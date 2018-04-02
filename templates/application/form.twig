@@ -1,0 +1,53 @@
+{% extends 'base.twig' %}
+{% block title %}New application{% endblock %}
+{% block container %}
+<div class="col-sm-6 mx-auto">
+    {% if errors %}
+        <p>Following errors occurred:</p>
+        <ul>
+            {% for key,error in errors %}
+                <li>{{ key }} => {{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+<form method="POST">
+    <div class="row">
+        <div class="col-sm-6 mx-auto">
+            <div class="form-group">
+                <input type="text" name="firstName" id="firstName" placeholder="First name" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="lastName" id="lastName" placeholder="Last name" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="text" name="loanAmount" id="loanAmount" placeholder="Loan amount" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <input type="integer" name="loanTerm" id="loanTerm" placeholder="Loan term" class="form-control"/>
+            </div>
+            <div class="form-group">
+                <select name="sourceType">
+                    <option value="Employed">Employed</option>
+                    <option value="Student">Student</option>
+                    <option value="NormalPension">NormalPension</option>
+                    <option value="DisabilityPension">DisabilityPension</option>
+                    <option value="Unemployed">Unemployed</option>
+                    <option value="BenefitOrAlimony">BenefirOrAlimony</option>
+                    <option value="SelfEmployed">SelfEmployed</option>
+                    <option value="Farmer">Farmer</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" name="trade" placeholder="Trade" class="form-control"/>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 mx-auto">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </div>
+</form>
+{% endblock %}

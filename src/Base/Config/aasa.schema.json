@@ -1,0 +1,401 @@
+{
+  "type": "object",
+  "required": [
+    "loanAmount",
+    "loanPeriodInMonths",
+    "firstName",
+    "lastName",
+    "payoutMethod",
+    "contactAddress",
+    "mainAddress",
+    "idCardNumber",
+    "mobilePhoneNumber",
+    "pMarketing",
+    "tMarketing",
+    "eMarketing",
+    "loanPurposeType",
+    "educationType",
+    "housing",
+    "income",
+    "pin",
+    "emailAddress",
+    "maritalStatusType"
+  ],
+  "properties": {
+    "income": {
+      "type": "object",
+      "properties": {
+        "sourceType": {
+          "$ref": "#/definitions/sourceTypes"
+        },
+        "netPerMonth": {
+          "type": "number"
+        },
+        "employerName": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "position": {
+          "type": "string",
+          "maxLength": 80
+        },
+        "trade": {
+          "type": "string",
+          "maxLength": 20
+        },
+        "yearSince": {
+          "type": "integer",
+          "minimum": 1900,
+          "maximum": 2030
+        },
+        "monthSince": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12
+        },
+        "currentStudy": {
+          "type": "string"
+        }
+      },
+      "allOf": [
+        {
+          "anyOf": [
+            {
+              "not": {
+                "properties": {
+                  "sourceType": { "enum": ["Employed", "SelfEmployed"] }
+                }
+              }
+            },
+            {
+              "required": ["employerName", "position"]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "not": {
+                "properties": {
+                  "sourceType": { "enum": ["SelfEmployed"] }
+                }
+              }
+            },
+            {
+              "required": ["trade"]
+            }
+          ]
+        },
+        {
+          "anyOf": [
+            {
+              "not": {
+                "properties": {
+                  "sourceType": { "enum": ["Student"] }
+                }
+              }
+            },
+            {
+              "required": ["currentStudy"]
+            }
+          ]
+        }
+      ]
+    },
+    "loanPurposeType": {
+      "$ref": "#/definitions/purposeTypes"
+    },
+    "pin": {
+      "type": "string",
+      "maxLength": 11
+    },
+    "contactAddress": {
+      "$ref": "#/definitions/addressObject"
+    },
+    "mainAddress": {
+      "$ref": "#/definitions/addressObject"
+    },
+    "account": {
+      "$ref": "#/definitions/accountObject"
+    },
+    "idCardNumber": {
+      "type": "string",
+      "example": "ZZC900146"
+    },
+    "mobilePhoneType": {
+      "type": "string",
+      "enum": [
+        "PostPaid",
+        "PrePaid",
+        "Mix"
+      ]
+    },
+    "payoutMethod": {
+      "type": "string",
+      "enum": [
+        "Giro",
+        "Account",
+        "BlueCash"
+      ]
+    },
+    "educationType": {
+      "type": "string",
+      "enum": [
+        "MBA",
+        "MSc",
+        "BA",
+        "Secondary",
+        "Vocational",
+        "Basic",
+        "Other"
+      ]
+    },
+    "maritalStatusType": {
+      "type": "string",
+      "enum": [
+        "Single",
+        "Married",
+        "MarriedDivorcing",
+        "Divorced",
+        "Separated",
+        "Widow",
+        "InformationRelationship",
+        "Other"
+      ]
+    },
+    "housing": {
+      "$ref": "#/definitions/housingObject"
+    },
+    "insurance": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "aasaAsBeneficiaryConsent": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "insuranceMarketingConsent": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "agentId": {
+      "type": "string",
+      "example": "AGENT1234"
+    },
+    "agentIP": {
+      "description": "Valid IP address of the agent",
+      "type": "string",
+      "example": "8.8.8.8"
+    },
+    "agentPesel": {
+      "type": "string",
+      "maxLength": 11,
+      "example": "57082924225"
+    },
+    "loanAmount": {
+      "type": "number",
+      "minimum": 1,
+      "example": "1000.00"
+    },
+    "loanPeriodInMonths": {
+      "type": "number",
+      "minimum": 1,
+      "example": "12"
+    },
+    "firstName": {
+      "type": "string",
+      "maxLength": 50,
+      "minLength": 1,
+      "example": "Anders"
+    },
+    "lastName": {
+      "type": "string",
+      "maxLength": 50,
+      "minLength": 1,
+      "example": "Aas"
+    },
+    "emailAddress": {
+      "type": "string",
+      "example": "test.test@aasaglobal.com"
+    },
+    "mobilePhoneNumber": {
+      "type": "string",
+      "example": "+372987654321"
+    },
+    "eMarketing": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "pMarketing": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "tMarketing": {
+      "type": "string",
+      "enum": [
+        "Y",
+        "N"
+      ]
+    },
+    "additionalParameters": {
+      "description": "Parameter names lenght must be between 1 and 45 and values length must be between 1 and 255",
+      "type": "object",
+      "items": {
+        "type": "string"
+      },
+      "example": {
+        "example_param_1": "1",
+        "example_param_2": "M3"
+      }
+    },
+    "code": {
+      "type": "string",
+      "maxLength": 99,
+      "minLength": 1,
+      "example": "campaign code"
+    },
+    "firstPaymentDate": {
+      "type": "string",
+      "example": "2018-04-27"
+    }
+  },
+  "definitions": {
+    "sourceTypes": {
+      "enum": ["Employed", "Student", "NormalPension", "DisabilityPension", "Unemployed", "BenefitOrAlimony", "SelfEmployed", "Farmer", "Other"]
+    },
+    "purposeTypes": {
+      "enum": ["Bills", "Vacation", "RentOrMortgage", "Car", "Entertainment", "Groceries", "Renovation", "Electronics", "Furniture", "School", "Other"]
+    },
+    "addressObject": {
+      "required": [
+        "street",
+        "houseNumber",
+        "postalCode",
+        "city"
+      ],
+      "properties": {
+        "street": {
+          "type": "string",
+          "maxLength": 100,
+          "minLength": 2,
+          "example": "Ul.brzozowskiego 12 m. 15"
+        },
+        "postalCode": {
+          "type": "string",
+          "example": "62-262"
+        },
+        "houseNumber": {
+          "type": "string",
+          "maxLength": 10,
+          "minLength": 1,
+          "example": "1"
+        },
+        "apartmentNumber": {
+          "type": "string",
+          "maxLength": 10,
+          "minLength": 1,
+          "example": "1"
+        },
+        "city": {
+          "type": "string",
+          "maxLength": 50,
+          "minLength": 2,
+          "example": "Zachowice"
+        }
+      }
+    },
+    "accountObject": {
+      "required": [
+        "accountNumber",
+        "accountType",
+        "accountHolder"
+      ],
+      "properties": {
+        "accountNumber": {
+          "type": "string",
+          "maxLength": 26,
+          "minLength": 26,
+          "example": "61 1090 1014 0000 0712 1981 2874"
+        },
+        "accountType": {
+          "type": "string",
+          "enum": [
+            "Personal",
+            "Joint",
+            "Company"
+          ]
+        },
+        "accountHolder": {
+          "type": "string",
+          "example": "Anders Aas"
+        }
+      }
+    },
+    "housingObject": {
+      "required": [
+        "residentialType",
+        "propertyType"
+      ],
+      "properties": {
+        "residentialType": {
+          "type": "string",
+          "enum": [
+            "Own",
+            "Rented",
+            "LivingWithFamily",
+            "Other",
+            "CouncilHousing",
+            "HousingAssociation"
+          ]
+        },
+        "monthlyExpenses": {
+          "type": "number",
+          "example": "400.00"
+        },
+        "propertyType": {
+          "type": "string",
+          "enum": [
+            "Apartment",
+            "House",
+            "TerracedHouse",
+            "Duplex",
+            "Other"
+          ]
+        },
+        "yearMovedIn": {
+          "type": "number",
+          "maximum": 2030,
+          "minimum": 1900,
+          "example": "1992"
+        },
+        "monthMovedIn": {
+          "type": "number",
+          "maximum": 12,
+          "minimum": 1,
+          "example": "11"
+        },
+        "numberOfPeople": {
+          "type": "number",
+          "maximum": 20,
+          "minimum": 1,
+          "example": "2"
+        }
+      }
+    }
+  }
+}

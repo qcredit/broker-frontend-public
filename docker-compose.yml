@@ -1,0 +1,53 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: slim_web
+    image: nginx:latest
+    ports:
+      - "8100:80"
+    volumes:
+      - ./:/app
+      - ./infrastructure/nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      - default
+
+  php:
+    container_name: slim_php
+    build: ./infrastructure/php
+    volumes:
+      - ./:/app
+    networks:
+      - default
+    working_dir: /app
+    depends_on:
+     - mysql
+
+  composer:
+    container_name: slim_composer
+    image: composer
+    volumes:
+    - ./:/app
+    command: composer install
+
+  mysql:
+    container_name: slim_mysql
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: hobunelasiterveaiat2is
+      MYSQL_DATABASE: broker
+    volumes:
+      - ./data:/var/lib/mysql
+    networks:
+      default:
+        aliases:
+          - mysql
+    ports:
+      - "3310:3306"
+
+networks:
+  default:
+    driver: bridge
