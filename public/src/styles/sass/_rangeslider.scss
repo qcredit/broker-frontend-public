@@ -1,0 +1,54 @@
+.rangeslider, .rangeslider__fill {
+  display: block;
+}
+.rangeslider {
+  position: relative;
+  background: #e6e6e6;
+}
+.rangeslider--horizontal {
+  display: inline-block;
+  height: 6px;
+  width: 75%;
+}
+.rangeslider__fill {
+  position: absolute;
+  background: $blue;
+}
+.rangeslider--horizontal .rangeslider__fill {
+  top: 0;
+  height: 100%;
+}
+.rangeslider__handle {
+  position: absolute;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: $blue;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+.rangeslider--horizontal .rangeslider__handle {
+  top: -9px;
+  touch-action: pan-y;
+  -ms-touch-action: pan-y;
+}
+.rangeslider__handle:hover, .rangeslider__handle:active {
+  box-shadow: 0 0 0 6px rgba(0, 151, 213, 0.3), 0 0 0 0px $blue;
+  transition: box-shadow 0.2s ease-in-out;
+}
+
+.range-slider-value {
+  position: relative;
+  display: inline-block;
+  width: 20%;
+  margin-left: 3%;
+  padding: 3px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+}
+.range-slider-label {
+  margin: 1rem 0;
+  font-size: 1.25rem;
+}

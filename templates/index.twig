@@ -1,5 +1,78 @@
 {% extends 'base.twig' %}
 {% block title %}Broker{% endblock %}
+{% block hero %}
+<section class="row home-hero">
+  <div class="col-sm-12 col-md-5 home-hero-half home-hero-left">
+    <h2>Leverage agile frameworks</h2>
+    <p>Provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
+    <!--<button class="btn broker-btn broker-btn-blue">See how it works</button> -->
+  </div>
+  <div class="col-sm-12 col-md-7 home-hero-half home-hero-right">
+    <form class="landing-form">
+      <div class="landing-form-upper">
+        <div class="landing-slider landing-form-amount">
+          <p class="range-slider-label">How fast do you want to pay off?</p>
+          <input type="range" id="loanAmount" min="0" max="10000" step="500" value="2000">
+          <input type="text" class="range-slider-value landing-slider-value" id="loanAmountOutput" value="2000 PLN">
+        </div>
+        <div class="landing-slider landing-form-duration">
+          <p class="range-slider-label">How fast do you want to pay off (months)?</p>
+          <input type="range" id="loanDurationSlider" min="6" max="72" step="1" value="24">
+          <input type="text" class="range-slider-value landing-slider-value" id="loanDurationOutput" value="24">
+        </div>
+        <p class="range-slider-label range-slider-monhly-label">Approximate monthly installment</p>
+        <span class="monthly-installment">PLN 767</span>
+      <div class="landing-form-lower">
+        <label for="">First name</label>
+        <input type="text">
+        <label for="">Email address</label>
+        <input type="text">
+        <button class="btn broker-btn broker-btn-gold">Apply for a loan</button>
+      </div>
+    </form>
+  </div>
+</section>
+<section class="row home-partners"></section>
+{% endblock %}
 {% block container %}
-    <h3>Das homepage</h3>
+    <div class="container">
+      <section class="row home-how">
+        <h1 class="col-sm-12 text-center">How it works?</h1>
+        <div class="col-sm-12 col-lg-4 home-how-block">
+          <div class="home-how-block-icon"><img src="src/images/step_icon.svg" alt="Step"></div>
+          <div class="home-how-block-text">
+            <span class="home-how-block-step text-uppercase">Step 1</span>
+            <p class="home-how-block-heading"><strong>Fill in the application</strong></p>
+            <p class="home-how-block-description">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-4 home-how-block">
+          <div class="home-how-block-icon"><img src="src/images/step_icon.svg" alt="Step"></div>
+          <div class="home-how-block-text">
+            <span class="home-how-block-step text-uppercase">Step 2</span>
+            <p class="home-how-block-heading"><strong>Choose the best offer</strong></p>
+            <p class="home-how-block-description">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+          </div>
+        </div>
+        <div class="col-sm-12 col-lg-4 home-how-block">
+          <div class="home-how-block-icon"><img src="src/images/step_icon.svg" alt="Step"></div>
+          <div class="home-how-block-text">
+            <span class="home-how-block-step text-uppercase">Step 3</span>
+            <p class="home-how-block-heading"><strong>Get the money</strong></p>
+            <p class="home-how-block-description">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+          </div>
+        </div>
+      </section>
+      <section class="row home-about">
+        <h1 class="col-sm-12 text-center">About Brokers</h1>
+        <div class="col-sm-12 col-lg-6 home-about-left">
+          <p><strong>Lorem ipsum dolor</strong> sit amet, consectetur adipiscing elit. Vivamus imperdiet malesuada arcu, a placerat ipsum dictum ut. Donec faucibus elementum purus ut placerat. Cras sollicitudin, arcu non rhoncus rutrum, mauris velit commodo tellus, nec fringilla augue tellus non neque. Fusce iaculis mattis sodales. Nam tortor eros, aliquet ac porta quis, blandit sit amet enim. Donec sed urna sit amet arcu sodales hendrerit. Aliquam odio magna, egestas accumsan laoreet ut, pellentesque et tortor. Donec elementum imperdiet libero id posuere. Suspendisse id euismod sem. </p>
+          <p><strong>Vestibulum ante</strong> ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Cras vel nunc eget dolor viverra cursus. Curabitur maximus nunc at elit blandit, at rhoncus risus convallis. Mauris consequat leo vitae metus facilisis aliquam vitae id tellus. Vivamus vel nibh ullamcorper, sollicitudin nisl sed, faucibus eros. </p>
+          <p><strong>Proin a orci vel libero</strong> luctus mattis at ac risus. Integer congue, eros a facilisis placerat, urna ligula varius massa, non suscipit diam ligula vitae erat. Maecenas ex ante, rutrum vel leo ac, dictum dignissim est. Donec posuere scelerisque tellus, a accumsan ex. Integer tellus eros, efficitur et rhon cus quis, mattis eu eros. Curabitur nec justo eget magna porttitor bibendum quis <a href="#">vitae lorem.</a></p>
+        </div>
+        <div class="col-sm-12 col-lg-6 home-about-right">
+          <img src="http://via.placeholder.com/500x500" alt="">
+        </div>
+      </section>
+    </div>
 {% endblock %}
