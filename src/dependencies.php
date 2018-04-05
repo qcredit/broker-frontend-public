@@ -1,6 +1,15 @@
 <?php
-use Broker\Persistence\Doctrine\UserRepository;
-use App\Models\User;
+use Broker\System\Config;
+use App\Base\Repository\PartnerDataMapperRepository;
+use Broker\Domain\Service\NewApplicationService;
+use Broker\Domain\Factory\ApplicationFactory;
+use Broker\Domain\Service\PartnerRequestsService;
+use Broker\Domain\Service\PartnerResponseService;
+use App\Base\PartnerDeliveryGateway;
+use Broker\Domain\Factory\OfferFactory;
+use Broker\Domain\Service\PreparePartnerRequestsService;
+use Broker\Domain\Factory\PartnerRequestFactory;
+
 $container = $app->getContainer();
 
 // view renderer
@@ -17,6 +26,8 @@ $container['logger'] = function ($c) {
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
+
+Config::getInstance()->setConfig($container->get('settings')['broker']);
 
 $container['view'] = function($container) {
   $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
@@ -41,6 +52,9 @@ $container['db'] = function($container) {
 $container['UserRepository'] = function($container) {
   $factory = new \Broker\persistence\doctrine\RepositoryFactory();
   return $factory->createGateway($container->get('db'), 'User');
+/*  return new UserRepository(
+    $container->get('db')
+  );*/
 };
 
 $container['UserController'] = function($c) {
@@ -62,7 +76,41 @@ $container['AdminController'] = function($c)
 
 $container['ApplicationController'] = function ($c)
 {
+  $factory = new \Broker\Persistence\Doctrine\RepositoryFactory();
+  $partnerRepository = $factory->createGateway($c->get('db'), 'Partner');
+  $appRepository = $factory->createGateway($c->get('db'), 'Application');
+  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
+  $partnerDataMapperRepository = new PartnerDataMapperRepository();
+
+  $newApplicationService = new NewApplicationService(
+    new ApplicationFactory(),
+    $appRepository,
+    $partnerRepository,
+    $partnerDataMapperRepository
+  );
+
+  $requestService = new PartnerRequestsService(
+    new PartnerDeliveryGateway(),
+    $partnerDataMapperRepository
+  );
+  $responseService = new PartnerResponseService(
+    new OfferFactory(),
+    $offerRepository,
+    $partnerDataMapperRepository
+  );
+  $prepareService = new PreparePartnerRequestsService(
+    $partnerRepository,
+    $newApplicationService,
+    $requestService,
+    $responseService,
+    new PartnerRequestFactory()
+  );
+
+  $offerService = new \Broker\Domain\Service\ApplicationOfferListService($appRepository, $offerRepository);
+
   return new \App\Controllers\ApplicationController(
-    $c->get('view')
+    $prepareService,
+    $offerService,
+    $c
   );
 };

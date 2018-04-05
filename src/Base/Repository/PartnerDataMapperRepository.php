@@ -13,6 +13,11 @@ use Broker\Domain\Interfaces\PartnerDataMapperRepositoryInterface;
 
 class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterface
 {
+  /**
+   * @param string $identifier
+   * @return PartnerDataMapperInterface
+   * @throws \Exception
+   */
   public function getDataMapperByPartnerId(string $identifier): PartnerDataMapperInterface
   {
     switch($identifier)

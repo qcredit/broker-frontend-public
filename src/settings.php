@@ -15,6 +15,13 @@ return [
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
         ],
+        'broker' => [
+          'logger' => [
+            'loggerClass' => 'App\Base\Logger',
+            'logFile' => __DIR__ . '/../logs/broker.log',
+            'logLevel' => 100
+          ]
+        ],
         'doctrine' => [
           'meta' => [
             'entity_path' => [
