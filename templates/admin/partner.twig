@@ -1,0 +1,14 @@
+{% extends 'base.twig' %}
+{% block title %}{{ partner.name }}{% endblock %}
+{% block container %}
+    <div class="container">
+        <a href="/admin/partners/update/{{ partner.id }}" class="btn btn-primary mb-3">Update</a>
+        <ol>
+            <li><strong>ID:</strong> {{ partner.id }}</li>
+            <li><strong>Name:</strong> {{ partner.name }}</li>
+            <li><strong>Identifier:</strong> {{ partner.identifier }}</li>
+            <li><strong>Status:</strong> {% if partner.status %}Enabled{% else %}Disabled{% endif %}</li>
+            <li><strong>Commission:</strong> {{ partner.commission }}</li>
+        </ol>
+    </div>
+{% endblock %}

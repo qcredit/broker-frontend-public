@@ -57,6 +57,12 @@ $container['UserRepository'] = function($container) {
   );*/
 };
 
+$container['PartnerController'] = function($c) {
+  $factory = new \Broker\Persistence\Doctrine\RepositoryFactory();
+  $partnerRepository = $factory->createGateway($c->get('db'), 'Partner');
+  return new \App\Controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $c);
+};
+
 $container['UserController'] = function($c) {
   $view = $c->get('view');
   return new \App\Controllers\UserController($view);
