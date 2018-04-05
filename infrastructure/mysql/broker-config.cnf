@@ -7,4 +7,5 @@ default-character-set=utf8
 [mysqld]
 collation-server=utf8_unicode_ci
 character-set-server=utf8
-default_time_zone=UTC
+default_time_zone=+00:00
+explicit_defaults_for_timestamp=1
