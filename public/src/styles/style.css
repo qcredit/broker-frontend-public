@@ -24,16 +24,40 @@
   border: 0;
   outline: none; }
 
-.landing-form {
-  padding: 2rem; }
+.landing-form .form-fields {
+  justify-content: flex-start; }
+.landing-form .field {
+  flex: 0 0 200px;
+  margin: 0 .625rem 1rem; }
+
+.landing-form-upper {
+  padding: 2rem;
+  background: #fbfafa; }
+
+.landing-form-lower {
+  padding: 1rem 2rem 2rem; }
+
+.landing-form-lower-footer {
+  display: flex;
+  align-items: flex-start;
+  margin: 1.5rem 0 1rem; }
+  .landing-form-lower-footer .landing-terms {
+    flex-shrink: 1;
+    margin: 0 .625rem;
+    color: #444;
+    font-size: .625rem; }
 
 .range-slider-monhly-label {
   margin-bottom: 0 !important; }
 
 .monthly-installment {
+  color: #00aeef;
   font-size: 1.25rem;
-  color: #00aeef; }
+  font-weight: bold; }
 
+@media only screen and (min-width: 1650px) {
+  .home-hero-left p {
+    max-width: 80%; } }
 .page-footer {
   margin: 5rem 0 0;
   padding: 0;
@@ -114,7 +138,42 @@
   margin: 1rem 0;
   font-size: 1.25rem; }
 
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-around; }
+
+.field {
+  position: relative;
+  flex: 0 0 46%;
+  margin: 0 2% 1rem; }
+  .field input {
+    width: 100%;
+    padding: 1rem 0 .5rem 0;
+    border: 0;
+    border-bottom: 1px solid #999; }
+    .field input:focus {
+      outline: none;
+      border-bottom: 2px solid #00aeef; }
+  .field label {
+    position: absolute;
+    left: 0;
+    top: 1.125rem;
+    color: #333;
+    font-size: 0.875rem;
+    font-weight: bold;
+    pointer-events: none;
+    transition: 0.2s ease all; }
+  .field.filled label, .field.focused label {
+    top: 0.1875rem;
+    font-size: 0.75rem; }
+
 /* Typography */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif; }
 
@@ -126,7 +185,7 @@ section > h1 {
 
 /* UTILITIES */
 .broker-btn {
-  padding: .65rem 1.25rem;
+  padding: .65rem 2rem;
   border-radius: 0;
   border: 0;
   text-transform: uppercase;
@@ -135,6 +194,8 @@ section > h1 {
   .broker-btn:focus {
     outline: none;
     box-shadow: none; }
+  .broker-btn:hover {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19); }
 
 .broker-btn-blue {
   color: #fff;

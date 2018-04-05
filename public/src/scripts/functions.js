@@ -43,4 +43,20 @@ $(document).ready(function(){
       $loanDurationSlider.val(this.value).change();
     });
   });
+
+
+  // Temporary input field focused and filled classes
+  $(".field input").focusin(function() {
+    $(this).parent().addClass("focused");
+  });
+  $(".field input").focusout(function() {
+    $(this).parent().removeClass("focused");
+  });
+  $(".field input").on("input", function() {
+    if($(this).val()){
+      $(this).parent().addClass("filled");
+    } else {
+      $(this).parent().removeClass("filled");
+    }
+  });
 });

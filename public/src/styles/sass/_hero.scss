@@ -1,10 +1,44 @@
 .landing-form {
+  .form-fields {
+    justify-content: flex-start;
+  }
+  .field {
+    flex: 0 0 200px;
+    margin: 0 .625rem 1rem;
+  }
+}
+.landing-form-upper {
   padding: 2rem;
+  background: #fbfafa;
+}
+.landing-form-lower {
+  padding: 1rem 2rem 2rem;
+}
+.landing-form-lower-footer {
+  display: flex;
+  align-items: flex-start;
+  margin: 1.5rem 0 1rem;
+  .landing-terms {
+    flex-shrink: 1;
+    margin: 0 .625rem;
+    color: #444;
+    font-size: .625rem;
+  }
 }
 .range-slider-monhly-label {
   margin-bottom: 0!important;
 }
 .monthly-installment {
-  font-size: 1.25rem;
   color: $blue;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+
+@media only screen and (min-width: 1650px) {
+  .home-hero-left {
+    p {
+      max-width: 80%;
+    }
+  }
 }
