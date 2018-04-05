@@ -1,0 +1,24 @@
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif; }
+
+p, span, a, strong {
+  font-family: 'Lato', sans-serif; }
+
+body {
+  padding-top: 85px; }
+
+.navbar {
+  padding: 1rem;
+  background-color: #e1e1e1; }
+
+.navbar-light .navbar-toggler {
+  border: 0;
+  outline: none; }
+
+.home-hero {
+  height: 70vh;
+  min-height: 400px;
+  background-color: #e1e1e1; }
+
+/*# sourceMappingURL=style.css.map */
