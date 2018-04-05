@@ -43,7 +43,7 @@
   display: inline-block;
   width: 20%;
   margin-left: 3%;
-  padding: 3px 0;
+  padding: 8px 0;
   font-size: 1rem;
   font-weight: bold;
   text-align: center;
@@ -51,4 +51,10 @@
 .range-slider-label {
   margin: 1rem 0;
   font-size: 1.25rem;
+}
+
+@media only screen and (min-width: 1150px) {
+  .range-slider-select-value {
+    padding-left: 10px;
+  }
 }

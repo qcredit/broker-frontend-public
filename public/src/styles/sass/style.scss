@@ -55,25 +55,6 @@ body {
   padding-top: 85px;
 }
 
-/* Home page hero sectio */
-.home-hero {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: #e1e1e1;
-  .home-hero-left {
-    h1{
-      text-align: center;
-    }
-    button, p {
-      display: none;
-    }
-  }
-  .home-hero-right form{
-    max-width: 700px;
-    background: #fff;
-  }
-}
-
 /* Home page How it works section */
 .home-how-block {
   display: flex;
@@ -114,28 +95,3 @@ body {
 
 
 /* Media queries */
-
-@media only screen and (min-width: 768px) {
-  .home-hero {
-    height: 70vh;
-    min-height: 400px;
-    align-items: center;
-    .landing-form {
-      min-height: 400px;
-    }
-    .home-hero-left {
-      h1{
-        text-align: left;
-      }
-      button, p {
-        display: block;
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-  .home-hero {
-    padding: 50px 10%;
-  }
-}
