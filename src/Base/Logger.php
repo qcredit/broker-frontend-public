@@ -11,6 +11,7 @@ namespace App\Base;
 use Broker\Domain\Interfaces\LoggerInterface;
 use Monolog\Logger as Monolog;
 use Monolog\Handler\StreamHandler;
+use Monolog\Processor\UidProcessor;
 
 class Logger implements LoggerInterface
 {
@@ -18,12 +19,11 @@ class Logger implements LoggerInterface
 
   /**
    * Logger constructor.
-   * @param $config
-   * @throws \Exception
+   * @param array $config
    */
-  public function __construct()
+  public function __construct(array $config)
   {
-    $this->logger = new Monolog('broker');
+    $this->logger = new Monolog($config['name']);
   }
 
   /**
@@ -32,7 +32,20 @@ class Logger implements LoggerInterface
    */
   public function setConfig($config)
   {
-    $this->logger->pushHandler(new StreamHandler($config['logFile'], $config['logLevel']));
+    $this->logger->pushHandler(new StreamHandler($config['path'], $config['level']));
+    if (isset($config['processor']))
+    {
+      if (is_array($config['processor']))
+      {
+        foreach ($config['processor'] as $processor)
+        {
+          $this->logger->pushProcessor($processor);
+        }
+      }
+      else {
+        $this->logger->pushProcessor($config['processor']);
+      }
+    }
   }
 
   /**

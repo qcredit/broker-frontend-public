@@ -8,8 +8,10 @@
 
 namespace App\Controllers\Admin;
 
+use App\Base\Validator\PartnerValidator;
 use Broker\Domain\Interfaces\FactoryInterface;
 use Broker\Domain\Interfaces\PartnerRepositoryInterface;
+use Broker\Domain\Service\Validator\AbstractEntityValidator;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -28,6 +30,10 @@ class PartnerController
    * @var Container
    */
   protected $container;
+  /**
+   * @var AbstractEntityValidator
+   */
+  protected $validator;
 
   /**
    * PartnerController constructor.
@@ -40,6 +46,7 @@ class PartnerController
     $this->partnerRepository = $partnerRepository;
     $this->partnerFactory = $partnerFactory;
     $this->container = $container;
+    $this->validator = new PartnerValidator();
   }
 
   /**
@@ -87,6 +94,14 @@ class PartnerController
   }
 
   /**
+   * @return AbstractEntityValidator
+   */
+  public function getValidator()
+  {
+    return $this->validator;
+  }
+
+  /**
    * @param Request $request
    * @param Response $response
    * @param $args
@@ -117,11 +132,14 @@ class PartnerController
     $data = [];
 
     $partner = $this->findEntity($args['id'], $request, $response);
+    $partner->setValidator($this->getValidator());
 
     if ($request->isPost())
     {
-      $partner->load($request->getParsedBody());
-      $this->getPartnerRepository()->save($partner);
+      if ($partner->load($request->getParsedBody()) && $partner->validate())
+      {
+        $this->getPartnerRepository()->save($partner);
+      }
     }
 
     $data['partner'] = $partner;
@@ -159,12 +177,15 @@ class PartnerController
     $data = [];
 
     $partner = $this->getPartnerFactory()->create();
+    $partner->setValidator($this->getValidator());
 
     if ($request->isPost())
     {
-      $partner->load($request->getParsedBody());
-      $this->getPartnerRepository()->save($partner);
-      return $response->withRedirect('/admin/partners');
+      if ($partner->load($request->getParsedBody()) && $partner->validate())
+      {
+        $this->getPartnerRepository()->save($partner);
+        return $response->withRedirect('/admin/partners');
+      }
     }
 
     $data['partner'] = $partner;

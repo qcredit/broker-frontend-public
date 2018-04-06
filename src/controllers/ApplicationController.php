@@ -43,7 +43,7 @@ class ApplicationController
   public function indexAction($request, $response, $args)
   {
 
-/*    $data = [
+    $data = [
       'incomeSourceType' => 'Employed',
       'netPerMonth' => 3200,
       'employerName' => 'Wasras asd',
@@ -75,12 +75,12 @@ class ApplicationController
       'lastName' => 'Toome',
       'email' => 'koit@toome.ee',
       'phone' => '5171231'
-    ];*/
+    ];
 
-    $data = [];
+    //$data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($request->getParsedBody())->run();
+      $app = $this->prepareService->setData($data)->run();
       $data['errors'] = $app->getErrors();
 
       if (!isset($data['errors']) || empty($data['errors']))

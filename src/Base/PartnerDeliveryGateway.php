@@ -25,11 +25,12 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
   {
     $partner = $request->getPartner();
 
-/*    if ($partner->getHasApi())
+    if ($partner->getHasApi())
     {
-      $this->sendApiRequest($request);
-    }*/
-    return $this->sendApiRequest($request);
+      return $this->sendApiRequest($request);
+    }
+
+    return (new PartnerResponse)->setPartner($partner);
   }
 
   /**
@@ -80,5 +81,10 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
 
     return $partnerResponse;
+  }
+
+  protected function sendEmailRequest()
+  {
+
   }
 }

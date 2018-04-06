@@ -22,12 +22,24 @@ $container['renderer'] = function ($c) {
 $container['logger'] = function ($c) {
     $settings = $c->get('settings')['logger'];
     $logger = new Monolog\Logger($settings['name']);
-    $logger->pushProcessor(new Monolog\Processor\UidProcessor());
+    if (is_array($settings['processor']))
+    {
+      foreach ($settings['processor'] as $processor)
+      {
+        $logger->pushProcessor($processor);
+      }
+    }
+    else {
+      $logger->pushProcessor($settings['processor']);
+    }
     $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
     return $logger;
 };
 
-Config::getInstance()->setConfig($container->get('settings')['broker']);
+$brokerSettings = $container->get('settings')['broker'];
+$brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
+
+Config::getInstance()->setConfig($brokerSettings);
 
 $container['view'] = function($container) {
   $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');

@@ -12,6 +12,7 @@ use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
+use Broker\System\Error\InvalidConfigException;
 
 class AasaDataMapper implements PartnerDataMapperInterface
 {
@@ -21,12 +22,42 @@ class AasaDataMapper implements PartnerDataMapperInterface
   const STATUS_IN_DEBT = 'InDebt';
   const STATUS_REJECTED = 'Rejected';
 
+  protected $configFile = 'aasa.config.json';
+
   /**
    * @return string
+   * @throws InvalidConfigException
+   * @throws \Exception
    */
-  public function getRequestSchema(): string
+  public function getRequestSchema(): array
   {
-    return file_get_contents(dirname(__FILE__) . '/Config/aasa.schema.json');
+    return $this->getConfig()['requestSchema'];
+  }
+
+  /**
+   * @return array
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getConfig(): array
+  {
+    return json_decode($this->getConfigFile(), true);
+  }
+
+  /**
+   * @return bool|string
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getConfigFile()
+  {
+    $file = dirname(__FILE__) . '/Config/aasa.config.json';
+    if (!file_exists($file))
+    {
+      throw new InvalidConfigException('No configuration file found for Aasa!');
+    }
+
+    return file_get_contents($file);
   }
 
   /**
