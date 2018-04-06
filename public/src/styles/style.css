@@ -73,7 +73,7 @@
 @media only screen and (max-width: 420px) {
   .home-hero-right {
     padding: 0; } }
-@media only screen and (min-width: 490px) {
+@media only screen and (min-width: 501px) {
   .landing-form .field {
     flex: 0 0 175px; } }
 @media only screen and (max-width: 768px) {
@@ -90,6 +90,9 @@
     .landing-form-lower-footer .broker-btn {
       width: 100%;
       margin-bottom: 16px; } }
+@media only screen and (min-width: 501px) and (max-width: 768px) {
+  .landing-form .field {
+    margin: 0 .625rem 1rem; } }
 @media only screen and (min-width: 768px) {
   .home-hero {
     min-height: 400px;

@@ -64,7 +64,7 @@
   }
 }
 
-@media only screen and (min-width: 490px) {
+@media only screen and (min-width: 501px) {
   .landing-form {
     .field {
       flex: 0 0 175px;
@@ -90,7 +90,11 @@
     }
   }
 }
-
+@media only screen and (min-width: 501px) and (max-width: 768px) {
+  .landing-form .field {
+    margin: 0 .625rem 1rem;
+  }
+}
 @media only screen and (min-width: 768px) {
   .home-hero {
     min-height: 400px;
