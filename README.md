@@ -1,5 +1,7 @@
 # Broker web application
 
+[![CircleCI](https://circleci.com/gh/aasa-global/broker-frontend.svg?style=shield&circle-token=08389d4d974569df4b92e070aa1ffbb510a0d5df)](https://circleci.com/gh/aasa-global/broker-frontend)
+
 This is the base web application skeleton for the Broker project. The main business logic is handled by [aasa-global/broker](https://github.com/aasa-global/broker)
 repository.
 

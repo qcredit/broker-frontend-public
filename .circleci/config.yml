@@ -36,4 +36,4 @@ jobs:
       # run tests!
       - run: |
           mkdir -p ./phpunit
-          vendor/bin/phpunit --bootstrap phpunit-bootstrap.php tests
+          vendor/bin/phpunit tests/Unit
