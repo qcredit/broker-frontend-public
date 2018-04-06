@@ -25,13 +25,13 @@ class AasaDataMapper implements PartnerDataMapperInterface
   protected $configFile = 'aasa.config.json';
 
   /**
-   * @return string
+   * @return array
    * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getRequestSchema(): array
   {
-    return $this->getConfig()['requestSchema'];
+    return json_decode($this->getConfigFile(), true)['requestSchema'];
   }
 
   /**
@@ -41,7 +41,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfig(): array
   {
-    return json_decode($this->getConfigFile(), true);
+    return json_decode($this->getConfigFile(), true)['config'];
   }
 
   /**

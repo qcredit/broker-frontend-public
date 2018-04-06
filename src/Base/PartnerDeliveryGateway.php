@@ -8,6 +8,7 @@
 
 namespace App\Base;
 
+use Broker\Domain\Entity\Partner;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Entity\PartnerRequest;
 use Broker\Infrastructure\AbstractPartnerDeliveryGateway;
@@ -15,17 +16,21 @@ use Broker\System\Log;
 
 class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
 {
-  protected $apiUrl = 'http://crm-test.asakredyt.pl/api/v1/loans';
   /**
    * @var bool
    */
   protected $ok = false;
 
+  /**
+   * @param PartnerRequest $request
+   * @return PartnerResponse
+   * @todo Set up offers via e-mail!
+   */
   public function send(PartnerRequest $request)
   {
     $partner = $request->getPartner();
 
-    if ($partner->getHasApi())
+    if ($partner->getUseApi())
     {
       return $this->sendApiRequest($request);
     }
@@ -41,7 +46,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     return $this->ok;
   }
 
-  protected function sendApiRequest($request)
+  protected function sendApiRequest(PartnerRequest $request)
   {
     $ch = curl_init();
 
@@ -53,7 +58,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
       $authorization
     ];
 
-    curl_setopt($ch, CURLOPT_URL, $this->apiUrl);
+    curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl());
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
     curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());

@@ -15,8 +15,7 @@ return [
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
             'processor' => [
-              new \Monolog\Processor\UidProcessor(),
-              new \Monolog\Processor\WebProcessor()
+              new \Monolog\Processor\UidProcessor()
             ]
         ],
         'broker' => [

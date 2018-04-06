@@ -72,7 +72,9 @@ $container['UserRepository'] = function($container) {
 $container['PartnerController'] = function($c) {
   $factory = new \Broker\Persistence\Doctrine\RepositoryFactory();
   $partnerRepository = $factory->createGateway($c->get('db'), 'Partner');
-  return new \App\Controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $c);
+
+  $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
+  return new \App\Controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
 };
 
 $container['UserController'] = function($c) {
@@ -117,7 +119,6 @@ $container['ApplicationController'] = function ($c)
     $partnerDataMapperRepository
   );
   $prepareService = new PreparePartnerRequestsService(
-    $partnerRepository,
     $newApplicationService,
     $requestService,
     $responseService,

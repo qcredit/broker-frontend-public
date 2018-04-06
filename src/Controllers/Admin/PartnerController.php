@@ -8,6 +8,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Base\Repository\PartnerExtraDataLoader;
 use App\Base\Validator\PartnerValidator;
 use Broker\Domain\Interfaces\FactoryInterface;
 use Broker\Domain\Interfaces\PartnerRepositoryInterface;
@@ -34,18 +35,24 @@ class PartnerController
    * @var AbstractEntityValidator
    */
   protected $validator;
+  /**
+   * @var PartnerExtraDataLoader
+   */
+  protected $partnerDataLoader;
 
   /**
    * PartnerController constructor.
    * @param PartnerRepositoryInterface $partnerRepository
    * @param FactoryInterface $partnerFactory
+   * @param PartnerExtraDataLoader $partnerDataLoader
    * @param Container $container
    */
-  public function __construct(PartnerRepositoryInterface $partnerRepository, FactoryInterface $partnerFactory, Container $container)
+  public function __construct(PartnerRepositoryInterface $partnerRepository, FactoryInterface $partnerFactory, PartnerExtraDataLoader $partnerDataLoader, Container $container)
   {
     $this->partnerRepository = $partnerRepository;
     $this->partnerFactory = $partnerFactory;
     $this->container = $container;
+    $this->partnerDataLoader = $partnerDataLoader;
     $this->validator = new PartnerValidator();
   }
 
@@ -102,17 +109,36 @@ class PartnerController
   }
 
   /**
+   * @return PartnerExtraDataLoader
+   */
+  public function getPartnerDataLoader()
+  {
+    return $this->partnerDataLoader;
+  }
+
+  /**
+   * @param PartnerExtraDataLoader $partnerDataLoader
+   * @return PartnerController
+   */
+  public function setPartnerDataLoader($partnerDataLoader)
+  {
+    $this->partnerDataLoader = $partnerDataLoader;
+    return $this;
+  }
+
+  /**
    * @param Request $request
    * @param Response $response
    * @param $args
    * @return mixed
+   * @throws \Exception
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function indexAction(Request $request, Response $response, $args)
   {
     $data = [];
 
-    $partners = $this->getPartnerRepository()->getAll();
+    $partners = $this->getPartnerDataLoader()->bulkLoadExtraConfiguration($this->getPartnerRepository()->getAll());
 
     $data['partners'] = $partners;
 
@@ -152,6 +178,7 @@ class PartnerController
    * @param Response $response
    * @param $args
    * @return mixed
+   * @throws \Exception
    * @throws \Interop\Container\Exception\ContainerException
    * @throws \Slim\Exception\NotFoundException
    */
@@ -159,7 +186,7 @@ class PartnerController
   {
     $data = [];
 
-    $data['partner'] = $this->findEntity($args['id'], $request, $response);
+    $data['partner'] = $this->getPartnerDataLoader()->loadExtraConfiguration($this->findEntity($args['id'], $request, $response));
 
     return $this->getContainer()->get('view')->render($response, 'admin/partner.twig', $data);
   }

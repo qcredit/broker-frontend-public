@@ -1,6 +1,11 @@
 {
-  "hasApi": true,
-  "apiUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
+  "config": {
+    "useApi": true,
+    "apiLiveUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
+    "apiTestUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
+    "logo": "/assets/img/aasa.jpg",
+    "email": "offers@aasa.global"
+  },
   "requestSchema": {
     "type": "object",
     "required": [

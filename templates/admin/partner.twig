@@ -9,6 +9,10 @@
             <li><strong>Identifier:</strong> {{ partner.identifier }}</li>
             <li><strong>Status:</strong> {% if partner.status %}Enabled{% else %}Disabled{% endif %}</li>
             <li><strong>Commission:</strong> {{ partner.commission }}</li>
+            <li><strong>UseAPI:</strong> {{ partner.useApi }}</li>
+            <li><strong>APILiveUrl:</strong> {{ partner.apiLiveUrl }}</li>
+            <li><strong>APITestUrl:</strong>{{ partner.apiTestUrl }}</li>
+            <li><strong>Logo:</strong> <img src="{{ partner.logo }}"/></li>
         </ol>
     </div>
 {% endblock %}
