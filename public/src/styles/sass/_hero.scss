@@ -1,27 +1,34 @@
 /* Home page hero sectio */
 .home-hero {
-  padding-top: 20px;
-  padding-bottom: 20px;
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
   background-color: #e1e1e1;
   .home-hero-left {
-    h1{
+    h2{
       text-align: center;
+      margin-bottom: 1.25rem;
     }
     button, p {
       display: none;
     }
   }
-  .home-hero-right form{
-    max-width: 700px;
-    background: #fff;
+
+  .home-hero-right {
+    form{
+      max-width: 700px;
+      background: #fff;
+    }
   }
 }
 .landing-form {
+  .landing-component-lg {
+    display: none;
+  }
   .form-fields {
     justify-content: flex-start;
   }
   .field {
-    flex: 0 0 200px;
+    flex: 1 1 280px;
     margin: 0 .625rem 1rem;
   }
 }
@@ -48,8 +55,40 @@
 }
 .monthly-installment {
   color: $blue;
-  font-size: 1.25rem;
   font-weight: bold;
+}
+
+@media only screen and (max-width: 420px) {
+  .home-hero-right {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: 490px) {
+  .landing-form {
+    .field {
+      flex: 0 0 175px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .landing-form .field {
+    margin: 0 0 1rem;
+  }
+  .landing-form-lower-footer {
+    flex-direction: column;
+    align-items: center;
+    .landing-terms {
+      order: 2;
+      flex: 1 1 100%;
+      margin: 0
+    }
+    .broker-btn {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
 }
 
 @media only screen and (min-width: 768px) {
@@ -58,14 +97,32 @@
     align-items: center;
     .landing-form {
       min-height: 400px;
+      .field {
+        flex: 1 0 200px;
+      }
     }
     .home-hero-left {
-      h1{
+      h2{
         text-align: left;
+        margin-bottom: .5rem;
       }
       button, p {
         display: block;
       }
+    }
+  }
+  .monthly-installment {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .landing-form {
+    .landing-component-lg {
+      display: block;
+    }
+    .landing-component-sm {
+      display: none;
     }
   }
 }

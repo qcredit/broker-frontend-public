@@ -1,9 +1,10 @@
 $(document).ready(function(){
+  // Loan landing form functions for laptops and desktops start here
   $(function() {
-    var $loanAmountSlider = $('#loanAmount');
-    var $loanAmount = $('#loanAmountOutput');
-    var $loanDurationSlider = $('#loanDurationSlider');
-    var $loanDuration = $('#loanDurationOutput');
+    var $loanAmountSlider = $('.landing-component-lg #loanAmount');
+    var $loanAmount = $('.landing-component-lg #loanAmountOutput');
+    var $loanDurationSlider = $('.landing-component-lg #loanDurationSlider');
+    var $loanDuration = $('.landing-component-lg #loanDurationOutput');
 
     $loanAmountSlider.rangeslider({
         polyfill: false
@@ -22,9 +23,40 @@ $(document).ready(function(){
     $loanDuration.on('change', function() {
       $loanDurationSlider.val(this.value).change();
     });
+  }); // Loan landing form functions for laptops and desktops end here
+
+
+  // Loan landing form functions for mobile devices and tablets
+  $(".landing-component-sm .landing-form-adjust-increase").click(function() {
+    var $curOpt = $(this).parent().find('select');  // Get the correct select
+    var $targetOpt = $curOpt.children('option:selected'); // Get the current selected option
+    $(this).parent().find('.landing-form-adjust-decrease').removeClass('disabled'); // If decrease button is disabled, enable it
+    if($curOpt.children('option:last-child').is(':selected')) { // if the last element is already selected end the function with return false
+      $(this).addClass('disabled');
+      return false;
+    }
+    $curOpt.find('option').removeAttr('selected'); // Remove seleced from all the options
+    $targetOpt.next().attr('selected', 'selected'); // Add selected to next element
+  });
+  $(".landing-component-sm .landing-form-adjust-decrease").click(function() {
+    var $curOpt = $(this).parent().find('select');
+    var $targetOpt = $curOpt.children('option:selected'); // Get the current selected option
+    $(this).parent().find('.landing-form-adjust-increase').removeClass('disabled');
+    if($curOpt.children('option:first-child').is(':selected')) {
+      $(this).addClass('disabled');
+      return false;
+    }
+    $curOpt.find('option').removeAttr('selected'); // Remove seleced from all the options
+    $targetOpt.prev().attr('selected', 'selected');
+  });
+  $('.landing-component-sm select').on('change', function() {
+    var $selectedOpt = $(this).find('option:selected');
+    $(this).parent().find('.landing-form-adjust').removeClass('disabled');
+    $(this).find('option').removeAttr('selected');
+    $selectedOpt.attr('selected', 'selected');
   });
 
-
+  
   // Temporary input field focused and filled classes
   $(".field input").focusin(function() {
     $(this).parent().addClass("focused");

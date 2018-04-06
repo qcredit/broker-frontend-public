@@ -13,8 +13,10 @@
     padding: 1rem 0 .5rem 0;
     border: 0;
     border-bottom: 1px solid #999;
+    margin-bottom: 1px;
     &:focus {
       outline: none;
+      margin-bottom: 0;
       border-bottom: 2px solid $blue;
     }
   }
