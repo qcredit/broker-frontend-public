@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "9bdab0dd6b6c94a9e16ca1680d64a05cc15e9d66"
+                "reference": "a5ebd4377764817526c2e9dc54cedc2b8cbff32f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/9bdab0dd6b6c94a9e16ca1680d64a05cc15e9d66",
-                "reference": "9bdab0dd6b6c94a9e16ca1680d64a05cc15e9d66",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/a5ebd4377764817526c2e9dc54cedc2b8cbff32f",
+                "reference": "a5ebd4377764817526c2e9dc54cedc2b8cbff32f",
                 "shasum": ""
             },
             "require": {
@@ -38,7 +38,7 @@
                 "source": "https://github.com/aasa-global/broker/tree/master",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-04-06T09:22:05+00:00"
+            "time": "2018-04-06T12:33:07+00:00"
         },
         {
             "name": "container-interop/container-interop",
