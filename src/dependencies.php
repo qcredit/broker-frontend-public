@@ -61,20 +61,29 @@ $container['db'] = function($container) {
   return $entityManager;
 };
 
+$container['RepositoryFactory'] = function($c)
+{
+  return new \Broker\persistence\doctrine\RepositoryFactory();
+};
+
 $container['UserRepository'] = function($container) {
-  $factory = new \Broker\persistence\doctrine\RepositoryFactory();
-  return $factory->createGateway($container->get('db'), 'User');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
 /*  return new UserRepository(
     $container->get('db')
   );*/
 };
 
 $container['PartnerController'] = function($c) {
-  $factory = new \Broker\Persistence\Doctrine\RepositoryFactory();
-  $partnerRepository = $factory->createGateway($c->get('db'), 'Partner');
+  $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 
   $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
   return new \App\Controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
+};
+
+$container['AdminApplicationController'] = function($c)
+{
+  $appRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Application');
+  return new \App\Controllers\Admin\AdminApplicationController($appRepository, $c);
 };
 
 $container['UserController'] = function($c) {

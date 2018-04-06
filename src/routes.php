@@ -14,8 +14,8 @@ $app->map(['GET', 'POST'], '/admin/partners/new', 'PartnerController:newAction')
 $app->map(['GET', 'POST'], '/admin/partners/update/{id}', 'PartnerController:updateAction');
 $app->get('/admin/partners/{id}', 'PartnerController:viewAction');
 $app->get('/admin/partners', 'PartnerController:indexAction');
-$app->get('/admin/applications', 'AdminController:applicationsAction');
-$app->get('/admin/application/{id}', 'AdminController:applicationAction');
+$app->get('/admin/applications', 'AdminApplicationController:indexAction');
+$app->get('/admin/applications/{id}', 'AdminApplicationController:viewAction');
 $app->get('/admin/users', 'AdminController:usersAction');
 
 $app->map(['GET', 'POST'], '/admin/login', 'AdminController:loginAction');
