@@ -1,10 +1,146 @@
+/* Home page hero sectio */
+.home-hero {
+  padding-top: 1.25rem;
+  padding-bottom: 1.25rem;
+  background-color: #e1e1e1;
+  .home-hero-left {
+    h2{
+      text-align: center;
+      margin-bottom: 1.25rem;
+    }
+    button, p {
+      display: none;
+    }
+  }
+
+  .home-hero-right {
+    form{
+      max-width: 700px;
+      background: #fff;
+    }
+  }
+}
 .landing-form {
+  .landing-component-lg {
+    display: none;
+  }
+  .form-fields {
+    justify-content: flex-start;
+  }
+  .field {
+    flex: 1 1 280px;
+    margin: 0 .625rem 1rem;
+  }
+}
+.landing-form-upper {
   padding: 2rem;
+  background: #fbfafa;
+}
+.landing-form-lower {
+  padding: 1rem 2rem 2rem;
+}
+.landing-form-lower-footer {
+  display: flex;
+  align-items: flex-start;
+  margin: 1.5rem 0 1rem;
+  .landing-terms {
+    flex-shrink: 1;
+    margin: 0 .625rem;
+    color: #444;
+    font-size: .625rem;
+  }
 }
 .range-slider-monhly-label {
   margin-bottom: 0!important;
 }
 .monthly-installment {
-  font-size: 1.25rem;
   color: $blue;
+  font-weight: bold;
+}
+
+@media only screen and (max-width: 420px) {
+  .home-hero-right {
+    padding: 0;
+  }
+}
+
+@media only screen and (min-width: 501px) {
+  .landing-form {
+    .field {
+      flex: 0 0 175px;
+    }
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .landing-form .field {
+    margin: 0 0 1rem;
+  }
+  .landing-form-lower-footer {
+    flex-direction: column;
+    align-items: center;
+    .landing-terms {
+      order: 2;
+      flex: 1 1 100%;
+      margin: 0
+    }
+    .broker-btn {
+      width: 100%;
+      margin-bottom: 16px;
+    }
+  }
+}
+@media only screen and (min-width: 501px) and (max-width: 768px) {
+  .landing-form .field {
+    margin: 0 .625rem 1rem;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .home-hero {
+    min-height: 400px;
+    align-items: center;
+    .landing-form {
+      min-height: 400px;
+      .field {
+        flex: 1 0 200px;
+      }
+    }
+    .home-hero-left {
+      h2{
+        text-align: left;
+        margin-bottom: .5rem;
+      }
+      button, p {
+        display: block;
+      }
+    }
+  }
+  .monthly-installment {
+    font-size: 1.25rem;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .landing-form {
+    .landing-component-lg {
+      display: block;
+    }
+    .landing-component-sm {
+      display: none;
+    }
+  }
+}
+
+@media only screen and (min-width: 1400px) {
+  .home-hero {
+    padding: 3rem 10%;
+  }
+}
+
+@media only screen and (min-width: 1650px) {
+  .home-hero-left {
+    p {
+      max-width: 80%;
+    }
+  }
 }

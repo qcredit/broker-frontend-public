@@ -9,8 +9,13 @@ $bluegray: #e6e9ee;
 @import "hero";
 @import "footer";
 @import "rangeslider";
+@import "form";
 
 /* Typography */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 h1,h2,h3,h4,h5,h6 {
   font-family: 'Playfair Display', serif;
 }
@@ -22,7 +27,7 @@ section > h1 {
 }
 /* UTILITIES */
 .broker-btn {
-  padding: .65rem 1.25rem;
+  padding: .65rem 2rem;
   border-radius: 0;
   border: 0;
   text-transform: uppercase;
@@ -31,6 +36,9 @@ section > h1 {
   &:focus {
     outline: none;
     box-shadow: none;
+  }
+  &:hover {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19);
   }
 }
 .broker-btn-blue {
@@ -45,25 +53,6 @@ section > h1 {
 
 body {
   padding-top: 85px;
-}
-
-/* Home page hero sectio */
-.home-hero {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  background-color: #e1e1e1;
-  .home-hero-left {
-    h1{
-      text-align: center;
-    }
-    button, p {
-      display: none;
-    }
-  }
-  .home-hero-right form{
-    max-width: 700px;
-    background: #fff;
-  }
 }
 
 /* Home page How it works section */
@@ -106,28 +95,3 @@ body {
 
 
 /* Media queries */
-
-@media only screen and (min-width: 768px) {
-  .home-hero {
-    height: 70vh;
-    min-height: 400px;
-    align-items: center;
-    .landing-form {
-      min-height: 400px;
-    }
-    .home-hero-left {
-      h1{
-        text-align: left;
-      }
-      button, p {
-        display: block;
-      }
-    }
-  }
-}
-
-@media only screen and (min-width: 1400px) {
-  .home-hero {
-    padding: 50px 10%;
-  }
-}
