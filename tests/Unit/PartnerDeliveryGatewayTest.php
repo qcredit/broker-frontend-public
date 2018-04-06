@@ -27,7 +27,7 @@ class PartnerDeliveryGatewayTest extends TestCase
   public function testSend()
   {
     $request = new PartnerRequest();
-    $request->setPartner((new Partner())->setHasApi(true));
+    $request->setPartner((new Partner())->setUseApi(true));
 
     $mock = $this->gatewayMock;
     $mock->expects($this->once())
@@ -40,7 +40,7 @@ class PartnerDeliveryGatewayTest extends TestCase
   public function testNotSendApi()
   {
     $request = new PartnerRequest();
-    $request->setPartner((new Partner())->setHasApi(false));
+    $request->setPartner((new Partner())->setUseApi(false));
 
     $mock = $this->gatewayMock;
     $mock->expects($this->never())
