@@ -9,16 +9,16 @@
 namespace Tests\Unit\Controller;
 
 use App\Controllers\ApplicationController;
+use Broker\System\BaseTest;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Container;
 use Slim\Views\Twig;
-use PHPUnit\Framework\TestCase;
 use Broker\Persistence\Doctrine\ApplicationRepository;
 use Broker\Domain\Entity\Application;
 
-class ApplicationControllerTest extends TestCase
+class ApplicationControllerTest extends BaseTest
 {
   protected $mock;
   protected $requestMock;
