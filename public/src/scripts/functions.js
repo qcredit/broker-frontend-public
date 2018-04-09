@@ -35,8 +35,8 @@ $(document).ready(function(){
       $(this).addClass('disabled');
       return false;
     }
-    $curOpt.find('option').removeAttr('selected'); // Remove seleced from all the options
-    $targetOpt.next().attr('selected', 'selected'); // Add selected to next element
+    $curOpt.children('option').removeProp('selected'); // Remove seleced from all the options
+    $targetOpt.next().prop('selected', true); // Add selected to next element
   });
   $(".landing-component-sm .landing-form-adjust-decrease").click(function() {
     var $curOpt = $(this).parent().find('select');
@@ -46,17 +46,20 @@ $(document).ready(function(){
       $(this).addClass('disabled');
       return false;
     }
-    $curOpt.find('option').removeAttr('selected'); // Remove seleced from all the options
-    $targetOpt.prev().attr('selected', 'selected');
+    $curOpt.children('option').removeProp('selected'); // Remove seleced from all the options
+    $targetOpt.prev().prop('selected', true);
   });
-  $('.landing-component-sm select').on('change', function() {
+  $('.landing-component-sm select').change(function() {
     var $selectedOpt = $(this).find('option:selected');
     $(this).parent().find('.landing-form-adjust').removeClass('disabled');
-    $(this).find('option').removeAttr('selected');
-    $selectedOpt.attr('selected', 'selected');
+    $(this).children('option').removeProp('selected');
+    $selectedOpt.prop('selected', true);
   });
+  // To get values of selected options
+  //$('.landing-component-sm #loanAmountOutput').val();
+  //$('.landing-component-sm #loanDurationOutput').val();
 
-  
+
   // Temporary input field focused and filled classes
   $(".field input").focusin(function() {
     $(this).parent().addClass("focused");
