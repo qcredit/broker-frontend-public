@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Controller;
 
-use App\Controllers\Admin\AdminApplicationController;
+use App\controllers\Admin\AdminApplicationController;
 use Broker\Domain\Entity\Application;
 use Broker\Persistence\Doctrine\ApplicationRepository;
 use Broker\Persistence\Doctrine\OfferRepository;
