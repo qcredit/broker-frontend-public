@@ -65,7 +65,7 @@ class ApplicationControllerTest extends BaseTest
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
-    $this->assertInstanceOf(Response::class, $mock->offerListAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']));
+    $this->assertInstanceOf(Response::class, $mock->offersAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']));
   }
 
   public function testOfferListActionWithNoApplication()
@@ -82,6 +82,6 @@ class ApplicationControllerTest extends BaseTest
 
     $this->expectException(NotFoundException::class);
 
-    $mock->offerListAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
+    $mock->offersAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
   }
 }

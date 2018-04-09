@@ -155,7 +155,7 @@ class ApplicationController
    * @return mixed
    * @throws \Exception
    */
-  public function offerListAction($request, $response, $args)
+  public function offersAction($request, $response, $args)
   {
     $application = $this->getAppRepository()->getByHash($args['hash']);
 

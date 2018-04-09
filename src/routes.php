@@ -6,7 +6,7 @@ use App\Controllers\UserController;
 // Routes
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
-$app->get('/application/{hash}', 'ApplicationController:offerListAction');
+$app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->get('/', 'HomeController:indexAction');
 
 $app->get('/admin', 'AdminController:indexAction');
