@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "24b8067ba1452ffe5b1828e41b4d1a6b371dd10e"
+                "reference": "7a3d2d566bb667c2f4db0a028d04dba98bfccc47"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/24b8067ba1452ffe5b1828e41b4d1a6b371dd10e",
-                "reference": "24b8067ba1452ffe5b1828e41b4d1a6b371dd10e",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/7a3d2d566bb667c2f4db0a028d04dba98bfccc47",
+                "reference": "7a3d2d566bb667c2f4db0a028d04dba98bfccc47",
                 "shasum": ""
             },
             "require": {
@@ -35,10 +35,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/master",
+                "source": "https://github.com/aasa-global/broker/tree/dev",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-04-09T11:42:51+00:00"
+            "time": "2018-04-09T14:49:11+00:00"
         },
         {
             "name": "container-interop/container-interop",
