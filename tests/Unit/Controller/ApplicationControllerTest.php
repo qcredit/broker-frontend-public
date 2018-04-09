@@ -30,7 +30,7 @@ class ApplicationControllerTest extends TestCase
   {
     $this->mock = $this->getMockBuilder(ApplicationController::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAppRepository', 'getContainer', 'getOfferRepository'])
+      ->setMethods(['getAppRepository', 'getContainer'])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
     $this->responseMock = $this->createMock(Response::class);
@@ -56,29 +56,32 @@ class ApplicationControllerTest extends TestCase
 
   public function testOfferListAction()
   {
+    $mock = $this->mock;
     $this->repositoryMock->expects($this->once())
       ->method('getByHash')
       ->willReturn(new Application());
 
-    $this->mock->expects($this->once())
+    $mock->expects($this->once())
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
-    $this->assertInstanceOf(Response::class, $this->mock->offerListAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']));
+    $this->assertInstanceOf(Response::class, $mock->offerListAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']));
   }
 
   public function testOfferListActionWithNoApplication()
   {
+    $mock = $this->mock;
+
     $this->repositoryMock->expects($this->once())
       ->method('getByHash')
       ->willReturn(null);
 
-    $this->mock->expects($this->once())
+    $mock->expects($this->once())
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
     $this->expectException(NotFoundException::class);
 
-    $this->mock->offerListAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
+    $mock->offerListAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
   }
 }
