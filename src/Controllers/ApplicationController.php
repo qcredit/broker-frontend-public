@@ -6,7 +6,7 @@
  * Time: 16:58
  */
 
-namespace App\controllers;
+namespace App\Controllers;
 
 use Broker\Domain\Service\ApplicationOfferListService;
 use Broker\Domain\Service\PreparePartnerRequestsService;
