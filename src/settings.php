@@ -14,6 +14,17 @@ return [
             'name' => 'slim-app',
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
+            'processor' => [
+              new \Monolog\Processor\UidProcessor()
+            ]
+        ],
+        'broker' => [
+          'environment' => 'BROKER_DEV',
+          'logger' => [
+            'name' => 'BROKER',
+            'loggerClass' => 'App\Base\Logger',
+/*            'path' => __DIR__ . '/../logs/broker.log',*/
+          ]
         ],
         'doctrine' => [
           'meta' => [

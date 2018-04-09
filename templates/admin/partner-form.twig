@@ -1,0 +1,42 @@
+{% extends 'base.twig' %}
+{% block title %}{{ partner.name }}{% endblock %}
+{% block container %}
+    <form method="POST">
+        <div class="row">
+            <div class="col-sm-6 mx-auto">
+                <div class="form-group">
+                    <input type="text" name="name" placeholder="Name" class="form-control" value="{{ partner.name }}"/>
+                    {% if partner.errors.name %}
+                        <small class="form-text text-danger">{{ partner.errors.name }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <input type="text" name="identifier" placeholder="Identifier" class="form-control" value="{{ partner.identifier }}"/>
+                    {% if partner.errors.identifier %}
+                        <small class="form-text text-danger">{{ partner.errors.identifier }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <select name="status">
+                        <option value="0" {% if not partner.status %} selected {% endif %}>Disabled</option>
+                        <option value="1" {% if partner.status %} selected {% endif %}>Enabled</option>
+                    </select>
+                    {% if partner.errors.status %}
+                        <small class="form-text text-danger">{{ partner.errors.status }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    <input type="integer" name="commission" placeholder="Commission" class="form-control" value="{{ partner.commission }}"/>
+                    {% if partner.errors.commission %}
+                        <small class="form-text text-danger">{{ partner.errors.commission }}</small>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 mx-auto">
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}

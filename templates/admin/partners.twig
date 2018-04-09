@@ -1,0 +1,11 @@
+{% extends 'base.twig' %}
+{% block title %}Partners{% endblock %}
+{% block container %}
+    <div class="container">
+        <h3>Partners</h3>
+        <p class="small"><a href="/admin/partners/new">New</a></p>
+        {% for partner in partners %}
+            <li><a href="/admin/partners/{{ partner.id }}">{{ partner.name }}</a></li>
+        {% endfor %}
+    </div>
+{% endblock %}

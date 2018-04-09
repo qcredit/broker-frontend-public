@@ -13,6 +13,12 @@ use Broker\Domain\Interfaces\PartnerDataMapperRepositoryInterface;
 
 class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterface
 {
+  /**
+   * @param string $identifier
+   * @return PartnerDataMapperInterface
+   * @throws \Broker\System\Error\InvalidConfigException
+   * @throws \Exception
+   */
   public function getDataMapperByPartnerId(string $identifier): PartnerDataMapperInterface
   {
     switch($identifier)
@@ -21,7 +27,7 @@ class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterfac
         $class = 'App\Base\AasaDataMapper';
         break;
       default:
-        throw new \Exception(sprintf('No data mapper for "%s"!', $identifier));
+        throw new \Broker\System\Error\InvalidConfigException(sprintf('No data mapper for "%s"!', $identifier));
         break;
     }
 

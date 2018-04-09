@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "1d1a298f834713297ee225844750ba30",
+    "content-hash": "6db5e31c336c50470ce2ac7f84b5160e",
     "packages": [
         {
             "name": "aasa/broker",
@@ -12,19 +12,20 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "8e09ce32fb5f6735d14fc1be9c5ba6e8799d8023"
+                "reference": "a5ebd4377764817526c2e9dc54cedc2b8cbff32f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/8e09ce32fb5f6735d14fc1be9c5ba6e8799d8023",
-                "reference": "8e09ce32fb5f6735d14fc1be9c5ba6e8799d8023",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/a5ebd4377764817526c2e9dc54cedc2b8cbff32f",
+                "reference": "a5ebd4377764817526c2e9dc54cedc2b8cbff32f",
                 "shasum": ""
             },
             "require": {
-                "respect/validation": "^1.1"
+                "doctrine/orm": "^2.6",
+                "justinrainbow/json-schema": "^5.2"
             },
             "require-dev": {
-                "phpunit/phpunit": "^7"
+                "phpunit/phpunit": "^7.0"
             },
             "type": "library",
             "autoload": {
@@ -37,7 +38,7 @@
                 "source": "https://github.com/aasa-global/broker/tree/master",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-03-21T07:39:25+00:00"
+            "time": "2018-04-06T12:33:07+00:00"
         },
         {
             "name": "container-interop/container-interop",
