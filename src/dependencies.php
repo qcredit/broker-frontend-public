@@ -83,7 +83,8 @@ $container['PartnerController'] = function($c) {
 $container['AdminApplicationController'] = function($c)
 {
   $appRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Application');
-  return new \App\Controllers\Admin\AdminApplicationController($appRepository, $c);
+  $offerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer');
+  return new \App\Controllers\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
 };
 
 $container['UserController'] = function($c) {

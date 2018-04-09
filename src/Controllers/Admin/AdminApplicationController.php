@@ -10,7 +10,7 @@ namespace App\Controllers\Admin;
 
 
 use Broker\Domain\Interfaces\ApplicationRepositoryInterface;
-use Broker\Persistence\Doctrine\ApplicationRepository;
+use Broker\Domain\Interfaces\OfferRepositoryInterface;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -22,6 +22,10 @@ class AdminApplicationController
    */
   protected $appRepository;
   /**
+   * @var OfferRepositoryInterface
+   */
+  protected $offerRepository;
+  /**
    * @var Container
    */
   protected $container;
@@ -29,11 +33,15 @@ class AdminApplicationController
   /**
    * AdminApplicationController constructor.
    * @param ApplicationRepositoryInterface $appRepository
+   * @param OfferRepositoryInterface $offerRepository
    * @param Container $container
    */
-  public function __construct(ApplicationRepositoryInterface $appRepository, Container $container)
+  public function __construct(ApplicationRepositoryInterface $appRepository,
+    OfferRepositoryInterface $offerRepository,
+    Container $container)
   {
     $this->appRepository = $appRepository;
+    $this->offerRepository = $offerRepository;
     $this->container = $container;
   }
 
@@ -52,6 +60,24 @@ class AdminApplicationController
   public function setAppRepository($appRepository)
   {
     $this->appRepository = $appRepository;
+    return $this;
+  }
+
+  /**
+   * @return OfferRepositoryInterface
+   */
+  public function getOfferRepository()
+  {
+    return $this->offerRepository;
+  }
+
+  /**
+   * @param OfferRepositoryInterface $offerRepository
+   * @return AdminApplicationController
+   */
+  public function setOfferRepository(OfferRepositoryInterface $offerRepository)
+  {
+    $this->offerRepository = $offerRepository;
     return $this;
   }
 
@@ -95,13 +121,34 @@ class AdminApplicationController
    * @param $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @throws \Slim\Exception\NotFoundException
    */
   public function viewAction(Request $request, Response $response, $args)
   {
     $data = [];
 
-    $data['application'] = $this->getAppRepository()->getOneBy(['id' => $args['id']]);
+    $data['application'] = $this->findEntity($args['id'], $request, $response);
+    $data['offers'] = $this->getOfferRepository()->getBy(['applicationId' => $args['id']]);
 
     return $this->getContainer()->get('view')->render($response, 'admin/application.twig', $data);
+  }
+
+  /**
+   * @param $id
+   * @param $request
+   * @param $response
+   * @return mixed
+   * @throws \Slim\Exception\NotFoundException
+   */
+  protected function findEntity($id, $request, $response)
+  {
+    $entity = $this->getAppRepository()->getOneBy(['id' => $id]);
+
+    if (!$entity)
+    {
+      throw new \Slim\Exception\NotFoundException($request, $response);
+    }
+
+    return $entity;
   }
 }

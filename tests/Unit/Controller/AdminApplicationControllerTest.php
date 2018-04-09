@@ -11,13 +11,15 @@ namespace Tests\Unit\Controller;
 use App\Controllers\Admin\AdminApplicationController;
 use Broker\Domain\Entity\Application;
 use Broker\Persistence\Doctrine\ApplicationRepository;
-use PHPUnit\Framework\TestCase;
+use Broker\Persistence\Doctrine\OfferRepository;
+use Broker\System\BaseTest;
 use Slim\Container;
+use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Views\Twig;
 
-class AdminApplicationControllerTest extends TestCase
+class AdminApplicationControllerTest extends BaseTest
 {
   protected $mock;
   protected $requestMock;
@@ -30,7 +32,7 @@ class AdminApplicationControllerTest extends TestCase
   {
     $this->mock = $this->getMockBuilder(AdminApplicationController::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAppRepository', 'getContainer'])
+      ->setMethods(['getAppRepository', 'getContainer', 'getOfferRepository'])
       ->getMock();
 
     $this->repositoryMock = $this->getMockBuilder(ApplicationRepository::class)
@@ -77,10 +79,44 @@ class AdminApplicationControllerTest extends TestCase
     $this->repositoryMock->method('getOneBy')
       ->willReturn(new Application());
 
+    $offerRepository = $this->getMockBuilder(OfferRepository::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getBy'])
+      ->getMock();
+
     $this->mock->expects($this->once())
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
+    $this->mock->expects($this->once())
+      ->method('getOfferRepository')
+      ->willReturn($offerRepository);
+
     $this->assertInstanceOf(Response::class, $this->mock->viewAction($this->requestMock, $this->responseMock, []));
+  }
+
+  public function testFindEntity()
+  {
+    $this->repositoryMock->method('getOneBy')
+      ->willReturn(new Application());
+
+    $this->mock->expects($this->once())
+      ->method('getAppRepository')
+      ->willReturn($this->repositoryMock);
+
+    $this->assertInstanceOf(Application::class, $this->invokeMethod($this->mock, 'findEntity', [1, $this->requestMock, $this->responseMock]));
+  }
+
+  public function testFindNoEntity()
+  {
+    $this->repositoryMock->method('getOneBy')
+      ->willReturn(null);
+
+    $this->mock->expects($this->once())
+      ->method('getAppRepository')
+      ->willReturn($this->repositoryMock);
+
+    $this->expectException(NotFoundException::class);
+    $this->invokeMethod($this->mock, 'findEntity', [1, $this->requestMock, $this->responseMock]);
   }
 }
