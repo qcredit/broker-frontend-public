@@ -26,6 +26,9 @@
     }
   }
 }
+.landing-component-lg {
+  display: none;
+}
 .range-slider-label {
   margin: 1rem 0 0;
   font-weight: bold;
@@ -35,6 +38,7 @@
   margin-top: 1.25rem;
   font-weight: normal;
 }
+
 @media only screen and (min-width: 769px) {
   .rangeslider, .rangeslider__fill {
     display: block;
@@ -90,6 +94,12 @@
     margin: 1rem 0;
     font-size: 1.25rem;
     font-weight: normal;
+  }
+  .landing-component-lg {
+    display: block;
+  }
+  .landing-component-sm {
+    display: none;
   }
 }
 

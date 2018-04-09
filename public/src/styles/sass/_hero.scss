@@ -21,9 +21,6 @@
   }
 }
 .landing-form {
-  .landing-component-lg {
-    display: none;
-  }
   .form-fields {
     justify-content: flex-start;
   }
@@ -117,17 +114,6 @@
   }
   .monthly-installment {
     font-size: 1.25rem;
-  }
-}
-
-@media only screen and (min-width: 769px) {
-  .landing-form {
-    .landing-component-lg {
-      display: block;
-    }
-    .landing-component-sm {
-      display: none;
-    }
   }
 }
 

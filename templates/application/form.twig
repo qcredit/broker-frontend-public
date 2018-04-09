@@ -12,42 +12,39 @@
     {% endif %}
 </div>
 <form method="POST">
-    <div class="row">
-        <div class="col-sm-6 mx-auto">
-            <div class="field text firstName">
-              <label for="">Insert your first name*</label>
-                <input type="text" name="firstName" id="firstName"/>
-            </div>
-            <div class="field text lastName">
-              <label for="">Insert your last name*</label>
-                <input type="text" name="lastName" id="lastName"/>
-            </div>
-            <div class="field text loanAmount">
-              <label for="">Insert the loan amount</label>
-                <input type="text" name="loanAmount" id="loanAmount"/>
-            </div>
-            <div class="field text loanTerm">
-              <label for="">Insert the loan duration</label>
-                <input type="integer" name="loanTerm" id="loanTerm"/>
-            </div>
-            <div class="field select sourceType">
-                <select name="sourceType">
-                    <option value="Employed">Employed</option>
-                    <option value="Student">Student</option>
-                    <option value="NormalPension">NormalPension</option>
-                    <option value="DisabilityPension">DisabilityPension</option>
-                    <option value="Unemployed">Unemployed</option>
-                    <option value="BenefitOrAlimony">BenefirOrAlimony</option>
-                    <option value="SelfEmployed">SelfEmployed</option>
-                    <option value="Farmer">Farmer</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-            <div class="field text trade">
-              <label for="">Insert your occupation</label>
-                <input type="text" name="trade"/>
-            </div>
-        </div>
+  {% include '$sliders.twig' %}
+    <div class="field text firstName">
+      <label for="">Insert your first name*</label>
+        <input type="text" name="firstName" id="firstName"/>
+    </div>
+    <div class="field text lastName">
+      <label for="">Insert your last name*</label>
+        <input type="text" name="lastName" id="lastName"/>
+    </div>
+    <div class="field text loanAmount">
+      <label for="">Insert the loan amount</label>
+        <input type="text" name="loanAmount" id="loanAmount"/>
+    </div>
+    <div class="field text loanTerm">
+      <label for="">Insert the loan duration</label>
+        <input type="integer" name="loanTerm" id="loanTerm"/>
+    </div>
+    <div class="field select sourceType">
+        <select name="sourceType">
+            <option value="Employed">Employed</option>
+            <option value="Student">Student</option>
+            <option value="NormalPension">NormalPension</option>
+            <option value="DisabilityPension">DisabilityPension</option>
+            <option value="Unemployed">Unemployed</option>
+            <option value="BenefitOrAlimony">BenefirOrAlimony</option>
+            <option value="SelfEmployed">SelfEmployed</option>
+            <option value="Farmer">Farmer</option>
+            <option value="Other">Other</option>
+        </select>
+    </div>
+    <div class="field text trade">
+      <label for="">Insert your occupation</label>
+        <input type="text" name="trade"/>
     </div>
     <div class="row">
         <div class="col-sm-6 mx-auto">

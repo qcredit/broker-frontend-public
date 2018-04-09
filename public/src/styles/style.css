@@ -38,8 +38,6 @@
     max-width: 700px;
     background: #fff; }
 
-.landing-form .landing-component-lg {
-  display: none; }
 .landing-form .form-fields {
   justify-content: flex-start; }
 .landing-form .field {
@@ -109,11 +107,6 @@
 
   .monthly-installment {
     font-size: 1.25rem; } }
-@media only screen and (min-width: 769px) {
-  .landing-form .landing-component-lg {
-    display: block; }
-  .landing-form .landing-component-sm {
-    display: none; } }
 @media only screen and (min-width: 1400px) {
   .home-hero {
     padding: 3rem 10%; } }
@@ -167,6 +160,9 @@
   border: 0; }
   .landing-component-sm select:focus {
     outline: none; }
+
+.landing-component-lg {
+  display: none; }
 
 .range-slider-label {
   margin: 1rem 0 0;
@@ -230,7 +226,13 @@
   .range-slider-label {
     margin: 1rem 0;
     font-size: 1.25rem;
-    font-weight: normal; } }
+    font-weight: normal; }
+
+  .landing-component-lg {
+    display: block; }
+
+  .landing-component-sm {
+    display: none; } }
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px; } }
