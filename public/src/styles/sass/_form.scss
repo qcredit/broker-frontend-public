@@ -1,8 +1,27 @@
-.form-fields {
+.loan-form {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+.loan-form-upper {
+  margin-left: -0.9375rem;
+  margin-right: -0.9375rem;
+  padding: 2.5rem 1.25rem;
+  background: #fbfafa;
+}
+.form-fields, .form-block {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-around;
+}
+.form-block {
+  justify-content: flex-start;
+  margin: 2rem 0;
+}
+.form-block p {
+  flex: 0 0 100%;
+  font-size: 1.125rem;
+  font-weight: bold;
 }
 .field {
   position: relative;
@@ -32,6 +51,56 @@
   }
   &.filled label, &.focused label{
     top: 0.1875rem;
-    font-size: 0.75rem;
+    font-size: 0.75rem!important;
+  }
+  select {
+    display: block;
+    width: 100%;
+    padding: 0.6875rem 1.875rem 0.6875rem 0;
+    border: 0;
+    border-bottom: 1px solid #999;
+    font-size: 0.875rem;
+    color: #000;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    background-image: url(../images/ic_down.png);
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    background-size: 0.8125rem;
+    cursor: pointer;
+  }
+}
+.form-block .field{
+  flex: 1 1 18.75rem;
+  label {
+    font-weight: normal;
+    color: #000;
+  }
+}
+.field.select {
+  label {
+    position: static;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .loan-form {
+    margin: 3rem auto;
+  }
+  .loan-form-upper {
+    margin: 0;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .form-block {
+    margin: 4rem 0;
+  }
+  .loan-form-upper {
+    padding: 2.5rem;
+  }
+  .form-block .field{
+    flex: 0 0 46%;
   }
 }
