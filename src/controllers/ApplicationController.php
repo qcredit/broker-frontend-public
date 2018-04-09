@@ -10,27 +10,82 @@ namespace App\Controllers;
 
 use Broker\Domain\Service\ApplicationOfferListService;
 use Broker\Domain\Service\PreparePartnerRequestsService;
+use Broker\Persistence\Doctrine\ApplicationRepository;
 
 class ApplicationController
 {
   protected $prepareService;
   protected $container;
-  protected $offerListService;
+  protected $appRepository;
 
   /**
    * ApplicationController constructor.
    * @param PreparePartnerRequestsService $prepareService
-   * @param ApplicationOfferListService $offerListService
+   * @param ApplicationRepository $appRepository
    * @param $container
    */
   public function __construct(
     PreparePartnerRequestsService $prepareService,
-    ApplicationOfferListService $offerListService,
+    ApplicationRepository $appRepository,
     $container)
   {
     $this->prepareService = $prepareService;
-    $this->offerListService = $offerListService;
+    $this->appRepository = $appRepository;
     $this->container = $container;
+  }
+
+  /**
+   * @return PreparePartnerRequestsService
+   */
+  public function getPrepareService()
+  {
+    return $this->prepareService;
+  }
+
+  /**
+   * @param PreparePartnerRequestsService $prepareService
+   * @return ApplicationController
+   */
+  public function setPrepareService($prepareService)
+  {
+    $this->prepareService = $prepareService;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
+  /**
+   * @param mixed $container
+   * @return ApplicationController
+   */
+  public function setContainer($container)
+  {
+    $this->container = $container;
+    return $this;
+  }
+
+  /**
+   * @return ApplicationRepository
+   */
+  public function getAppRepository()
+  {
+    return $this->appRepository;
+  }
+
+  /**
+   * @param ApplicationRepository $appRepository
+   * @return ApplicationController
+   */
+  public function setAppRepository($appRepository)
+  {
+    $this->appRepository = $appRepository;
+    return $this;
   }
 
   /**
@@ -43,7 +98,7 @@ class ApplicationController
   public function indexAction($request, $response, $args)
   {
 
-    $data = [
+/*    $data = [
       'incomeSourceType' => 'Employed',
       'netPerMonth' => 3200,
       'employerName' => 'Wasras asd',
@@ -75,13 +130,14 @@ class ApplicationController
       'lastName' => 'Toome',
       'email' => 'koit@toome.ee',
       'phone' => '5171231'
-    ];
+    ];*/
 
-    //$data = [];
+    $data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($data)->run();
+      $app = $this->prepareService->setData($request->getParsedBody())->run();
       $data['errors'] = $app->getErrors();
+      $data['application'] = $app;
 
       if (!isset($data['errors']) || empty($data['errors']))
       {
@@ -101,22 +157,17 @@ class ApplicationController
    */
   public function offerListAction($request, $response, $args)
   {
-    $offers = $this->offerListService
-      ->setApplicationHash($args['hash'])
-      ->run();
+    $application = $this->getAppRepository()->getByHash($args['hash']);
 
-    if (!$offers)
+    if (!$application)
     {
-      throw new \Exception('No application was found!');
+      throw new \Slim\Exception\NotFoundException($request, $response);
     }
 
     $data = [
-      'offers' => $offers,
-      'application' => $this->offerListService->getApplication()
+      'application' => $application
     ];
 
-    print_r($data);
-
-    return $this->container->get('view')->render($response, 'application/offer-list.twig', $data);
+    return $this->getContainer()->get('view')->render($response, 'application/offer-list.twig', $data);
   }
 }

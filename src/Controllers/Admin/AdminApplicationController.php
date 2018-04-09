@@ -128,7 +128,7 @@ class AdminApplicationController
     $data = [];
 
     $data['application'] = $this->findEntity($args['id'], $request, $response);
-    $data['offers'] = $this->getOfferRepository()->getBy(['applicationId' => $args['id']]);
+    //$data['offers'] = $this->getOfferRepository()->getBy(['applicationId' => $args['id']]);
 
     return $this->getContainer()->get('view')->render($response, 'admin/application.twig', $data);
   }

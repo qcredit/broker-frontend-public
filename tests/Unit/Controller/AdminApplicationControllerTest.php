@@ -88,10 +88,6 @@ class AdminApplicationControllerTest extends BaseTest
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
-    $this->mock->expects($this->once())
-      ->method('getOfferRepository')
-      ->willReturn($offerRepository);
-
     $this->assertInstanceOf(Response::class, $this->mock->viewAction($this->requestMock, $this->responseMock, []));
   }
 

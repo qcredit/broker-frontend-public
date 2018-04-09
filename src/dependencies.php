@@ -139,7 +139,7 @@ $container['ApplicationController'] = function ($c)
 
   return new \App\Controllers\ApplicationController(
     $prepareService,
-    $offerService,
+    $appRepository,
     $c
   );
 };
