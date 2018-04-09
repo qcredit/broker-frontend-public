@@ -98,44 +98,44 @@ class ApplicationController
   public function indexAction($request, $response, $args)
   {
 
-/*    $data = [
+    $data = [
       'incomeSourceType' => 'Employed',
-      'netPerMonth' => 3200,
-      'employerName' => 'Wasras asd',
-      'position' => 'Wont tell',
-      'yearSince' => 2006,
-      'monthSince' => 06,
-      'currentStudy' => 'TÜ',
+      'netPerMonth' => 4400,
+      'employerName' => 'European Parliament',
+      'position' => 'Cleaning man',
+      'yearSince' => 2013,
+      'monthSince' => 1,
+      'currentStudy' => '',
       'trade' => 'unknown',
-      'loanPurposeType' => 'Car',
-      'pin' => '92090700966',
-      'street' => 'Koidu',
-      'zip' => '66-121',
-      'houseNr' => '20',
-      'apartmentNr' => '1',
-      'city' => 'Warsawa',
-      'documentNr' => 'AUH611715',
+      'loanPurposeType' => 'Bills',
+      'pin' => '71121513234',
+      'street' => 'Wolności',
+      'zip' => '44-285',
+      'houseNr' => '60',
+      'apartmentNr' => ' ',
+      'city' => 'Kornowac',
+      'documentNr' => 'CCY014054',
       'mobilePhoneType' => 'PrePaid',
       'payoutMethod' => 'Account',
       'educationType' => 'MSc',
       'accountType' => 'Personal',
-      'accountNr' => '11232345678901234569415835',
-      'accountHolder' => 'Koit Toome',
+      'accountNr' => '32132345678901234569415123',
+      'accountHolder' => 'Anu Saagim',
       'maritalStatusType' => 'Single',
       'residentialType' => 'Own',
-      'propertyType' => 'House',
-      'loanAmount' => 8000,
-      'loanTerm' => 24,
-      'firstName' => 'Koit',
-      'lastName' => 'Toome',
-      'email' => 'koit@toome.ee',
-      'phone' => '5171231'
-    ];*/
+      'propertyType' => 'Apartment',
+      'loanAmount' => 2100,
+      'loanTerm' => 18,
+      'firstName' => 'Adam',
+      'lastName' => 'Barański',
+      'email' => 'brak@asakredyt.pl',
+      'phone' => '+48739050381'
+    ];
 
-    $data = [];
+    //$data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($request->getParsedBody())->run();
+      $app = $this->prepareService->setData($data)->run();
       $data['errors'] = $app->getErrors();
       $data['application'] = $app;
 
