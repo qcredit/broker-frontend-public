@@ -125,8 +125,8 @@ class AasaDataMapper implements PartnerDataMapperInterface
   {
     return [
       'id' => 'remoteId',
-      'amount' => 'amount',
-      'period' => 'term',
+      'amount' => 'loanAmount',
+      'period' => 'loanTerm',
       'interest' => 'interest',
       'avg' => 'monthlyFee'
     ];

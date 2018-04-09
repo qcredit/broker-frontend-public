@@ -50,18 +50,25 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
   {
     $ch = curl_init();
 
-    $authorization = 'Authorization: Basic a3Jpc3RqYW4tdGVzdDprcmlzdGphbi10ZXN0';
-
     $header = [
-      'Accept' => 'application/json',
-      'Content-Type' => 'application/json',
-      $authorization
+      'Accept: application/json',
+      'Content-Type: application/json',
+      'Authorization: Basic a3Jpc3RqYW4tdGVzdDprcmlzdGphbi10ZXN0'
     ];
 
-    curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl());
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_INITIAL)
+    {
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl());
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
+    }
+    elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
+    {
+      $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getRequestPayload()->getRemoteId());
+    }
+
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
 
     $result = curl_exec($ch);
     $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
@@ -69,8 +76,9 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     curl_close($ch);
 
     $partnerResponse = new PartnerResponse();
-    $partnerResponse->setPartner($request->getPartner());
-    $partnerResponse->setResponseBody($result);
+    $partnerResponse->setPartner($request->getPartner())
+      ->setType($request->getType())
+      ->setResponseBody($result);
 
     if ($code == 200)
     {
@@ -79,10 +87,11 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     else if ($code == 400)
     {
       $partnerResponse->setOk(false);
+      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), $response);
     }
     else {
       $partnerResponse->setOk(false);
-      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), $response);
+      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), $response, $result);
     }
 
     return $partnerResponse;

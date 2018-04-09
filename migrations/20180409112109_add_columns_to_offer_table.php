@@ -30,7 +30,8 @@ class AddColumnsToOfferTable extends AbstractMigration
     {
       $table = $this->table('offer');
 
-      $table->addColumn('created_at', 'datetime', ['null' => true]);
+      $table->addColumn('created_at', 'datetime', ['null' => true])
+        ->addColumn('updated_at', 'datetime', ['null' => true]);
 
       $table->save();
     }

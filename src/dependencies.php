@@ -104,42 +104,66 @@ $container['AdminController'] = function($c)
   return new \App\Controllers\AdminController($view);
 };
 
+$container['PartnerDataMapperRepository'] = function($c)
+{
+  return new PartnerDataMapperRepository();
+};
+
+$container['PartnerRequestsService'] = function($c)
+{
+  return new PartnerRequestsService(
+    new PartnerDeliveryGateway(),
+    $c->get('PartnerDataMapperRepository')
+  );
+};
+
+$container['PartnerResponseService'] = function($c)
+{
+  return new PartnerResponseService(
+    new OfferFactory(),
+    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
+    $c->get('PartnerDataMapperRepository')
+  );
+};
+
 $container['ApplicationController'] = function ($c)
 {
-  $factory = new \Broker\Persistence\Doctrine\RepositoryFactory();
-  $partnerRepository = $factory->createGateway($c->get('db'), 'Partner');
+  $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
-  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
-  $partnerDataMapperRepository = new PartnerDataMapperRepository();
 
   $newApplicationService = new NewApplicationService(
     new ApplicationFactory(),
     $appRepository,
-    $partnerRepository,
-    $partnerDataMapperRepository
+    $factory->createGateway($c->get('db'), 'Partner'),
+    $c->get('PartnerDataMapperRepository')
   );
 
-  $requestService = new PartnerRequestsService(
-    new PartnerDeliveryGateway(),
-    $partnerDataMapperRepository
-  );
-  $responseService = new PartnerResponseService(
-    new OfferFactory(),
-    $offerRepository,
-    $partnerDataMapperRepository
-  );
   $prepareService = new PreparePartnerRequestsService(
     $newApplicationService,
-    $requestService,
-    $responseService,
+    $c->get('PartnerRequestsService'),
+    $c->get('PartnerResponseService'),
     new PartnerRequestFactory()
   );
-
-  $offerService = new \Broker\Domain\Service\ApplicationOfferListService($appRepository, $offerRepository);
 
   return new \App\Controllers\ApplicationController(
     $prepareService,
     $appRepository,
     $c
+  );
+};
+
+$container['AdminOfferController'] = function($c)
+{
+  $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
+    new PartnerDataMapperRepository(),
+    new PartnerDeliveryGateway(),
+    new PartnerRequestFactory(),
+    $c->get('PartnerRequestsService'),
+    $c->get('PartnerResponseService')
+  );
+
+  return new \App\Controllers\Admin\AdminOfferController(
+    $offerUpdateService,
+    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer')
   );
 };

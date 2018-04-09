@@ -39,6 +39,7 @@
                                     <td>{{ offer.loanAmount }}</td>
                                     <td>{{ offer.remoteId }}</td>
                                     <td>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                                    <td><a href="/admin/offers/update/{{ offer.id }}"><small class="text-uppercase">update</small></a></td>
                                 </tr>
                             {% endfor %}
                         </tbody>

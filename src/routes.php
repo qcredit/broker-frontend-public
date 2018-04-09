@@ -16,6 +16,8 @@ $app->get('/admin/partners/{id}', 'PartnerController:viewAction');
 $app->get('/admin/partners', 'PartnerController:indexAction');
 $app->get('/admin/applications', 'AdminApplicationController:indexAction');
 $app->get('/admin/applications/{id}', 'AdminApplicationController:viewAction');
+$app->get('/admin/offers/update/{id}', 'AdminOfferController:updateAction');
+
 $app->get('/admin/users', 'AdminController:usersAction');
 
 $app->map(['GET', 'POST'], '/admin/login', 'AdminController:loginAction');
