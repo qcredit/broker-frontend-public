@@ -11,8 +11,8 @@ namespace App\Controllers\Admin;
 use App\Base\Components\AbstractController;
 use App\Base\Repository\PartnerExtraDataLoader;
 use App\Base\Validator\PartnerValidator;
-use Broker\Domain\Interfaces\FactoryInterface;
-use Broker\Domain\Interfaces\PartnerRepositoryInterface;
+use Broker\Domain\Interfaces\Factory\PartnerFactoryInterface;
+use Broker\Domain\Interfaces\Repository\PartnerRepositoryInterface;
 use Broker\Domain\Service\Validator\AbstractEntityValidator;
 use Slim\Container;
 use Slim\Http\Request;
@@ -25,7 +25,7 @@ class PartnerController extends AbstractController
    */
   protected $partnerRepository;
   /**
-   * @var FactoryInterface
+   * @var PartnerFactoryInterface
    */
   protected $partnerFactory;
   /**
@@ -44,11 +44,11 @@ class PartnerController extends AbstractController
   /**
    * PartnerController constructor.
    * @param PartnerRepositoryInterface $partnerRepository
-   * @param FactoryInterface $partnerFactory
+   * @param PartnerFactoryInterface $partnerFactory
    * @param PartnerExtraDataLoader $partnerDataLoader
    * @param Container $container
    */
-  public function __construct(PartnerRepositoryInterface $partnerRepository, FactoryInterface $partnerFactory, PartnerExtraDataLoader $partnerDataLoader, Container $container)
+  public function __construct(PartnerRepositoryInterface $partnerRepository, PartnerFactoryInterface $partnerFactory, PartnerExtraDataLoader $partnerDataLoader, Container $container)
   {
     $this->partnerRepository = $partnerRepository;
     $this->partnerFactory = $partnerFactory;
@@ -76,7 +76,7 @@ class PartnerController extends AbstractController
   }
 
   /**
-   * @return FactoryInterface
+   * @return PartnerFactoryInterface
    */
   public function getPartnerFactory()
   {
@@ -84,10 +84,10 @@ class PartnerController extends AbstractController
   }
 
   /**
-   * @param FactoryInterface $partnerFactory
-   * @return PartnerController
+   * @param PartnerFactoryInterface $partnerFactory
+   * @return $this
    */
-  public function setPartnerFactory(FactoryInterface $partnerFactory)
+  public function setPartnerFactory(PartnerFactoryInterface $partnerFactory)
   {
     $this->partnerFactory = $partnerFactory;
     return $this;

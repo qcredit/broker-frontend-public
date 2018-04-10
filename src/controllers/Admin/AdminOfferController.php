@@ -8,7 +8,8 @@
 
 namespace App\Controllers\Admin;
 
-use Broker\Domain\Interfaces\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Service\OfferUpdateServiceInterface;
 use Broker\Domain\Service\OfferUpdateService;
 use Slim\Container;
 use Slim\Exception\NotFoundException;
@@ -39,10 +40,10 @@ class AdminOfferController
   }
 
   /**
-   * @param OfferUpdateService $offerUpdateService
-   * @return AdminOfferController
+   * @param OfferUpdateServiceInterface $offerUpdateService
+   * @return $this
    */
-  public function setOfferUpdateService($offerUpdateService)
+  public function setOfferUpdateService(OfferUpdateServiceInterface $offerUpdateService)
   {
     $this->offerUpdateService = $offerUpdateService;
     return $this;

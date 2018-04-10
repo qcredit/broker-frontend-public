@@ -91,7 +91,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
     else {
       $partnerResponse->setOk(false);
-      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), $response, $result);
+      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), json_decode($result,true), $response);
     }
 
     return $partnerResponse;

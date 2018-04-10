@@ -8,10 +8,9 @@
 
 namespace App\Controllers\Admin;
 
-
 use App\Base\Components\AbstractController;
-use Broker\Domain\Interfaces\ApplicationRepositoryInterface;
-use Broker\Domain\Interfaces\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;

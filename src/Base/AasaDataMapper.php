@@ -185,12 +185,11 @@ class AasaDataMapper implements PartnerDataMapperInterface
       }
     }
 
-    if (isset($flatBody['status']))
-    {
-      $this->updateStatus($flatBody);
-    }
-
     $data['data'] = $flatBody;
+    if (isset($data['data']['status']))
+    {
+      $this->updateStatus($data);
+    }
 
     return $data;
   }
@@ -201,11 +200,11 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   protected function updateStatus(array &$data)
   {
-    if ($data['status'] === self::STATUS_ACCEPTED)
+    if ($data['data']['status'] === self::STATUS_ACCEPTED)
     {
       $data['acceptedDate'] = new \DateTime();
     }
-    if ($data['status'] === self::STATUS_REJECTED)
+    if ($data['data']['status'] === self::STATUS_REJECTED)
     {
       $data['rejectedDate'] = new \DateTime();
     }
