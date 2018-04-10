@@ -36,11 +36,6 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
-$brokerSettings = $container->get('settings')['broker'];
-$brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
-
-Config::getInstance()->setConfig($brokerSettings);
-
 $container['view'] = function($container) {
   $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
 
@@ -49,6 +44,10 @@ $container['view'] = function($container) {
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
 
   return $view;
+};
+
+$container['flash'] = function() {
+  return new \Slim\Flash\Messages();
 };
 
 $container['db'] = function($container) {
@@ -164,6 +163,12 @@ $container['AdminOfferController'] = function($c)
 
   return new \App\Controllers\Admin\AdminOfferController(
     $offerUpdateService,
-    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer')
+    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
+    $c
   );
 };
+
+$brokerSettings = $container->get('settings')['broker'];
+$brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
+
+Config::getInstance()->setConfig($brokerSettings);

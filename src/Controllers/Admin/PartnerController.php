@@ -8,6 +8,7 @@
 
 namespace App\Controllers\Admin;
 
+use App\Base\Components\AbstractController;
 use App\Base\Repository\PartnerExtraDataLoader;
 use App\Base\Validator\PartnerValidator;
 use Broker\Domain\Interfaces\FactoryInterface;
@@ -17,7 +18,7 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class PartnerController
+class PartnerController extends AbstractController
 {
   /**
    * @var PartnerRepositoryInterface
@@ -142,7 +143,7 @@ class PartnerController
 
     $data['partners'] = $partners;
 
-    return $this->getContainer()->get('view')->render($response, 'admin/partners.twig', $data);
+    return $this->render($response, 'admin/partners.twig', $data);
   }
 
   /**
@@ -170,7 +171,7 @@ class PartnerController
 
     $data['partner'] = $partner;
 
-    return $this->getContainer()->get('view')->render($response, 'admin/partner-form.twig', $data);
+    return $this->render($response, 'admin/partner-form.twig', $data);
   }
 
   /**
@@ -188,7 +189,7 @@ class PartnerController
 
     $data['partner'] = $this->getPartnerDataLoader()->loadExtraConfiguration($this->findEntity($args['id'], $request, $response));
 
-    return $this->getContainer()->get('view')->render($response, 'admin/partner.twig', $data);
+    return $this->render($response, 'admin/partner.twig', $data);
   }
 
   /**
@@ -217,7 +218,7 @@ class PartnerController
 
     $data['partner'] = $partner;
 
-    return $this->getContainer()->get('view')->render($response, 'admin/partner-form.twig', $data);
+    return $this->render($response, 'admin/partner-form.twig', $data);
   }
 
   /**

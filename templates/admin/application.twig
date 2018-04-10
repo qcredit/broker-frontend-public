@@ -2,6 +2,15 @@
 {% block title %}{{ application.id }}{% endblock %}
 {% block container %}
     <div class="container">
+        {% if flash %}
+            <div class="row">
+                {% if flash.success %}
+                    <div class="alert alert-success" role="alert">{{ flash.success }}</div>
+                {% elseif flash.error %}
+                    <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
         <div class="row">
             <div class="col col-sm-4">
                 <h4>Loan information</h4>

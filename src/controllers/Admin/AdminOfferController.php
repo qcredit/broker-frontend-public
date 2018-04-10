@@ -10,6 +10,7 @@ namespace App\Controllers\Admin;
 
 use Broker\Domain\Interfaces\OfferRepositoryInterface;
 use Broker\Domain\Service\OfferUpdateService;
+use Slim\Container;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -24,6 +25,10 @@ class AdminOfferController
    * @var OfferRepositoryInterface
    */
   protected $offerRepository;
+  /**
+   * @var Container
+   */
+  protected $container;
 
   /**
    * @return OfferUpdateService
@@ -61,10 +66,29 @@ class AdminOfferController
     return $this;
   }
 
-  public function __construct(OfferUpdateService $offerUpdateService, OfferRepositoryInterface $offerRepository)
+  /**
+   * @return Container
+   */
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
+  /**
+   * @param Container $container
+   * @return AdminOfferController
+   */
+  public function setContainer($container)
+  {
+    $this->container = $container;
+    return $this;
+  }
+
+  public function __construct(OfferUpdateService $offerUpdateService, OfferRepositoryInterface $offerRepository, Container $container)
   {
     $this->offerUpdateService = $offerUpdateService;
     $this->offerRepository = $offerRepository;
+    $this->container = $container;
   }
 
   /**
@@ -74,6 +98,7 @@ class AdminOfferController
    * @return static
    * @throws NotFoundException
    * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function updateAction(Request $request, Response $response, $args)
   {
@@ -84,7 +109,16 @@ class AdminOfferController
       throw new NotFoundException($request, $response);
     }
 
-    $this->getOfferUpdateService()->setOffers([$offer])->run();
+    $offers = $this->getOfferUpdateService()->setOffers([$offer])->run();
+
+    if (isset($offers[0]) && $offers[0]->getId() === $offer->getId())
+    {
+      $this->getContainer()->get('flash')->addMessage('success', 'Offer was successfully updated.');
+    }
+    else
+    {
+      $this->getContainer()->get('flash')->addMessage('error', 'Could not update the offer.');
+    }
 
     return $response->withRedirect(sprintf('/admin/applications/%d', $offer->getApplicationId()));
   }
