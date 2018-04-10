@@ -61,25 +61,9 @@ $(document).ready(function(){
   // To get values of selected options
   //$('.landing-component-sm #loanAmountOutput').val();
   //$('.landing-component-sm #loanDurationOutput').val();
-
-
-  // Temporary input field focused and filled classes
-  $(".field input").focusin(function() {
-    $(this).parent().addClass("focused");
-  });
-  $(".field input").focusout(function() {
-    $(this).parent().removeClass("focused");
-  });
-  $(".field input").on("input", function() {
-    if($(this).val()){
-      $(this).parent().addClass("filled");
-    } else {
-      $(this).parent().removeClass("filled");
-    }
-  });
 });
 
-function checkSize(){
+function checkSize() {
     if ($(".landing-component-sm").css("display") == "block" && $(".landing-component-lg").css("display") == "none"){
         // your code here
         $('.landing-component-lg .landing-form-amount input').removeAttr('id');

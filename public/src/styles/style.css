@@ -151,7 +151,12 @@
     font-size: 36px;
     font-weight: bold;
     line-height: 1;
-    text-align: center; }
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
   .landing-component-sm .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
 .landing-component-sm select {
@@ -258,9 +263,10 @@
 
 .form-block p {
   flex: 0 0 100%;
-  font-size: 1.125rem;
+  font-size: 1rem;
   font-weight: bold; }
 
+/* Input fields & select list styles start here */
 .field {
   position: relative;
   flex: 0 0 46%;
@@ -285,15 +291,15 @@
     pointer-events: none;
     transition: 0.2s ease all; }
   .field.filled label, .field.focused label {
-    top: 0.1875rem;
+    top: 0;
     font-size: 0.75rem !important; }
   .field select {
     display: block;
     width: 100%;
-    padding: 0.6875rem 1.875rem 0.6875rem 0;
+    padding: 1rem 1.875rem 0.5rem 0;
     border: 0;
     border-bottom: 1px solid #999;
-    font-size: 0.875rem;
+    font-size: 1rem;
     color: #000;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -303,6 +309,11 @@
     background-position: right 0.875rem center;
     background-size: 0.8125rem;
     cursor: pointer; }
+  .field .rules {
+    position: absolute;
+    bottom: -1.875rem;
+    font-size: 0.675rem;
+    color: #CE0000; }
 
 .form-block .field {
   flex: 1 1 18.75rem; }
@@ -311,23 +322,46 @@
     color: #000; }
 
 .field.select label {
-  position: static; }
+  top: 1rem; }
+.field.select .rules {
+  bottom: -2rem; }
 
+.field.select.filled label, .field.select.focused label {
+  top: 0;
+  font-size: 0.75rem; }
+
+/* Error styles */
+.field.error select, .field.error input {
+  border-bottom: 2px solid #CE0000;
+  color: #CE0000; }
+.field.error label {
+  color: #CE0000; }
+
+/* Input fields & select list styles end here */
+@media only screen and (max-width: 420px) {
+  .loan-form .broker-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem 4rem; } }
+@media only screen and (min-width: 420px) {
+  .form-block-submit {
+    display: flex;
+    justify-content: flex-end; } }
 @media only screen and (min-width: 768px) {
   .loan-form {
     margin: 3rem auto; }
 
   .loan-form-upper {
-    margin: 0; } }
+    margin: 0; }
+
+  .form-block .field {
+    flex: 0 0 46%; } }
 @media only screen and (min-width: 769px) {
   .form-block {
     margin: 4rem 0; }
 
   .loan-form-upper {
-    padding: 2.5rem; }
-
-  .form-block .field {
-    flex: 0 0 46%; } }
+    padding: 2.5rem; } }
 /* Typography */
 * {
   -webkit-font-smoothing: antialiased;
@@ -344,12 +378,14 @@ section > h1 {
 
 /* UTILITIES */
 .broker-btn {
-  padding: .65rem 2rem;
+  padding: .875rem 3rem;
   border-radius: 0;
   border: 0;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 14px; }
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out; }
   .broker-btn:focus {
     outline: none;
     box-shadow: none; }

@@ -17,41 +17,43 @@
   </div>
   <div class="form-block form-block-personal">
     <p>Personal information</p>
-    <div class="field text pin">
+    <div class="field text pin required">
       <label for="">Insert your personal ID*</label>
         <input type="text" name="pin" id="pin"/>
     </div>
-    <div class="field text firstName">
+    <div class="field text firstName required">
       <label for="">Insert your first name*</label>
         <input type="text" name="firstName" id="firstName"/>
     </div>
-    <div class="field text lastName">
+    <div class="field text lastName required">
       <label for="">Insert your last name*</label>
         <input type="text" name="lastName" id="lastName"/>
     </div>
-    <div class="field text email">
+    <div class="field text email required">
       <label for="">Insert your email*</label>
         <input type="text" name="email" id="email"/>
     </div>
     <div class="field select mobilePhoneType">
+      <label for="">Choose your phone type</label>
       <select name="mobilePhoneType">
-        <option value>Choose your phone type</option>
+        <option value></option>
         <option value="Mobile">Mobile phone</option>
         <option value="Home">Home number</option>
         <option value="Work">Work phone</option>
       </select>
     </div>
-    <div class="field text phone">
+    <div class="field number phone required">
       <label for="">Insert your phone number*</label>
         <input type="text" name="phone" id="phone"/>
     </div>
-    <div class="field text documentNr">
+    <div class="field text documentNr required">
       <label for="">Insert your document number*</label>
         <input type="text" name="documentNr" id="documentNr"/>
     </div>
-    <div class="field select maritalStatusType">
+    <div class="field select maritalStatusType required">
+      <label for="">Choose your marital status*</label>
       <select name="maritalStatusType">
-        <option value>Choose your marital status</option>
+        <option value></option>
         <option value="Single">Single</option>
         <option value="Married">Married</option>
         <option value="Widow">In a relationship</option>
@@ -59,9 +61,10 @@
         <option value="Widow">Widow</option>
       </select>
     </div>
-    <div class="field select educationType">
+    <div class="field select educationType required">
+      <label for="">Choose you education*</label>
       <select name="educationType">
-        <option value>Choose you education</option>
+        <option value></option>
         <option value="ElementarySchoolCurrent">Elementary</option>
         <option value="VocationalSchool">Vocational</option>
         <option value="Bachelor">Bachelor's degree</option>
@@ -73,53 +76,46 @@
   </div>
   <div class="form-block form-block-housing">
     <p>Housing information</p>
-    <div class="field select educationType">
+    <div class="field select educationType required">
+      <label for="">Choose housing type*</label>
       <select name="residentialType" id="residentialType">
-        <option value>Choose housing type</option>
+        <option value></option>
         <option value="Rental">Rental</option>
         <option value="Own">Own</option>
         <option value="Other">Other</option>
       </select>
     </div>
-    <div class="field text propertyType">
+    <div class="field text propertyType required">
       <label for="">Insert the propery type*</label>
         <input type="text" name="propertyType" id="propertyType"/>
     </div>
-    <div class="field text street">
+    <div class="field text street required">
       <label for="">Insert the street name*</label>
         <input type="text" name="street" id="street"/>
     </div>
-    <div class="field text houseNr">
+    <div class="field text houseNr required">
       <label for="">House number*</label>
         <input type="text" name="houseNr" id="houseNr"/>
     </div>
-    <div class="field text apartmentNr">
+    <div class="field text apartmentNr required">
       <label for="">Appartment number*</label>
         <input type="text" name="apartmentNr" id="apartmentNr"/>
     </div>
-    <div class="field text city">
+    <div class="field text city required">
       <label for="">Insert city*</label>
         <input type="text" name="city" id="city"/>
     </div>
-    <div class="field text zip">
+    <div class="field number zip required">
       <label for="">ZIP*</label>
         <input type="text" name="zip" id="zip"/>
     </div>
   </div>
-    <!--
-    <div class="field text loanAmount">
-      <label for="">Insert the loan amount</label>
-        <input type="text" name="loanAmount" id="loanAmount"/>
-    </div>
-    <div class="field text loanTerm">
-      <label for="">Insert the loan duration</label>
-        <input type="integer" name="loanTerm" id="loanTerm"/>
-    </div> -->
-  <div class="form-block form-block-income">
+  <div class="form-block form-block-income ">
     <p>Income information</p>
-    <div class="field select sourceType">
+    <div class="field select sourceType required">
+      <label for="">Choose income type*</label>
         <select name="sourceType">
-            <option value>Choose income type</option>
+            <option value></option>
             <option value="Employed">Employed</option>
             <option value="Student">Student</option>
             <option value="NormalPension">NormalPension</option>
@@ -131,34 +127,36 @@
             <option value="Other">Other</option>
         </select>
     </div>
-    <div class="field select position">
+    <div class="field select position required">
+      <label for="">Choose position*</label>
         <select name="position">
-            <option value>Choose position</option>
+            <option value></option>
             <option value="Specialist">Specialist</option>
             <option value="Middlemanagement">Middle management</option>
             <option value="Uppermanagement">Upper management</option>
             <option value="Other">Other</option>
         </select>
     </div>
-    <div class="field text trade">
-      <label for="">Insert your occupation</label>
+    <div class="field text trade required">
+      <label for="">Insert your occupation*</label>
         <input type="text" name="trade"/>
     </div>
-    <div class="field text employerName">
-      <label for="">Insert your employer's name</label>
+    <div class="field text employerName required">
+      <label for="">Insert your employer's name*</label>
         <input type="text" name="employerName" id="employerName"/>
     </div>
     <div class="field text currentStudy">
       <label for="">Insert the school's name</label>
         <input type="text" name="currentStudy" id="currentStudy"/>
     </div>
-    <div class="field text netPerMonth">
-      <label for="">Insert your monthly net income</label>
+    <div class="field number netPerMonth required">
+      <label for="">Insert your monthly net income*</label>
         <input type="text" name="netPerMonth" id="netPerMonth"/>
     </div>
-    <div class="field select position">
+    <div class="field select monthSince required">
+      <label for="">Choose starting month*</label>
         <select name="monthSince" id="monthSince">
-            <option value>Choose starting month</option>
+            <option value></option>
             <option value="January">January</option>
             <option value="February">February</option>
             <option value="March">March</option>
@@ -173,45 +171,45 @@
             <option value="December">December</option>
         </select>
     </div>
-    <div class="field text yearSince">
-      <label for="">Insert starting year</label>
+    <div class="field number yearSince required">
+      <label for="">Insert starting year*</label>
         <input type="text" name="yearSince" id="yearSince"/>
     </div>
   </div>
-  <div class="form-block form-block-account">
+  <div class="form-block form-block-accoun">
     <p>Account information</p>
-    <div class="field select accountType">
+    <div class="field select accountType required">
+      <label for="">Choose account type*</label>
       <select name="accountType" id="accountType">
-          <option value>Choose account type</option>
+          <option value></option>
           <option value="January">January</option>
           <option value="February">February</option>
           <option value="March">March</option>
       </select>
     </div>
-    <div class="field text accountNr">
-      <label for="">Insert account number</label>
+    <div class="field text accountNr required">
+      <label for="">Insert account number*</label>
         <input type="text" name="accountNr" id="accountNr"/>
     </div>
-    <div class="field text accountHolder">
-      <label for="">Insert account holder name</label>
+    <div class="field text accountHolder required">
+      <label for="">Insert account holder name*</label>
         <input type="text" name="accountHolder" id="accountHolder"/>
     </div>
   </div>
   <div class="form-block form-block-additional">
     <p>Additional information</p>
     <div class="field select loanPurposeType">
+      <label for="">Choose the loan purpose</label>
       <select name="loanPurposeType" id="loanPurposeType">
-          <option value>Choose the loan purpose</option>
+          <option value></option>
           <option value="January">January</option>
           <option value="February">February</option>
           <option value="March">March</option>
       </select>
     </div>
   </div>
-    <div class="row">
-        <div class="col-sm-6 mx-auto">
-            <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-    </div>
+  <div class="form-block form-block-submit">
+    <button type="submit" class="broker-btn broker-btn-gold">Submit form</button>
+  </div>
 </form>
 {% endblock %}
