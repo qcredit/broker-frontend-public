@@ -3,7 +3,8 @@
 /* Navigation styles */
 .navbar {
   padding: 1rem;
-  background-color: #e1e1e1; }
+  background-color: #fff;
+  box-shadow: 0px 2px 21px -4px rgba(0, 0, 0, 0.15); }
   .navbar .nav-link {
     font-size: 14px;
     font-weight: bold;
@@ -28,7 +29,7 @@
 .home-hero {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-  background-color: #e1e1e1; }
+  background-color: #eaeaea; }
   .home-hero .home-hero-left h2 {
     text-align: center;
     margin-bottom: 1.25rem; }
@@ -94,7 +95,9 @@
 @media only screen and (min-width: 768px) {
   .home-hero {
     min-height: 400px;
-    align-items: center; }
+    align-items: center;
+    background: url(../images/hero-bg.jpg) center;
+    background-size: cover; }
     .home-hero .landing-form {
       min-height: 400px; }
       .home-hero .landing-form .field {
@@ -116,7 +119,7 @@
 .page-footer {
   margin: 5rem 0 0;
   padding: 0;
-  background: #e1e1e1; }
+  background: #eaeaea; }
 
 .footer-contacts span {
   display: block; }
@@ -124,6 +127,8 @@
 .upper-footer {
   padding-top: 3rem;
   padding-bottom: 3rem; }
+  .upper-footer a {
+    color: #333; }
 
 .lower-footer {
   display: flex;
