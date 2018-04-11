@@ -6,7 +6,7 @@
  * Time: 16:15
  */
 
-namespace App\controllers\Admin;
+namespace App\Controllers\Admin;
 
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Broker\Domain\Interfaces\Service\OfferUpdateServiceInterface;

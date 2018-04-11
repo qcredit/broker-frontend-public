@@ -2,7 +2,7 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use App\controllers\UserController;
+use App\Controllers\UserController;
 // Routes
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');

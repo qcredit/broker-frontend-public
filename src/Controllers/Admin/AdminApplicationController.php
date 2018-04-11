@@ -6,7 +6,7 @@
  * Time: 17:02
  */
 
-namespace App\controllers\Admin;
+namespace App\Controllers\Admin;
 
 use App\Base\Components\AbstractController;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;

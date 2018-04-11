@@ -6,7 +6,7 @@
  * Time: 15:55
  */
 
-namespace App\controllers\Admin;
+namespace App\Controllers\Admin;
 
 use App\Base\Components\AbstractController;
 use App\Base\Repository\PartnerExtraDataLoader;

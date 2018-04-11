@@ -76,31 +76,31 @@ $container['PartnerController'] = function($c) {
   $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 
   $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
-  return new \App\controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
+  return new \App\Controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
 };
 
 $container['AdminApplicationController'] = function($c)
 {
   $appRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Application');
   $offerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer');
-  return new \App\controllers\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
+  return new \App\Controllers\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
 };
 
 $container['UserController'] = function($c) {
   $view = $c->get('view');
-  return new \App\controllers\UserController($view);
+  return new \App\Controllers\UserController($view);
 };
 
 $container['HomeController'] = function($c)
 {
   $view = $c->get('view');
-  return new \App\controllers\HomeController($view);
+  return new \App\Controllers\HomeController($view);
 };
 
 $container['AdminController'] = function($c)
 {
   $view = $c->get('view');
-  return new \App\controllers\AdminController($view);
+  return new \App\Controllers\AdminController($view);
 };
 
 $container['PartnerDataMapperRepository'] = function($c)
@@ -144,7 +144,7 @@ $container['ApplicationController'] = function ($c)
     new PartnerRequestFactory()
   );
 
-  return new \App\controllers\ApplicationController(
+  return new \App\Controllers\ApplicationController(
     $prepareService,
     $appRepository,
     $c
@@ -161,7 +161,7 @@ $container['AdminOfferController'] = function($c)
     $c->get('PartnerResponseService')
   );
 
-  return new \App\controllers\Admin\AdminOfferController(
+  return new \App\Controllers\Admin\AdminOfferController(
     $offerUpdateService,
     $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
     $c
