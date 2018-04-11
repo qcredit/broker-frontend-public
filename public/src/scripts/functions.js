@@ -74,4 +74,5 @@ $(document).ready(function(){
       $(this).parent().removeClass("filled");
     }
   });
+  $('.loan-offer-container:first-child').addClass('featured');
 });

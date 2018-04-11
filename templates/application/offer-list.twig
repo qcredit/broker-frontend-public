@@ -1,20 +1,26 @@
 {% extends 'base.twig' %}
 {% block title %}Application's offer list{% endblock %}
 {% block container %}
-  <div class="row">
-    <div class="col">
-        <p>Thank you! Your application has been submitted and here are the results:</p>
+  <div class="row justify-content-md-center">
+    <div class="col-sm-12 col-md-9">
+      <div class="offer-list-head">
+        <p>Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:</p>
+      </div>
     </div>
   </div>
   <div class="row justify-content-md-center">
     {% if application.offers %}
-    <div class="col-sm-12 col-md-8 col-lg-6">
+    <div class="col-sm-12 col-md-9">
       {% for offer in application.offers %}
       <article class="loan-offer-container">
         <div class="loan-offer-head">
-          <img src="" alt="Aasa logo">
-          <span class="loan-offerer-name">{{ offer.partner.name }}</span>
-          <span class="loan-offerer-website"></span>
+          <div class="loan-offerer-logo-container">
+            <img src="/src/images/aasalogo.png" class="loan-offerer-logo" alt="{{ offer.partner.name }} logo">
+          </div>
+          <div class="loan-offerer-info">
+            <span class="loan-offerer-name">{{ offer.partner.name }}</span>
+            <span class="loan-offerer-website">www.aasa.fi</span>
+          </div>
         </div>
         <div class="loan-offer-body">
           <span>Amount: 2400 €</span>
@@ -23,7 +29,7 @@
           <span>APR: 238 %</span>
         </div>
         <div class="loan-offer-footer">
-          <a href="#" class="loan-offer-cta btn-broker-gold">SIGN CONTRACT</a>
+          <a href="#" class="loan-offer-cta broker-btn broker-btn-gold">SIGN CONTRACT</a>
         </div>
         <!--
         <p>{{ offer.partner.id }}</p>
@@ -35,5 +41,14 @@
       {% endfor %}
     </div>
     {% endif %}
+  </div>
+  <div class="row justify-content-sm-center">
+    <div class="col-sm-9">
+      <div class="bouncing-loader">
+        <div class="bouncing-loader__round"></div>
+        <div class="bouncing-loader__round"></div>
+        <div class="bouncing-loader__round"></div>
+      </div>
+    </div>
   </div>
 {% endblock %}
