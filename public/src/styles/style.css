@@ -131,6 +131,8 @@
 .upper-footer {
   padding-top: 3rem;
   padding-bottom: 3rem; }
+  .upper-footer a {
+    color: #333; }
 
 .lower-footer {
   display: flex;
