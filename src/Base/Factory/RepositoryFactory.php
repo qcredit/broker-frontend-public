@@ -6,7 +6,7 @@
  * Time: 13:56
  */
 
-namespace App\Base\Persistence\Doctrine;
+namespace App\Base\Factory;
 
 class RepositoryFactory
 {

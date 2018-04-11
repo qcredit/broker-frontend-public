@@ -80,8 +80,6 @@ abstract class AbstractRepository implements RepositoryInterface
   /**
    * @param $entity
    * @return $this
-   * @throws \Doctrine\ORM\ORMException
-   * @throws \Doctrine\ORM\OptimisticLockException
    */
   public function save($entity)
   {
@@ -89,5 +87,17 @@ abstract class AbstractRepository implements RepositoryInterface
     $this->entityManager->flush();
 
     return $this;
+  }
+
+  /**
+   * @param $entity
+   * @return bool
+   */
+  public function delete($entity)
+  {
+    $this->entityManager->remove($entity);
+    $this->entityManager->flush();
+
+    return true;
   }
 }

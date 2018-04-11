@@ -18,6 +18,8 @@ $app->get('/admin/applications', 'AdminApplicationController:indexAction');
 $app->get('/admin/applications/{id}', 'AdminApplicationController:viewAction');
 $app->get('/admin/offers/update/{id}', 'AdminOfferController:updateAction');
 
-$app->get('/admin/users', 'AdminController:usersAction');
+$app->get('/admin/users', 'UserController:indexAction');
+$app->map(['GET', 'POST'], '/admin/users/new', 'UserController:newAction');
+$app->get('/admin/users/delete/{id}', 'UserController:deleteAction');
 
 $app->map(['GET', 'POST'], '/admin/login', 'AdminController:loginAction');

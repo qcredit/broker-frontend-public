@@ -8,9 +8,11 @@
 
 namespace App\Model;
 
-class User
+use Broker\Domain\Entity\AbstractEntity;
+
+class User extends AbstractEntity
 {
-  const ACCESS_LVL_ADMIN = 0;
+  const ACCESS_LVL_ADMIN = 1;
   /**
    * @var integer
    */
@@ -23,6 +25,10 @@ class User
    * @var integer
    */
   protected $accessLevel;
+  /**
+   * @var \DateTime
+   */
+  protected $createdAt;
 
   /**
    * @return int
@@ -75,6 +81,24 @@ class User
   public function setAccessLevel($accessLevel)
   {
     $this->accessLevel = $accessLevel;
+    return $this;
+  }
+
+  /**
+   * @return \DateTime
+   */
+  public function getCreatedAt()
+  {
+    return $this->createdAt;
+  }
+
+  /**
+   * @param \DateTime $createdAt
+   * @return User
+   */
+  public function setCreatedAt(\DateTime $createdAt)
+  {
+    $this->createdAt = $createdAt;
     return $this;
   }
 }

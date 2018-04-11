@@ -12,4 +12,8 @@ App\Model\User:
       type: string
       nullable: false
     accessLevel:
+      column: access_level
       type: integer
+    createdAt:
+      column: created_at
+      type: datetime

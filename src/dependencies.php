@@ -62,7 +62,7 @@ $container['db'] = function($container) {
 
 $container['RepositoryFactory'] = function($c)
 {
-  return new \App\Base\Persistence\Doctrine\RepositoryFactory();
+  return new \App\Base\Factory\RepositoryFactory();
 };
 
 $container['UserRepository'] = function($container) {
@@ -87,20 +87,16 @@ $container['AdminApplicationController'] = function($c)
 };
 
 $container['UserController'] = function($c) {
-  $view = $c->get('view');
-  return new \App\Controller\UserController($view);
+  $userFactory = new \App\Base\Factory\UserFactory();
+  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $validator = new \App\Base\Validator\UserValidator();
+  return new \App\Controller\Admin\UserController($userRepository, $userFactory, $validator, $c);
 };
 
 $container['HomeController'] = function($c)
 {
   $view = $c->get('view');
   return new \App\Controller\HomeController($view);
-};
-
-$container['AdminController'] = function($c)
-{
-  $view = $c->get('view');
-  return new \App\Controller\AdminController($view);
 };
 
 $container['PartnerDataMapperRepository'] = function($c)
