@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6db5e31c336c50470ce2ac7f84b5160e",
+    "content-hash": "ffc73422a9351c1f8800cbfdca9617cb",
     "packages": [
         {
             "name": "aasa/broker",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "a5ebd4377764817526c2e9dc54cedc2b8cbff32f"
+                "reference": "3f314bba999aa538c586d880e677566f895bb26c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/a5ebd4377764817526c2e9dc54cedc2b8cbff32f",
-                "reference": "a5ebd4377764817526c2e9dc54cedc2b8cbff32f",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/3f314bba999aa538c586d880e677566f895bb26c",
+                "reference": "3f314bba999aa538c586d880e677566f895bb26c",
                 "shasum": ""
             },
             "require": {
@@ -35,10 +35,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/master",
+                "source": "https://github.com/aasa-global/broker/tree/dev",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-04-06T12:33:07+00:00"
+            "time": "2018-04-10T14:17:37+00:00"
         },
         {
             "name": "container-interop/container-interop",
@@ -1202,6 +1202,54 @@
                 "phinx"
             ],
             "time": "2017-12-23T06:48:51+00:00"
+        },
+        {
+            "name": "slim/flash",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/slimphp/Slim-Flash.git",
+                "reference": "9aaff5fded3b54f4e519ec3d4ac74d3d1f2cbbbc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/slimphp/Slim-Flash/zipball/9aaff5fded3b54f4e519ec3d4ac74d3d1f2cbbbc",
+                "reference": "9aaff5fded3b54f4e519ec3d4ac74d3d1f2cbbbc",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Slim\\Flash\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Josh Lockhart",
+                    "email": "hello@joshlockhart.com",
+                    "homepage": "http://joshlockhart.com"
+                }
+            ],
+            "description": "Slim Framework Flash message service provider",
+            "homepage": "http://slimframework.com",
+            "keywords": [
+                "flash",
+                "framework",
+                "message",
+                "provider",
+                "slim"
+            ],
+            "time": "2017-10-22T10:35:05+00:00"
         },
         {
             "name": "slim/php-view",

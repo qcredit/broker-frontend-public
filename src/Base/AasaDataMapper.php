@@ -21,6 +21,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
   const STATUS_PAID_BACK = 'PaidBack';
   const STATUS_IN_DEBT = 'InDebt';
   const STATUS_REJECTED = 'Rejected';
+  const STATUS_ACCEPTED = 'Accepted';
 
   protected $configFile = 'aasa.config.json';
 
@@ -125,8 +126,8 @@ class AasaDataMapper implements PartnerDataMapperInterface
   {
     return [
       'id' => 'remoteId',
-      'amount' => 'amount',
-      'period' => 'term',
+      'amount' => 'loanAmount',
+      'period' => 'loanTerm',
       'interest' => 'interest',
       'avg' => 'monthlyFee'
     ];
@@ -185,7 +186,25 @@ class AasaDataMapper implements PartnerDataMapperInterface
     }
 
     $data['data'] = $flatBody;
-    if (isset($flatBody['status']) && $flatBody['status'] == self::STATUS_REJECTED)
+    if (isset($data['data']['status']))
+    {
+      $this->updateStatus($data);
+    }
+
+    return $data;
+  }
+
+  /**
+   * @param $data
+   * @return mixed
+   */
+  protected function updateStatus(array &$data)
+  {
+    if ($data['data']['status'] === self::STATUS_ACCEPTED)
+    {
+      $data['acceptedDate'] = new \DateTime();
+    }
+    if ($data['data']['status'] === self::STATUS_REJECTED)
     {
       $data['rejectedDate'] = new \DateTime();
     }

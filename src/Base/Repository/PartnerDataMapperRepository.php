@@ -9,7 +9,7 @@
 namespace App\Base\Repository;
 
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
-use Broker\Domain\Interfaces\PartnerDataMapperRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 
 class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterface
 {

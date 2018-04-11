@@ -8,14 +8,14 @@
 
 namespace App\Controllers\Admin;
 
-
-use Broker\Domain\Interfaces\ApplicationRepositoryInterface;
-use Broker\Domain\Interfaces\OfferRepositoryInterface;
+use App\Base\Components\AbstractController;
+use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
-class AdminApplicationController
+class AdminApplicationController extends AbstractController
 {
   /**
    * @var ApplicationRepositoryInterface
@@ -112,7 +112,7 @@ class AdminApplicationController
 
     $data['applications'] = $this->getAppRepository()->getAll();
 
-    return $this->getContainer()->get('view')->render($response, 'admin/applications.twig', $data);
+    return $this->render($response, 'admin/applications.twig', $data);
   }
 
   /**
@@ -128,9 +128,8 @@ class AdminApplicationController
     $data = [];
 
     $data['application'] = $this->findEntity($args['id'], $request, $response);
-    $data['offers'] = $this->getOfferRepository()->getBy(['applicationId' => $args['id']]);
 
-    return $this->getContainer()->get('view')->render($response, 'admin/application.twig', $data);
+    return $this->render($response, 'admin/application.twig', $data);
   }
 
   /**

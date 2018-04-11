@@ -1,0 +1,44 @@
+{% extends 'base.twig' %}
+{% block title %}Application's offer list{% endblock %}
+{% block container %}
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <p>Thank you! Your application has been submitted and here are the results:</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <h4>Partners' offers</h4>
+                <div class="col">
+                    {% if application.offers %}
+                        <table class="table">
+                            <thead>
+                            <tr>
+                                <th>Lender Id</th>
+                                <th>Lender Name</th>
+                                <th>Amount</th>
+                                <th>Remote Id</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for offer in application.offers %}
+                                <tr>
+                                    <td>{{ offer.partner.id }}</td>
+                                    <td>{{ offer.partner.name }}</td>
+                                    <td>{{ offer.loanAmount }}</td>
+                                    <td>{{ offer.remoteId }}</td>
+                                    <td>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
