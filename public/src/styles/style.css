@@ -349,7 +349,7 @@
     background: #ffc328;
     color: #000; }
 
-@media only screen and (min-width: 340px) {
+@media only screen and (min-width: 360px) {
   .loan-offer-body span {
     font-size: 1rem;
     flex: 0 0 118px; } }
