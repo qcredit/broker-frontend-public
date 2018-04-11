@@ -32,7 +32,7 @@ class AdminApplicationControllerTest extends BaseTest
   {
     $this->mock = $this->getMockBuilder(AdminApplicationController::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAppRepository', 'getContainer', 'getOfferRepository'])
+      ->setMethods(['getAppRepository', 'getContainer', 'getOfferRepository', 'render'])
       ->getMock();
 
     $this->repositoryMock = $this->getMockBuilder(ApplicationRepository::class)
@@ -40,20 +40,10 @@ class AdminApplicationControllerTest extends BaseTest
       ->setMethods(['getAll', 'getOneBy'])
       ->getMock();
 
-    $twigMock = $this->getMockBuilder(Twig::class)
-      ->disableOriginalConstructor()
-      ->getMock();
-    $twigMock->method('render')
-      ->willReturn(new Response());
-
     $this->requestMock = $this->createMock(Request::class);
     $this->responseMock = $this->createMock(Response::class);
-    $this->containerMock = $this->getMockBuilder(Container::class)
-      ->setMethods(['get'])
-      ->getMock();
-    $this->containerMock->method('get')
-      ->willReturn($twigMock);
-    $this->mock->method('getContainer')->willReturn($this->containerMock);
+
+    $this->mock->method('render')->willReturnArgument(2);
 
     $this->apps = [
       (new Application())->setFirstName('Slava')->setLastName('Bogu')
@@ -71,7 +61,11 @@ class AdminApplicationControllerTest extends BaseTest
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
-    $this->assertInstanceOf(Response::class, $mock->indexAction($this->requestMock, $this->responseMock, []));
+    $result = $mock->indexAction($this->requestMock, $this->responseMock, []);
+
+    $this->assertTrue(is_array($result));
+    $this->assertInstanceOf(Application::class, $result['applications'][0]);
+
   }
 
   public function testViewAction()
@@ -79,20 +73,14 @@ class AdminApplicationControllerTest extends BaseTest
     $this->repositoryMock->method('getOneBy')
       ->willReturn(new Application());
 
-    $offerRepository = $this->getMockBuilder(OfferRepository::class)
-      ->disableOriginalConstructor()
-      ->setMethods(['getBy'])
-      ->getMock();
-
     $this->mock->expects($this->once())
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 
-    $this->mock->expects($this->once())
-      ->method('getOfferRepository')
-      ->willReturn($offerRepository);
+    $result = $this->mock->viewAction($this->requestMock, $this->responseMock, []);
 
-    $this->assertInstanceOf(Response::class, $this->mock->viewAction($this->requestMock, $this->responseMock, []));
+    $this->assertTrue(is_array($result));
+    $this->assertInstanceOf(Application::class, $result['application']);
   }
 
   public function testFindEntity()

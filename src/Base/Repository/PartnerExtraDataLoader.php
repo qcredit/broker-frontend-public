@@ -9,9 +9,8 @@
 namespace App\Base\Repository;
 
 use Broker\Domain\Entity\Partner;
-use Broker\Domain\Interfaces\PartnerDataMapperRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\System\Error\InvalidConfigException;
-use Broker\System\Log;
 
 class PartnerExtraDataLoader
 {

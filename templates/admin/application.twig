@@ -2,7 +2,60 @@
 {% block title %}{{ application.id }}{% endblock %}
 {% block container %}
     <div class="container">
-        <h3>App #{{ application.id }}</h3>
+        {% if flash %}
+            <div class="row">
+                {% if flash.success %}
+                    <div class="alert alert-success" role="alert">{{ flash.success }}</div>
+                {% elseif flash.error %}
+                    <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
+                {% endif %}
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col col-sm-4">
+                <h4>Loan information</h4>
+                <div class="col">
+                    <p>Amount: {{ application.loanAmount }}</p>
+                    <p>Duration: {{ application.loanTerm }}</p>
+                </div>
+            </div>
+            <div class="col col-sm-4">
+                <h4>Loan status</h4>
+            </div>
+        </div>
 
+        <div class="row">
+            <div class="col">
+                <h4>Partners' offers</h4>
+                <div class="col">
+                    {% if application.offers %}
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Lender Id</th>
+                                <th>Lender Name</th>
+                                <th>Amount</th>
+                                <th>Remote Id</th>
+                                <th>Status</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for offer in application.offers %}
+                                <tr>
+                                    <td>{{ offer.partner.id }}</td>
+                                    <td>{{ offer.partner.name }}</td>
+                                    <td>{{ offer.loanAmount }}</td>
+                                    <td>{{ offer.remoteId }}</td>
+                                    <td>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                                    <td><a href="/admin/offers/update/{{ offer.id }}"><small class="text-uppercase">update</small></a></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
