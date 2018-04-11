@@ -6,7 +6,7 @@
  * Time: 16:08
  */
 
-namespace App\Controllers;
+namespace App\Controller;
 
 use App\Models\User;
 use Broker\Repository\UserRepositoryInterface;
