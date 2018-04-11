@@ -53,7 +53,7 @@ $container['flash'] = function() {
 $container['db'] = function($container) {
   $settings = $container->get('settings')['doctrine'];
 
-  $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/vendor/aasa/broker/src/Persistence/Doctrine/Mappings'], true);
+  $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
 
   $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
 
@@ -62,7 +62,7 @@ $container['db'] = function($container) {
 
 $container['RepositoryFactory'] = function($c)
 {
-  return new \Broker\persistence\doctrine\RepositoryFactory();
+  return new \App\Base\Persistence\Doctrine\RepositoryFactory();
 };
 
 $container['UserRepository'] = function($container) {

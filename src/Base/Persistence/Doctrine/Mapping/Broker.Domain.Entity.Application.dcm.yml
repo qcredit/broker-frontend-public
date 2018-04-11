@@ -1,0 +1,51 @@
+Broker\Domain\Entity\Application:
+  type: entity
+  table: application
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    loanAmount:
+      column: loan_amount
+      type: integer
+      nullable: false
+    loanTerm:
+      column: loan_term
+      type: integer
+      nullable: false
+    createdAt:
+      column: created_at
+      type: datetime
+      nullable: false
+    data:
+      type: json
+      nullable: true
+    applicationHash:
+      column: application_hash
+      type: string
+      nullable: false
+    firstName:
+      column: first_name
+      type: string
+      nullable: false
+    lastName:
+      column: last_name
+      type: string
+      nullable: false
+    email:
+      type: string
+      nullable: false
+    phone:
+      type: string
+      nullable: false
+    documentNr:
+      column: document_nr
+      type: string
+      nullable: false
+  oneToMany:
+    offers:
+      targetEntity: Offer
+      mappedBy: application
+      fetch: EAGER

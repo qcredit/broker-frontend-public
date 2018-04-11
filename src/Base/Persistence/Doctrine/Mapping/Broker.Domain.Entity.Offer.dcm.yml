@@ -1,0 +1,75 @@
+Broker\Domain\Entity\Offer:
+  type: entity
+  table: offer
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    applicationId:
+      column: application_id
+      type: integer
+      nullable: false
+    partnerId:
+      column: partner_id
+      type: integer
+      nullable: false
+    loanAmount:
+      column: loan_amount
+      type: integer
+      nullable: true
+    loanTerm:
+      column: loan_term
+      type: integer
+      nullable: true
+    interest:
+      type: integer
+      nullable: true
+    monthlyFee:
+      column: monthly_fee
+      type: integer
+      nullable: true
+    rejectedDate:
+      column: rejected_date
+      type: datetime
+      nullable: true
+    acceptedDate:
+      column: accepted_date
+      type: datetime
+      nullable: true
+    paidOutDate:
+      column: paid_out_date
+      type: datetime
+      nullable: true
+    remoteId:
+      column: remote_id
+      type: string
+      nullable: true
+    data:
+      type: json
+      nullable: true
+    createdAt:
+      column: created_at
+      type: datetime
+      nullable: true
+    updatedAt:
+      column: updated_at
+      type: datetime
+      nullable: true
+  manyToOne:
+    application:
+      targetEntity: Application
+      inversedBy: offers
+      joinColumn:
+        name: application_id
+        referencedColumnName: id
+        nullable: false
+    partner:
+      targetEntity: Partner
+      inversedBy: offers
+      joinColumn:
+        name: partner_id
+        referencedColumnName: id
+        onDelete: RESTRICT
+        onUpdate: CASCADE

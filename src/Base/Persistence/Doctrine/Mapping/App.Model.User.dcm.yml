@@ -1,0 +1,15 @@
+App\Model\User:
+  type: entity
+  table: user
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    email:
+      length: 255
+      type: string
+      nullable: false
+    accessLevel:
+      type: integer

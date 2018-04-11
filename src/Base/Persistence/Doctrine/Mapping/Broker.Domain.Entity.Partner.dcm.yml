@@ -1,0 +1,22 @@
+Broker\Domain\Entity\Partner:
+  type: entity
+  table: partner
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    name:
+      type: string
+      nullable: false
+    identifier:
+      type: string
+      nullable: false
+    status:
+      type: integer
+      nullable: false
+    commission:
+      type: decimal
+      precision: 5
+      scale: 2
