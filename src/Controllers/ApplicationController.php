@@ -6,7 +6,7 @@
  * Time: 16:58
  */
 
-namespace App\Controllers;
+namespace App\controllers;
 
 use Broker\Domain\Service\PreparePartnerRequestsService;
 use App\Base\Persistence\Doctrine\ApplicationRepository;
