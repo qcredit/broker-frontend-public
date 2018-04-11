@@ -1,4 +1,13 @@
 $(document).ready(function() {
+  $('.field input, .field select').each(
+    function(){
+        var val = $(this).val().trim();
+        if (val != ''){
+            // do stuff with the non-valued element
+            $(this).parent().addClass("filled");
+            console.log($(this));
+        }
+    });
   // Temporary input field focused and filled classes
   $(".field input").focusin(function() {
     if(!$(this).next('.rules').length) {
@@ -56,11 +65,12 @@ $(document).ready(function() {
 
 function checkIfInput(a) {
   var $parent = a.parent();
-  if(a.val() == '') {
+  var value = a.val();
+  if(value == '') {
     $parent.addClass('error empty');
     $parent.removeClass('notnumber notemail');
     $parent.find('.rules').text('This field is required');
-  } else if(a.val() != '' && $parent.hasClass('notnumber')) {
+  } else if(value != '' && $parent.hasClass('notnumber')) {
     $parent.removeClass('empty');
   } else {
     $parent.removeClass('error empty');
@@ -70,11 +80,11 @@ function checkIfInput(a) {
 
 function checkIfNumber(a) {
   var $parent = a.parent();
-  if (!a.val().match(/^[0-9]+$/) && a.val()) {
-    console.log('number func');
+  var value = a.val();
+  if (!value.match(/^[0-9]+$/) && value) {
     $parent.addClass('error notnumber');
     $parent.find('.rules').text('Not a number');
-  } else if(!a.val()) {
+  } else if(!value) {
     $parent.addClass('error empty').removeClass('notnumber');
     $parent.find('.rules').text('This field is required');
   } else {
@@ -85,12 +95,12 @@ function checkIfNumber(a) {
 
 function checkIfEmail(a) {
   var $parent = a.parent();
+  var value = a.val();
   var re = /\S+@\S+\.\S+/;
-  console.log(re.test(a.val()));
-  if(!re.test(a.val()) && a.val()) {
+  if(!re.test(value) && value) {
     $parent.addClass('error notemail');
     $parent.find('.rules').text('Not a correct email');
-  } else if(!a.val()) {
+  } else if(!value) {
     $parent.addClass('error empty').removeClass('notemail');
     $parent.find('.rules').text('This field is required');
   } else {
@@ -101,11 +111,12 @@ function checkIfEmail(a) {
 
 function checkIfPhone(a) {
   var $parent = a.parent();
-  var yes = /^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$/im.test(a.val());
-  if(!yes && a.val()) {
+  var value = a.val();
+  var yes = /^(?:\(?\+?48)?(?:[-\.\(\)\s]*(\d)){9}\)?$/im.test(value);
+  if(!yes && value) {
     $parent.addClass('error notphone');
     $parent.find('.rules').text('Not a correct phone number');
-  } else if(!a.val()) {
+  } else if(!value) {
     $parent.addClass('error empty').removeClass('notphone');
     $parent.find('.rules').text('This field is required');
   } else {
@@ -116,11 +127,12 @@ function checkIfPhone(a) {
 
 function checkIfCorrectYear(a) {
   var $parent = a.parent();
-  var year = parseInt(a.val());
+  var value = a.val();
+  var year = parseInt(value);
   if(year <= 1989 || year >= 2019) {
     $parent.addClass('error wrongyear');
     $parent.find('.rules').text('Year has to be between 1990 and 2018');
-  } else if(!a.val()) {
+  } else if(!value) {
     $parent.addClass('error empty').removeClass('wrongyear');
     $parent.find('.rules').text('This field is required');
   } else {
@@ -160,11 +172,10 @@ function checkAccountNumber(a) {
   var $parent = a.parent();
   var value = a.val();
   var yes = /^PL\d{2}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{4}[ ]\d{2}|PL\d{20}$/im.test(a.val());
-  console.log(yes);
-  if(!yes) {
+  if(!yes && value) {
     $parent.addClass('error wrongAccountNo');
     $parent.find('.rules').text('Not a correct IBAN');
-  } else if(!a.val()) {
+  } else if(!value) {
     $parent.addClass('error empty').removeClass('wrongAccountNo');
     $parent.find('.rules').text('This field is required');
   } else {
