@@ -3,7 +3,8 @@
 /* Navigation styles */
 .navbar {
   padding: 1rem;
-  background-color: #e1e1e1; }
+  background-color: #fff;
+  box-shadow: 0px 2px 21px -4px rgba(0, 0, 0, 0.15); }
   .navbar .nav-link {
     font-size: 14px;
     font-weight: bold;
@@ -28,7 +29,7 @@
 .home-hero {
   padding-top: 1.25rem;
   padding-bottom: 1.25rem;
-  background-color: #e1e1e1; }
+  background-color: #eaeaea; }
   .home-hero .home-hero-left h2 {
     text-align: center;
     margin-bottom: 1.25rem; }
@@ -38,8 +39,6 @@
     max-width: 700px;
     background: #fff; }
 
-.landing-form .landing-component-lg {
-  display: none; }
 .landing-form .form-fields {
   justify-content: flex-start; }
 .landing-form .field {
@@ -96,7 +95,9 @@
 @media only screen and (min-width: 768px) {
   .home-hero {
     min-height: 400px;
-    align-items: center; }
+    align-items: center;
+    background: url(../images/hero-bg.jpg) center;
+    background-size: cover; }
     .home-hero .landing-form {
       min-height: 400px; }
       .home-hero .landing-form .field {
@@ -109,11 +110,6 @@
 
   .monthly-installment {
     font-size: 1.25rem; } }
-@media only screen and (min-width: 769px) {
-  .landing-form .landing-component-lg {
-    display: block; }
-  .landing-form .landing-component-sm {
-    display: none; } }
 @media only screen and (min-width: 1400px) {
   .home-hero {
     padding: 3rem 10%; } }
@@ -123,7 +119,7 @@
 .page-footer {
   margin: 5rem 0 0;
   padding: 0;
-  background: #e1e1e1; }
+  background: #eaeaea; }
 
 .footer-contacts span {
   display: block; }
@@ -131,6 +127,8 @@
 .upper-footer {
   padding-top: 3rem;
   padding-bottom: 3rem; }
+  .upper-footer a {
+    color: #333; }
 
 .lower-footer {
   display: flex;
@@ -158,7 +156,12 @@
     font-size: 36px;
     font-weight: bold;
     line-height: 1;
-    text-align: center; }
+    text-align: center;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
   .landing-component-sm .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
 .landing-component-sm select {
@@ -167,6 +170,9 @@
   border: 0; }
   .landing-component-sm select:focus {
     outline: none; }
+
+.landing-component-lg {
+  display: none; }
 
 .range-slider-label {
   margin: 1rem 0 0;
@@ -230,16 +236,42 @@
   .range-slider-label {
     margin: 1rem 0;
     font-size: 1.25rem;
-    font-weight: normal; } }
+    font-weight: normal; }
+
+  .landing-component-lg {
+    display: block; }
+
+  .landing-component-sm {
+    display: none; } }
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px; } }
-.form-fields {
+.loan-form {
+  max-width: 800px;
+  margin: 0 auto 3rem; }
+
+.loan-form-upper {
+  margin-left: -0.9375rem;
+  margin-right: -0.9375rem;
+  padding: 2.5rem 1.25rem;
+  background: #fbfafa; }
+
+.form-fields, .form-block {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-around; }
 
+.form-block {
+  justify-content: flex-start;
+  margin: 2rem 0; }
+
+.form-block p {
+  flex: 0 0 100%;
+  font-size: 1rem;
+  font-weight: bold; }
+
+/* Input fields & select list styles start here */
 .field {
   position: relative;
   flex: 0 0 46%;
@@ -264,9 +296,77 @@
     pointer-events: none;
     transition: 0.2s ease all; }
   .field.filled label, .field.focused label {
-    top: 0.1875rem;
-    font-size: 0.75rem; }
+    top: 0;
+    font-size: 0.75rem !important; }
+  .field select {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.875rem 0.5rem 0;
+    border: 0;
+    border-bottom: 1px solid #999;
+    font-size: 1rem;
+    color: #000;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url(../images/ic_down.png);
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    background-size: 0.8125rem;
+    cursor: pointer; }
+  .field .rules {
+    position: absolute;
+    bottom: -1.875rem;
+    font-size: 0.675rem;
+    color: #CE0000; }
 
+.form-block .field {
+  flex: 1 1 18.75rem; }
+  .form-block .field label {
+    font-weight: normal;
+    color: #000; }
+
+.field.select label {
+  top: 1rem; }
+.field.select .rules {
+  bottom: -2rem; }
+
+.field.select.filled label, .field.select.focused label {
+  top: 0;
+  font-size: 0.75rem; }
+
+/* Error styles */
+.field.error select, .field.error input {
+  border-bottom: 2px solid #CE0000;
+  color: #CE0000; }
+.field.error label {
+  color: #CE0000; }
+
+/* Input fields & select list styles end here */
+@media only screen and (max-width: 420px) {
+  .loan-form .broker-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem 4rem; } }
+@media only screen and (min-width: 420px) {
+  .form-block-submit {
+    display: flex;
+    justify-content: flex-end; } }
+@media only screen and (min-width: 768px) {
+  .loan-form {
+    margin: 3rem auto; }
+
+  .loan-form-upper {
+    margin: 0; }
+
+  .form-block .field {
+    flex: 0 0 46%; } }
+@media only screen and (min-width: 769px) {
+  .form-block {
+    margin: 4rem 0; }
+
+  .loan-form-upper {
+    padding: 2.5rem; } }
 /* Typography */
 * {
   -webkit-font-smoothing: antialiased;
@@ -283,12 +383,14 @@ section > h1 {
 
 /* UTILITIES */
 .broker-btn {
-  padding: .65rem 2rem;
+  padding: .875rem 3rem;
   border-radius: 0;
   border: 0;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 14px; }
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out; }
   .broker-btn:focus {
     outline: none;
     box-shadow: none; }
