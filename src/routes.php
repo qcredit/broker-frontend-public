@@ -22,4 +22,4 @@ $app->get('/admin/users', 'UserController:indexAction');
 $app->map(['GET', 'POST'], '/admin/users/new', 'UserController:newAction');
 $app->get('/admin/users/delete/{id}', 'UserController:deleteAction');
 
-$app->map(['GET', 'POST'], '/admin/login', 'AdminController:loginAction');
+$app->map(['GET', 'POST'], '/admin/login', 'UserController:loginAction');

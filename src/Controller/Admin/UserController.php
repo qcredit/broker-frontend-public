@@ -194,6 +194,28 @@ class UserController extends AbstractController
     return $this->withRedirect('/admin/users');
   }
 
+  public function loginAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+
+    if ($request->isPost())
+    {
+      $payload = $request->getParsedBody();
+      $user = $this->getUserRepository()->getByEmail($payload['email']);
+
+      if (!$user)
+      {
+        return $response->withJson(['error' => 'No such user!']);
+      }
+
+
+
+      return $response->withJson();
+    }
+
+    return $this->render($response, 'admin/login.twig', $data);
+  }
+
   /**
    * @param $id
    * @param $request
