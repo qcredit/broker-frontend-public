@@ -46,6 +46,10 @@ $container['view'] = function($container) {
   return $view;
 };
 
+$container['session'] = function() {
+  return new \SlimSession\Helper;
+};
+
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
 };
@@ -53,7 +57,7 @@ $container['flash'] = function() {
 $container['db'] = function($container) {
   $settings = $container->get('settings')['doctrine'];
 
-  $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/vendor/aasa/broker/src/Persistence/Doctrine/Mappings'], true);
+  $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
 
   $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
 
@@ -62,7 +66,7 @@ $container['db'] = function($container) {
 
 $container['RepositoryFactory'] = function($c)
 {
-  return new \Broker\persistence\doctrine\RepositoryFactory();
+  return new \App\Base\Factory\RepositoryFactory();
 };
 
 $container['UserRepository'] = function($container) {
@@ -76,31 +80,27 @@ $container['PartnerController'] = function($c) {
   $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 
   $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
-  return new \App\Controllers\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
+  return new \App\Controller\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
 };
 
 $container['AdminApplicationController'] = function($c)
 {
   $appRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Application');
   $offerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer');
-  return new \App\Controllers\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
+  return new \App\Controller\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
 };
 
 $container['UserController'] = function($c) {
-  $view = $c->get('view');
-  return new \App\Controllers\UserController($view);
+  $userFactory = new \App\Base\Factory\UserFactory();
+  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $validator = new \App\Base\Validator\UserValidator();
+  return new \App\Controller\Admin\UserController($userRepository, $userFactory, $validator, $c);
 };
 
 $container['HomeController'] = function($c)
 {
   $view = $c->get('view');
-  return new \App\Controllers\HomeController($view);
-};
-
-$container['AdminController'] = function($c)
-{
-  $view = $c->get('view');
-  return new \App\Controllers\AdminController($view);
+  return new \App\Controller\HomeController($view);
 };
 
 $container['PartnerDataMapperRepository'] = function($c)
@@ -144,7 +144,7 @@ $container['ApplicationController'] = function ($c)
     new PartnerRequestFactory()
   );
 
-  return new \App\Controllers\ApplicationController(
+  return new \App\Controller\ApplicationController(
     $prepareService,
     $appRepository,
     $c
@@ -161,11 +161,19 @@ $container['AdminOfferController'] = function($c)
     $c->get('PartnerResponseService')
   );
 
-  return new \App\Controllers\Admin\AdminOfferController(
+  return new \App\Controller\Admin\AdminOfferController(
     $offerUpdateService,
     $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
     $c
   );
+};
+
+$container['LoginController'] = function ($c)
+{
+  $authService = new \App\Base\Components\GoogleAuthenticator();
+  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $authHandler = new \App\Base\Components\AuthHandler($authService, $userRepository, $c);
+  return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
 
 $brokerSettings = $container->get('settings')['broker'];

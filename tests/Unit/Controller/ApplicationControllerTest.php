@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Controller;
 
-use App\Controllers\ApplicationController;
+use App\Controller\ApplicationController;
 use Broker\System\BaseTest;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
