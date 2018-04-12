@@ -1,0 +1,37 @@
+.form-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-around;
+}
+.field {
+  position: relative;
+  flex: 0 0 46%;
+  margin: 0 2% 1rem;
+  input {
+    width: 100%;
+    padding: 1rem 0 .5rem 0;
+    border: 0;
+    border-bottom: 1px solid #999;
+    margin-bottom: 1px;
+    &:focus {
+      outline: none;
+      margin-bottom: 0;
+      border-bottom: 2px solid $blue;
+    }
+  }
+  label{
+    position: absolute;
+    left: 0;
+    top: 1.125rem;
+    color: #333;
+    font-size: 0.875rem;
+    font-weight: bold;
+    pointer-events: none;
+    transition: 0.2s ease all;
+  }
+  &.filled label, &.focused label{
+    top: 0.1875rem;
+    font-size: 0.75rem;
+  }
+}

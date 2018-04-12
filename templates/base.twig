@@ -3,41 +3,87 @@
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="google-signin-client_id" content="876809952895-st56us9uskma01899f546k6vobo9m2sn.apps.googleusercontent.com">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Playfair+Display:700" rel="stylesheet">
+    <link rel="stylesheet" href="src/styles/style.css">
     <title>{{ block('title') }}</title>
-    <style>
-        h1 {
-            color: #719e40;
-            font-family: 'Lato', sans-serif;
-            font-weight: 200;
-            margin-bottom: 0;
-        }
-    </style>
 </head>
 <body>
-
-<div class="container">
-    <div class="page-header text-center my-5">
-        <h1>{{ block('title') }}</h1>
+  <header class="page-header">
+      <nav class="navbar fixed-top navbar-expand-md navbar-light">
+      <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/broker_logo.png" alt="logo"></a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link text-uppercase" href="/">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-uppercase" href="/product">Product</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-uppercase" href="#">Contact</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link nav-link-outline text-uppercase" href="/application">Apply for a loan</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+<div class="container-fluid">
+  {% block hero %}
+  {% endblock %}
+  </div>
+  <div class="container">
+      {% block container %}
+      {% endblock %}
+  </div>
+  <footer class="page-footer">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="container">
+          <section class="row upper-footer">
+            <div class="col-sm-12 col-md-6 col-lg-3 footer-section">
+              <p class="footer-heading font-weight-bold text-uppercase">BROKER</p>
+              <nav class="navigation footer-navigation">
+                <ul class="list-unstyled text-uppercase">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="/about/">Product</a></li>
+                  <li><a href="/contact/">Contact</a></li>
+                  <li><a href="/application">Apply for a loan</a></li>
+                </ul>
+              </nav>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3 footer-section">
+              <p class="footer-heading font-weight-bold text-uppercase">Contact</p>
+              <p class="footer-contacts">
+                <span><strong>E-mail:</strong> <a href="mailto:broker@brokers.pl">brokers@brokers.pl</a></span>
+                <span><strong>Address:</strong> Lorem ipsum 28, 115 50,
+                Tallinn, Estonia</span>
+                <span><strong>Phone:</strong> <a href="tel:+4834311254">+4834311254</a></span>
+              </p>
+            </div>
+          </section>
+        </div>
+      </div>
+      <section class="row lower-footer text-center">
+        <a class="navbar-brand" href="#"><img src="/src/images/broker_logo.png" alt="logo"></a>
+        <p>Copyright © 2018 Brokers - Lorem ipsum 28, 115 50, Tallinn, Estonia</p>
+      </section>
     </div>
-    {% block container %}
-        <p>Where did all the money go?</p>
-    {% endblock %}
-</div>
+  </footer>
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="//code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-{% if block('endBody') is defined %}
-    {{ block('endBody') }}
-{% endif %}
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+<script src="src/scripts/rangeslider.min.js"></script>
+<script src="src/scripts/functions.js"></script>
 </body>
 </html>
