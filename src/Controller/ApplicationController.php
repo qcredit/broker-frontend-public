@@ -134,7 +134,7 @@ class ApplicationController
     //$data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($data)->run();
+      $app = $this->prepareService->setData($request->getParsedBody())->run();
       $data['errors'] = $app->getErrors();
       $data['application'] = $app;
 

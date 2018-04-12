@@ -76,6 +76,11 @@ $container['UserRepository'] = function($container) {
   );*/
 };
 
+$container['AdminController'] = function($c)
+{
+  return new \App\Controller\Admin\AdminController($c);
+};
+
 $container['PartnerController'] = function($c) {
   $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 

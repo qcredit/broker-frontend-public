@@ -11,7 +11,7 @@ $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->get('/', 'HomeController:indexAction');
 
 $app->group('/admin', function() {
-  $this->get('/', 'AdminController:indexAction');
+  $this->get('', 'AdminController:indexAction');
   $this->map(['GET', 'POST'], '/partners/new', 'PartnerController:newAction');
   $this->map(['GET', 'POST'], '/partners/update/{id}', 'PartnerController:updateAction');
   $this->get('/partners/{id}', 'PartnerController:viewAction');
