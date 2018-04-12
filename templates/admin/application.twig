@@ -50,28 +50,100 @@
       <h4>Loan applicant information</h4>
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <p><strong>Personal</strong></p>
           <table>
-            <tr>
-              <td class="key">Name: </td>
-              <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
-            </tr>
-            <tr>
-              <td class="key">Id:</td>
-              <td class="value">{{ application.pin }}</td>
-            </tr>
-            <tr>
-              <td class="key">Phone: </td>
-              <td class="value">{{ application.phone }}</td>
-            </tr>
-            <tr>
-              <td class="key">E-mail:</td>
-              <td class="value">{{ application.email }}</td>
-            </tr>
-            <tr>
-              <td class="key">Account num:</td>
-              <td class="value">{{ application.account.accountNumber }}</td>
-            </tr>
+            <thead>
+              <tr>
+                <th>Personal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="key">Name: </td>
+                <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
+              </tr>
+              <tr>
+                <td class="key">Id:</td>
+                <td class="value">{{ application.data.pin }}</td>
+              </tr>
+              <tr>
+                <td class="key">Phone: </td>
+                <td class="value">{{ application.phone }}</td>
+              </tr>
+              <tr>
+                <td class="key">E-mail:</td>
+                <td class="value">{{ application.email }}</td>
+              </tr>
+              <tr>
+                <td class="key">Account num:</td>
+                <td class="value">{{ application.data.accountNr }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <table>
+            <thead>
+              <tr>
+                <th>Housing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="key">Address: </td>
+                <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
+              </tr>
+              <tr>
+                <td class="key">Residential type:</td>
+                <td class="value">{{ application.data.pin }}</td>
+              </tr>
+              <tr>
+                <td class="key">Residence: </td>
+                <td class="value">{{ application.phone }}</td>
+              </tr>
+              <tr>
+                <td class="key">Living expenses:</td>
+                <td class="value">{{ application.email }}</td>
+              </tr>
+              <tr>
+                <td class="key">People living:</td>
+                <td class="value">{{ application.data.accountNr }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <table>
+            <thead>
+              <tr>
+                <th colspan="2">Employment & Education</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="key">Education: </td>
+                <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
+              </tr>
+              <tr>
+                <td class="key">Occupation type:</td>
+                <td class="value">{{ application.data.pin }}</td>
+              </tr>
+              <tr>
+                <td class="key">Position: </td>
+                <td class="value">{{ application.phone }}</td>
+              </tr>
+              <tr>
+                <td class="key">Work start:</td>
+                <td class="value">{{ application.email }}</td>
+              </tr>
+              <tr>
+                <td class="key">Net income:</td>
+                <td class="value">{{ application.data.accountNr }}</td>
+              </tr>
+              <tr>
+                <td class="key">Revenue yearly:</td>
+                <td class="value">{{ application.data.accountNr }}</td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
