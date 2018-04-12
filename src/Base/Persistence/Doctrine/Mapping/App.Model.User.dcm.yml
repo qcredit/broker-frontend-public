@@ -1,0 +1,23 @@
+App\Model\User:
+  type: entity
+  table: user
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: IDENTITY
+  fields:
+    email:
+      length: 255
+      type: string
+      nullable: false
+    accessLevel:
+      column: access_level
+      type: integer
+    authKey:
+      column: auth_key
+      type: string
+      nullable: true
+    createdAt:
+      column: created_at
+      type: datetime

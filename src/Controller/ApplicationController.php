@@ -6,11 +6,10 @@
  * Time: 16:58
  */
 
-namespace App\Controllers;
+namespace App\Controller;
 
-use Broker\Domain\Service\ApplicationOfferListService;
 use Broker\Domain\Service\PreparePartnerRequestsService;
-use Broker\Persistence\Doctrine\ApplicationRepository;
+use App\Base\Persistence\Doctrine\ApplicationRepository;
 
 class ApplicationController
 {

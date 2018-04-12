@@ -6,7 +6,7 @@
  * Time: 12:42
  */
 
-namespace App\Controllers;
+namespace App\Controller;
 
 use Slim\Views\Twig;
 
