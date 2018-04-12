@@ -3,23 +3,26 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 use App\Controller\UserController;
+use App\Middleware\Authenticator;
 // Routes
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->get('/', 'HomeController:indexAction');
 
-$app->get('/admin', 'AdminController:indexAction');
-$app->map(['GET', 'POST'], '/admin/partners/new', 'PartnerController:newAction');
-$app->map(['GET', 'POST'], '/admin/partners/update/{id}', 'PartnerController:updateAction');
-$app->get('/admin/partners/{id}', 'PartnerController:viewAction');
-$app->get('/admin/partners', 'PartnerController:indexAction');
-$app->get('/admin/applications', 'AdminApplicationController:indexAction');
-$app->get('/admin/applications/{id}', 'AdminApplicationController:viewAction');
-$app->get('/admin/offers/update/{id}', 'AdminOfferController:updateAction');
+$app->group('/admin', function() {
+  $this->get('/', 'AdminController:indexAction');
+  $this->map(['GET', 'POST'], '/partners/new', 'PartnerController:newAction');
+  $this->map(['GET', 'POST'], '/partners/update/{id}', 'PartnerController:updateAction');
+  $this->get('/partners/{id}', 'PartnerController:viewAction');
+  $this->get('/partners', 'PartnerController:indexAction');
+  $this->get('/applications', 'AdminApplicationController:indexAction');
+  $this->get('/applications/{id}', 'AdminApplicationController:viewAction');
+  $this->get('/offers/update/{id}', 'AdminOfferController:updateAction');
 
-$app->get('/admin/users', 'UserController:indexAction');
-$app->map(['GET', 'POST'], '/admin/users/new', 'UserController:newAction');
-$app->get('/admin/users/delete/{id}', 'UserController:deleteAction');
+  $this->get('/users', 'UserController:indexAction');
+  $this->map(['GET', 'POST'], '/users/new', 'UserController:newAction');
+  $this->get('/users/delete/{id}', 'UserController:deleteAction');
+})->add(new Authenticator($app));
 
-$app->map(['GET', 'POST'], '/admin/login', 'UserController:loginAction');
+$app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');

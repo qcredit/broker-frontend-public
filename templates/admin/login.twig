@@ -28,10 +28,10 @@
           console.log(response.error);
         }
         else if (response.success) {
-          window.redirect('/admin');
+          window.location.href = '/admin/partners';
         }
       };
-      xhr.send('idtoken=' + id_token + '&email=' + profile.getEmail());
+      xhr.send('idToken=' + id_token + '&email=' + profile.getEmail());
     }
 
     function signOut() {

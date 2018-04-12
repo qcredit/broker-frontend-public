@@ -46,6 +46,10 @@ $container['view'] = function($container) {
   return $view;
 };
 
+$container['session'] = function() {
+  return new \SlimSession\Helper;
+};
+
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
 };
@@ -162,6 +166,14 @@ $container['AdminOfferController'] = function($c)
     $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
     $c
   );
+};
+
+$container['LoginController'] = function ($c)
+{
+  $authService = new \App\Base\Components\GoogleAuthenticator();
+  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $authHandler = new \App\Base\Components\AuthHandler($authService, $userRepository, $c);
+  return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
 
 $brokerSettings = $container->get('settings')['broker'];

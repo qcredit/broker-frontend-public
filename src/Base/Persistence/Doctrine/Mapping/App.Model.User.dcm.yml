@@ -14,6 +14,10 @@ App\Model\User:
     accessLevel:
       column: access_level
       type: integer
+    authKey:
+      column: auth_key
+      type: string
+      nullable: true
     createdAt:
       column: created_at
       type: datetime

@@ -31,6 +31,7 @@ class CreateUserTable extends AbstractMigration
       $table = $this->table('user');
       $table->addColumn('email', 'string')
         ->addColumn('access_level', 'integer', ['limit' => \Phinx\Db\Adapter\MysqlAdapter::INT_TINY])
+        ->addColumn('auth_key', 'string', ['null' => true])
         ->addColumn('created_at', 'datetime');
 
       $table->addIndex(['email'], ['name' => 'idx_email', 'unique' => true])

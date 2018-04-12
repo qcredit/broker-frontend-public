@@ -8,9 +8,10 @@
 
 namespace App\Model;
 
+use App\Base\Interfaces\UserIdentityInterface;
 use Broker\Domain\Entity\AbstractEntity;
 
-class User extends AbstractEntity
+class User extends AbstractEntity implements UserIdentityInterface
 {
   const ACCESS_LVL_ADMIN = 1;
   /**
@@ -25,6 +26,10 @@ class User extends AbstractEntity
    * @var integer
    */
   protected $accessLevel;
+  /**
+   * @var string
+   */
+  protected $authKey;
   /**
    * @var \DateTime
    */
@@ -100,5 +105,37 @@ class User extends AbstractEntity
   {
     $this->createdAt = $createdAt;
     return $this;
+  }
+
+  public function getRole()
+  {
+    // TODO: Implement getRole() method.
+  }
+
+  /**
+   * @return string
+   */
+  public function getAuthKey()
+  {
+    return $this->authKey;
+  }
+
+  /**
+   * @return $this
+   */
+  public function generateAuthKey()
+  {
+    $this->authKey = bin2hex(openssl_random_pseudo_bytes(16));
+    return $this;
+  }
+
+  public function isGuest(): bool
+  {
+    // TODO: Implement isGuest() method.
+  }
+
+  public function validateAuthKey(string $authKey): bool
+  {
+    return $authKey === $this->authKey;
   }
 }

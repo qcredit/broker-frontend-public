@@ -216,6 +216,23 @@ class UserController extends AbstractController
     return $this->render($response, 'admin/login.twig', $data);
   }
 
+  protected function login($body)
+  {
+    $idToken = $body['idToken'];
+    $clientId = '876809952895-st56us9uskma01899f546k6vobo9m2sn.apps.googleusercontent.com';
+
+    $client = new \Google_Client(['client_id' => $clientId]);
+    $payload = $client->verifyToken($idToken);
+    if (!$payload)
+    {
+      return false;
+    }
+
+    $userId = $payload['sub'];
+
+    return true;
+  }
+
   /**
    * @param $id
    * @param $request
