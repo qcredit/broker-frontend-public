@@ -91,7 +91,7 @@ class Authenticator
 
     $user = $this->getUser($session->get('uID'));
 
-    if (!$user || $user->validateAuthKey($session->get('authKey')))
+    if (!$user || !$user->validateAuthKey($session->get('authKey')))
     {
       return $this->denyAccess($response);
     }
