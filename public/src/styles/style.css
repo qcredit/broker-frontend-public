@@ -303,7 +303,7 @@
   display: flex;
   flex-direction: column;
   margin: 2rem 0;
-  border: 1px solid #d7d7d7; }
+  border: 1px solid #e6e9ee; }
 
 .loan-offer-head {
   display: flex;
@@ -328,7 +328,7 @@
   justify-content: center;
   margin: 1rem 0; }
   .loan-offer-body span {
-    margin: .5rem 1rem;
+    margin: 0 1rem;
     font-size: .875rem; }
 
 .loan-offer-footer {

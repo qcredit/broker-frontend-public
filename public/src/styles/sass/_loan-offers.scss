@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   margin: 2rem 0;
-  border: 1px solid #d7d7d7;
+  border: 1px solid $bluegray;
 }
 .loan-offer-head {
   display: flex;
@@ -38,7 +38,7 @@
   justify-content: center;
   margin: 1rem 0;
   span {
-    margin: .5rem 1rem;
+    margin: 0 1rem;
     font-size: .875rem;
   }
 
