@@ -1,0 +1,64 @@
+/* VARS */
+/* TYPOGRAPHY */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale; }
+
+h1, h2, h3, h4, h5, h6, p, span, a, strong, button, input, textarea, table {
+  font-family: 'Lato', sans-serif; }
+
+h3 {
+  margin: 1rem 0 3rem;
+  text-align: center; }
+
+h4 {
+  font-size: 1.25rem; }
+
+/* IMPORTS */
+/* Navigation styles */
+.navbar {
+  padding: 1rem;
+  background-color: #fff;
+  box-shadow: 0px 2px 21px -4px rgba(0, 0, 0, 0.15); }
+  .navbar .nav-link {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0 10px;
+    color: rgba(0, 0, 0, 0.7); }
+  .navbar .nav-link-outline {
+    display: inline-block;
+    border: 2px solid;
+    padding: .38rem .5rem; }
+
+.navbar-light .navbar-nav .nav-link {
+  color: rgba(0, 0, 0, 0.6); }
+  .navbar-light .navbar-nav .nav-link:hover {
+    color: black; }
+.navbar-light .navbar-nav .active > .nav-link {
+  color: black; }
+.navbar-light .navbar-toggler {
+  border: 0;
+  outline: none; }
+
+/* STYLES FOR ALL THE TABLES IS /ADMIN/ */
+.table {
+  font-size: 0.875rem; }
+  .table thead {
+    color: #c7c6c8; }
+    .table thead th {
+      border-top: 0;
+      border-bottom-width: 1px;
+      text-transform: uppercase; }
+  .table tbody tr {
+    transition: all .1s ease-in-out; }
+    .table tbody tr:hover {
+      background: #f1f1f1; }
+
+.status-accepted {
+  color: #07b846; }
+
+/* BASIC STYLES */
+.container {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  color: #333; }

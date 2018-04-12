@@ -6,19 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Playfair+Display:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link rel="stylesheet" href="/src/styles/admin.css">
     <title>{{ block('title') }}</title>
 </head>
 <body>
   <header class="page-header">
       <nav class="navbar navbar-expand-md navbar-light">
-      <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/broker_logo.png" alt="logo"></a>
+      <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/crm_broker_logo.png" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
+        <ul class="navbar-nav mr-auto">
           <li class="nav-item active">
             <a class="nav-link text-uppercase" href="/">Dashboard <span class="sr-only">(current)</span></a>
           </li>
@@ -29,6 +29,9 @@
             <a class="nav-link text-uppercase" href="#">Partners</a>
           </li>
         </ul>
+        <div class="login-info my-2 my-lg-0">
+         <span><strong>admin@aasaglobal.com</strong></span>
+       </div>
       </div>
     </nav>
   </header>

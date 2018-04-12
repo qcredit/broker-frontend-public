@@ -1,0 +1,24 @@
+/* STYLES FOR ALL THE TABLES IS /ADMIN/ */
+.table {
+  font-size: 0.875rem;
+  thead {
+    color: $gray;
+    th {
+      border-top: 0;
+      border-bottom-width: 1px;
+      text-transform: uppercase;
+    }
+  }
+  tbody {
+    tr {
+      transition: all .1s ease-in-out;
+      &:hover {
+        background: #f1f1f1;
+      }
+    }
+  }
+}
+
+.status-accepted {
+  color: $accept;
+}

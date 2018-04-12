@@ -1,1 +1,34 @@
+/* VARS */
+$gray: #c7c6c8;
+$blue: #0097d5;
+$accept: #07b846;
+$hold: #ffc328;
+$error: #e00404;
 
+/* TYPOGRAPHY */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,h2,h3,h4,h5,h6, p, span, a, strong, button, input, textarea, table {
+  font-family: 'Lato', sans-serif;
+}
+h3 {
+  margin: 1rem 0 3rem;
+  text-align: center;
+}
+h4 {
+  font-size: 1.25rem;
+}
+/* IMPORTS */
+@import "../../sass/header";
+@import "tables";
+
+
+/* BASIC STYLES */
+
+.container {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  color: #333;
+}
