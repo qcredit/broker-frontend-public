@@ -87,7 +87,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     else if ($code == 400)
     {
       $partnerResponse->setOk(false);
-      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), $response);
+      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), json_decode($result, true), $response);
     }
     else {
       $partnerResponse->setOk(false);
