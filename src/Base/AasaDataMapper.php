@@ -8,7 +8,10 @@
 
 namespace App\Base;
 
+use App\Model\ChooseOfferForm;
+use Broker\Domain\Entity\AbstractEntity;
 use Broker\Domain\Entity\Application;
+use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
@@ -122,6 +125,16 @@ class AasaDataMapper implements PartnerDataMapperInterface
   /**
    * @return array
    */
+  public function getChooseOfferPayload()
+  {
+    return [
+      'signingMethod' => ChooseOfferForm::ATTR_SIGN_METHOD
+    ];
+  }
+
+  /**
+   * @return array
+   */
   public function getResponsePayload()
   {
     return [
@@ -136,16 +149,23 @@ class AasaDataMapper implements PartnerDataMapperInterface
   /**
    * @param $item
    * @param $key
-   * @param $application
+   * @param $data
    */
-  public function mapper(&$item, $key, $application)
+  public function mapper(&$item, $key, $data)
   {
     if (is_array($item))
     {
-      array_walk($item, [$this, 'mapper'], $application);
+      array_walk($item, [$this, 'mapper'], $data);
     }
     else {
-      $item = $application->getAttribute($item);
+      if ($data instanceof AbstractEntity)
+      {
+        $item = $data->getAttribute($item);
+      }
+      else
+      {
+        $item = $data[$item];
+      }
     }
   }
 
@@ -161,6 +181,23 @@ class AasaDataMapper implements PartnerDataMapperInterface
     $payload['eMarketing'] = 'Y';
     $payload['pMarketing'] = 'Y';
     $payload['tMarketing'] = 'Y';
+
+    return json_encode($payload);
+  }
+
+  /**
+   * @param array $data
+   * @param PartnerRequest $request
+   * @return string
+   */
+  public function mapDataToRequest(array $data, PartnerRequest $request)
+  {
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
+    {
+      $payload = $this->getChooseOfferPayload();
+    }
+
+    array_walk($payload, [$this, 'mapper'], $data);
 
     return json_encode($payload);
   }
@@ -271,5 +308,15 @@ class AasaDataMapper implements PartnerDataMapperInterface
     });
 
     return $output;
+  }
+
+  /**
+   * @return array
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getUpdateSchema(): array
+  {
+    return json_decode($this->getConfigFile(), true)['updateSchema'];
   }
 }
