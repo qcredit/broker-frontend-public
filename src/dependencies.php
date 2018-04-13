@@ -134,12 +134,14 @@ $container['ApplicationController'] = function ($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
     new ApplicationFactory(),
     $appRepository,
     $factory->createGateway($c->get('db'), 'Partner'),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('PartnerDataMapperRepository'),
+    $schemaValidator
   );
 
   $prepareService = new PreparePartnerRequestsService(
