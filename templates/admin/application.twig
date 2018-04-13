@@ -11,14 +11,23 @@
       </div>
   {% endif %}
   <div class="row">
-      <div class="col col-sm-12 col-md-6 col-lg-4">
-          <h4>Loan information</h4>
-          <p>Amount: {{ application.loanAmount }}</p>
-          <p>Duration: {{ application.loanTerm }}</p>
-          <p>Insurance: yes</p>
+      <div class="col col-sm-12 col-md-6 col-lg-4 application-loan-info">
+          <h5>Loan information</h5>
+          <table class="application-information-table">
+            <tbody>
+              <tr>
+                <td class="key">Amount: </td>
+                <td class="value">{{ application.loanAmount }}</td>
+              </tr>
+              <tr>
+                <td class="key">Duration: </td>
+                <td class="value">{{ application.loanTerm }}</td>
+              </tr>
+            </tbody>
+          </table>
       </div>
-      <div class="col col-sm-12 col-md-6 col-lg-6">
-          <h4>Loan status</h4>
+      <div class="col col-sm-12 col-md-6 col-lg-6 application-loan-accepted-table">
+          <h5>Loan status</h5>
           <table class="table">
               <thead>
                   <tr>
@@ -45,12 +54,12 @@
             </table>
       </div>
   </div>
-  <div class="row">
+  <div class="row application-information-table-container">
     <div class="col-sm-12">
-      <h4>Loan applicant information</h4>
+      <h5>Loan applicant information</h5>
       <div class="row">
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <table>
+          <table class="application-information-table">
             <thead>
               <tr>
                 <th>Personal</th>
@@ -73,15 +82,25 @@
                 <td class="key">E-mail:</td>
                 <td class="value">{{ application.email }}</td>
               </tr>
+              {% if application.data.idCardNumber %}
+              <tr>
+                <td class="key">ID card:</td>
+                <td class="value">{{ application.data.documentNr }}</td>
+              </tr>
+              {% endif %}
               <tr>
                 <td class="key">Account num:</td>
-                <td class="value">{{ application.data.accountNr }}</td>
+                <td class="value account-number-value">{{ application.data.accountNr }}</td>
+              </tr>
+              <tr>
+                <td class="key">Marital status:</td>
+                <td class="value">{{ application.data.maritalStatusType }}</td>
               </tr>
             </tbody>
           </table>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <table>
+          <table class="application-information-table">
             <thead>
               <tr>
                 <th>Housing</th>
@@ -90,7 +109,11 @@
             <tbody>
               <tr>
                 <td class="key">Address: </td>
-                <td class="value">{{ application.data.street }}, {{ application.data.houseNumber }}, {{ application.data.apartmentNumber }}, {{ application.data.postalCode }}, {{ application.data.city }}</td>
+                <td class="value">{{ application.data.street }},
+                                  {{ application.data.houseNr }}
+                                  {% if application.data.apartmentNr %} - {% endif %}
+                                  {{ application.data.apartmentNr }},
+                                  {{ application.data.city }}</td>
               </tr>
               <tr>
                 <td class="key">Residential type:</td>
@@ -100,19 +123,11 @@
                 <td class="key">Residence: </td>
                 <td class="value">{{ application.data.propertyType }}</td>
               </tr>
-              <tr>
-                <td class="key">Living expenses:</td>
-                <td class="value">{{ application.email }}</td>
-              </tr>
-              <tr>
-                <td class="key">People living:</td>
-                <td class="value">2</td>
-              </tr>
             </tbody>
           </table>
         </div>
         <div class="col-sm-12 col-md-6 col-lg-4">
-          <table>
+          <table class="application-information-table">
             <thead>
               <tr>
                 <th colspan="2">Employment & Education</th>
@@ -127,21 +142,33 @@
                 <td class="key">Occupation type:</td>
                 <td class="value">{{ application.data.trade }}</td>
               </tr>
+              {% if application.data.currentStudy %}
+              <tr>
+                <td class="key">School:</td>
+                <td class="value">{{ application.data.currentStudy }}</td>
+              </tr>
+              {% endif %}
+              {% if application.data.incomeSourceType %}
+              <tr>
+                <td class="key">Income type</td>
+                <td class="value">{{ application.data.incomeSourceType }}</td>
+              </tr>
               <tr>
                 <td class="key">Position: </td>
                 <td class="value">{{ application.data.position }}</td>
               </tr>
               <tr>
-                <td class="key">Work start:</td>
-                <td class="value">{{ application.data.monthSince }} {{ application.data.yearSince }}</td>
+                <td class="key">Employer: </td>
+                <td class="value">{{ application.data.employerName }}</td>
               </tr>
+              <tr>
+                <td class="key">Work start:</td>
+                <td class="value">{{ application.data.monthSince }}.{{ application.data.yearSince }}</td>
+              </tr>
+              {% endif %}
               <tr>
                 <td class="key">Net income:</td>
-                <td class="value">{{ application.data.netPerMonth }}</td>
-              </tr>
-              <tr>
-                <td class="key">Income type</td>
-                <td class="value">{{ application.data.sourceType }}</td>
+                <td class="value">{{ application.data.netPerMonth }} PLN</td>
               </tr>
             </tbody>
           </table>
@@ -151,7 +178,7 @@
   </div>
   <div class="row">
       <div class="col">
-          <h4>Partners' offers</h4>
+          <h5>Partners' offers</h5>
           {% if application.offers %}
           <table class="table">
               <thead>
@@ -171,7 +198,7 @@
                           <td>{{ offer.partner.name }}</td>
                           <td>{% if offer.loanAmount %}{{ offer.loanAmount }} PLN{% endif %}</td>
                           <td>{{ offer.remoteId }}</td>
-                          <td>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                          <td class="{% if offer.isInProcess %}status-in-process{% elseif offer.isPaidOut %}status-paidout{% else %}status-rejected{% endif %}">{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
                           <td><a href="/admin/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
                       </tr>
                   {% endfor %}

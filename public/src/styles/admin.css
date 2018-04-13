@@ -54,11 +54,65 @@ h4 {
     .table tbody tr:hover {
       background: #f1f1f1; }
 
-.status-accepted {
+.application-information-table-container {
+  margin: 3rem -30px;
+  padding: 2rem 1rem;
+  background: #f3f3f3; }
+
+.application-information-table {
+  font-weight: bold; }
+  .application-information-table th {
+    padding-top: 1rem;
+    padding-bottom: 1rem; }
+  .application-information-table td {
+    vertical-align: top; }
+  .application-information-table .key, .application-information-table .value {
+    padding: .25rem 0; }
+  .application-information-table .key {
+    padding-right: 2rem;
+    color: #adadad; }
+
+.application-loan-info .application-information-table {
+  margin-top: .875rem; }
+
+.status-accepted, .status-paidout {
+  font-weight: bold;
   color: #07b846; }
 
+.status-in-process {
+  font-weight: bold;
+  color: #ffc328; }
+
+.status-rejected {
+  font-weight: bold;
+  color: #e00404; }
+
 /* BASIC STYLES */
+.broker-btn {
+  padding: .675rem 3rem;
+  border-radius: 0;
+  border: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out; }
+  .broker-btn:focus {
+    outline: none;
+    box-shadow: none; }
+  .broker-btn:hover {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19); }
+
+.broker-btn-blue {
+  color: #fff;
+  background: #0097d5; }
+  .broker-btn-blue:hover {
+    color: #fff; }
+
 .container {
   margin-top: 4rem;
   margin-bottom: 4rem;
   color: #333; }
+
+.nav-item.active a {
+  border-bottom: 2px solid #0097d5; }

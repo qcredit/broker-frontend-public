@@ -26,9 +26,35 @@ h4 {
 
 
 /* BASIC STYLES */
-
+.broker-btn {
+  padding: .675rem 3rem;
+  border-radius: 0;
+  border: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  &:hover {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+.broker-btn-blue {
+  color: #fff;
+  background: $blue;
+  &:hover {
+    color: #fff;
+  }
+}
 .container {
   margin-top: 4rem;
   margin-bottom: 4rem;
   color: #333;
+}
+.nav-item.active a {
+  border-bottom: 2px solid $blue;
 }

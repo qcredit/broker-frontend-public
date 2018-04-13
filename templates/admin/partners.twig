@@ -1,11 +1,26 @@
 {% extends 'admin.twig' %}
 {% block title %}Partners{% endblock %}
 {% block container %}
-    <div class="container">
-        <h3>Partners</h3>
-        <p class="small"><a href="/admin/partners/new">New</a></p>
+    <h3>Partners</h3>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Commission</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
         {% for partner in partners %}
-            <li><a href="/admin/partners/{{ partner.id }}">{{ partner.name }}</a></li>
+        <tr>
+          <td>{{ partner.id }}</td>
+          <td>{{ partner.name }}</td>
+          <td>{{ partner.commission }}</td>
+          <td class="text-right"><a href="/admin/partners/{{ partner.id }}" class="text-uppercase">Details</a></td>
+        </tr>
         {% endfor %}
-    </div>
+      </tbody>
+    </table>
+    <p><a class="btn broker-btn broker-btn-blue" href="/admin/partners/new">Add new partner</a></p>
 {% endblock %}

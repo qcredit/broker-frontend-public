@@ -18,7 +18,40 @@
     }
   }
 }
-
-.status-accepted {
+.application-information-table-container {
+  margin: 3rem -30px;
+  padding: 2rem 1rem;
+  background: #f3f3f3;
+}
+.application-information-table {
+  font-weight: bold;
+  th {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  td {
+    vertical-align: top;
+  }
+  .key, .value {
+    padding: .25rem 0;
+  }
+  .key {
+    padding-right: 2rem;
+    color: #adadad;
+  }
+}
+.application-loan-info .application-information-table {
+  margin-top: .875rem;
+}
+.status-accepted, .status-paidout {
+  font-weight: bold;
   color: $accept;
+}
+.status-in-process {
+  font-weight: bold;
+  color: $hold;
+}
+.status-rejected {
+  font-weight: bold;
+  color: $error;
 }
