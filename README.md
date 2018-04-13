@@ -11,13 +11,13 @@ Clone the project and run the following commands:
 
     docker-compose up -d
     docker-compose exec php vendor/bin/phinx migrate
-    docker-compose exec php vendor/bin/phinx seed:run -s PartnerSeed -s ApplicationSeed -s OfferSeed    
+    docker-compose exec php vendor/bin/phinx seed:run -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed
 
 Now you should have a local development up and running on port 8100 with some initial sample data.
 
 ## Updating the base system
 
-As the base system lives in another repository, you can update the local version to latest master branch (substitute $PWD with %cd% when using Windows):
+As the base system lives in another repository, you can update the local version manually to latest master branch (substitute $PWD with %cd% when using Windows):
 
     docker run --rm --interactive --volume $PWD:/app composer update aasa/broker
     
@@ -25,3 +25,10 @@ As the base system lives in another repository, you can update the local version
 
     docker-compose up -d
     
+In case someone else has pulled in a new core version and updated the remote repository, then running the application will always update your local
+core system as well.
+
+
+### Running tests
+
+    docker-compose exec php vendor/bin/phpunit tests/Unit --bootstrap phpunit-bootstrap.php
