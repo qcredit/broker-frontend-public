@@ -90,15 +90,15 @@
             <tbody>
               <tr>
                 <td class="key">Address: </td>
-                <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
+                <td class="value">{{ application.data.street }}, {{ application.data.houseNumber }}, {{ application.data.apartmentNumber }}, {{ application.data.postalCode }}, {{ application.data.city }}</td>
               </tr>
               <tr>
                 <td class="key">Residential type:</td>
-                <td class="value">{{ application.data.pin }}</td>
+                <td class="value">{{ application.data.residentialType }}</td>
               </tr>
               <tr>
                 <td class="key">Residence: </td>
-                <td class="value">{{ application.phone }}</td>
+                <td class="value">{{ application.data.propertyType }}</td>
               </tr>
               <tr>
                 <td class="key">Living expenses:</td>
@@ -106,7 +106,7 @@
               </tr>
               <tr>
                 <td class="key">People living:</td>
-                <td class="value">{{ application.data.accountNr }}</td>
+                <td class="value">2</td>
               </tr>
             </tbody>
           </table>
@@ -121,27 +121,27 @@
             <tbody>
               <tr>
                 <td class="key">Education: </td>
-                <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
+                <td class="value">{{ application.data.educationType }}</td>
               </tr>
               <tr>
                 <td class="key">Occupation type:</td>
-                <td class="value">{{ application.data.pin }}</td>
+                <td class="value">{{ application.data.trade }}</td>
               </tr>
               <tr>
                 <td class="key">Position: </td>
-                <td class="value">{{ application.phone }}</td>
+                <td class="value">{{ application.data.position }}</td>
               </tr>
               <tr>
                 <td class="key">Work start:</td>
-                <td class="value">{{ application.email }}</td>
+                <td class="value">{{ application.data.monthSince }} {{ application.data.yearSince }}</td>
               </tr>
               <tr>
                 <td class="key">Net income:</td>
-                <td class="value">{{ application.data.accountNr }}</td>
+                <td class="value">{{ application.data.netPerMonth }}</td>
               </tr>
               <tr>
-                <td class="key">Revenue yearly:</td>
-                <td class="value">{{ application.data.accountNr }}</td>
+                <td class="key">Income type</td>
+                <td class="value">{{ application.data.sourceType }}</td>
               </tr>
             </tbody>
           </table>
