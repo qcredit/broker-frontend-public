@@ -64,7 +64,13 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
     {
       $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
-      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getRequestPayload()->getRemoteId());
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+    }
+    elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
+    {
+      $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
     }
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);

@@ -315,8 +315,8 @@ class AasaDataMapper implements PartnerDataMapperInterface
    * @throws InvalidConfigException
    * @throws \Exception
    */
-  public function getUpdateSchema(): array
+  public function getChooseRequestSchema(): array
   {
-    return json_decode($this->getConfigFile(), true)['updateSchema'];
+    return json_decode($this->getConfigFile(), true)['chooseRequestSchema'];
   }
 }

@@ -384,5 +384,90 @@
         }
       }
     }
+  },
+  "chooseRequestSchema": {
+    "type": "object",
+    "properties": {
+      "paymentFreeMonth": {
+        "$ref": "#/definitions/paymentFreeMonthRequest"
+      },
+      "signingMethod": {
+        "type": "string",
+        "enum": [
+          "SignOnPaper",
+          "CallMe",
+          "SignWithBlueMedia",
+          "OTP"
+        ]
+      },
+      "signingToken": {
+        "type": "string"
+      },
+      "generateESignUrl": {
+        "type": "boolean"
+      },
+      "update": {
+        "$ref": "#/definitions/updateRequest"
+      }
+    },
+    "definitions": {
+      "paymentFreeMonthRequest": {
+        "properties": {
+          "enable": {
+            "type": "boolean"
+          },
+          "installmentDate": {
+            "type": "string",
+            "example": "2017-01-08"
+          },
+          "installmentAmount": {
+            "type": "number",
+            "example": "224.58"
+          }
+        }
+      },
+      "updateRequest": {
+        "properties": {
+          "insurance": {
+            "$ref": "#/definitions/insuranceRequest"
+          },
+          "firstPaymentDate": {
+            "type": "string",
+            "example": "2018-05-08"
+          },
+          "payoutMethod": {
+            "type": "string",
+            "enum": [
+              "Account",
+              "Pikasiirto",
+              "Giro",
+              "BlueCash"
+            ]
+          },
+          "pepConsent": {
+            "type": "string",
+            "enum": [
+              "Y",
+              "N"
+            ]
+          },
+          "pepConsentFamily": {
+            "type": "string",
+            "enum": [
+              "Y",
+              "N"
+            ]
+          },
+          "autoGiro": {
+            "type": "string",
+            "default": "Y",
+            "enum": [
+              "Y",
+              "N"
+            ]
+          }
+        }
+      }
+    }
   }
 }

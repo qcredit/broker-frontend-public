@@ -130,10 +130,22 @@ $container['PartnerResponseService'] = function($c)
   );
 };
 
+$container['ChooseOfferService'] = function($c)
+{
+  return new \Broker\Domain\Service\ChooseOfferService(
+    $c->get('PartnerRequestsService'),
+    $c->get('PartnerResponseService'),
+    new PartnerRequestFactory(),
+    new PartnerDataMapperRepository(),
+    new \App\Base\Validator\SchemaValidator()
+  );
+};
+
 $container['ApplicationController'] = function ($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
+  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
   $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
@@ -154,6 +166,8 @@ $container['ApplicationController'] = function ($c)
   return new \App\Controller\ApplicationController(
     $prepareService,
     $appRepository,
+    $offerRepository,
+    $c->get('ChooseOfferService'),
     $c
   );
 };
