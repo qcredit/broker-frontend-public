@@ -19,9 +19,14 @@
         <div class="form-group">
           <label for="signingMethod">Signing method:</label>
           <select id="signingMethod" name="signingMethod">
-            <option value="ema">Ema</option>
-            <option value="lendur">Lendur</option>
+            <option value="SignOnPaper">Sign on paper</option>
+            <option value="CallMe">Call me</option>
+            <option value="SignWithBlueMedia">Sign with blue media</option>
+            <option value="OTP">OTP</option>
           </select>
+          {% if offer.errors.signingMethod %}
+            <small class="form-text text-danger">{{ offer.errors.signingMethod }}</small>
+          {% endif %}
         </div>
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Let's go!</button>

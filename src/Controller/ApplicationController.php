@@ -257,7 +257,6 @@ class ApplicationController extends AbstractController
       if (!$service->run())
       {
         $data['offer']->setErrors($service->getOffer()->getErrors());
-        print_r($service->getOffer()->getErrors());
       }
     }
 

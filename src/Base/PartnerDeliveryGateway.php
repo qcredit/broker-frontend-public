@@ -63,12 +63,12 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
     elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
     {
-      $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
+      $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
       curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
     }
     elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
     {
-      $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
+      $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
       curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
       curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
     }
@@ -97,7 +97,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
     else {
       $partnerResponse->setOk(false);
-      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), json_decode($result,true), $response);
+      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), json_decode($result,true) ?? [], $response);
     }
 
     return $partnerResponse;

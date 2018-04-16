@@ -50,8 +50,8 @@ class SchemaValidator implements SchemaValidatorInterface
    */
   public function validate(string $data, string $schema)
   {
-    $data = json_decode($data, true);
-    $schema = json_decode($schema, true);
+    $data = json_decode($data);
+    $schema = json_decode($schema);
 
     $this->getValidator()->validate($data, $schema);
   }
