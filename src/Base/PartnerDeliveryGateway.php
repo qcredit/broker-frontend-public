@@ -71,6 +71,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
       $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
       curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
       curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
     }
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -83,6 +84,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
 
     $partnerResponse = new PartnerResponse();
     $partnerResponse->setPartner($request->getPartner())
+      ->setOffer($request->getOffer())
       ->setType($request->getType())
       ->setResponseBody($result);
 
@@ -97,7 +99,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
     else {
       $partnerResponse->setOk(false);
-      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), json_decode($result,true) ?? [], $response);
+      Log::critical(sprintf('%s API request returned unhandled response (code %s)!', $request->getPartner()->getIdentifier(), $code), json_decode($result,true) ?? [], $response);
     }
 
     return $partnerResponse;

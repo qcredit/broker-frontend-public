@@ -11,4 +11,5 @@ namespace App\Model;
 class ChooseOfferForm
 {
   const ATTR_SIGN_METHOD = 'signingMethod';
+  const ATTR_FIRST_PAYMENT_DATE = 'firstPaymentDate';
 }

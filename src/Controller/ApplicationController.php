@@ -228,7 +228,7 @@ class ApplicationController extends AbstractController
       'application' => $application
     ];
 
-    return $this->getContainer()->get('view')->render($response, 'application/offer-list.twig', $data);
+    return $this->render($response, 'application/offer-list.twig', $data);
   }
 
   /**
@@ -242,7 +242,7 @@ class ApplicationController extends AbstractController
   {
     $data = [];
     $data['application'] = $this->findEntity($args['hash'], $request, $response);
-    $data['offer'] = $this->getOfferRepository()->getOneBy(['id' => $args['id']]);
+    $data['offer'] = $this->getOfferRepository()->getOneBy(['id' => $args['id'], 'rejectedDate' => null]);
 
     if (!$data['offer'])
     {
@@ -256,11 +256,27 @@ class ApplicationController extends AbstractController
 
       if (!$service->run())
       {
-        $data['offer']->setErrors($service->getOffer()->getErrors());
+        $data['offer'] = $service->getOffer();
+      }
+      else
+      {
+        return $response->withRedirect('/application/thankyou');
       }
     }
 
     return $this->render($response, 'application/choose-offer.twig', $data);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   */
+  public function thankYouAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+    return $this->render($response, 'application/thankyou.twig', $data);
   }
 
   /**

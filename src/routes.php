@@ -7,6 +7,7 @@ use App\Middleware\Authenticator;
 // Routes
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
+$app->get('/application/thankyou', 'ApplicationController:thankYouAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
 $app->get('/', 'HomeController:indexAction');

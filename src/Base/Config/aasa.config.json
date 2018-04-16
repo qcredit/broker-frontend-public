@@ -426,6 +426,19 @@
           }
         }
       },
+      "insuranceRequest": {
+        "properties": {
+          "enable": {
+            "type": "boolean"
+          },
+          "aasaAsBeneficiaryConsent": {
+            "type": "boolean"
+          },
+          "insuranceMarketingConsent": {
+            "type": "boolean"
+          }
+        }
+      },
       "updateRequest": {
         "properties": {
           "insurance": {
