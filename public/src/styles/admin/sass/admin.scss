@@ -1,0 +1,60 @@
+/* VARS */
+$gray: #c7c6c8;
+$blue: #0097d5;
+$accept: #07b846;
+$hold: #ffc328;
+$error: #e00404;
+
+/* TYPOGRAPHY */
+* {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+h1,h2,h3,h4,h5,h6, p, span, a, strong, button, input, textarea, table {
+  font-family: 'Lato', sans-serif;
+}
+h3 {
+  margin: 1rem 0 3rem;
+  text-align: center;
+}
+h4 {
+  font-size: 1.25rem;
+}
+/* IMPORTS */
+@import "../../sass/header";
+@import "tables";
+
+
+/* BASIC STYLES */
+.broker-btn {
+  padding: .675rem 3rem;
+  border-radius: 0;
+  border: 0;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.1s ease-in-out;
+  &:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  &:hover {
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19);
+  }
+}
+.broker-btn-blue {
+  color: #fff;
+  background: $blue;
+  &:hover {
+    color: #fff;
+  }
+}
+.container {
+  margin-top: 4rem;
+  margin-bottom: 4rem;
+  color: #333;
+}
+.nav-item.active a {
+  border-bottom: 2px solid $blue;
+}

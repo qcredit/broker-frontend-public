@@ -1,61 +1,210 @@
-{% extends 'base.twig' %}
+{% extends 'admin.twig' %}
 {% block title %}{{ application.id }}{% endblock %}
 {% block container %}
-    <div class="container">
-        {% if flash %}
-            <div class="row">
-                {% if flash.success %}
-                    <div class="alert alert-success" role="alert">{{ flash.success }}</div>
-                {% elseif flash.error %}
-                    <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
-                {% endif %}
-            </div>
-        {% endif %}
-        <div class="row">
-            <div class="col col-sm-4">
-                <h4>Loan information</h4>
-                <div class="col">
-                    <p>Amount: {{ application.loanAmount }}</p>
-                    <p>Duration: {{ application.loanTerm }}</p>
-                </div>
-            </div>
-            <div class="col col-sm-4">
-                <h4>Loan status</h4>
-            </div>  aaaa
+  {% if flash %}
+      <div class="row">
+          {% if flash.success %}
+              <div class="alert alert-success" role="alert">{{ flash.success }}</div>
+          {% elseif flash.error %}
+              <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
+          {% endif %}
+      </div>
+  {% endif %}
+  <div class="row">
+      <div class="col col-sm-12 col-md-6 col-lg-4 application-loan-info">
+          <h5>Loan information</h5>
+          <table class="application-information-table">
+            <tbody>
+              <tr>
+                <td class="key">Amount: </td>
+                <td class="value">{{ application.loanAmount }}</td>
+              </tr>
+              <tr>
+                <td class="key">Duration: </td>
+                <td class="value">{{ application.loanTerm }}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+      <div class="col col-sm-12 col-md-6 col-lg-6 application-loan-accepted-table">
+          <h5>Loan status</h5>
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Lender Id</th>
+                      <th>Lender Id</th>
+                      <th>Amount</th>
+                      <th>Status</th>
+                  </tr>
+              </thead>
+              <tbody>
+                <tr>
+                    <td>5435432</td>
+                    <td>1231232</td>
+                    <td>6000 PLN</td>
+                    <td class="status-accepted">Accepted</td>
+                </tr>
+                <tr>
+                    <td>7676755</td>
+                    <td>1442122</td>
+                    <td>5000 PLN</td>
+                    <td class="status-accepted">Accepted</td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+  </div>
+  <div class="row application-information-table-container">
+    <div class="col-sm-12">
+      <h5>Loan applicant information</h5>
+      <div class="row">
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <table class="application-information-table">
+            <thead>
+              <tr>
+                <th>Personal</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="key">Name: </td>
+                <td class="value">{{ application.firstName }} {{ application.lastName }}</td>
+              </tr>
+              <tr>
+                <td class="key">Id:</td>
+                <td class="value">{{ application.data.pin }}</td>
+              </tr>
+              <tr>
+                <td class="key">Phone: </td>
+                <td class="value">{{ application.phone }}</td>
+              </tr>
+              <tr>
+                <td class="key">E-mail:</td>
+                <td class="value">{{ application.email }}</td>
+              </tr>
+              {% if application.data.idCardNumber %}
+              <tr>
+                <td class="key">ID card:</td>
+                <td class="value">{{ application.data.documentNr }}</td>
+              </tr>
+              {% endif %}
+              <tr>
+                <td class="key">Account num:</td>
+                <td class="value account-number-value">{{ application.data.accountNr }}</td>
+              </tr>
+              <tr>
+                <td class="key">Marital status:</td>
+                <td class="value">{{ application.data.maritalStatusType }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-
-        <div class="row">
-            <div class="col">
-                <h4>Partners' offers</h4>
-                <div class="col">
-                    {% if application.offers %}
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Lender Id</th>
-                                <th>Lender Name</th>
-                                <th>Amount</th>
-                                <th>Remote Id</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for offer in application.offers %}
-                                <tr>
-                                    <td>{{ offer.partner.id }}</td>
-                                    <td>{{ offer.partner.name }}</td>
-                                    <td>{{ offer.loanAmount }}</td>
-                                    <td>{{ offer.remoteId }}</td>
-                                    <td>{% if offer.isAccepted %}Accepted{% elseif offer.isPaidOut %}Paid out{% elseif offer.isInProcess %}In Process{% else %}Rejected{% endif %}</td>
-                                    <td><a href="/admin/offers/update/{{ offer.id }}"><small class="text-uppercase">update</small></a></td>
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% endif %}
-                </div>
-            </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <table class="application-information-table">
+            <thead>
+              <tr>
+                <th>Housing</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="key">Address: </td>
+                <td class="value">{{ application.data.street }},
+                                  {{ application.data.houseNr }}
+                                  {% if application.data.apartmentNr %} - {% endif %}
+                                  {{ application.data.apartmentNr }},
+                                  {{ application.data.city }}</td>
+              </tr>
+              <tr>
+                <td class="key">Residential type:</td>
+                <td class="value">{{ application.data.residentialType }}</td>
+              </tr>
+              <tr>
+                <td class="key">Residence: </td>
+                <td class="value">{{ application.data.propertyType }}</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
+        <div class="col-sm-12 col-md-6 col-lg-4">
+          <table class="application-information-table">
+            <thead>
+              <tr>
+                <th colspan="2">Employment & Education</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="key">Education: </td>
+                <td class="value">{{ application.data.educationType }}</td>
+              </tr>
+              <tr>
+                <td class="key">Occupation type:</td>
+                <td class="value">{{ application.data.trade }}</td>
+              </tr>
+              {% if application.data.currentStudy %}
+              <tr>
+                <td class="key">School:</td>
+                <td class="value">{{ application.data.currentStudy }}</td>
+              </tr>
+              {% endif %}
+              {% if application.data.incomeSourceType %}
+              <tr>
+                <td class="key">Income type</td>
+                <td class="value">{{ application.data.incomeSourceType }}</td>
+              </tr>
+              <tr>
+                <td class="key">Position: </td>
+                <td class="value">{{ application.data.position }}</td>
+              </tr>
+              <tr>
+                <td class="key">Employer: </td>
+                <td class="value">{{ application.data.employerName }}</td>
+              </tr>
+              <tr>
+                <td class="key">Work start:</td>
+                <td class="value">{{ application.data.monthSince }}.{{ application.data.yearSince }}</td>
+              </tr>
+              {% endif %}
+              <tr>
+                <td class="key">Net income:</td>
+                <td class="value">{{ application.data.netPerMonth }} PLN</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="row">
+      <div class="col">
+          <h5>Partners' offers</h5>
+          {% if application.offers %}
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Lender Id</th>
+                      <th>Lender Name</th>
+                      <th>Amount</th>
+                      <th>Remote Id</th>
+                      <th>Status</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for offer in application.offers %}
+                      <tr>
+                          <td>{{ offer.partner.id }}</td>
+                          <td>{{ offer.partner.name }}</td>
+                          <td>{% if offer.loanAmount %}{{ offer.loanAmount }} PLN{% endif %}</td>
+                          <td>{{ offer.remoteId }}</td>
+                          <td class="{% if offer.isAccepted %}status-accepted{% elseif offer.isInProcess %}status-in-process{% elseif offer.isPaidOut %}status-paidout{% else %}status-rejected{% endif %}">{% if offer.isAccepted %}Accepted{% elseif offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                          <td><a href="/admin/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          {% endif %}
+      </div>
+  </div>
 {% endblock %}
