@@ -1,5 +1,5 @@
 {% extends 'admin.twig' %}
-{% block title %}{{ application.id }}{% endblock %}
+{% block title %}Application {{ application.id }} details{% endblock %}
 {% block container %}
   {% if flash %}
       <div class="row">
@@ -177,7 +177,7 @@
     </div>
   </div>
   <div class="row">
-      <div class="col">
+      <div class="col-sm-12">
           <h5>Partners' offers</h5>
           {% if application.offers %}
           <table class="table">

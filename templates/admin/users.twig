@@ -1,37 +1,35 @@
 {% extends 'admin.twig' %}
 {% block title %}Users{% endblock %}
 {% block container %}
-    <div class="container">
       {% if flash %}
-          <div class="row">
-            {% if flash.success %}
-                <div class="alert alert-success" role="alert">{{ flash.success }}</div>
-            {% elseif flash.error %}
-                <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
-            {% endif %}
-          </div>
-      {% endif %}
-        <h3>Users</h3>
-        <p class="small"><a href="/admin/users/new">New</a></p>
-        <table class="table">
-          <thead>
+        <div class="row">
+          {% if flash.success %}
+              <div class="alert alert-success" role="alert">{{ flash.success }}</div>
+          {% elseif flash.error %}
+              <div class="alert alert-danger" role="alert">{{ flash.error }}</div>
+          {% endif %}
+        </div>
+    {% endif %}
+      <h3>Users</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Email</th>
+            <th>Created</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in users %}
             <tr>
-              <th>ID</th>
-              <th>Email</th>
-              <th>Created</th>
-              <th></th>
+              <td>{{ user.id }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.createdAt|date('d/m/Y') }}</td>
+              <td><small><a href="/admin/users/delete/{{ user.id }}">Delete</a></small></td>
             </tr>
-          </thead>
-          <tbody>
-            {% for user in users %}
-              <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.createdAt|date('d/m/Y') }}</td>
-                <td><small><a href="/admin/users/delete/{{ user.id }}">Delete</a></small></td>
-              </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-    </div>
+          {% endfor %}
+        </tbody>
+      </table>
+      <a href="/admin/users/new" class="btn broker-btn broker-btn-blue">Add new</a>
 {% endblock %}
