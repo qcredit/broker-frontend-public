@@ -102,7 +102,11 @@ $container['HomeController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\HomeController($view);
 };
-
+$container['ContactController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\ContactController($view);
+};
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();

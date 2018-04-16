@@ -9,6 +9,7 @@ use App\Middleware\Authenticator;
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->get('/', 'HomeController:indexAction');
+$app->get('/contact', 'ContactController:indexAction');
 
 $app->group('/admin', function() {
   $this->get('/', 'AdminController:indexAction');
