@@ -211,5 +211,7 @@
   <div class="form-block form-block-submit">
     <button type="submit" class="broker-btn broker-btn-gold">Submit form</button>
   </div>
+  <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+  <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
 </form>
 {% endblock %}

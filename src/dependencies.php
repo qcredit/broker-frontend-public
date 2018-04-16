@@ -36,22 +36,28 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
-$container['view'] = function($container) {
-  $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
-
-  // Instantiate and add Slim specific extension
-  $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
-  $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-
-  return $view;
-};
-
 $container['session'] = function() {
   return new \SlimSession\Helper;
 };
 
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
+};
+
+$container['csrf'] = function()
+{
+  return new \Slim\Csrf\Guard();
+};
+
+$container['view'] = function($container) {
+  $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
+
+  // Instantiate and add Slim specific extension
+  $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+  $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
+  $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+
+  return $view;
 };
 
 $container['db'] = function($container) {
