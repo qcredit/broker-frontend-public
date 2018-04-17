@@ -9,6 +9,7 @@
 namespace App\Base\Validator;
 
 use Broker\Domain\Interfaces\SchemaValidatorInterface;
+use JsonSchema\Constraints\Constraint;
 use JsonSchema\Validator;
 
 class SchemaValidator implements SchemaValidatorInterface
@@ -47,13 +48,14 @@ class SchemaValidator implements SchemaValidatorInterface
   /**
    * @param string $data
    * @param string $schema
+   * @return int
    */
   public function validate(string $data, string $schema)
   {
     $data = json_decode($data);
     $schema = json_decode($schema);
 
-    $this->getValidator()->validate($data, $schema);
+    return $this->getValidator()->validate($data, $schema, Constraint::CHECK_MODE_COERCE_TYPES);
   }
 
   /**
@@ -69,6 +71,46 @@ class SchemaValidator implements SchemaValidatorInterface
    */
   public function getErrors()
   {
-    return $this->getValidator()->getErrors();
+    return $this->getFormattedErrors();
+  }
+
+  /**
+   * @return array
+   */
+  protected function getFormattedErrors()
+  {
+    $fatErrors = $this->getValidator()->getErrors();
+    $errors = [];
+
+    foreach ($fatErrors as $error)
+    {
+      if (isset($error['property']))
+      {
+        $parts = explode('.', $error['property']);
+        if ($parts)
+        {
+          $errors[end($parts)] = $this->beautifyErrorMessage($error['message']);
+        }
+        else {
+          $errors[$error['property']] = $this->beautifyErrorMessage($error['message']);
+        }
+      }
+    }
+
+    return $errors;
+  }
+
+  /**
+   * @param $message
+   * @return string
+   */
+  protected function beautifyErrorMessage($message)
+  {
+    if (strpos($message, 'Does not have a value in the enumeration') !== false)
+    {
+      return 'Please provide a value in provided range.';
+    }
+
+    return $message;
   }
 }
