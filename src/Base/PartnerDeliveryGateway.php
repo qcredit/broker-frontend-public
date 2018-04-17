@@ -63,8 +63,15 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
     elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
     {
-      $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
-      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getRequestPayload()->getRemoteId());
+      $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+    }
+    elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
+    {
+      $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
     }
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -77,6 +84,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
 
     $partnerResponse = new PartnerResponse();
     $partnerResponse->setPartner($request->getPartner())
+      ->setOffer($request->getOffer())
       ->setType($request->getType())
       ->setResponseBody($result);
 
@@ -87,11 +95,11 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     else if ($code == 400)
     {
       $partnerResponse->setOk(false);
-      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), $response);
+      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), json_decode($result, true), $response);
     }
     else {
       $partnerResponse->setOk(false);
-      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), json_decode($result,true), $response);
+      Log::critical(sprintf('%s API request returned unhandled response (code %s)!', $request->getPartner()->getIdentifier(), $code), json_decode($result,true) ?? [], $response);
     }
 
     return $partnerResponse;

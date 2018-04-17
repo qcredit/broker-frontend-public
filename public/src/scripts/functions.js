@@ -1,9 +1,12 @@
 $(document).ready(function(){
+  checkSize();
+  $(window).resize(checkSize);
+
   // Loan landing form functions for laptops and desktops start here
   $(function() {
     var $loanAmountSlider = $('.landing-component-lg #loanAmount');
     var $loanAmount = $('.landing-component-lg #loanAmountOutput');
-    var $loanDurationSlider = $('.landing-component-lg #loanDurationSlider');
+    var $loanDurationSlider = $('.landing-component-lg #loanTerm');
     var $loanDuration = $('.landing-component-lg #loanDurationOutput');
 
     $loanAmountSlider.rangeslider({
@@ -58,20 +61,20 @@ $(document).ready(function(){
   // To get values of selected options
   //$('.landing-component-sm #loanAmountOutput').val();
   //$('.landing-component-sm #loanDurationOutput').val();
-
-
-  // Temporary input field focused and filled classes
-  $(".field input").focusin(function() {
-    $(this).parent().addClass("focused");
-  });
-  $(".field input").focusout(function() {
-    $(this).parent().removeClass("focused");
-  });
-  $(".field input").on("input", function() {
-    if($(this).val()){
-      $(this).parent().addClass("filled");
-    } else {
-      $(this).parent().removeClass("filled");
-    }
-  });
 });
+
+function checkSize() {
+    if ($(".landing-component-sm").css("display") == "block" && $(".landing-component-lg").css("display") == "none"){
+        // your code here
+        $('.landing-component-lg .landing-form-amount input').removeAttr('id');
+        $('.landing-component-lg .landing-form-duration input').removeAttr('id');
+        $('.landing-component-sm .landing-form-amount select').attr('id','loanAmount');
+        $('.landing-component-sm .landing-form-duration select').attr('id','loanTerm');
+
+    } else if ($(".landing-component-lg").css("display") == "block" && $(".landing-component-sm").css("display") == "none") {
+      $('.landing-component-sm .landing-form-duration select').removeAttr('id');
+      $('.landing-component-sm .landing-form-amount select').removeAttr('id');
+      $('.landing-component-lg .landing-form-amount input').attr('id','loanAmount');
+      $('.landing-component-lg .landing-form-duration input').attr('id','loanTerm');
+    }
+}

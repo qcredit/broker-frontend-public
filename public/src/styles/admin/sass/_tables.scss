@@ -1,0 +1,57 @@
+/* STYLES FOR ALL THE TABLES IS /ADMIN/ */
+.table {
+  font-size: 0.875rem;
+  thead {
+    color: $gray;
+    th {
+      border-top: 0;
+      border-bottom-width: 1px;
+      text-transform: uppercase;
+    }
+  }
+  tbody {
+    tr {
+      transition: all .1s ease-in-out;
+      &:hover {
+        background: #f1f1f1;
+      }
+    }
+  }
+}
+.application-information-table-container {
+  margin: 3rem -30px;
+  padding: 2rem 1rem;
+  background: #f3f3f3;
+}
+.application-information-table {
+  font-weight: bold;
+  th {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  td {
+    vertical-align: top;
+  }
+  .key, .value {
+    padding: .25rem 0;
+  }
+  .key {
+    padding-right: 2rem;
+    color: #adadad;
+  }
+}
+.application-loan-info .application-information-table {
+  margin-top: .875rem;
+}
+.status-accepted, .status-paidout {
+  font-weight: bold;
+  color: $accept;
+}
+.status-in-process {
+  font-weight: bold;
+  color: $hold;
+}
+.status-rejected {
+  font-weight: bold;
+  color: $error;
+}

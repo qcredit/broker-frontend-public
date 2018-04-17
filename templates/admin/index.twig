@@ -1,0 +1,32 @@
+{% extends 'admin.twig' %}
+{% block title %}Dashboard{% endblock %}
+
+{% block container %}
+  <div class="container">
+    <table class="table">
+      <caption>Partners data</caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Applications</th>
+          <th>Accepted</th>
+          <th>Paid out</th>
+          <th>Rejected</th>
+          <th>In Progress</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for partner in partners %}
+          <tr>
+            <td>{{ partner.name }}</td>
+            <td>{{ partner.total }}</td>
+            <td>{{ partner.accepted }}</td>
+            <td>{{ partner.paidOut }}</td>
+            <td>{{ partner.rejected }}</td>
+            <td>{{ partner.inProcess }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

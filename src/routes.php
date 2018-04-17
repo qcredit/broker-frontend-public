@@ -7,12 +7,14 @@ use App\Middleware\Authenticator;
 // Routes
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
+$app->get('/application/thankyou', 'ApplicationController:thankYouAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
+$app->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
 $app->get('/', 'HomeController:indexAction');
 $app->get('/contact', 'ContactController:indexAction');
 
 $app->group('/admin', function() {
-  $this->get('/', 'AdminController:indexAction');
+  $this->get('', 'AdminController:indexAction');
   $this->map(['GET', 'POST'], '/partners/new', 'PartnerController:newAction');
   $this->map(['GET', 'POST'], '/partners/update/{id}', 'PartnerController:updateAction');
   $this->get('/partners/{id}', 'PartnerController:viewAction');
