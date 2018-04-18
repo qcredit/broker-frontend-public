@@ -66,6 +66,7 @@ $(document).ready(function(){
   // To get values of selected options
   //$('.landing-component-sm #loanAmountOutput').val();
   //$('.landing-component-sm #loanDurationOutput').val();
+  $('.loan-offer-container:first-child').addClass('featured');
 });
 
 function calculateMonthly(amount,months) {
@@ -102,4 +103,4 @@ function checkSize() {
     } else {
       $(this).parent().removeClass("filled");
     }
-});
+  });
