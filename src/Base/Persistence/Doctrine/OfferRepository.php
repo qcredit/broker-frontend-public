@@ -24,13 +24,4 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
   {
     return $this->getBy(['applicationId' => $application->getId()]) ?? [];
   }
-
-  public function getActiveOfferById(int $id)
-  {
-    $criteria = Criteria::create();
-    $criteria->where(Criteria::expr()->isNull('chosenDate'))
-      ->andWhere(Criteria::expr()->eq('id', $id));
-
-    return $this->getOneBy(['id' => $id, 'chosenDate' => null]);
-  }
 }

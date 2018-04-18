@@ -242,7 +242,7 @@ class ApplicationController extends AbstractController
   {
     $data = [];
     $data['application'] = $this->findEntity($args['hash'], $request, $response);
-    $data['offer'] = $this->getOfferRepository()->getActiveOfferById($args['id']);
+    $data['offer'] = $this->getOfferRepository()->getOneBy(['id' => $args['id'], 'rejectedDate' => null, 'chosenDate' => null]);
 
     if (!$data['offer'])
     {
