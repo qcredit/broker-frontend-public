@@ -13,6 +13,7 @@ $(document).ready(function(){
         polyfill: false
       }).on('input', function() {
           $loanAmount.val(this.value);
+          calculateMonthly($loanAmountSlider.val(), $loanDurationSlider.val());
       });
     $loanAmount.on('change', function() {
       $loanAmountSlider.val(this.value).change();
@@ -22,6 +23,7 @@ $(document).ready(function(){
         polyfill: false
       }).on('input', function() {
           $loanDuration.val(this.value);
+          calculateMonthly($loanAmountSlider.val(), $loanDurationSlider.val());
       });
     $loanDuration.on('change', function() {
       $loanDurationSlider.val(this.value).change();
@@ -63,6 +65,12 @@ $(document).ready(function(){
   //$('.landing-component-sm #loanDurationOutput').val();
 });
 
+function calculateMonthly(amount,months) {
+  console.log(amount,months);
+  var monthlyInstallment = Math.round((amount/months)*1.3);
+  console.log(monthlyInstallment);
+  $('.monthly-installment').text('PLN '+monthlyInstallment);
+}
 function checkSize() {
     if ($(".landing-component-sm").css("display") == "block" && $(".landing-component-lg").css("display") == "none"){
         // your code here
