@@ -25,6 +25,11 @@ class UserSeed extends AbstractSeed
           'email' => 'hainer.savimaa@aasaglobal.com',
           'access_level' => 1,
           'created_at' => '2018-04-11 10:11:12'
+        ],
+        [
+          'email' => 'leive.turi@aasaglobal.com',
+          'access_level' => 1,
+          'created_at' => '2018-04-18 11:12:13'
         ]
       ];
 
