@@ -468,4 +468,12 @@ body {
 .home-about-right img {
   max-width: 100%; }
 
+.about-image-container .image-container img {
+  max-width: 100%; }
+.about-image-container .about-text {
+  margin-top: 3rem; }
+  .about-image-container .about-text p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6; }
+
 /* Media queries */
