@@ -476,4 +476,8 @@ body {
     margin-bottom: 1.5rem;
     line-height: 1.6; }
 
+.terms-container {
+  font-size: 0.875rem;
+  line-height: 1.6; }
+
 /* Media queries */
