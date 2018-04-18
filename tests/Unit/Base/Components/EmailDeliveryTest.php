@@ -139,6 +139,9 @@ class EmailDeliveryTest extends BaseTest
 
   public function testSend()
   {
+    $mock = $this->getMockBuilder(EmailDelivery::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['setupClient', 'setupMessages'])
 
   }
 

@@ -49,14 +49,22 @@ class EmailDelivery implements MessageDeliveryInterface
     // TODO: Implement send() method.
   }
 
+  /**
+   * @param Message $message
+   * @return $this
+   */
   public function setMessage(Message $message)
   {
-    // TODO: Implement setMessage() method.
+    $this->message = $message;
+    return $this;
   }
 
+  /**
+   * @return Message
+   */
   public function getMessage(): Message
   {
-    // TODO: Implement getMessage() method.
+    return $this->message;
   }
 
   /**
