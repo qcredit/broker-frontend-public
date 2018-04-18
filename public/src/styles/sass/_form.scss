@@ -14,11 +14,11 @@
     border: 0;
     border-bottom: 1px solid #999;
     margin-bottom: 1px;
-    &:focus {
-      outline: none;
-      margin-bottom: 0;
-      border-bottom: 2px solid $blue;
-    }
+  }
+  input:focus, textarea:focus {
+    outline: none;
+    margin-bottom: 0;
+    border-bottom: 2px solid $blue;
   }
   label{
     position: absolute;
@@ -34,4 +34,24 @@
     top: 0.1875rem;
     font-size: 0.75rem;
   }
+}
+
+/* CONTACT PAGE FORM */
+.contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label{
+  top: -0.8875rem;
+}
+.contact-form .submit {
+  display: flex;
+  justify-content: flex-end;
+}
+textarea {
+  width: 100%;
+  padding-top: 0.5rem;
+  border: 0;
+  border-bottom: 1px solid #999;
+  outline: none;
+  resize: none;
+}
+.contact-information > span {
+  display: block;
 }

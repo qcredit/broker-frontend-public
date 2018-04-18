@@ -61,13 +61,13 @@ $(document).ready(function(){
 
 
   // Temporary input field focused and filled classes
-  $(".field input").focusin(function() {
+  $(".field input, .field textarea").focusin(function() {
     $(this).parent().addClass("focused");
   });
-  $(".field input").focusout(function() {
+  $(".field input, .field textarea").focusout(function() {
     $(this).parent().removeClass("focused");
   });
-  $(".field input").on("input", function() {
+  $(".field input, .field textarea").on("input", function() {
     if($(this).val()){
       $(this).parent().addClass("filled");
     } else {

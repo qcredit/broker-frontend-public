@@ -29,6 +29,6 @@ class ContactController
    */
   public function indexAction($request, $response)
   {
-    return $this->view->render($response, 'contact/index.twig');
+    return $this->view->render($response, 'contact.twig');
   }
 }

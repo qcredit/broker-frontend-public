@@ -56,11 +56,11 @@ body {
 }
 
 /* Home page How it works section */
-.home-how-block {
+.circle-block {
   display: flex;
   margin-bottom: 2rem;
   line-height: 1.3;
-  .home-how-block-step {
+  .circle-block-step {
     color: $bluegray;
     font-size: 0.875rem;
     font-weight: bold;
@@ -68,20 +68,35 @@ body {
   p {
     margin-bottom: 0;
   }
-  .home-how-block-heading {
+  .circle-block-heading {
     margin-top: -2px;
     color: black;
     font-size: 1rem;
   }
-  .home-how-block-description {
+  .circle-block-description, .circle-block-description a {
     color: rgba(0,0,0,0.5);
     font-size: 0.875rem;
   }
 }
-.home-how-block-icon{
+.circle-block-icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 75px;
+  height: 75px;
+  width: 75px;
   margin-right: 1.25rem;
+  background: url(../images/step_icon.svg) no-repeat center;
+  background-size: 100%;
   img {
-    width: 75px;
+    width: 30px;
+  }
+}
+
+.contact-page-blocks {
+  margin-bottom: 3rem;
+  .circle-block {
+    margin-bottom: 1rem;
   }
 }
 
