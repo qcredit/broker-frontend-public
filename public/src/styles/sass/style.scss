@@ -127,4 +127,28 @@ body {
   line-height: 1.6;
 }
 
+.thank-you-row {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
 /* Media queries */
+
+@media only screen and (min-width: 340px) {
+  .thank-you-row {
+    padding: 1rem 1rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .thank-you-row {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .thank-you-row {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}
