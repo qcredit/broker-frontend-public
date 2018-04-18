@@ -1,31 +1,29 @@
 {% extends 'admin.twig' %}
 {% block title %}Applications{% endblock %}
 {% block container %}
-    <div class="container">
-        <h3>Applications</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Amount</th>
-                    <th>Term</th>
-                    <th>Status</th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-            {% for app in applications %}
-                <tr>
-                    <th>{{ app.id }}</th>
-                    <td>{{ app.fullName }}</td>
-                    <td>{{ app.loanAmount }}</td>
-                    <td>{{ app.loanTerm }}</td>
-                    <td>{{ app.status }}</td>
-                    <td><a href="/admin/applications/{{ app.id }}">Details</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
+  <h3>Applications</h3>
+  <table class="table">
+      <thead>
+          <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Amount</th>
+              <th>Term</th>
+              <th>Status</th>
+              <th></th>
+          </tr>
+      </thead>
+      <tbody>
+      {% for app in applications %}
+          <tr>
+              <th>{{ app.id }}</th>
+              <td>{{ app.fullName }}</td>
+              <td>{{ app.loanAmount }} PLN</td>
+              <td>{{ app.loanTerm }}</td>
+              <td>{{ app.status }}</td>
+              <td><a href="/admin/applications/{{ app.id }}">Details</a></td>
+          </tr>
+      {% endfor %}
+      </tbody>
+  </table>
 {% endblock %}

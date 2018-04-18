@@ -1,9 +1,29 @@
-.form-fields {
+.loan-form {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+}
+.loan-form-upper {
+  margin-left: -0.9375rem;
+  margin-right: -0.9375rem;
+  padding: 2.5rem 1.25rem;
+  background: #fbfafa;
+}
+.form-fields, .form-block {
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-around;
 }
+.form-block {
+  justify-content: flex-start;
+  margin: 2rem 0;
+}
+.form-block p {
+  flex: 0 0 100%;
+  font-size: 1rem;
+  font-weight: bold;
+}
+/* Input fields & select list styles start here */
 .field {
   position: relative;
   flex: 0 0 46%;
@@ -31,13 +51,57 @@
     transition: 0.2s ease all;
   }
   &.filled label, &.focused label{
-    top: 0.1875rem;
+    top: 0;
+    font-size: 0.75rem!important;
+  }
+  select {
+    display: block;
+    width: 100%;
+    padding: 1rem 1.875rem 0.5rem 0;
+    border: 0;
+    border-bottom: 1px solid #999;
+    font-size: 1rem;
+    color: #000;
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+    background-image: url(../images/ic_down.png);
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    background-size: 0.8125rem;
+    cursor: pointer;
+  }
+  .rules {
+    position: absolute;
+    bottom: -1.875rem;
+    font-size: 0.675rem;
+    color: $error;
+  }
+}
+.form-block .field{
+  flex: 1 1 18.75rem;
+  label {
+    font-weight: normal;
+    color: #000;
+  }
+}
+.field.select {
+  label {
+    top: 1rem;
+  }
+  .rules {
+    bottom: -2rem;
+  }
+}
+.field.select.filled, .field.select.focused {
+  label {
+    top: 0;
     font-size: 0.75rem;
   }
 }
 
 /* CONTACT PAGE FORM */
-.contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label{
+.contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label {
   top: -0.8875rem;
 }
 .contact-form .submit {
@@ -54,4 +118,51 @@ textarea {
 }
 .contact-information > span {
   display: block;
+}
+/* Error styles */
+.field.error {
+  select, input {
+    border-bottom: 2px solid $error;
+    color: $error;
+  }
+  label {
+    color: $error;
+  }
+}
+/* Input fields & select list styles end here */
+
+@media only screen and (max-width: 420px) {
+  .loan-form .broker-btn {
+    display: block;
+    width: 100%;
+    padding: 1rem 4rem;
+  }
+}
+
+@media only screen and (min-width: 420px) {
+  .form-block-submit {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .loan-form {
+    margin: 3rem auto;
+  }
+  .loan-form-upper {
+    margin: 0;
+  }
+  .form-block .field{
+    flex: 0 0 46%;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .form-block {
+    margin: 4rem 0;
+  }
+  .loan-form-upper {
+    padding: 2.5rem;
+  }
 }

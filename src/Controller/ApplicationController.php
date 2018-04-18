@@ -8,33 +8,63 @@
 
 namespace App\Controller;
 
-use Broker\Domain\Service\PreparePartnerRequestsService;
-use App\Base\Persistence\Doctrine\ApplicationRepository;
+use App\Base\Components\AbstractController;
+use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
+use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
+use Slim\Container;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use Slim\Exception\NotFoundException;
 
-class ApplicationController
+class ApplicationController extends AbstractController
 {
+  /**
+   * @var PreparePartnerRequestsServiceInterface
+   */
   protected $prepareService;
+  /**
+   * @var Container
+   */
   protected $container;
+  /**
+   * @var ApplicationRepositoryInterface
+   */
   protected $appRepository;
+  /**
+   * @var OfferRepositoryInterface
+   */
+  protected $offerRepository;
+  /**
+   * @var ChooseOfferServiceInterface
+   */
+  protected $chooseOfferService;
 
   /**
    * ApplicationController constructor.
-   * @param PreparePartnerRequestsService $prepareService
-   * @param ApplicationRepository $appRepository
+   * @param PreparePartnerRequestsServiceInterface $prepareService
+   * @param ApplicationRepositoryInterface $appRepository
+   * @param OfferRepositoryInterface $offerRepository
+   * @param ChooseOfferServiceInterface $chooseOfferService
    * @param $container
    */
   public function __construct(
-    PreparePartnerRequestsService $prepareService,
-    ApplicationRepository $appRepository,
+    PreparePartnerRequestsServiceInterface $prepareService,
+    ApplicationRepositoryInterface $appRepository,
+    OfferRepositoryInterface $offerRepository,
+    ChooseOfferServiceInterface $chooseOfferService,
     $container)
   {
     $this->prepareService = $prepareService;
     $this->appRepository = $appRepository;
     $this->container = $container;
+    $this->offerRepository = $offerRepository;
+    $this->chooseOfferService = $chooseOfferService;
   }
 
   /**
-   * @return PreparePartnerRequestsService
+   * @return PreparePartnerRequestsServiceInterface
    */
   public function getPrepareService()
   {
@@ -42,10 +72,10 @@ class ApplicationController
   }
 
   /**
-   * @param PreparePartnerRequestsService $prepareService
-   * @return ApplicationController
+   * @param PreparePartnerRequestsServiceInterface $prepareService
+   * @return $this
    */
-  public function setPrepareService($prepareService)
+  public function setPrepareService(PreparePartnerRequestsServiceInterface $prepareService)
   {
     $this->prepareService = $prepareService;
     return $this;
@@ -63,14 +93,14 @@ class ApplicationController
    * @param mixed $container
    * @return ApplicationController
    */
-  public function setContainer($container)
+  public function setContainer(Container $container)
   {
     $this->container = $container;
     return $this;
   }
 
   /**
-   * @return ApplicationRepository
+   * @return ApplicationRepositoryInterface
    */
   public function getAppRepository()
   {
@@ -78,12 +108,48 @@ class ApplicationController
   }
 
   /**
-   * @param ApplicationRepository $appRepository
-   * @return ApplicationController
+   * @param ApplicationRepositoryInterface $appRepository
+   * @return $this
    */
-  public function setAppRepository($appRepository)
+  public function setAppRepository(ApplicationRepositoryInterface $appRepository)
   {
     $this->appRepository = $appRepository;
+    return $this;
+  }
+
+  /**
+   * @return OfferRepositoryInterface
+   */
+  public function getOfferRepository()
+  {
+    return $this->offerRepository;
+  }
+
+  /**
+   * @param OfferRepositoryInterface $offerRepository
+   * @return ApplicationController
+   */
+  public function setOfferRepository(OfferRepositoryInterface $offerRepository)
+  {
+    $this->offerRepository = $offerRepository;
+    return $this;
+  }
+
+  /**
+   * @return ChooseOfferServiceInterface
+   */
+  public function getChooseOfferService()
+  {
+    return $this->chooseOfferService;
+  }
+
+  /**
+   * @param ChooseOfferServiceInterface $chooseOfferService
+   * @return ApplicationController
+   */
+  public function setChooseOfferService(ChooseOfferServiceInterface $chooseOfferService)
+  {
+    $this->chooseOfferService = $chooseOfferService;
     return $this;
   }
 
@@ -91,8 +157,8 @@ class ApplicationController
    * @param $request
    * @param $response
    * @param $args
-   * @return \Psr\Http\Message\ResponseInterface
-   * @throws \Exception
+   * @return mixed
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function indexAction($request, $response, $args)
   {
@@ -134,7 +200,7 @@ class ApplicationController
     //$data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($data)->run();
+      $app = $this->prepareService->setData($request->getParsedBody())->run();
       $data['errors'] = $app->getErrors();
       $data['application'] = $app;
 
@@ -154,19 +220,81 @@ class ApplicationController
    * @return mixed
    * @throws \Exception
    */
-  public function offersAction($request, $response, $args)
+  public function offersAction(Request $request, Response $response, $args)
   {
-    $application = $this->getAppRepository()->getByHash($args['hash']);
-
-    if (!$application)
-    {
-      throw new \Slim\Exception\NotFoundException($request, $response);
-    }
+    $application = $this->findEntity($args['hash'], $request, $response);
 
     $data = [
       'application' => $application
     ];
 
-    return $this->getContainer()->get('view')->render($response, 'application/offer-list.twig', $data);
+    return $this->render($response, 'application/offer-list.twig', $data);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   * @throws NotFoundException
+   */
+  public function selectOfferAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+    $data['application'] = $this->findEntity($args['hash'], $request, $response);
+    $data['offer'] = $this->getOfferRepository()->getOneBy(['id' => $args['id'], 'rejectedDate' => null]);
+
+    if (!$data['offer'])
+    {
+      throw new NotFoundException($request, $response);
+    }
+
+    if ($request->isPost())
+    {
+      $service = $this->getChooseOfferService();
+      $service->setData($request->getParsedBody())->setOffer($data['offer']);
+
+      if (!$service->run())
+      {
+        $data['offer'] = $service->getOffer();
+      }
+      else
+      {
+        return $response->withRedirect('/application/thankyou');
+      }
+    }
+
+    return $this->render($response, 'application/choose-offer.twig', $data);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   */
+  public function thankYouAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+    return $this->render($response, 'application/thankyou.twig', $data);
+  }
+
+  /**
+   * @param $hash
+   * @param $request
+   * @param $response
+   * @return null|object
+   * @throws \Slim\Exception\NotFoundException
+   */
+  protected function findEntity($hash, Request $request, Response $response)
+  {
+    $application = $this->getAppRepository()->getByHash($hash);
+
+    if (!$application)
+    {
+      throw new NotFoundException($request, $response);
+    }
+
+    return $application;
   }
 }

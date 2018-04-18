@@ -1,0 +1,46 @@
+{% extends 'base.twig' %}
+{% block title %}Confirm offer{% endblock %}
+{% block container %}
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col">
+        <p>Please make your final selections for offer #{{ offer.id }}</p>
+      </div>
+    </div>
+    <div class="row">
+      {% if offer.errors %}
+        <ul>
+        {% for error in offer.errors %}
+          <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    </div>
+    <div class="row">
+      <form method="POST">
+        <div class="form-group">
+          <label for="signingMethod">Signing method:</label>
+          <select id="signingMethod" name="signingMethod">
+            <option value="SignOnPaper">Sign on paper</option>
+            <option value="CallMe">Call me</option>
+            <option value="SignWithBlueMedia">Sign with blue media</option>
+            <option value="OTP">OTP</option>
+          </select>
+          {% if offer.errors.signingMethod %}
+            <small class="form-text text-danger">{{ offer.errors.signingMethod }}</small>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <label for="firstPayment">First payment date:</label>
+          <input type="text" name="firstPaymentDate" id="firstPayment" class="form-control"/>
+          {% if offer.errors.firstPaymentDate %}
+            <small class="form-text text-danger">{{ offer.errors.firstPaymentDate }}</small>
+          {% endif %}
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-primary">Let's go!</button>
+        </div>
+      </form>
+    </div>
+  </div>
+{% endblock %}

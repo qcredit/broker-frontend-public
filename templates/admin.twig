@@ -4,38 +4,38 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-signin-client_id" content="876809952895-st56us9uskma01899f546k6vobo9m2sn.apps.googleusercontent.com">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Playfair+Display:700" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
     <link rel="stylesheet" href="/src/styles/admin.css">
     <title>{{ block('title') }}</title>
 </head>
 <body>
   <header class="page-header">
       <nav class="navbar navbar-expand-md navbar-light">
-      <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/broker_logo.png" alt="logo"></a>
+      <a class="navbar-brand" href="/admin"><img class="navbar-brand" src="/src/images/crm_broker_logo.png" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-            <a class="nav-link text-uppercase" href="/">Dashboard <span class="sr-only">(current)</span></a>
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link text-uppercase" href="/admin">Dashboard <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-uppercase" href="/product">Applications</a>
+            <a class="nav-link text-uppercase" href="/admin/applications">Applications</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-uppercase" href="#">Partners</a>
+            <a class="nav-link text-uppercase" href="/admin/partners">Partners</a>
           </li>
         </ul>
+        <div class="login-info my-2 my-lg-0">
+         <span><strong>admin@aasaglobal.com</strong></span>
+       </div>
       </div>
     </nav>
   </header>
-<div class="container-fluid">
-  {% block hero %}
-  {% endblock %}
-  </div>
   <div class="container">
       {% block container %}
       {% endblock %}
@@ -46,5 +46,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="/src/scripts/admin.js"></script>
+{% if block('endBody') is defined %}
+  {{ block('endBody') }}
+{% endif %}
 </body>
 </html>

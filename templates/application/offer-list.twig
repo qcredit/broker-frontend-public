@@ -31,7 +31,8 @@
                                     <td>{{ offer.partner.name }}</td>
                                     <td>{{ offer.loanAmount }}</td>
                                     <td>{{ offer.remoteId }}</td>
-                                    <td>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                                    <td>{% if offer.isAccepted %}Accepted{% elseif offer.isPaidOut %}Paid out{% elseif offer.isInProcess %}In Process{% else %}Rejected{% endif %}</td>
+                                    <td>{% if offer.isAccepted %}<a href='/application/{{ application.applicationHash }}/offer/{{ offer.id }}'>Gimme money</a>{% endif %}</td>
                                 </tr>
                             {% endfor %}
                             </tbody>

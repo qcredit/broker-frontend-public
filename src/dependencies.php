@@ -36,22 +36,28 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
-$container['view'] = function($container) {
-  $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
-
-  // Instantiate and add Slim specific extension
-  $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
-  $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-
-  return $view;
-};
-
 $container['session'] = function() {
   return new \SlimSession\Helper;
 };
 
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
+};
+
+$container['csrf'] = function()
+{
+  return new \Slim\Csrf\Guard();
+};
+
+$container['view'] = function($container) {
+  $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
+
+  // Instantiate and add Slim specific extension
+  $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+  $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
+  $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+
+  return $view;
 };
 
 $container['db'] = function($container) {
@@ -74,6 +80,11 @@ $container['UserRepository'] = function($container) {
 /*  return new UserRepository(
     $container->get('db')
   );*/
+};
+
+$container['AdminController'] = function($c)
+{
+  return new \App\Controller\Admin\AdminController($c);
 };
 
 $container['PartnerController'] = function($c) {
@@ -129,16 +140,30 @@ $container['PartnerResponseService'] = function($c)
   );
 };
 
+$container['ChooseOfferService'] = function($c)
+{
+  return new \Broker\Domain\Service\ChooseOfferService(
+    $c->get('PartnerRequestsService'),
+    $c->get('PartnerResponseService'),
+    new PartnerRequestFactory(),
+    new PartnerDataMapperRepository(),
+    new \App\Base\Validator\SchemaValidator()
+  );
+};
+
 $container['ApplicationController'] = function ($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
+  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
     new ApplicationFactory(),
     $appRepository,
     $factory->createGateway($c->get('db'), 'Partner'),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('PartnerDataMapperRepository'),
+    $schemaValidator
   );
 
   $prepareService = new PreparePartnerRequestsService(
@@ -151,6 +176,8 @@ $container['ApplicationController'] = function ($c)
   return new \App\Controller\ApplicationController(
     $prepareService,
     $appRepository,
+    $offerRepository,
+    $c->get('ChooseOfferService'),
     $c
   );
 };

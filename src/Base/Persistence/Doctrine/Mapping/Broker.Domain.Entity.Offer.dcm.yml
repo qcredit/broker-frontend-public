@@ -38,6 +38,10 @@ Broker\Domain\Entity\Offer:
       column: accepted_date
       type: datetime
       nullable: true
+    chosenDate:
+      column: chosen_date
+      type: datetime
+      nullable: true
     paidOutDate:
       column: paid_out_date
       type: datetime
