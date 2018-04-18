@@ -42,6 +42,9 @@ return [
             'password' => 'hobunelasiterveaiat2is',
             'dbname' => 'broker',
           ]
+        ],
+        'mailer' => [
+
         ]
     ],
 ];
