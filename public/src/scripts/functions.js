@@ -13,7 +13,7 @@ $(document).ready(function(){
         polyfill: false
       }).on('input', function() {
           $loanAmount.val(this.value);
-          calculateMonthly($loanAmountSlider.val(), $loanDurationSlider.val());
+          calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
       });
     $loanAmount.on('change', function() {
       $loanAmountSlider.val(this.value).change();
@@ -23,7 +23,7 @@ $(document).ready(function(){
         polyfill: false
       }).on('input', function() {
           $loanDuration.val(this.value);
-          calculateMonthly($loanAmountSlider.val(), $loanDurationSlider.val());
+          calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
       });
     $loanDuration.on('change', function() {
       $loanDurationSlider.val(this.value).change();
@@ -42,6 +42,7 @@ $(document).ready(function(){
     }
     $curOpt.children('option').removeProp('selected'); // Remove seleced from all the options
     $targetOpt.next().prop('selected', true); // Add selected to next element
+    calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
   $(".landing-component-sm .landing-form-adjust-decrease").click(function() {
     var $curOpt = $(this).parent().find('select');
@@ -53,12 +54,14 @@ $(document).ready(function(){
     }
     $curOpt.children('option').removeProp('selected'); // Remove seleced from all the options
     $targetOpt.prev().prop('selected', true);
+    calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
   $('.landing-component-sm select').change(function() {
     var $selectedOpt = $(this).find('option:selected');
     $(this).parent().find('.landing-form-adjust').removeClass('disabled');
     $(this).children('option').removeProp('selected');
     $selectedOpt.prop('selected', true);
+    calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
   // To get values of selected options
   //$('.landing-component-sm #loanAmountOutput').val();
