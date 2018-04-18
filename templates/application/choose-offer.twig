@@ -40,6 +40,8 @@
         <div class="form-group">
           <button type="submit" class="btn btn-primary">Let's go!</button>
         </div>
+        <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+        <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
       </form>
     </div>
   </div>
