@@ -13,11 +13,6 @@
       var profile = googleUser.getBasicProfile();
       var id_token = googleUser.getAuthResponse().id_token;
 
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Image URL: ' + profile.getImageUrl());
-      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-
       var xhr = new XMLHttpRequest();
       xhr.open('POST', '/admin/login');
       xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
@@ -31,7 +26,20 @@
           window.location.href = '/admin/partners';
         }
       };
-      xhr.send('idToken=' + id_token + '&email=' + profile.getEmail());
+
+      var params = {
+        'idToken': id_token,
+        'email': profile.getEmail(),
+        '{{csrf.keys.name}}': '{{csrf.name}}',
+        '{{csrf.keys.value}}': '{{csrf.value}}'
+      };
+
+      var urlParams = new URLSearchParams();
+      for (var [key, val] of Object.entries(params)) {
+        urlParams.append(key, val);
+      }
+
+      xhr.send(urlParams.toString());
     }
 
     function signOut() {
