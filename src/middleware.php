@@ -9,4 +9,4 @@ $app->add(new \App\Middleware\Session([
   'lifetime' => '20 minutes'
 ]));
 
-//$app->add($container->get('csrf'));
+$app->add($container->get('csrf'));
