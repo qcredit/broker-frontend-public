@@ -7,10 +7,10 @@ environments:
     default_database: development
     production:
         adapter: mysql
-        host: localhost
-        name: broker
-        user: root
-        pass: ''
+        host: luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com
+        name: broker_frontend_production
+        user: bf_prod
+        pass: 'PjkAbyTKTe2dr2qMRQF2'
         port: 3306
         charset: utf8
 
@@ -23,12 +23,12 @@ environments:
         port: 3306
         charset: utf8
 
-    testing:
+    testserver:
         adapter: mysql
-        host: localhost
-        name: testing_db
-        user: root
-        pass: ''
+        host: luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com
+        name: broker_frontend_test
+        user: bf_test
+        pass: 'a9HJKvXz4uKRXvfVaBBg'
         port: 3306
         charset: utf8
 
