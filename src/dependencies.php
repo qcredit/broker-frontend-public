@@ -113,7 +113,21 @@ $container['HomeController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\HomeController($view);
 };
-
+$container['AboutController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\AboutController($view);
+};
+$container['ContactController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\ContactController($view);
+};
+$container['TermsController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\TermsController($view);
+};
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
@@ -136,6 +150,11 @@ $container['PartnerResponseService'] = function($c)
   );
 };
 
+$container['MessageDeliveryService'] = function ($c)
+{
+  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+};
+
 $container['ChooseOfferService'] = function($c)
 {
   return new \Broker\Domain\Service\ChooseOfferService(
@@ -143,7 +162,8 @@ $container['ChooseOfferService'] = function($c)
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     new PartnerDataMapperRepository(),
-    new \App\Base\Validator\SchemaValidator()
+    new \App\Base\Validator\SchemaValidator(),
+    $c->get('MessageDeliveryService')
   );
 };
 
@@ -163,10 +183,10 @@ $container['ApplicationController'] = function ($c)
   );
 
   $prepareService = new PreparePartnerRequestsService(
-    $newApplicationService,
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
-    new PartnerRequestFactory()
+    new PartnerRequestFactory(),
+    $c->get('MessageDeliveryService')
   );
 
   return new \App\Controller\ApplicationController(
@@ -174,6 +194,7 @@ $container['ApplicationController'] = function ($c)
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
+    $newApplicationService,
     $c
   );
 };

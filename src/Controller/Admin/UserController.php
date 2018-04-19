@@ -136,7 +136,7 @@ class UserController extends AbstractController
    */
   public function indexAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $data['users'] = $this->getUserRepository()->getAll();
 
@@ -154,7 +154,7 @@ class UserController extends AbstractController
    */
   public function newAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $user = $this->getUserFactory()->create();
     $user->setValidator($this->getValidator());
@@ -196,7 +196,7 @@ class UserController extends AbstractController
 
   public function loginAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     if ($request->isPost())
     {

@@ -69,6 +69,7 @@ Broker\Domain\Entity\Offer:
         name: application_id
         referencedColumnName: id
         nullable: false
+      cascade: [persist]
     partner:
       targetEntity: Partner
       inversedBy: offers

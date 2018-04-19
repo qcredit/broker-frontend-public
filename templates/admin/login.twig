@@ -7,7 +7,6 @@
   </div>
 {% endblock %}
 {% block endBody %}
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <script type="application/javascript">
     function onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
@@ -23,7 +22,7 @@
           console.log(response.error);
         }
         else if (response.success) {
-          window.location.href = '/admin/partners';
+          window.location.href = '/admin';
         }
       };
 
@@ -40,13 +39,6 @@
       }
 
       xhr.send(urlParams.toString());
-    }
-
-    function signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(function () {
-        console.log('User signed out.');
-      });
     }
   </script>
 {% endblock %}
