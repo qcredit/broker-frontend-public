@@ -15,6 +15,8 @@ use Slim\Container;
 
 class AuthHandler
 {
+  const SESSION_AUTH_KEY = 'authKey';
+  const SESSION_USER_ID = 'uID';
   /**
    * @var AuthenticationServiceInterface
    */
@@ -175,6 +177,19 @@ class AuthHandler
   }
 
   /**
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function logout()
+  {
+    $session = $this->getContainer()->get('session');
+    $session->delete(self::SESSION_AUTH_KEY);
+    $session->delete(self::SESSION_USER_ID);
+
+    return true;
+  }
+
+  /**
    * @throws \Exception
    */
   protected function findUser()
@@ -197,8 +212,8 @@ class AuthHandler
     $user->generateAuthKey();
 
     $session = $this->getContainer()->get('session');
-    $session->set('authKey', $user->getAuthKey());
-    $session->set('uID', $user->getId());
+    $session->set(self::SESSION_AUTH_KEY, $user->getAuthKey());
+    $session->set(self::SESSION_USER_ID, $user->getId());
 
     $this->getUserRepository()->save($user);
   }

@@ -31,3 +31,4 @@ $app->group('/admin', function() {
 })->add(new Authenticator($app));
 
 $app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
+$app->post('/admin/logout', 'LoginController:logoutAction');

@@ -92,20 +92,22 @@ class LoginController extends AbstractController
     return $this->render($response, 'admin/login.twig', $data);
   }
 
-  protected function login($body)
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function logoutAction(Request $request, Response $response, $args)
   {
-    $idToken = $body['idToken'];
-    $clientId = '876809952895-st56us9uskma01899f546k6vobo9m2sn.apps.googleusercontent.com';
+    $handler = $this->getAuthHandler();
 
-    $client = new \Google_Client(['client_id' => $clientId]);
-    $payload = $client->verifyToken($idToken);
-    if (!$payload)
+    if ($handler->logout())
     {
-      return false;
+      return $response->withRedirect('/');
     }
 
-    $userId = $payload['sub'];
-
-    return true;
+    return $response->withRedirect($request->getHeader('HTTP_REFERER'));
   }
 }
