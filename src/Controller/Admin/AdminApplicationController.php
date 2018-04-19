@@ -108,7 +108,7 @@ class AdminApplicationController extends AbstractController
    */
   public function indexAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $data['applications'] = $this->getAppRepository()->getAll();
 
@@ -125,7 +125,7 @@ class AdminApplicationController extends AbstractController
    */
   public function viewAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $data['application'] = $this->findEntity($args['id'], $request, $response);
 

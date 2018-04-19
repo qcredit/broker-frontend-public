@@ -97,6 +97,7 @@ class Authenticator
       return $this->denyAccess($response);
     }
 
+    $request = $request->withAttribute('user', $user);
     $response = $next($request, $response);
 
     return $response;

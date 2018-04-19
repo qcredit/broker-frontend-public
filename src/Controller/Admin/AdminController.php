@@ -54,7 +54,7 @@ class AdminController extends AbstractController
   {
     $factory = $this->getContainer()->get('RepositoryFactory');
     $repo = $factory->createGateway($this->getContainer()->get('db'), 'Partner');
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $data['partners'] = $repo->getPartnersWithStats();
 

@@ -9,6 +9,7 @@
 namespace App\Base\Components;
 
 use App\Base\Interfaces\AuthenticationServiceInterface;
+use Firebase\JWT\JWT;
 
 class GoogleAuthenticator implements AuthenticationServiceInterface
 {
