@@ -13,7 +13,7 @@ return [
   ],
   "environments" => [
     "default_migration_table" => "phinxlog",
-    "default_database" => getenv("ENV_TYPE") ?? "developer",
+    "default_database" => getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer",
     "production" => [
       "adapter" => "mysql",
       "host" => "luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
