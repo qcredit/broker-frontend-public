@@ -20,6 +20,7 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
+use Broker\Domain\Entity\Application;
 
 class ApplicationController extends AbstractController
 {
@@ -346,9 +347,25 @@ class ApplicationController extends AbstractController
     $message = new Message();
     $message->setTitle('Offers for your application')
       ->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setBody(sprintf('Hello!<br/><br/>Here\'s a list to your offers: <a href="%s">%s</a>.', sprintf('http://localhost:8100/application/%s', $application->getApplicationHash()), 'click here to follow the link'))
+      ->setBody($this->generateEmailContent($application))
       ->setRecipient($application->getEmail());
 
     $this->getPrepareService()->getMessageDeliveryService()->setMessage($message);
+  }
+
+  /**
+   * @param Application $application
+   * @return mixed
+   */
+  protected function generateEmailContent(Application $application)
+  {
+    $twig = $this->getContainer()->get('view');
+    $params = [
+      'application' => $application,
+      'title' => 'Our offers for your application',
+      'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
+    ];
+
+    return $twig->fetch('mail/offer-link.twig', $params);
   }
 }
