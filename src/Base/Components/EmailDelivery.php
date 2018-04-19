@@ -41,12 +41,28 @@ class EmailDelivery implements MessageDeliveryInterface
   public function __construct(Container $container)
   {
     $this->container = $container;
-    $this->client = new PHPMailer();
+    $this->client = new PHPMailer(true);
   }
 
+  /**
+   * @param Message $message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
   public function send(Message $message)
   {
-    // TODO: Implement send() method.
+    try {
+      $this->setMessage($message);
+      $this->setupClient();
+      $this->setupMessage();
+
+      $this->getClient()->send();
+      $this->setOk(true);
+    }
+    catch (\Exception $ex)
+    {
+      $this->getContainer()->get('logger')->error('Could not deliver e-mail!', [$this->getClient()->ErrorInfo]);
+      $this->setOk(false);
+    }
   }
 
   /**
@@ -134,7 +150,9 @@ class EmailDelivery implements MessageDeliveryInterface
 
     $client->Subject = $message->getTitle();
     $client->Body = $message->getBody();
+    //$client->setFrom($settings['sender'], $settings['senderName']);
     $client->From = $settings['sender'];
+    $client->FromName = $settings['senderName'];
     $client->addAddress($message->getRecipient());
   }
 

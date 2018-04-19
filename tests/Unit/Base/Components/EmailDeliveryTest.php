@@ -12,6 +12,7 @@ use App\Base\Components\EmailDelivery;
 use Broker\Domain\Entity\Message;
 use Broker\System\BaseTest;
 use Broker\System\Error\InvalidConfigException;
+use Monolog\Logger;
 use PHPMailer\PHPMailer\PHPMailer;
 use Slim\Container;
 
@@ -33,6 +34,7 @@ class EmailDeliveryTest extends BaseTest
 
     $this->settings = [
       'sender' => 'info@pornhub.com',
+      'senderName' => 'Hugh Hefner',
       'host' => 'smtp.porhub.com',
       'username' => 'littlepervert123',
       'password' => '1337',
@@ -102,11 +104,11 @@ class EmailDeliveryTest extends BaseTest
 
     $this->invokeMethod($mock, 'setupClient', []);
 
-    $this->assertSame($settings['host'], $mock->getClient()->Host);
-    $this->assertSame($settings['username'], $mock->getClient()->Username);
-    $this->assertSame($settings['password'], $mock->getClient()->Password);
-    $this->assertSame($settings['port'], $mock->getClient()->Port);
-    $this->assertSame($settings['secure'], $mock->getClient()->SMTPSecure);
+    $this->assertSame($this->settings['host'], $mock->getClient()->Host);
+    $this->assertSame($this->settings['username'], $mock->getClient()->Username);
+    $this->assertSame($this->settings['password'], $mock->getClient()->Password);
+    $this->assertSame($this->settings['port'], $mock->getClient()->Port);
+    $this->assertSame($this->settings['secure'], $mock->getClient()->SMTPSecure);
   }
 
   public function testSetupMessage()
@@ -141,12 +143,56 @@ class EmailDeliveryTest extends BaseTest
   {
     $mock = $this->getMockBuilder(EmailDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setupClient', 'setupMessages'])
+      ->setMethods(['setupClient', 'setupMessage', 'getClient'])
+      ->getMock();
 
+    $mock->expects($this->once())
+      ->method('setupClient')
+      ->willReturnSelf();
+    $mock->expects($this->once())
+      ->method('setupMessage')
+      ->willReturnSelf();
+    $mock->expects($this->once())
+      ->method('getClient')
+      ->willReturn($this->clientMock);
+
+    $message = new Message();
+
+    $mock->setContainer($this->containerMock);
+    $mock->send($message);
+
+    $this->assertTrue($mock->isOk());
   }
 
-  public function testIsOk()
+  public function testSendFails()
   {
+    $mock = $this->getMockBuilder(EmailDelivery::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['setupClient', 'setupMessage', 'getClient', 'getContainer'])
+      ->getMock();
 
+    $mock->expects($this->once())
+      ->method('setupClient')
+      ->willReturnSelf();
+    $mock->expects($this->once())
+      ->method('setupMessage')
+      ->willReturnSelf();
+    $this->clientMock->method('send')
+      ->willThrowException(new \Exception());
+    $mock->expects($this->exactly(2))
+      ->method('getClient')
+      ->willReturn($this->clientMock);
+    $this->containerMock->method('get')
+      ->willReturn($this->createMock(Logger::class));
+    $mock->expects($this->once())
+      ->method('getContainer')
+      ->willReturn($this->containerMock);
+
+    $message = new Message();
+
+    $mock->setContainer($this->containerMock);
+    $mock->send($message);
+
+    $this->assertFalse($mock->isOk());
   }
 }

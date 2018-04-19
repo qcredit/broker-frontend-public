@@ -14,13 +14,21 @@ use App\Base\Factory\MessageDeliveryStrategyFactory;
 use Broker\Domain\Entity\Message;
 use Broker\System\BaseTest;
 use Broker\System\Error\InvalidConfigException;
+use Slim\Container;
 
 class MessageDeliveryStrategyFactoryTest extends BaseTest
 {
+  protected $containerMock;
+
+  public function setUp()
+  {
+    $this->containerMock = $this->createMock(Container::class);
+  }
+
   public function testCreateEmailDelivery()
   {
     $message = (new Message())->setType(Message::MESSAGE_TYPE_EMAIL);
-    $instance = new MessageDeliveryStrategyFactory();
+    $instance = new MessageDeliveryStrategyFactory($this->containerMock);
 
     $this->assertInstanceOf(EmailDelivery::class, $instance->create($message));
   }
@@ -28,7 +36,7 @@ class MessageDeliveryStrategyFactoryTest extends BaseTest
   public function testCreateSmsDelivery()
   {
     $message = (new Message())->setType(Message::MESSAGE_TYPE_SMS);
-    $instance = new MessageDeliveryStrategyFactory();
+    $instance = new MessageDeliveryStrategyFactory($this->containerMock);
 
     $this->assertInstanceOf(SmsDelivery::class, $instance->create($message));
   }
@@ -36,7 +44,7 @@ class MessageDeliveryStrategyFactoryTest extends BaseTest
   public function testCreateUnknownDelivery()
   {
     $message = (new Message())->setType(1337);
-    $instance = new MessageDeliveryStrategyFactory();
+    $instance = new MessageDeliveryStrategyFactory($this->containerMock);
 
     $this->expectException(InvalidConfigException::class);
 
