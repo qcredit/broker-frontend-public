@@ -113,7 +113,21 @@ $container['HomeController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\HomeController($view);
 };
-
+$container['AboutController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\AboutController($view);
+};
+$container['ContactController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\ContactController($view);
+};
+$container['TermsController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\TermsController($view);
+};
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();

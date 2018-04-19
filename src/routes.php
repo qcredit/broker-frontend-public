@@ -11,6 +11,9 @@ $app->get('/application/thankyou', 'ApplicationController:thankYouAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
 $app->get('/', 'HomeController:indexAction');
+$app->get('/about', 'AboutController:indexAction');
+$app->get('/contact', 'ContactController:indexAction');
+$app->get('/terms', 'TermsController:indexAction');
 
 $app->group('/admin', function() {
   $this->get('', 'AdminController:indexAction');
