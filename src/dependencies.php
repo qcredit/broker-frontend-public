@@ -147,6 +147,11 @@ $container['ChooseOfferService'] = function($c)
   );
 };
 
+$container['MessageDeliveryService'] = function ($c)
+{
+  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+};
+
 $container['ApplicationController'] = function ($c)
 {
   $factory = $c->get('RepositoryFactory');
@@ -163,10 +168,10 @@ $container['ApplicationController'] = function ($c)
   );
 
   $prepareService = new PreparePartnerRequestsService(
-    $newApplicationService,
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
-    new PartnerRequestFactory()
+    new PartnerRequestFactory(),
+    $c->get('MessageDeliveryService')
   );
 
   return new \App\Controller\ApplicationController(
@@ -174,6 +179,7 @@ $container['ApplicationController'] = function ($c)
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
+    $newApplicationService,
     $c
   );
 };

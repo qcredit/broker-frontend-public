@@ -84,7 +84,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
 
     $partnerResponse = new PartnerResponse();
     $partnerResponse->setPartner($request->getPartner())
-      ->setOffer($request->getOffer())
+      //->setOffer($request->getOffer())
       ->setType($request->getType())
       ->setResponseBody($result);
 

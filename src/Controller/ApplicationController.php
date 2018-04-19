@@ -9,9 +9,12 @@
 namespace App\Controller;
 
 use App\Base\Components\AbstractController;
+use App\Base\Components\EmailDelivery;
+use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
+use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Slim\Container;
 use Slim\Http\Request;
@@ -40,6 +43,10 @@ class ApplicationController extends AbstractController
    * @var ChooseOfferServiceInterface
    */
   protected $chooseOfferService;
+  /**
+   * @var NewApplicationServiceInterface
+   */
+  protected $newApplicationService;
 
   /**
    * ApplicationController constructor.
@@ -47,6 +54,7 @@ class ApplicationController extends AbstractController
    * @param ApplicationRepositoryInterface $appRepository
    * @param OfferRepositoryInterface $offerRepository
    * @param ChooseOfferServiceInterface $chooseOfferService
+   * @param NewApplicationServiceInterface $newApplicationService
    * @param $container
    */
   public function __construct(
@@ -54,6 +62,7 @@ class ApplicationController extends AbstractController
     ApplicationRepositoryInterface $appRepository,
     OfferRepositoryInterface $offerRepository,
     ChooseOfferServiceInterface $chooseOfferService,
+    NewApplicationServiceInterface $newApplicationService,
     $container)
   {
     $this->prepareService = $prepareService;
@@ -61,6 +70,7 @@ class ApplicationController extends AbstractController
     $this->container = $container;
     $this->offerRepository = $offerRepository;
     $this->chooseOfferService = $chooseOfferService;
+    $this->newApplicationService = $newApplicationService;
   }
 
   /**
@@ -154,6 +164,24 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return NewApplicationServiceInterface
+   */
+  public function getNewApplicationService()
+  {
+    return $this->newApplicationService;
+  }
+
+  /**
+   * @param NewApplicationServiceInterface $newApplicationService
+   * @return ApplicationController
+   */
+  public function setNewApplicationService(NewApplicationServiceInterface $newApplicationService)
+  {
+    $this->newApplicationService = $newApplicationService;
+    return $this;
+  }
+
+  /**
    * @param $request
    * @param $response
    * @param $args
@@ -162,6 +190,12 @@ class ApplicationController extends AbstractController
    */
   public function indexAction($request, $response, $args)
   {
+    $message = new Message();
+    $message->setRecipient('hendrik.uibopuu@aasaglobal.com')
+      ->setBody('hellllo!')
+      ->setTitle('Johhaidii');
+    $delivery = new EmailDelivery($this->getContainer());
+    $delivery->send($message);
 
     $data = [
       'incomeSourceType' => 'Employed',
@@ -193,21 +227,29 @@ class ApplicationController extends AbstractController
       'loanTerm' => 18,
       'firstName' => 'Adam',
       'lastName' => 'Barański',
-      'email' => 'brak@asakredyt.pl',
+      'email' => 'hendrik.uibopuu@aasaglobal.com',
       'phone' => '+48739050381'
     ];
 
     //$data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($request->getParsedBody())->run();
-      $data['errors'] = $app->getErrors();
-      $data['application'] = $app;
-
-      if (!isset($data['errors']) || empty($data['errors']))
+      $newAppService = $this->getNewApplicationService();
+      if ($newAppService->setData($data)->run())
       {
-        return $response->withRedirect(sprintf('application/%s', $app->getApplicationHash()));
+        $this->getPrepareService()->setApplication($newAppService->getApplication())
+          ->setData($newAppService->getPreparedData());
+
+        $this->generateOfferLinkMessage();
+
+        if ($this->getPrepareService()->run())
+        {
+          //$newAppService->saveApp();
+          return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
+        }
       }
+
+      $data['application'] = $newAppService->getApplication();
     }
 
     return $this->container->get('view')->render($response, 'application/form.twig', $data);
@@ -296,5 +338,17 @@ class ApplicationController extends AbstractController
     }
 
     return $application;
+  }
+
+  protected function generateOfferLinkMessage()
+  {
+    $application = $this->getPrepareService()->getApplication();
+    $message = new Message();
+    $message->setTitle('Offers for your application')
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody(sprintf('Hello!<br/><br/>Here\'s a list to your offers: <a href="%s">%s</a>.', sprintf('http://localhost:8100/application/%s', $application->getApplicationHash()), 'click here to follow the link'))
+      ->setRecipient($application->getEmail());
+
+    $this->getPrepareService()->getMessageDeliveryService()->setMessage($message);
   }
 }
