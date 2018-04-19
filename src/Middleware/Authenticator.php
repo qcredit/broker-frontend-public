@@ -8,6 +8,7 @@
 
 namespace App\Middleware;
 
+use App\Base\Components\AuthHandler;
 use Slim\App;
 use Slim\Container;
 use Slim\Http\Request;
@@ -84,14 +85,14 @@ class Authenticator
     $container = $this->getContainer();
     $session = $container->get('session');
 
-    if (!($session->exists('authKey') && $session->exists('uID')))
+    if (!($session->exists(AuthHandler::SESSION_AUTH_KEY) && $session->exists(AuthHandler::SESSION_USER_ID)))
     {
       return $this->denyAccess($response);
     }
 
-    $user = $this->getUser($session->get('uID'));
+    $user = $this->getUser($session->get(AuthHandler::SESSION_USER_ID));
 
-    if (!$user || !$user->validateAuthKey($session->get('authKey')))
+    if (!$user || !$user->validateAuthKey($session->get(AuthHandler::SESSION_AUTH_KEY)))
     {
       return $this->denyAccess($response);
     }
