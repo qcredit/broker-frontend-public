@@ -148,6 +148,7 @@ class EmailDelivery implements MessageDeliveryInterface
     $client = $this->getClient();
     $message = $this->getMessage();
 
+    $client->isHTML(true);
     $client->Subject = $message->getTitle();
     $client->Body = $message->getBody();
     //$client->setFrom($settings['sender'], $settings['senderName']);

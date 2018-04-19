@@ -150,6 +150,11 @@ $container['PartnerResponseService'] = function($c)
   );
 };
 
+$container['MessageDeliveryService'] = function ($c)
+{
+  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+};
+
 $container['ChooseOfferService'] = function($c)
 {
   return new \Broker\Domain\Service\ChooseOfferService(
@@ -157,13 +162,9 @@ $container['ChooseOfferService'] = function($c)
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     new PartnerDataMapperRepository(),
-    new \App\Base\Validator\SchemaValidator()
+    new \App\Base\Validator\SchemaValidator(),
+    $c->get('MessageDeliveryService')
   );
-};
-
-$container['MessageDeliveryService'] = function ($c)
-{
-  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
 };
 
 $container['ApplicationController'] = function ($c)

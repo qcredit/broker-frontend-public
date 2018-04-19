@@ -49,6 +49,9 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
   protected function sendApiRequest(PartnerRequest $request)
   {
     $ch = curl_init();
+    $partnerResponse = new PartnerResponse();
+    $partnerResponse->setPartner($request->getPartner())
+      ->setType($request->getType());
 
     $header = [
       'Accept: application/json',
@@ -72,6 +75,8 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
       curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
       curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
       curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+
+      $partnerResponse->setOffer($request->getOffer());
     }
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -82,11 +87,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     $response = curl_getinfo($ch);
     curl_close($ch);
 
-    $partnerResponse = new PartnerResponse();
-    $partnerResponse->setPartner($request->getPartner())
-      //->setOffer($request->getOffer())
-      ->setType($request->getType())
-      ->setResponseBody($result);
+    $partnerResponse->setResponseBody($result);
 
     if ($code == 200)
     {

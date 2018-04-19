@@ -294,32 +294,20 @@ class ApplicationController extends AbstractController
 
     if ($request->isPost())
     {
-      $service = $this->getChooseOfferService();
-      $service->setData($request->getParsedBody())->setOffer($data['offer']);
+      $service = $this->getChooseOfferService()
+        ->setData($request->getParsedBody())->setOffer($data['offer']);
 
-      if (!$service->run())
+      $this->generateOfferConfirmationMessage();
+
+      if ($service->run())
       {
-        $data['offer'] = $service->getOffer();
+        return $this->render($response, 'application/thankyou.twig', $data);
       }
-      else
-      {
-        return $response->withRedirect('/application/thankyou');
-      }
+
+      $data['offer'] = $service->getOffer();
     }
 
     return $this->render($response, 'application/choose-offer.twig', $data);
-  }
-
-  /**
-   * @param Request $request
-   * @param Response $response
-   * @param $args
-   * @return mixed
-   */
-  public function thankYouAction(Request $request, Response $response, $args)
-  {
-    $data = [];
-    return $this->render($response, 'application/thankyou.twig', $data);
   }
 
   /**
@@ -341,31 +329,46 @@ class ApplicationController extends AbstractController
     return $application;
   }
 
+  protected function generateOfferConfirmationMessage()
+  {
+    $offer = $this->getChooseOfferService()->getOffer();
+    $message = new Message();
+    $message->setTitle('Thank you for choosing us!')
+      ->setRecipient($offer->getApplication()->getEmail())
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/offer-confirmation.twig', [
+        'offer' => $offer,
+        'title' => 'Your selected offer'
+      ]));
+
+    $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
+  }
+
   protected function generateOfferLinkMessage()
   {
     $application = $this->getPrepareService()->getApplication();
     $message = new Message();
     $message->setTitle('Offers for your application')
       ->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setBody($this->generateEmailContent($application))
+      ->setBody($this->generateEmailContent('mail/offer-link.twig', [
+        'application' => $application,
+        'title' => 'Our offers for your application',
+        'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
+      ]))
       ->setRecipient($application->getEmail());
 
     $this->getPrepareService()->getMessageDeliveryService()->setMessage($message);
   }
 
   /**
-   * @param Application $application
+   * @param $template
+   * @param $params
    * @return mixed
    */
-  protected function generateEmailContent(Application $application)
+  protected function generateEmailContent($template, $params)
   {
     $twig = $this->getContainer()->get('view');
-    $params = [
-      'application' => $application,
-      'title' => 'Our offers for your application',
-      'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
-    ];
 
-    return $twig->fetch('mail/offer-link.twig', $params);
+    return $twig->fetch($template, $params);
   }
 }

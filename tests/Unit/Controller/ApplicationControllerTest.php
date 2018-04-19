@@ -34,7 +34,14 @@ class ApplicationControllerTest extends BaseTest
   {
     $this->mock = $this->getMockBuilder(ApplicationController::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAppRepository', 'getContainer', 'render', 'findEntity', 'getOfferRepository', 'getChooseOfferService'])
+      ->setMethods([
+        'getAppRepository',
+        'getContainer',
+        'render',
+        'findEntity',
+        'getOfferRepository',
+        'getChooseOfferService',
+      ])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
     $this->responseMock = $this->createMock(Response::class);
