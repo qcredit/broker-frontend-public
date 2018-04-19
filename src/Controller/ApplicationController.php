@@ -236,7 +236,7 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $newAppService = $this->getNewApplicationService();
-      if ($newAppService->setData($data)->run())
+      if ($newAppService->setData($request->getParsedBody())->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());
