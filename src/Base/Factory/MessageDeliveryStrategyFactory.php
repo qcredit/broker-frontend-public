@@ -10,6 +10,7 @@ namespace App\Base\Factory;
 
 use App\Base\Components\EmailDelivery;
 use App\Base\Components\SmsDelivery;
+use App\Base\Components\ApiDelivery;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Factory\MessageDeliveryStrategyFactoryInterface;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
@@ -65,6 +66,9 @@ class MessageDeliveryStrategyFactory implements MessageDeliveryStrategyFactoryIn
         break;
       case Message::MESSAGE_TYPE_SMS:
         return new SmsDelivery();
+        break;
+      case Message::MESSAGE_TYPE_API:
+        return new ApiDelivery();
         break;
       default:
         throw new InvalidConfigException('Unknown message type!');

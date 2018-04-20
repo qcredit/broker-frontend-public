@@ -137,7 +137,8 @@ $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
     new PartnerDeliveryGateway(),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('PartnerDataMapperRepository'),
+    $c->get('MessageDeliveryService')
   );
 };
 
@@ -163,7 +164,7 @@ $container['ChooseOfferService'] = function($c)
     new PartnerRequestFactory(),
     new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
-    $c->get('MessageDeliveryService')
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
   );
 };
 
@@ -186,7 +187,7 @@ $container['ApplicationController'] = function ($c)
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
-    $c->get('MessageDeliveryService')
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
   );
 
   return new \App\Controller\ApplicationController(

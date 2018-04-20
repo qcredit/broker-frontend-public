@@ -193,4 +193,9 @@ class EmailDelivery implements MessageDeliveryInterface
 
     return $settings['mailer'];
   }
+
+  public function getResponse()
+  {
+    // TODO: Implement getResponse() method.
+  }
 }
