@@ -55,7 +55,7 @@ return [
               'port' => 3306
             ],
             "testserver" => [
-              "adapter" => "pdo_mysql",
+              "driver" => "pdo_mysql",
               "host" => "luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
               "dbname" => "broker_frontend_test",
               "user" => "bf_test",
