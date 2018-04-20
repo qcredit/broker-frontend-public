@@ -37,8 +37,8 @@ RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
-         echo "### change me @Phinx ###"; php /var/www/html/vendor/bin/phinx migrate -e testserver || echo "Ignoring failure"; \
-         echo "### change me @Phinx ###"; php /var/www/html/vendor/bin/phinx seed:run -e testserver -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed || echo "Ignoring failure"; \
+         php /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php || echo "Ignoring failure"; \
+         php /var/www/html/vendor/bin/phinx seed:run -c /var/www/html/phinx.php -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed || echo "Ignoring failure"; \
        else exit 1; fi
 
 EXPOSE 80
