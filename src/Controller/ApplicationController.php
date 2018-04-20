@@ -191,12 +191,12 @@ class ApplicationController extends AbstractController
    */
   public function indexAction($request, $response, $args)
   {
-    $message = new Message();
+/*    $message = new Message();
     $message->setRecipient('hendrik.uibopuu@aasaglobal.com')
       ->setBody('hellllo!')
       ->setTitle('Johhaidii');
     $delivery = new EmailDelivery($this->getContainer());
-    $delivery->send($message);
+    $delivery->send($message);*/
 
     $data = [
       'incomeSourceType' => 'Employed',
@@ -236,7 +236,7 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $newAppService = $this->getNewApplicationService();
-      if ($newAppService->setData($request->getParsedBody())->run())
+      if ($newAppService->setData($data)->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());

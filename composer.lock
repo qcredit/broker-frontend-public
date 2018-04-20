@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "d65036097af8cc86ce60ee074e3efabccf194f87"
+                "reference": "cc0f9daa687fb5f5e5799c7d7f4f065dbcc15277"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/d65036097af8cc86ce60ee074e3efabccf194f87",
-                "reference": "d65036097af8cc86ce60ee074e3efabccf194f87",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/cc0f9daa687fb5f5e5799c7d7f4f065dbcc15277",
+                "reference": "cc0f9daa687fb5f5e5799c7d7f4f065dbcc15277",
                 "shasum": ""
             },
             "require-dev": {
@@ -31,10 +31,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/dev-messages",
+                "source": "https://github.com/aasa-global/broker/tree/dev-partner-delivery",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-04-19T12:12:54+00:00"
+            "time": "2018-04-20T11:21:34+00:00"
         },
         {
             "name": "bryanjhv/slim-session",
