@@ -7,7 +7,7 @@
     <p>Provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.</p>
   </div>
   <div class="col-sm-12 col-md-7 home-hero-half home-hero-right">
-    <form class="landing-form">
+    <form class="landing-form" method="post" action="/application">
       <div class="landing-form-upper">
         <!-- Landing form for laptop/desktop devices -->
         {% include '$sliders.twig' %}
@@ -24,10 +24,14 @@
           </div>
         </div>
         <div class="landing-form-lower-footer">
-          <p class="landing-terms">*Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. </p>
+          <p class="landing-terms">*Bring to the table win-win survival strategies to ensure proactive domination. 
+At the end of the day, going forward, a new normal that has evolved from 
+generation X is on the runway heading towards a streamlined cloud solution. </p>
           <button class="btn broker-btn broker-btn-gold">Apply for a loan</button>
         </div>
       </div>
+      <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+      <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
     </form>
 </section>
 <section class="row home-partners"></section>
@@ -40,7 +44,8 @@
       <div class="circle-block-text">
         <span class="circle-block-step text-uppercase">Step 1</span>
         <p class="circle-block-heading"><strong>Fill in the application</strong></p>
-        <p class="circle-block-description">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+        <p class="circle-block-description">Bring to the table win-win survival 
+strategies to ensure proactive domination.</p>
       </div>
     </div>
     <div class="col-sm-12 col-lg-4 circle-block">
@@ -48,7 +53,8 @@
       <div class="circle-block-text">
         <span class="circle-block-step text-uppercase">Step 2</span>
         <p class="circle-block-heading"><strong>Choose the best offer</strong></p>
-        <p class="circle-block-description">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+        <p class="circle-block-description">Bring to the table win-win survival 
+strategies to ensure proactive domination.</p>
       </div>
     </div>
     <div class="col-sm-12 col-lg-4 circle-block">
@@ -56,7 +62,8 @@
       <div class="circle-block-text">
         <span class="circle-block-step text-uppercase">Step 3</span>
         <p class="circle-block-heading"><strong>Get the money</strong></p>
-        <p class="circle-block-description">Bring to the table win-win survival strategies to ensure proactive domination.</p>
+        <p class="circle-block-description">Bring to the table win-win survival 
+strategies to ensure proactive domination.</p>
       </div>
     </div>
   </section>

@@ -36,11 +36,33 @@ return [
             'cache' => null,
           ],
           'connection' => [
-            'driver' => 'pdo_mysql',
-            'host' => 'mysql',
-            'user' => 'root',
-            'password' => 'hobunelasiterveaiat2is',
-            'dbname' => 'broker',
+            'production' => [
+              'driver' => 'pdo_mysql',
+              'host' => 'luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com',
+              'dbname' => 'broker_frontend_production',
+              'user' => 'bf_prod',
+              'password' => 'PjkAbyTKTe2dr2qMRQF2',
+              'port' => 3306,
+              'charset' => 'utf8'
+            ],
+            'developer' => [
+              'driver' => 'pdo_mysql',
+              'host' => 'mysql',
+              'user' => 'root',
+              'password' => 'hobunelasiterveaiat2is',
+              'dbname' => 'broker',
+              'charset' => 'utf8',
+              'port' => 3306
+            ],
+            "testserver" => [
+              "adapter" => "mysql",
+              "host" => "luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
+              "dbname" => "broker_frontend_test",
+              "user" => "bf_test",
+              "password" => "a9HJKvXz4uKRXvfVaBBg",
+              "port" => 3306,
+              "charset" => "utf8"
+            ]
           ]
         ],
         'mailer' => [
