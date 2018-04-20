@@ -41,7 +41,7 @@ return [
               'host' => 'luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com',
               'dbname' => 'broker_frontend_production',
               'user' => 'bf_prod',
-              'pass' => 'PjkAbyTKTe2dr2qMRQF2',
+              'password' => 'PjkAbyTKTe2dr2qMRQF2',
               'port' => 3306,
               'charset' => 'utf8'
             ],
@@ -59,7 +59,7 @@ return [
               "host" => "luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
               "dbname" => "broker_frontend_test",
               "user" => "bf_test",
-              "pass" => "a9HJKvXz4uKRXvfVaBBg",
+              "password" => "a9HJKvXz4uKRXvfVaBBg",
               "port" => 3306,
               "charset" => "utf8"
             ]

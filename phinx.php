@@ -22,7 +22,7 @@ return [
       "host" => $db["production"]["host"],
       "name" => $db["production"]["dbname"],
       "user" => $db["production"]["user"],
-      "pass" => $db["production"]["pass"],
+      "pass" => $db["production"]["password"],
       "port" => $db["production"]["port"],
       "charset" => $db["production"]["charset"]
     ],
@@ -31,7 +31,7 @@ return [
       "host" => $db["developer"]["host"],
       "name" => $db["developer"]["dbname"],
       "user" => $db["developer"]["user"],
-      "pass" => $db["developer"]["pass"],
+      "pass" => $db["developer"]["password"],
       //"port" => $db["developer"]["port"],
       "charset" => $db["developer"]["charset"]
     ],
@@ -40,7 +40,7 @@ return [
       "host" => $db["testserver"]["host"],
       "name" => $db["testserver"]["dbname"],
       "user" => $db["testserver"]["user"],
-      "pass" => $db["testserver"]["pass"],
+      "pass" => $db["testserver"]["password"],
       "port" => $db["testserver"]["port"],
       "charset" => $db["testserver"]["utf8"]
     ]
