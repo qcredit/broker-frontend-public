@@ -56,6 +56,7 @@ class GoogleAuthenticator implements AuthenticationServiceInterface
    */
   public function __construct()
   {
+    JWT::$leeway = 1000;
     $this->client = new \Google_Client(['client_id' => self::CLIENT_ID]);
   }
 
