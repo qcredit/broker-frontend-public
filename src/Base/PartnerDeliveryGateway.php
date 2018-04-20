@@ -14,6 +14,11 @@ use Broker\Domain\Entity\PartnerRequest;
 use Broker\Infrastructure\AbstractPartnerDeliveryGateway;
 use Broker\System\Log;
 
+/**
+ * Class PartnerDeliveryGateway
+ * @package App\Base
+ * @deprecated in favor of MessageDeliveryService!
+ */
 class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
 {
   /**

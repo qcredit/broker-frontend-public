@@ -41,6 +41,7 @@ class ApplicationControllerTest extends BaseTest
         'findEntity',
         'getOfferRepository',
         'getChooseOfferService',
+        'generateOfferConfirmationMessage'
       ])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
@@ -67,7 +68,7 @@ class ApplicationControllerTest extends BaseTest
       ->willReturn($twigMock);
 
     $this->mock->method('getContainer')->willReturn($this->containerMock);
-    $this->mock->method('render')->willReturnArgument(2);
+    //$this->mock->method('render')->willReturnArgument(2);
   }
 
   public function testOfferListAction()
@@ -77,6 +78,8 @@ class ApplicationControllerTest extends BaseTest
     $mock->expects($this->once())
       ->method('findEntity')
       ->willReturn(new Application());
+
+    $this->mock->method('render')->willReturnArgument(2);
 
     $result = $mock->offersAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
 
@@ -94,6 +97,7 @@ class ApplicationControllerTest extends BaseTest
     $this->mock->method('findEntity')
       ->willReturn(new Application());
 
+    $this->mock->method('render')->willReturnArgument(2);
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
     $this->assertTrue(is_array($result));
     $this->assertInstanceOf(Application::class, $result['application']);
@@ -130,8 +134,10 @@ class ApplicationControllerTest extends BaseTest
     $this->responseMock->method('withRedirect')
       ->willReturnSelf();
 
+    $this->mock->method('render')->willReturnArgument(1);
+
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
-    $this->assertInstanceOf(Response::class, $result);
+    $this->assertSame('application/thankyou.twig', $result);
   }
 
   public function testSelectOfferActionWithInvalidPost()
@@ -163,6 +169,8 @@ class ApplicationControllerTest extends BaseTest
       ->willReturn(['oh' => 'my']);
     $this->responseMock->method('withRedirect')
       ->willReturnSelf();
+
+    $this->mock->method('render')->willReturnArgument(2);
 
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
     $this->assertTrue(is_array($result));

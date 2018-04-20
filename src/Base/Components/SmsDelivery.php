@@ -33,4 +33,9 @@ class SmsDelivery implements MessageDeliveryInterface
   {
     // TODO: Implement isOk() method.
   }
+
+  public function getResponse()
+  {
+    // TODO: Implement getResponse() method.
+  }
 }
