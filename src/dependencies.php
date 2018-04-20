@@ -65,7 +65,9 @@ $container['db'] = function($container) {
 
   $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
 
-  $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+  $dbConf = getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer";
+
+  $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'][$dbConf], $config);
 
   return $entityManager;
 };

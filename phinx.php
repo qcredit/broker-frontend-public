@@ -5,6 +5,9 @@
  * Date: 19.04.18
  * Time: 16:09
  */
+$env = getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer";
+$settings = require_once(__DIR__ . '/src/settings.php');
+$db = $settings['settings']['doctrine']['connection'];
 
 return [
   "paths" => [
@@ -13,33 +16,33 @@ return [
   ],
   "environments" => [
     "default_migration_table" => "phinxlog",
-    "default_database" => getenv("ENV_TYPE") ?? "developer",
+    "default_database" => $env,
     "production" => [
       "adapter" => "mysql",
-      "host" => "luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
-      "name" => "broker_frontend_production",
-      "user" => "bf_prod",
-      "pass" => "PjkAbyTKTe2dr2qMRQF2",
-      "port" => 3306,
-      "charset" => "utf8"
+      "host" => $db["production"]["host"],
+      "name" => $db["production"]["dbname"],
+      "user" => $db["production"]["user"],
+      "pass" => $db["production"]["pass"],
+      "port" => $db["production"]["port"],
+      "charset" => $db["production"]["charset"]
     ],
     "developer" => [
       "adapter" => "mysql",
-      "host" => "mysql",
-      "name" => "broker",
-      "user" => "root",
-      "pass" => "hobunelasiterveaiat2is",
-      "port" => 3306,
-      "charset" => "utf8"
+      "host" => $db["developer"]["host"],
+      "name" => $db["developer"]["dbname"],
+      "user" => $db["developer"]["user"],
+      "pass" => $db["developer"]["pass"],
+      //"port" => $db["developer"]["port"],
+      "charset" => $db["developer"]["charset"]
     ],
     "testserver" => [
       "adapter" => "mysql",
-      "host" => "luxco-public.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
-      "name" => "broker_frontend_test",
-      "user" => "bf_test",
-      "pass" => "a9HJKvXz4uKRXvfVaBBg",
-      "port" => 3306,
-      "charset" => "utf8"
+      "host" => $db["testserver"]["host"],
+      "name" => $db["testserver"]["dbname"],
+      "user" => $db["testserver"]["user"],
+      "pass" => $db["testserver"]["pass"],
+      "port" => $db["testserver"]["port"],
+      "charset" => $db["testserver"]["utf8"]
     ]
   ],
   "version_order" => "creation"
