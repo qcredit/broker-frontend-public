@@ -2,13 +2,28 @@ $(document).ready(function(){
   checkSize();
   $(window).resize(checkSize);
 
+
+  /* URL check to add active class to correct navlink */
+  $(function(){
+      var current = location.pathname;
+      $('.navbar-nav .nav-item a').each(function(){
+          var $this = $(this);
+          // if the current path is like this link, make it active
+          if($this.attr('href').indexOf(current) !== -1 && location.pathname != "/"){
+              $this.parent().addClass('active');
+          } else if (location.pathname == "/") {
+            $('.home-link').addClass('active');
+          }
+      })
+  });
+
+
   // Loan landing form functions for laptops and desktops start here
   $(function() {
     var $loanAmountSlider = $('.landing-component-lg #loanAmount');
     var $loanAmount = $('.landing-component-lg #loanAmountOutput');
     var $loanDurationSlider = $('.landing-component-lg #loanTerm');
     var $loanDuration = $('.landing-component-lg #loanDurationOutput');
-
     $loanAmountSlider.rangeslider({
         polyfill: false
       }).on('input', function() {
@@ -18,7 +33,6 @@ $(document).ready(function(){
     $loanAmount.on('change', function() {
       $loanAmountSlider.val(this.value).change();
     });
-
     $loanDurationSlider.rangeslider({
         polyfill: false
       }).on('input', function() {
