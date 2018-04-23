@@ -37,11 +37,12 @@ RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
-         php /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php || echo "Ignoring failure"; \
-         php /var/www/html/vendor/bin/phinx seed:run -c /var/www/html/phinx.php -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed || echo "Ignoring failure"; \
        else exit 1; fi
 
 EXPOSE 80
+
+CMD ["/var/www/html/vendor/bin/phinx migrate -c /var/wwww/html/phinx.php"]
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 # mysql
 # mysql# create  database broker_frontend_test;
