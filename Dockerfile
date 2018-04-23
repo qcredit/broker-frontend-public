@@ -42,7 +42,6 @@ RUN    if cd /var/www/html; then\
 EXPOSE 80
 
 CMD ["/var/www/html/vendor/bin/phinx migrate -c /var/wwww/html/phinx.php"]
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
 
 # mysql
 # mysql# create  database broker_frontend_test;
