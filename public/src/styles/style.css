@@ -603,11 +603,10 @@ body {
     margin-bottom: 1rem; }
 
 /* Home page about section */
-.home-about-right img {
-  max-width: 100%; }
+.image-container img {
+  max-width: 100%;
+  min-width: 100%; }
 
-.about-image-container .image-container img {
-  max-width: 100%; }
 .about-image-container .about-text {
   margin-top: 3rem; }
   .about-image-container .about-text p {
