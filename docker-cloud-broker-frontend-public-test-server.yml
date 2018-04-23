@@ -3,9 +3,9 @@ version: "3.4"
 services:
   apache:
     image: 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest$GitCommitAppendix
-    command: /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php
     environment:
       ENV_TYPE: "testserver"
+    command: /var/www/html/infrastructure/start.sh
     volumes:
       - /srv/local/broker-frontend-public/test:/var/log/apache2
     ports:
