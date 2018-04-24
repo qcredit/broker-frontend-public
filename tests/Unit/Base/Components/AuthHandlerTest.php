@@ -82,6 +82,19 @@ class AuthHandlerTest extends BaseTest
     $this->assertFalse($this->mock->login());
   }
 
+  public function testLogout()
+  {
+    $sessionMock = $this->createMock(Helper::class);
+    $sessionMock->expects($this->exactly(2))
+      ->method('delete');
+
+    $this->containerMock->method('get')
+      ->willReturn($sessionMock);
+    $this->mock->setContainer($this->containerMock);
+
+    $this->mock->logout();
+  }
+
   public function testFindUser()
   {
     $mock = $this->getMockBuilder(AuthHandler::class)

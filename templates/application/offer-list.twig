@@ -1,44 +1,54 @@
 {% extends 'base.twig' %}
 {% block title %}Application's offer list{% endblock %}
 {% block container %}
-    <div class="container">
-        <div class="row">
-            <div class="col">
-                <p>Thank you! Your application has been submitted and here are the results:</p>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col">
-                <h4>Partners' offers</h4>
-                <div class="col">
-                    {% if application.offers %}
-                        <table class="table">
-                            <thead>
-                            <tr>
-                                <th>Lender Id</th>
-                                <th>Lender Name</th>
-                                <th>Amount</th>
-                                <th>Remote Id</th>
-                                <th>Status</th>
-                                <th></th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            {% for offer in application.offers %}
-                                <tr>
-                                    <td>{{ offer.partner.id }}</td>
-                                    <td>{{ offer.partner.name }}</td>
-                                    <td>{{ offer.loanAmount }}</td>
-                                    <td>{{ offer.remoteId }}</td>
-                                    <td>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
-                                </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    {% endif %}
-                </div>
-            </div>
-        </div>
+  <div class="row justify-content-md-center">
+    <div class="col-sm-12 col-md-9">
+      <div class="offer-list-head">
+        <p>Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:</p>
+      </div>
     </div>
+  </div>
+  <div class="row justify-content-md-center">
+    {% if application.offers %}
+    <div class="col-sm-12 col-md-9">
+      {% for offer in application.offers %}
+      <article class="loan-offer-container">
+        <div class="loan-offer-head">
+          <div class="loan-offerer-logo-container">
+            <img src="/src/images/aasalogo.png" class="loan-offerer-logo" alt="{{ offer.partner.name }} logo">
+          </div>
+          <div class="loan-offerer-info">
+            <span class="loan-offerer-name">{{ offer.partner.name }}</span>
+            <span class="loan-offerer-website">www.aasa.fi</span>
+          </div>
+        </div>
+        <div class="loan-offer-body">
+          <span>Amount: 2400 €</span>
+          <span>Duration: 24 m</span>
+          <span>Interest: 19.9 %</span>
+          <span>APR: 238 %</span>
+        </div>
+        <div class="loan-offer-footer">
+          <a href="#" class="loan-offer-cta btn broker-btn broker-btn-gold">SIGN CONTRACT</a>
+        </div>
+        <!--
+        <p>{{ offer.partner.id }}</p>
+        <p>{{ offer.partner.name }}</p>
+        <p>{{ offer.loanAmount }}</p>
+        <p>{{ offer.remoteId }}</p>
+        <p>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</p>-->
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </div>
+  <div class="row justify-content-sm-center">
+    <div class="col-sm-9">
+      <div class="bouncing-loader">
+        <div class="bouncing-loader__round"></div>
+        <div class="bouncing-loader__round"></div>
+        <div class="bouncing-loader__round"></div>
+      </div>
+    </div>
+  </div>
 {% endblock %}

@@ -8,7 +8,10 @@
 
 namespace App\Base;
 
+use App\Model\ChooseOfferForm;
+use Broker\Domain\Entity\AbstractEntity;
 use Broker\Domain\Entity\Application;
+use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
@@ -22,6 +25,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
   const STATUS_IN_DEBT = 'InDebt';
   const STATUS_REJECTED = 'Rejected';
   const STATUS_ACCEPTED = 'Accepted';
+  const STATUS_OK = 'OK';
 
   protected $configFile = 'aasa.config.json';
 
@@ -122,6 +126,19 @@ class AasaDataMapper implements PartnerDataMapperInterface
   /**
    * @return array
    */
+  public function getChooseOfferPayload()
+  {
+    return [
+      'signingMethod' => ChooseOfferForm::ATTR_SIGN_METHOD,
+      'update' => [
+        'firstPaymentDate' => ChooseOfferForm::ATTR_FIRST_PAYMENT_DATE
+      ]
+    ];
+  }
+
+  /**
+   * @return array
+   */
   public function getResponsePayload()
   {
     return [
@@ -136,16 +153,23 @@ class AasaDataMapper implements PartnerDataMapperInterface
   /**
    * @param $item
    * @param $key
-   * @param $application
+   * @param $data
    */
-  public function mapper(&$item, $key, $application)
+  public function mapper(&$item, $key, $data)
   {
     if (is_array($item))
     {
-      array_walk($item, [$this, 'mapper'], $application);
+      array_walk($item, [$this, 'mapper'], $data);
     }
     else {
-      $item = $application->getAttribute($item);
+      if ($data instanceof AbstractEntity)
+      {
+        $item = $data->getAttribute($item);
+      }
+      else
+      {
+        $item = $data[$item];
+      }
     }
   }
 
@@ -161,6 +185,23 @@ class AasaDataMapper implements PartnerDataMapperInterface
     $payload['eMarketing'] = 'Y';
     $payload['pMarketing'] = 'Y';
     $payload['tMarketing'] = 'Y';
+
+    return json_encode($payload);
+  }
+
+  /**
+   * @param array $data
+   * @param PartnerRequest $request
+   * @return string
+   */
+  public function mapDataToRequest(array $data, PartnerRequest $request)
+  {
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
+    {
+      $payload = $this->getChooseOfferPayload();
+    }
+
+    array_walk($payload, [$this, 'mapper'], $data);
 
     return json_encode($payload);
   }
@@ -188,23 +229,28 @@ class AasaDataMapper implements PartnerDataMapperInterface
     $data['data'] = $flatBody;
     if (isset($data['data']['status']))
     {
-      $this->updateStatus($data);
+      $this->updateStatus($data, $response);
     }
 
     return $data;
   }
 
   /**
-   * @param $data
-   * @return mixed
+   * @param array $data
+   * @param PartnerResponse $response
+   * @return array
    */
-  protected function updateStatus(array &$data)
+  protected function updateStatus(array &$data, PartnerResponse $response)
   {
-    if ($data['data']['status'] === self::STATUS_ACCEPTED)
+    if ($response->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE && $data['data']['status'] === self::STATUS_OK)
+    {
+      $data['chosenDate'] = new \DateTime();
+    }
+    else if ($data['data']['status'] === self::STATUS_ACCEPTED)
     {
       $data['acceptedDate'] = new \DateTime();
     }
-    if ($data['data']['status'] === self::STATUS_REJECTED)
+    else if ($data['data']['status'] === self::STATUS_REJECTED)
     {
       $data['rejectedDate'] = new \DateTime();
     }
@@ -218,20 +264,62 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getAdditionalErrors(PartnerResponse $response)
   {
-    $errors = [];
     $body = json_decode($response->getResponseBody(), true);
 
+    if (is_array($body) && isset($body['errors']))
+    {
+      $errors = $this->getBodyErrors($body);
+    }
+    else
+    {
+      $errors = $this->getFieldErrors($body);
+    }
+
+    return $errors;
+  }
+
+  /**
+   * @param array $body
+   * @return array
+   */
+  protected function getBodyErrors(array $body)
+  {
+    $errors = [];
+
+    foreach ($body['errors'] as $error)
+    {
+      if ($this->isApiErrorDefined($error['code']))
+      {
+        $err = $this->mapApiError($error['code']);
+        $errors[$err['field']] = $err['message'];
+      }
+      else {
+        $errors[] = $error['message'];
+      }
+    }
+
+    return $errors;
+  }
+
+  /**
+   * @param array $body
+   * @return array
+   */
+  protected function getFieldErrors(array $body)
+  {
+    $errors = [];
     foreach ($body as $row)
     {
       if (is_array($row) && isset($row['field']))
       {
-        $map = $this->flattenArray($this->getPayload());
+        $map = $this->flattenArray($this->getRequestPayload());
 
         if (isset($map[$row['field']]))
         {
           $errors[$map[$row['field']]] = $row['message'];
         }
-        else {
+        else
+        {
           $errors[$row['field']] = $row['message'];
         }
       }
@@ -248,11 +336,19 @@ class AasaDataMapper implements PartnerDataMapperInterface
   {
     $body = json_decode($response->getResponseBody(), true);
 
-    foreach ($body as $row)
+    if (is_array($body))
     {
-      if (is_array($row) && isset($row['field']))
+      if (isset($body['errors']))
       {
         return true;
+      }
+
+      foreach ($body as $row)
+      {
+        if (is_array($row) && isset($row['code']))
+        {
+          return true;
+        }
       }
     }
 
@@ -271,5 +367,54 @@ class AasaDataMapper implements PartnerDataMapperInterface
     });
 
     return $output;
+  }
+
+  /**
+   * @return array
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getChooseRequestSchema(): array
+  {
+    return json_decode($this->getConfigFile(), true)['chooseRequestSchema'];
+  }
+
+  /**
+   * @param $code
+   * @return bool
+   */
+  protected function isApiErrorDefined($code): bool
+  {
+    return array_key_exists($code, $this->definedApiErrors());
+  }
+
+  /**
+   * @param $code
+   * @return mixed
+   */
+  protected function mapApiError($code)
+  {
+    return $this->definedApiErrors()[$code];
+  }
+
+  /**
+   * @return array
+   */
+  protected function definedApiErrors()
+  {
+    return [
+      1125 => [
+        'field' => 'general',
+        'message' => 'Contract already signed!'
+      ],
+      1126 => [
+        'field' => ChooseOfferForm::ATTR_FIRST_PAYMENT_DATE,
+        'message' => 'Invalid payment date!'
+      ],
+      1127 => [
+        'field' => ChooseOfferForm::ATTR_SIGN_METHOD,
+        'message' => 'Signing method not allowed!'
+      ]
+    ];
   }
 }

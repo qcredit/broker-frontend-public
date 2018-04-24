@@ -8,7 +8,11 @@ use App\Middleware\Authenticator;
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
+$app->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
 $app->get('/', 'HomeController:indexAction');
+$app->get('/about', 'AboutController:indexAction');
+$app->get('/contact', 'ContactController:indexAction');
+$app->get('/terms', 'TermsController:indexAction');
 
 $app->group('/admin', function() {
   $this->get('', 'AdminController:indexAction');
@@ -26,3 +30,4 @@ $app->group('/admin', function() {
 })->add(new Authenticator($app));
 
 $app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
+$app->get('/admin/logout', 'LoginController:logoutAction');

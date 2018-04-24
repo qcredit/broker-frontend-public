@@ -10,6 +10,7 @@ namespace App\Base\Persistence\Doctrine;
 
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Doctrine\Common\Collections\Criteria;
 
 class OfferRepository extends AbstractRepository implements OfferRepositoryInterface
 {

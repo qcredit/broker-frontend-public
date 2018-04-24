@@ -1,0 +1,12 @@
+{% extends 'base.twig' %}
+{% block title %}Thank you{% endblock %}
+{% block container %}
+  <div class="row justify-content-sm-center thank-you-row">
+    <section class="col-sm-8 text-center">
+      <h1>A great big thank you!</h1>
+    </section>
+    <div class="col-sm-12 col-md-10 col-lg-7 text-center">
+      <p>Welcome to the Broker family! We've forwarded your application to loan providers and sent a confirmation email to <strong>{{ application.email }}</strong>. You can expect them to contact you within 3 days.</p>
+    </div>
+  </div>
+{% endblock %}

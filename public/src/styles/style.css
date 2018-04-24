@@ -1,5 +1,29 @@
 /* COLOURS */
 /* Components */
+.bouncing-loader {
+  display: flex;
+  margin: 3rem auto;
+  width: 5rem; }
+  .bouncing-loader__round {
+    width: 20px;
+    height: 20px;
+    background-color: #8385aa;
+    border-radius: 50%;
+    animation: bounce 0.6s infinite alternate; }
+    .bouncing-loader__round:not(:first-child) {
+      margin-left: 10px; }
+    .bouncing-loader__round:nth-child(2) {
+      animation-delay: 0.2s; }
+    .bouncing-loader__round:nth-child(3) {
+      animation-delay: 0.4s; }
+
+@keyframes bounce {
+  from {
+    opacity: 1;
+    transform: translateY(0); }
+  to {
+    opacity: 0.1;
+    transform: translateY(-20px); } }
 /* Navigation styles */
 .navbar {
   padding: 1rem;
@@ -282,10 +306,10 @@
     border: 0;
     border-bottom: 1px solid #999;
     margin-bottom: 1px; }
-    .field input:focus {
-      outline: none;
-      margin-bottom: 0;
-      border-bottom: 2px solid #00aeef; }
+  .field input:focus, .field textarea:focus {
+    outline: none;
+    margin-bottom: 0;
+    border-bottom: 2px solid #00aeef; }
   .field label {
     position: absolute;
     left: 0;
@@ -335,6 +359,25 @@
   top: 0;
   font-size: 0.75rem; }
 
+/* CONTACT PAGE FORM */
+.contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label {
+  top: -0.8875rem; }
+
+.contact-form .submit {
+  display: flex;
+  justify-content: flex-end; }
+
+textarea {
+  width: 100%;
+  padding-top: 0.5rem;
+  border: 0;
+  border-bottom: 1px solid #999;
+  outline: none;
+  resize: none; }
+
+.contact-information > span {
+  display: block; }
+
 /* Error styles */
 .field.error select, .field.error input {
   border-bottom: 2px solid #CE0000;
@@ -367,6 +410,117 @@
 
   .loan-form-upper {
     padding: 2.5rem; } }
+.offer-list-head {
+  margin: 2rem 0; }
+
+.loan-offer-container {
+  display: flex;
+  flex-direction: column;
+  margin: 2rem 0;
+  border: 1px solid #e6e9ee; }
+
+.loan-offer-head {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1rem;
+  border-bottom: 1px solid #d7d7d7; }
+  .loan-offer-head .loan-offerer-logo {
+    max-width: 100px; }
+  .loan-offer-head span {
+    display: block;
+    line-height: 1; }
+  .loan-offer-head .loan-offerer-info {
+    margin-left: 1rem; }
+  .loan-offer-head .loan-offerer-website {
+    font-size: 0.875rem;
+    color: #a1a1a1; }
+
+.loan-offer-body {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0; }
+  .loan-offer-body span {
+    margin: 0 1rem;
+    font-size: .875rem; }
+
+.loan-offer-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #e6e9ee;
+  padding: 1.5rem 0; }
+
+.loan-offer-container.featured {
+  position: relative;
+  border: 3px solid #ffc328; }
+  .loan-offer-container.featured:before {
+    content: "Top offer";
+    position: absolute;
+    top: -30px;
+    left: -3px;
+    width: 100px;
+    height: 30px;
+    padding: 3px;
+    font-weight: bold;
+    text-align: center;
+    background: #ffc328;
+    color: #000; }
+
+@media only screen and (min-width: 360px) {
+  .loan-offer-body span {
+    font-size: 1rem;
+    flex: 0 0 118px; } }
+@media only screen and (min-width: 768px) {
+  .offer-list-head {
+    margin: 3rem 0; }
+
+  .loan-offer-body span {
+    flex: 0 0 140px; } }
+@media only screen and (min-width: 1024px) {
+  .offer-list-head {
+    margin: 4rem 0; }
+
+  .loan-offer-container {
+    flex-direction: row;
+    padding: 0; }
+
+  .loan-offer-head {
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-top: 0;
+    padding-bottom: 0;
+    border-bottom: 0; }
+    .loan-offer-head .loan-offerer-logo-container {
+      margin-bottom: .1875rem; }
+    .loan-offer-head .loan-offerer-info {
+      margin-left: 0; }
+      .loan-offer-head .loan-offerer-info .loan-offerer-name {
+        display: none; }
+
+  .loan-offer-body {
+    justify-content: flex-start; }
+
+  .loan-offer-footer {
+    flex: 0 0 200px; }
+    .loan-offer-footer .broker-btn-gold {
+      padding: 1rem; } }
+@media only screen and (min-width: 1200px) {
+  .loan-offer-head {
+    flex-direction: row;
+    align-items: center; }
+    .loan-offer-head .loan-offerer-logo-container {
+      margin-bottom: 0; }
+    .loan-offer-head .loan-offerer-info {
+      margin-left: 1.5rem; }
+      .loan-offer-head .loan-offerer-info .loan-offerer-name {
+        display: block; }
+
+  .loan-offer-body {
+    margin-left: 2rem;
+    justify-content: center; } }
 /* Typography */
 * {
   -webkit-font-smoothing: antialiased;
@@ -383,19 +537,22 @@ section > h1 {
 
 /* UTILITIES */
 .broker-btn {
-  padding: .875rem 3rem;
+  padding: 1rem 3rem;
   border-radius: 0;
   border: 0;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out; }
+  font-size: 14px; }
   .broker-btn:focus {
     outline: none;
     box-shadow: none; }
   .broker-btn:hover {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19); }
+
+a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
+  text-decoration: none;
+  line-height: 1;
+  color: #000; }
 
 .broker-btn-blue {
   color: #fff;
@@ -409,31 +566,70 @@ body {
   padding-top: 85px; }
 
 /* Home page How it works section */
-.home-how-block {
+.circle-block {
   display: flex;
   margin-bottom: 2rem;
   line-height: 1.3; }
-  .home-how-block .home-how-block-step {
+  .circle-block .circle-block-step {
     color: #e6e9ee;
     font-size: 0.875rem;
     font-weight: bold; }
-  .home-how-block p {
+  .circle-block p {
     margin-bottom: 0; }
-  .home-how-block .home-how-block-heading {
+  .circle-block .circle-block-heading {
     margin-top: -2px;
     color: black;
     font-size: 1rem; }
-  .home-how-block .home-how-block-description {
+  .circle-block .circle-block-description, .circle-block .circle-block-description a {
     color: rgba(0, 0, 0, 0.5);
     font-size: 0.875rem; }
 
-.home-how-block-icon {
-  margin-right: 1.25rem; }
-  .home-how-block-icon img {
-    width: 75px; }
+.circle-block-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 75px;
+  height: 75px;
+  width: 75px;
+  margin-right: 1.25rem;
+  background: url(../images/step_icon.svg) no-repeat center;
+  background-size: 100%; }
+  .circle-block-icon img {
+    width: 30px; }
+
+.contact-page-blocks {
+  margin-bottom: 3rem; }
+  .contact-page-blocks .circle-block {
+    margin-bottom: 1rem; }
 
 /* Home page about section */
-.home-about-right img {
-  max-width: 100%; }
+.image-container img {
+  max-width: 100%;
+  min-width: 100%; }
+
+.about-image-container .about-text {
+  margin-top: 3rem; }
+  .about-image-container .about-text p {
+    margin-bottom: 1.5rem;
+    line-height: 1.6; }
+
+.terms-container {
+  font-size: 0.875rem;
+  line-height: 1.6; }
+
+.thank-you-row {
+  padding-top: 1rem;
+  padding-bottom: 1rem; }
 
 /* Media queries */
+@media only screen and (min-width: 340px) {
+  .thank-you-row {
+    padding: 1rem 1rem; } }
+@media only screen and (min-width: 768px) {
+  .thank-you-row {
+    padding-top: 4rem;
+    padding-bottom: 4rem; } }
+@media only screen and (min-width: 1024px) {
+  .thank-you-row {
+    padding-top: 6rem;
+    padding-bottom: 6rem; } }

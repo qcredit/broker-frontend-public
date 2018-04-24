@@ -36,16 +36,6 @@ $container['logger'] = function ($c) {
     return $logger;
 };
 
-$container['view'] = function($container) {
-  $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
-
-  // Instantiate and add Slim specific extension
-  $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
-  $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-
-  return $view;
-};
-
 $container['session'] = function() {
   return new \SlimSession\Helper;
 };
@@ -54,12 +44,30 @@ $container['flash'] = function() {
   return new \Slim\Flash\Messages();
 };
 
+$container['csrf'] = function()
+{
+  return new \Slim\Csrf\Guard();
+};
+
+$container['view'] = function($container) {
+  $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
+
+  // Instantiate and add Slim specific extension
+  $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+  $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
+  $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+
+  return $view;
+};
+
 $container['db'] = function($container) {
   $settings = $container->get('settings')['doctrine'];
 
   $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
 
-  $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+  $dbConf = getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer";
+
+  $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'][$dbConf], $config);
 
   return $entityManager;
 };
@@ -107,7 +115,21 @@ $container['HomeController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\HomeController($view);
 };
-
+$container['AboutController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\AboutController($view);
+};
+$container['ContactController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\ContactController($view);
+};
+$container['TermsController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\TermsController($view);
+};
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
@@ -117,7 +139,8 @@ $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
     new PartnerDeliveryGateway(),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('PartnerDataMapperRepository'),
+    $c->get('MessageDeliveryService')
   );
 };
 
@@ -130,28 +153,51 @@ $container['PartnerResponseService'] = function($c)
   );
 };
 
+$container['MessageDeliveryService'] = function ($c)
+{
+  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+};
+
+$container['ChooseOfferService'] = function($c)
+{
+  return new \Broker\Domain\Service\ChooseOfferService(
+    $c->get('PartnerRequestsService'),
+    $c->get('PartnerResponseService'),
+    new PartnerRequestFactory(),
+    new PartnerDataMapperRepository(),
+    new \App\Base\Validator\SchemaValidator(),
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+  );
+};
+
 $container['ApplicationController'] = function ($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
+  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
     new ApplicationFactory(),
     $appRepository,
     $factory->createGateway($c->get('db'), 'Partner'),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('PartnerDataMapperRepository'),
+    $schemaValidator
   );
 
   $prepareService = new PreparePartnerRequestsService(
-    $newApplicationService,
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
-    new PartnerRequestFactory()
+    new PartnerRequestFactory(),
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
   );
 
   return new \App\Controller\ApplicationController(
     $prepareService,
     $appRepository,
+    $offerRepository,
+    $c->get('ChooseOfferService'),
+    $newApplicationService,
     $c
   );
 };

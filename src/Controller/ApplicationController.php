@@ -8,33 +8,74 @@
 
 namespace App\Controller;
 
-use Broker\Domain\Service\PreparePartnerRequestsService;
-use App\Base\Persistence\Doctrine\ApplicationRepository;
+use App\Base\Components\AbstractController;
+use App\Base\Components\EmailDelivery;
+use Broker\Domain\Entity\Message;
+use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
+use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
+use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
+use Slim\Container;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use Slim\Exception\NotFoundException;
+use Broker\Domain\Entity\Application;
 
-class ApplicationController
+class ApplicationController extends AbstractController
 {
+  /**
+   * @var PreparePartnerRequestsServiceInterface
+   */
   protected $prepareService;
+  /**
+   * @var Container
+   */
   protected $container;
+  /**
+   * @var ApplicationRepositoryInterface
+   */
   protected $appRepository;
+  /**
+   * @var OfferRepositoryInterface
+   */
+  protected $offerRepository;
+  /**
+   * @var ChooseOfferServiceInterface
+   */
+  protected $chooseOfferService;
+  /**
+   * @var NewApplicationServiceInterface
+   */
+  protected $newApplicationService;
 
   /**
    * ApplicationController constructor.
-   * @param PreparePartnerRequestsService $prepareService
-   * @param ApplicationRepository $appRepository
+   * @param PreparePartnerRequestsServiceInterface $prepareService
+   * @param ApplicationRepositoryInterface $appRepository
+   * @param OfferRepositoryInterface $offerRepository
+   * @param ChooseOfferServiceInterface $chooseOfferService
+   * @param NewApplicationServiceInterface $newApplicationService
    * @param $container
    */
   public function __construct(
-    PreparePartnerRequestsService $prepareService,
-    ApplicationRepository $appRepository,
+    PreparePartnerRequestsServiceInterface $prepareService,
+    ApplicationRepositoryInterface $appRepository,
+    OfferRepositoryInterface $offerRepository,
+    ChooseOfferServiceInterface $chooseOfferService,
+    NewApplicationServiceInterface $newApplicationService,
     $container)
   {
     $this->prepareService = $prepareService;
     $this->appRepository = $appRepository;
     $this->container = $container;
+    $this->offerRepository = $offerRepository;
+    $this->chooseOfferService = $chooseOfferService;
+    $this->newApplicationService = $newApplicationService;
   }
 
   /**
-   * @return PreparePartnerRequestsService
+   * @return PreparePartnerRequestsServiceInterface
    */
   public function getPrepareService()
   {
@@ -42,10 +83,10 @@ class ApplicationController
   }
 
   /**
-   * @param PreparePartnerRequestsService $prepareService
-   * @return ApplicationController
+   * @param PreparePartnerRequestsServiceInterface $prepareService
+   * @return $this
    */
-  public function setPrepareService($prepareService)
+  public function setPrepareService(PreparePartnerRequestsServiceInterface $prepareService)
   {
     $this->prepareService = $prepareService;
     return $this;
@@ -63,14 +104,14 @@ class ApplicationController
    * @param mixed $container
    * @return ApplicationController
    */
-  public function setContainer($container)
+  public function setContainer(Container $container)
   {
     $this->container = $container;
     return $this;
   }
 
   /**
-   * @return ApplicationRepository
+   * @return ApplicationRepositoryInterface
    */
   public function getAppRepository()
   {
@@ -78,12 +119,66 @@ class ApplicationController
   }
 
   /**
-   * @param ApplicationRepository $appRepository
-   * @return ApplicationController
+   * @param ApplicationRepositoryInterface $appRepository
+   * @return $this
    */
-  public function setAppRepository($appRepository)
+  public function setAppRepository(ApplicationRepositoryInterface $appRepository)
   {
     $this->appRepository = $appRepository;
+    return $this;
+  }
+
+  /**
+   * @return OfferRepositoryInterface
+   */
+  public function getOfferRepository()
+  {
+    return $this->offerRepository;
+  }
+
+  /**
+   * @param OfferRepositoryInterface $offerRepository
+   * @return ApplicationController
+   */
+  public function setOfferRepository(OfferRepositoryInterface $offerRepository)
+  {
+    $this->offerRepository = $offerRepository;
+    return $this;
+  }
+
+  /**
+   * @return ChooseOfferServiceInterface
+   */
+  public function getChooseOfferService()
+  {
+    return $this->chooseOfferService;
+  }
+
+  /**
+   * @param ChooseOfferServiceInterface $chooseOfferService
+   * @return ApplicationController
+   */
+  public function setChooseOfferService(ChooseOfferServiceInterface $chooseOfferService)
+  {
+    $this->chooseOfferService = $chooseOfferService;
+    return $this;
+  }
+
+  /**
+   * @return NewApplicationServiceInterface
+   */
+  public function getNewApplicationService()
+  {
+    return $this->newApplicationService;
+  }
+
+  /**
+   * @param NewApplicationServiceInterface $newApplicationService
+   * @return ApplicationController
+   */
+  public function setNewApplicationService(NewApplicationServiceInterface $newApplicationService)
+  {
+    $this->newApplicationService = $newApplicationService;
     return $this;
   }
 
@@ -91,11 +186,17 @@ class ApplicationController
    * @param $request
    * @param $response
    * @param $args
-   * @return \Psr\Http\Message\ResponseInterface
-   * @throws \Exception
+   * @return mixed
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function indexAction($request, $response, $args)
   {
+/*    $message = new Message();
+    $message->setRecipient('hendrik.uibopuu@aasaglobal.com')
+      ->setBody('hellllo!')
+      ->setTitle('Johhaidii');
+    $delivery = new EmailDelivery($this->getContainer());
+    $delivery->send($message);*/
 
     $data = [
       'incomeSourceType' => 'Employed',
@@ -127,21 +228,29 @@ class ApplicationController
       'loanTerm' => 18,
       'firstName' => 'Adam',
       'lastName' => 'Barański',
-      'email' => 'brak@asakredyt.pl',
+      'email' => 'hendrik.uibopuu@aasaglobal.com',
       'phone' => '+48739050381'
     ];
 
     //$data = [];
     if ($request->isPost())
     {
-      $app = $this->prepareService->setData($request->getParsedBody())->run();
-      $data['errors'] = $app->getErrors();
-      $data['application'] = $app;
-
-      if (!isset($data['errors']) || empty($data['errors']))
+      $newAppService = $this->getNewApplicationService();
+      if ($newAppService->setData($request->getParsedBody())->run())
       {
-        return $response->withRedirect(sprintf('application/%s', $app->getApplicationHash()));
+        $this->getPrepareService()->setApplication($newAppService->getApplication())
+          ->setData($newAppService->getPreparedData());
+
+        $this->generateOfferLinkMessage();
+
+        if ($this->getPrepareService()->run())
+        {
+          //$newAppService->saveApp();
+          return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
+        }
       }
+
+      $data['application'] = $newAppService->getApplication();
     }
 
     return $this->container->get('view')->render($response, 'application/form.twig', $data);
@@ -154,19 +263,112 @@ class ApplicationController
    * @return mixed
    * @throws \Exception
    */
-  public function offersAction($request, $response, $args)
+  public function offersAction(Request $request, Response $response, $args)
   {
-    $application = $this->getAppRepository()->getByHash($args['hash']);
-
-    if (!$application)
-    {
-      throw new \Slim\Exception\NotFoundException($request, $response);
-    }
+    $application = $this->findEntity($args['hash'], $request, $response);
 
     $data = [
       'application' => $application
     ];
 
-    return $this->getContainer()->get('view')->render($response, 'application/offer-list.twig', $data);
+    return $this->render($response, 'application/offer-list.twig', $data);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   * @throws NotFoundException
+   */
+  public function selectOfferAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+    $data['application'] = $this->findEntity($args['hash'], $request, $response);
+    $data['offer'] = $this->getOfferRepository()->getOneBy(['id' => $args['id'], 'rejectedDate' => null, 'chosenDate' => null]);
+
+    if (!$data['offer'])
+    {
+      throw new NotFoundException($request, $response);
+    }
+
+    if ($request->isPost())
+    {
+      $service = $this->getChooseOfferService()
+        ->setData($request->getParsedBody())->setOffer($data['offer']);
+
+      $this->generateOfferConfirmationMessage();
+
+      if ($service->run())
+      {
+        return $this->render($response, 'application/thankyou.twig', $data);
+      }
+
+      $data['offer'] = $service->getOffer();
+    }
+
+    return $this->render($response, 'application/choose-offer.twig', $data);
+  }
+
+  /**
+   * @param $hash
+   * @param $request
+   * @param $response
+   * @return null|object
+   * @throws \Slim\Exception\NotFoundException
+   */
+  protected function findEntity($hash, Request $request, Response $response)
+  {
+    $application = $this->getAppRepository()->getByHash($hash);
+
+    if (!$application)
+    {
+      throw new NotFoundException($request, $response);
+    }
+
+    return $application;
+  }
+
+  protected function generateOfferConfirmationMessage()
+  {
+    $offer = $this->getChooseOfferService()->getOffer();
+    $message = new Message();
+    $message->setTitle('Thank you for choosing us!')
+      ->setRecipient($offer->getApplication()->getEmail())
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/offer-confirmation.twig', [
+        'offer' => $offer,
+        'title' => 'Your selected offer'
+      ]));
+
+    $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
+  }
+
+  protected function generateOfferLinkMessage()
+  {
+    $application = $this->getPrepareService()->getApplication();
+    $message = new Message();
+    $message->setTitle('Offers for your application')
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/offer-link.twig', [
+        'application' => $application,
+        'title' => 'Our offers for your application',
+        'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
+      ]))
+      ->setRecipient($application->getEmail());
+
+    $this->getPrepareService()->getMessageDeliveryService()->setMessage($message);
+  }
+
+  /**
+   * @param $template
+   * @param $params
+   * @return mixed
+   */
+  protected function generateEmailContent($template, $params)
+  {
+    $twig = $this->getContainer()->get('view');
+
+    return $twig->fetch($template, $params);
   }
 }

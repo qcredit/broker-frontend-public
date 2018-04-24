@@ -8,15 +8,18 @@
 
 namespace Tests\Unit\Controller;
 
+use App\Base\Persistence\Doctrine\OfferRepository;
 use App\Controller\ApplicationController;
+use Broker\Domain\Service\ChooseOfferService;
 use Broker\System\BaseTest;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Container;
 use Slim\Views\Twig;
-use Broker\Persistence\Doctrine\ApplicationRepository;
+use App\Base\Persistence\Doctrine\ApplicationRepository;
 use Broker\Domain\Entity\Application;
+use Broker\Domain\Entity\Offer;
 
 class ApplicationControllerTest extends BaseTest
 {
@@ -25,12 +28,21 @@ class ApplicationControllerTest extends BaseTest
   protected $responseMock;
   protected $containerMock;
   protected $repositoryMock;
+  protected $offerRepoMock;
 
   public function setUp()
   {
     $this->mock = $this->getMockBuilder(ApplicationController::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAppRepository', 'getContainer'])
+      ->setMethods([
+        'getAppRepository',
+        'getContainer',
+        'render',
+        'findEntity',
+        'getOfferRepository',
+        'getChooseOfferService',
+        'generateOfferConfirmationMessage'
+      ])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
     $this->responseMock = $this->createMock(Response::class);
@@ -38,6 +50,10 @@ class ApplicationControllerTest extends BaseTest
       ->setMethods(['get'])
       ->getMock();
     $this->repositoryMock = $this->getMockBuilder(ApplicationRepository::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getAll', 'getOneBy', 'getByHash'])
+      ->getMock();
+    $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
       ->setMethods(['getAll', 'getOneBy', 'getByHash'])
       ->getMock();
@@ -52,37 +68,127 @@ class ApplicationControllerTest extends BaseTest
       ->willReturn($twigMock);
 
     $this->mock->method('getContainer')->willReturn($this->containerMock);
+    //$this->mock->method('render')->willReturnArgument(2);
   }
 
   public function testOfferListAction()
   {
     $mock = $this->mock;
 
-    $this->repositoryMock->expects($this->once())
-      ->method('getByHash')
+    $mock->expects($this->once())
+      ->method('findEntity')
       ->willReturn(new Application());
 
-    $mock->expects($this->once())
-      ->method('getAppRepository')
-      ->willReturn($this->repositoryMock);
+    $this->mock->method('render')->willReturnArgument(2);
 
-    $this->assertInstanceOf(Response::class, $mock->offersAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']));
+    $result = $mock->offersAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
+
+    $this->assertTrue(is_array($result));
+    $this->assertInstanceOf(Application::class, $result['application']);
   }
 
-  public function testOfferListActionWithNoApplication()
+  public function testSelectOfferAction()
   {
-    $mock = $this->mock;
+    $this->offerRepoMock->method('getOneBy')
+      ->willReturn(new Offer());
+    $this->mock->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
 
-    $this->repositoryMock->expects($this->once())
-      ->method('getByHash')
+    $this->mock->method('findEntity')
+      ->willReturn(new Application());
+
+    $this->mock->method('render')->willReturnArgument(2);
+    $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
+    $this->assertTrue(is_array($result));
+    $this->assertInstanceOf(Application::class, $result['application']);
+    $this->assertInstanceOf(Offer::class, $result['offer']);
+  }
+
+  public function testSelectOfferActionWithPost()
+  {
+    $this->offerRepoMock->method('getOneBy')
+      ->willReturn(new Offer());
+    $this->mock->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
+    $serviceMock = $this->getMockBuilder(ChooseOfferService::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['run', 'setData'])
+      ->getMock();
+    $serviceMock->expects($this->once())
+      ->method('run')
+      ->willReturn(true);
+    $serviceMock->expects($this->once())
+      ->method('setData')
+      ->willReturnSelf();
+
+    $this->mock->expects($this->once())
+      ->method('getChooseOfferService')
+      ->willReturn($serviceMock);
+
+    $this->requestMock->expects($this->once())
+      ->method('isPost')
+      ->willReturn(true);
+    $this->requestMock->expects($this->once())
+      ->method('getParsedBody')
+      ->willReturn(['oh' => 'my']);
+    $this->responseMock->method('withRedirect')
+      ->willReturnSelf();
+
+    $this->mock->method('render')->willReturnArgument(1);
+
+    $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
+    $this->assertSame('application/thankyou.twig', $result);
+  }
+
+  public function testSelectOfferActionWithInvalidPost()
+  {
+    $this->offerRepoMock->method('getOneBy')
+      ->willReturn(new Offer());
+    $this->mock->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
+    $serviceMock = $this->getMockBuilder(ChooseOfferService::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['run', 'setData'])
+      ->getMock();
+    $serviceMock->expects($this->once())
+      ->method('run')
+      ->willReturn(false);
+    $serviceMock->expects($this->once())
+      ->method('setData')
+      ->willReturnSelf();
+
+    $this->mock->expects($this->once())
+      ->method('getChooseOfferService')
+      ->willReturn($serviceMock);
+
+    $this->requestMock->expects($this->once())
+      ->method('isPost')
+      ->willReturn(true);
+    $this->requestMock->expects($this->once())
+      ->method('getParsedBody')
+      ->willReturn(['oh' => 'my']);
+    $this->responseMock->method('withRedirect')
+      ->willReturnSelf();
+
+    $this->mock->method('render')->willReturnArgument(2);
+
+    $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
+    $this->assertTrue(is_array($result));
+    $this->assertInstanceOf(Offer::class, $result['offer']);
+  }
+
+  public function testSelectOfferActionNoOfferFound()
+  {
+    $this->offerRepoMock->method('getOneBy')
       ->willReturn(null);
+    $this->mock->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
 
-    $mock->expects($this->once())
-      ->method('getAppRepository')
-      ->willReturn($this->repositoryMock);
+    $this->mock->method('findEntity')
+      ->willReturn(new Application());
 
     $this->expectException(NotFoundException::class);
 
-    $mock->offersAction($this->requestMock, $this->responseMock, ['hash' => 'asdasd']);
+    $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
   }
 }

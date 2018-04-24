@@ -6,11 +6,13 @@ $bluegray: #e6e9ee;
 $error: #CE0000;
 
 /* Components */
+@import "modules";
 @import "header";
 @import "hero";
 @import "footer";
 @import "rangeslider";
 @import "form";
+@import "loan-offers";
 
 /* Typography */
 * {
@@ -28,14 +30,12 @@ section > h1 {
 }
 /* UTILITIES */
 .broker-btn {
-  padding: .875rem 3rem;
+  padding: 1rem 3rem;
   border-radius: 0;
   border: 0;
   text-transform: uppercase;
   font-weight: 700;
   font-size: 14px;
-  cursor: pointer;
-  transition: all 0.1s ease-in-out;
   &:focus {
     outline: none;
     box-shadow: none;
@@ -43,6 +43,11 @@ section > h1 {
   &:hover {
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19);
   }
+}
+a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
+  text-decoration: none;
+  line-height: 1;
+  color: #000;
 }
 .broker-btn-blue {
   color: #fff;
@@ -59,11 +64,11 @@ body {
 }
 
 /* Home page How it works section */
-.home-how-block {
+.circle-block {
   display: flex;
   margin-bottom: 2rem;
   line-height: 1.3;
-  .home-how-block-step {
+  .circle-block-step {
     color: $bluegray;
     font-size: 0.875rem;
     font-weight: bold;
@@ -71,30 +76,82 @@ body {
   p {
     margin-bottom: 0;
   }
-  .home-how-block-heading {
+  .circle-block-heading {
     margin-top: -2px;
     color: black;
     font-size: 1rem;
   }
-  .home-how-block-description {
+  .circle-block-description, .circle-block-description a {
     color: rgba(0,0,0,0.5);
     font-size: 0.875rem;
   }
 }
-.home-how-block-icon{
+.circle-block-icon{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 75px;
+  height: 75px;
+  width: 75px;
   margin-right: 1.25rem;
+  background: url(../images/step_icon.svg) no-repeat center;
+  background-size: 100%;
   img {
-    width: 75px;
+    width: 30px;
+  }
+}
+
+.contact-page-blocks {
+  margin-bottom: 3rem;
+  .circle-block {
+    margin-bottom: 1rem;
   }
 }
 
 
 /* Home page about section */
-.home-about-right img {
+.image-container img {
   max-width: 100%;
+  min-width: 100%;
 }
 
+.about-image-container {
+  .about-text {
+    margin-top: 3rem;
+    p {
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+  }
+}
 
+.terms-container {
+  font-size: 0.875rem;
+  line-height: 1.6;
+}
 
+.thank-you-row {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
 
 /* Media queries */
+
+@media only screen and (min-width: 340px) {
+  .thank-you-row {
+    padding: 1rem 1rem;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  .thank-you-row {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+}
+@media only screen and (min-width: 1024px) {
+  .thank-you-row {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+  }
+}

@@ -14,6 +14,11 @@ use Broker\Domain\Entity\PartnerRequest;
 use Broker\Infrastructure\AbstractPartnerDeliveryGateway;
 use Broker\System\Log;
 
+/**
+ * Class PartnerDeliveryGateway
+ * @package App\Base
+ * @deprecated in favor of MessageDeliveryService!
+ */
 class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
 {
   /**
@@ -49,6 +54,9 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
   protected function sendApiRequest(PartnerRequest $request)
   {
     $ch = curl_init();
+    $partnerResponse = new PartnerResponse();
+    $partnerResponse->setPartner($request->getPartner())
+      ->setType($request->getType());
 
     $header = [
       'Accept: application/json',
@@ -63,8 +71,17 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     }
     elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
     {
-      $header[] = sprintf('X-Auth-Token: %s', $request->getRequestPayload()->getDataElement('token'));
-      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getRequestPayload()->getRemoteId());
+      $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+    }
+    elseif ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
+    {
+      $header[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
+      curl_setopt($ch, CURLOPT_POSTFIELDS, $request->getRequestPayload());
+      curl_setopt($ch, CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'PATCH');
+
+      $partnerResponse->setOffer($request->getOffer());
     }
 
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -75,10 +92,7 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     $response = curl_getinfo($ch);
     curl_close($ch);
 
-    $partnerResponse = new PartnerResponse();
-    $partnerResponse->setPartner($request->getPartner())
-      ->setType($request->getType())
-      ->setResponseBody($result);
+    $partnerResponse->setResponseBody($result);
 
     if ($code == 200)
     {
@@ -87,11 +101,11 @@ class PartnerDeliveryGateway extends AbstractPartnerDeliveryGateway
     else if ($code == 400)
     {
       $partnerResponse->setOk(false);
-      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), $response);
+      Log::error(sprintf('%s API request returned with code 400!', $request->getPartner()->getIdentifier()), json_decode($result, true), $response);
     }
     else {
       $partnerResponse->setOk(false);
-      Log::critical(sprintf('%s API request returned unhandled response!', $request->getPartner()->getIdentifier()), json_decode($result,true), $response);
+      Log::critical(sprintf('%s API request returned unhandled response (code %s)!', $request->getPartner()->getIdentifier(), $code), json_decode($result,true) ?? [], $response);
     }
 
     return $partnerResponse;

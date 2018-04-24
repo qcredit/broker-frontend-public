@@ -1,0 +1,10 @@
+{% extends 'mail/base-html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <h4>Hi, {{ application.fullName }}</h4>
+  <p>Thank you for taking the time to explore the opportunities out there. Please <a href="{{ link }}">click here</a> to see, what wonderful offers we have for you.</p>
+  <p>If the link is not working, please copy and paste the following to your browser address bar and hit Enter:</p>
+  <p>{{ link }}</p>
+{% endblock %}
