@@ -1,7 +1,6 @@
 {% extends 'admin.twig' %}
-{% block title %}{{ partner.name }}{% endblock %}
+{% block title %}Partner info: {{ partner.name }}{% endblock %}
 {% block container %}
-    <a href="/admin/partners/update/{{ partner.id }}" class="btn btn-primary mb-3">Update</a>
     <ol>
         <li><strong>ID:</strong> {{ partner.id }}</li>
         <li><strong>Name:</strong> {{ partner.name }}</li>
@@ -13,4 +12,5 @@
         <li><strong>APITestUrl:</strong>{{ partner.apiTestUrl }}</li>
         <li><strong>Logo:</strong> <img src="{{ partner.logo }}"/></li>
     </ol>
+    <a href="/admin/partners/update/{{ partner.id }}" class="btn broker-btn broker-btn-blue mb-3">Edit</a>
 {% endblock %}

@@ -1,5 +1,5 @@
 {% extends 'admin.twig' %}
-{% block title %}Partners{% endblock %}
+{% block title %}All Partners{% endblock %}
 {% block container %}
     <h3>Partners</h3>
     <table class="table">
@@ -17,7 +17,7 @@
           <td>{{ partner.id }}</td>
           <td>{{ partner.name }}</td>
           <td>{{ partner.commission }}</td>
-          <td class="text-right"><a href="/admin/partners/{{ partner.id }}" class="text-uppercase">Details</a></td>
+          <td class="text-right"><a href="/admin/partners/{{ partner.id }}">Details</a></td>
         </tr>
         {% endfor %}
       </tbody>
