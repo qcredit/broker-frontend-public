@@ -97,15 +97,17 @@ function checkIfEmail(a) {
   var $parent = a.parent();
   var value = a.val();
   var re = /\S+@\S+\.\S+/;
-  if(!re.test(value) && value) {
-    $parent.addClass('error notemail');
-    $parent.find('.rules').text('Not a correct email');
-  } else if(!value) {
-    $parent.addClass('error empty').removeClass('notemail');
-    $parent.find('.rules').text('This field is required');
-  } else {
-    $parent.removeClass('error notemail');
-    $parent.find('.rules').text('');
+  if($parent.hasClass('required')){
+    if(!re.test(value) && value) {
+      $parent.addClass('error notemail');
+      $parent.find('.rules').text('Not a correct email');
+    } else if(!value) {
+      $parent.addClass('error empty').removeClass('notemail');
+      $parent.find('.rules').text('This field is required');
+    } else {
+      $parent.removeClass('error notemail');
+      $parent.find('.rules').text('');
+    }
   }
 }
 
