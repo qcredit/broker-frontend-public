@@ -2,10 +2,10 @@
 {% block title %}New application{% endblock %}
 {% block container %}
 <div class="col-sm-6 mx-auto">
-    {% if errors %}
+    {% if application.errors %}
         <p>Following errors occurred:</p>
         <ul>
-            {% for key,error in errors %}
+            {% for key,error in application.errors %}
                 <li>{{ key }} => {{ error }}</li>
             {% endfor %}
         </ul>

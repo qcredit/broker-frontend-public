@@ -137,7 +137,7 @@ class PartnerController extends AbstractController
    */
   public function indexAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $partners = $this->getPartnerDataLoader()->bulkLoadExtraConfiguration($this->getPartnerRepository()->getAll());
 
@@ -156,7 +156,7 @@ class PartnerController extends AbstractController
    */
   public function updateAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $partner = $this->findEntity($args['id'], $request, $response);
     $partner->setValidator($this->getValidator());
@@ -185,7 +185,7 @@ class PartnerController extends AbstractController
    */
   public function viewAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $data['partner'] = $this->getPartnerDataLoader()->loadExtraConfiguration($this->findEntity($args['id'], $request, $response));
 
@@ -202,7 +202,7 @@ class PartnerController extends AbstractController
    */
   public function newAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $data = ['user' => $request->getAttribute('user')];
 
     $partner = $this->getPartnerFactory()->create();
     $partner->setValidator($this->getValidator());

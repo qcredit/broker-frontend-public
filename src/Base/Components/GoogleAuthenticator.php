@@ -9,11 +9,12 @@
 namespace App\Base\Components;
 
 use App\Base\Interfaces\AuthenticationServiceInterface;
+use Firebase\JWT\JWT;
 
 class GoogleAuthenticator implements AuthenticationServiceInterface
 {
   const SERVICE_NAME = 'Google';
-  const CLIENT_ID = '876809952895-st56us9uskma01899f546k6vobo9m2sn.apps.googleusercontent.com';
+  const CLIENT_ID = '876809952895-e1h19b6f0ia8tjlqu2ohta05k2stseaf.apps.googleusercontent.com';
 
   /**
    * @var array
@@ -55,6 +56,7 @@ class GoogleAuthenticator implements AuthenticationServiceInterface
    */
   public function __construct()
   {
+    JWT::$leeway = 10;
     $this->client = new \Google_Client(['client_id' => self::CLIENT_ID]);
   }
 

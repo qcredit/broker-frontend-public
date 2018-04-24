@@ -1,0 +1,15 @@
+{% extends 'mail/base-html.twig' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+  <h4>Hi, {{ offer.application.fullName }}</h4>
+
+  <p>Thank you for choosing qCredit! Thank you for choosing the offer with following details:</p>
+  <ul>
+    <li><strong>Amount:</strong> {{ offer.loanAmount }}</li>
+    <li><strong>Term:</strong> {{ offer.loanTerm }}</li>
+    <li><strong>Interest:</strong> {{ offer.interest }}</li>
+  </ul>
+  <p>{{ offer.partner.name }} will contact you regarding the signing process of the contract.</p>
+{% endblock %}

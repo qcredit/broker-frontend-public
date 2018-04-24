@@ -336,16 +336,19 @@ class AasaDataMapper implements PartnerDataMapperInterface
   {
     $body = json_decode($response->getResponseBody(), true);
 
-    if (isset($body['errors']))
+    if (is_array($body))
     {
-      return true;
-    }
-
-    foreach ($body as $row)
-    {
-      if (is_array($row) && isset($row['code']))
+      if (isset($body['errors']))
       {
         return true;
+      }
+
+      foreach ($body as $row)
+      {
+        if (is_array($row) && isset($row['code']))
+        {
+          return true;
+        }
       }
     }
 

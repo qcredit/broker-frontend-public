@@ -11,7 +11,7 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'slim-app',
+            'name' => 'WEBSITE',
             'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
             'level' => \Monolog\Logger::DEBUG,
             'processor' => [
@@ -36,12 +36,43 @@ return [
             'cache' => null,
           ],
           'connection' => [
-            'driver' => 'pdo_mysql',
-            'host' => 'mysql',
-            'user' => 'root',
-            'password' => 'hobunelasiterveaiat2is',
-            'dbname' => 'broker',
+            'production' => [
+              'driver' => 'pdo_mysql',
+              'host' => 'public57-prod.cpk3qjynnaba.eu-west-1.rds.amazonaws.com',
+              'dbname' => 'broker_frontend_public',
+              'user' => 'broker_frontend_public',
+              'password' => '5WbdqtcKCmCubyYujG3L',
+              'port' => 3306,
+              'charset' => 'utf8'
+            ],
+            'developer' => [
+              'driver' => 'pdo_mysql',
+              'host' => 'mysql',
+              'user' => 'root',
+              'password' => 'hobunelasiterveaiat2is',
+              'dbname' => 'broker',
+              'charset' => 'utf8',
+              'port' => 3306
+            ],
+            "testserver" => [
+              "driver" => "pdo_mysql",
+              "host" => "public57-test.cpk3qjynnaba.eu-west-1.rds.amazonaws.com",
+              "dbname" => "broker_frontend_public_test",
+              "user" => "broker_frontend_public_test",
+              "password" => "5dMxsq79CDAT4vCNUFr4",
+              "port" => 3306,
+              "charset" => "utf8"
+            ]
           ]
+        ],
+        'mailer' => [
+          'host' => 'smtp.gmail.com',
+          'username' => 'hendrik.uibopuu@aasaglobal.com',
+          'password' => '',
+          'secure' => 'tls',
+          'port' => 587,
+          'sender' => 'hendrik.uibopuu@aasaglobal.com',
+          'senderName' => 'qCredit'
         ]
     ],
 ];

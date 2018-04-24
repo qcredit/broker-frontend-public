@@ -65,7 +65,9 @@ $container['db'] = function($container) {
 
   $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
 
-  $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'], $config);
+  $dbConf = getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer";
+
+  $entityManager = \Doctrine\ORM\EntityManager::create($settings['connection'][$dbConf], $config);
 
   return $entityManager;
 };
@@ -113,7 +115,21 @@ $container['HomeController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\HomeController($view);
 };
-
+$container['AboutController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\AboutController($view);
+};
+$container['ContactController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\ContactController($view);
+};
+$container['TermsController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\TermsController($view);
+};
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
@@ -123,7 +139,8 @@ $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
     new PartnerDeliveryGateway(),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('PartnerDataMapperRepository'),
+    $c->get('MessageDeliveryService')
   );
 };
 
@@ -136,6 +153,11 @@ $container['PartnerResponseService'] = function($c)
   );
 };
 
+$container['MessageDeliveryService'] = function ($c)
+{
+  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+};
+
 $container['ChooseOfferService'] = function($c)
 {
   return new \Broker\Domain\Service\ChooseOfferService(
@@ -143,7 +165,8 @@ $container['ChooseOfferService'] = function($c)
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     new PartnerDataMapperRepository(),
-    new \App\Base\Validator\SchemaValidator()
+    new \App\Base\Validator\SchemaValidator(),
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
   );
 };
 
@@ -163,10 +186,10 @@ $container['ApplicationController'] = function ($c)
   );
 
   $prepareService = new PreparePartnerRequestsService(
-    $newApplicationService,
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
-    new PartnerRequestFactory()
+    new PartnerRequestFactory(),
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
   );
 
   return new \App\Controller\ApplicationController(
@@ -174,6 +197,7 @@ $container['ApplicationController'] = function ($c)
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
+    $newApplicationService,
     $c
   );
 };
