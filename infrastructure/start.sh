@@ -1,10 +1,21 @@
-#!/bin/bash
+#!/bin/sh
+set -e
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
-php /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php
+Time () {
+  date +"%Y.%m.%d_%T"
+}
 
-if [ -z "$1" ]
-then
-    exec "/usr/sbin/apache2 -D -foreground"
-else
-    exec "$1"
+# first arg is `-f` or `--some-option`
+if [ "${1#-}" != "$1" ]; then
+	set -- apache2-foreground "$@"
 fi
+
+( echo "### $(Time) Starting phinx migrate ###"     | tee -a /var/log/messages
+  /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php | tee -a /var/log/messages 2>&1
+  echo "### $(Time) Finished phinx migrate: $? ###" | tee -a /var/log/messages
+) &
+
+sleep 8
+
+exec "$@"
