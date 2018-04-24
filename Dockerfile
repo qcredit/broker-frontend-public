@@ -48,8 +48,6 @@ RUN    if cd /var/www/html; then\
          pwd && ls -lh . vendor/bin/phinx; \
        else exit 1; fi
 
-# RUN    chmod +x /root/scripts/start.sh
-
 EXPOSE 80
 
 # docker build -t broker-frontend-public .
