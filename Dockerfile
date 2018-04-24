@@ -16,6 +16,7 @@ ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
+ADD ./infrastructure/start.sh      /root/scripts/start.sh
 
 RUN    apt-get update \
     && usermod -u 1000 www-data \
@@ -37,11 +38,13 @@ RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
-         echo "### change me @Phinx ###"; php /var/www/html/vendor/bin/phinx migrate -e testserver || echo "Ignoring failure"; \
-         echo "### change me @Phinx ###"; php /var/www/html/vendor/bin/phinx seed:run -e testserver -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed || echo "Ignoring failure"; \
        else exit 1; fi
 
+RUN    chmod +x /root/scripts/start.sh
+
 EXPOSE 80
+
+ENTRYPOINT /root/scripts/start.sh
 
 # mysql
 # mysql# create  database broker_frontend_test;
