@@ -18,6 +18,9 @@ ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
 ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 
+# COPY ./infrastructure/start.sh ./infrastructure/start.sh
+# RUN chmod 755 ./infrastructure/start.sh
+
 RUN    apt-get update \
     && usermod -u 1000 www-data \
     && a2enmod rewrite headers expires remoteip \
