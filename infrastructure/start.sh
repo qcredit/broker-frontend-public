@@ -1,5 +1,6 @@
 #!/bin/sh
 set -e
+PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:${PATH}"
 
 Time () {
   date +"%Y.%m.%d_%T"
@@ -11,7 +12,7 @@ if [ "${1#-}" != "$1" ]; then
 fi
 
 ( echo "### $(Time) Starting phinx migrate ###"     | tee -a /var/log/messages
-  /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php
+  /var/www/html/vendor/bin/phinx migrate -c /var/www/html/phinx.php | tee -a /var/log/messages 2>&1
   echo "### $(Time) Finished phinx migrate: $? ###" | tee -a /var/log/messages
 ) &
 
