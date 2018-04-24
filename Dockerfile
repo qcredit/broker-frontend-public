@@ -17,8 +17,8 @@ ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
 
-COPY ./infrastructure/start.sh ./infrastructure/start.sh
-RUN chmod 755 ./infrastructure/start.sh
+# COPY ./infrastructure/start.sh ./infrastructure/start.sh
+# RUN chmod 755 ./infrastructure/start.sh
 
 RUN    apt-get update \
     && usermod -u 1000 www-data \
@@ -44,7 +44,7 @@ RUN    if cd /var/www/html; then\
 
 EXPOSE 80
 
-ENTRYPOINT ['./infrastructure/start.sh']
+# ENTRYPOINT ['./infrastructure/start.sh']
 
 # mysql
 # mysql# create  database broker_frontend_test;
