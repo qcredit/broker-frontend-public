@@ -16,7 +16,7 @@ ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
-ADD ./infrastructure/start.sh      /root/scripts/start.sh
+ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 
 RUN    apt-get update \
     && usermod -u 1000 www-data \
@@ -45,20 +45,9 @@ RUN    if cd /var/www/html; then\
          pwd && ls -lh . vendor/bin/phinx; \
        else exit 1; fi
 
-RUN    chmod +x /root/scripts/start.sh
+# RUN    chmod +x /root/scripts/start.sh
 
 EXPOSE 80
-
-ENTRYPOINT /root/scripts/start.sh
-CMD ["apache2-foreground"]
-
-# mysql
-# mysql# create  database broker_frontend_test;
-# mysql# grant all privileges on broker_frontend_test.* to bf_test identified by 'a9HJKvXz4uKRXvfVaBBg';
-# mysql# grant execute on procedure setup.change_timezone to bf_test;
-# mysql# create  database broker_frontend_production;
-# mysql# grant all privileges on broker_frontend_production.* to bf_prod identified by 'PjkAbyTKTe2dr2qMRQF2';
-# mysql# grant execute on procedure setup.change_timezone to bf_prod;
 
 # docker build -t broker-frontend-public .
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest
