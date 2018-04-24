@@ -22,4 +22,21 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
   {
     return $this->getOneBy(['applicationHash' => $hash]);
   }
+
+  public function getByJson(string $path, string $value)
+  {
+    $queryBuilder = $this->entityManager->createQueryBuilder();
+    $query = $queryBuilder->select('a')
+      ->from($this->entityClass, 'a')
+      ->where("JSON_CONTAINS(a.data, :value, :jsonPath) ");
+
+    $q = $query->getQuery();
+
+    return $q->execute([
+      'jsonPath' => '$.pin',
+      'value' => "$value"
+    ]);
+
+    //return $query->getResult();
+  }
 }
