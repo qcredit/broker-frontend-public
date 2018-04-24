@@ -25,14 +25,19 @@ RUN    apt-get update \
     && echo 'session.save_handler=redis' >> /usr/local/etc/php/php.ini \
     && echo 'session.save_path="tcp://redis:6379"' >> /usr/local/etc/php/php.ini \
     && pecl install redis xdebug \
-    && docker-php-ext-install pdo pdo_mysql \
-    && docker-php-ext-enable redis pdo pdo_mysql xdebug \
-    && test -d /tmp/pear && /bin/rm -rv /tmp/pear \
+    && docker-php-ext-install pdo pdo_mysql >> /dev/null \
+    && docker-php-ext-enable redis pdo pdo_mysql xdebug >> /dev/null \
+    && if [ -d /tmp/pear ]; then /bin/rm -rv /tmp/pear; fi \
     && mkdir -p /var/www/html/cache \
     && chown www-data /var/www/html/cache \
     && if cd /var/www/html/conf; then \
          for file in apache_php.ini apache_000-default.conf apache_apache2.conf apache_security.conf; do \
-           test -f $file && /bin/rm $file; done; fi
+           test -f $file && /bin/rm $file; done; fi \
+    && if cd /var/www/html/infrastructure; then \
+         for file in start.sh; do \
+           test -f $file && /bin/rm $file; done; fi; \
+         for folder in mysql nginx php; do \
+           test -d $folder && /bin/rm -r $folder; done; fi
 
 RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
@@ -45,6 +50,7 @@ RUN    chmod +x /root/scripts/start.sh
 EXPOSE 80
 
 ENTRYPOINT /root/scripts/start.sh
+CMD ["apache2-foreground"]
 
 # mysql
 # mysql# create  database broker_frontend_test;
