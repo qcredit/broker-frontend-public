@@ -535,6 +535,9 @@ p, span, a, strong, button, input, textarea {
 section > h1 {
   margin: 4.125rem 0 4.5rem; }
 
+.container {
+  min-height: 200px; }
+
 /* UTILITIES */
 .broker-btn {
   padding: 1rem 3rem;
@@ -626,11 +629,22 @@ body {
 @media only screen and (min-width: 340px) {
   .thank-you-row {
     padding: 1rem 1rem; } }
+@media only screen and (max-width: 767px) {
+  .navbar-nav {
+    padding: 2rem 0 1rem; }
+    .navbar-nav .nav-link-outline {
+      margin-bottom: .5rem; } }
 @media only screen and (min-width: 768px) {
+  .container {
+    min-height: 400px; }
+
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem; } }
 @media only screen and (min-width: 1024px) {
+  .container {
+    min-height: 500px; }
+
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem; } }
