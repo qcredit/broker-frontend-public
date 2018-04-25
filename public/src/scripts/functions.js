@@ -2,7 +2,6 @@ $(document).ready(function(){
   checkSize();
   $(window).resize(checkSize);
 
-
   /* URL check to add active class to correct navlink */
   $(function(){
       var current = location.pathname;
@@ -16,7 +15,6 @@ $(document).ready(function(){
           }
       })
   });
-
 
   // Loan landing form functions for laptops and desktops start here
   $(function() {
@@ -43,7 +41,6 @@ $(document).ready(function(){
       $loanDurationSlider.val(this.value).change();
     });
   }); // Loan landing form functions for laptops and desktops end here
-
 
   // Loan landing form functions for mobile devices and tablets
   $(".landing-component-sm .landing-form-adjust-increase").click(function() {
@@ -83,12 +80,13 @@ $(document).ready(function(){
   $('.loan-offer-container:first-child').addClass('featured');
 });
 
+// Calculate approximate monthly installment
 function calculateMonthly(amount,months) {
-  console.log(amount,months);
-  var monthlyInstallment = Math.round((amount/months)*1.3);
-  console.log(monthlyInstallment);
+  var monthlyInstallment = Math.round((amount/months)*1.3); // Monthly fee calculation logic here
   $('.monthly-installment').text('PLN '+monthlyInstallment);
 }
+
+// Check the size of the screen to determine which slider is shown.
 function checkSize() {
     if ($(".landing-component-sm").css("display") == "block" && $(".landing-component-lg").css("display") == "none"){
         // your code here
@@ -104,17 +102,18 @@ function checkSize() {
       $('.landing-component-lg .landing-form-duration input').attr('id','loanTerm');
     }
   }
-  // Temporary input field focused and filled classes
-  $(".field input, .field textarea").focusin(function() {
-    $(this).parent().addClass("focused");
-  });
-  $(".field input, .field textarea").focusout(function() {
-    $(this).parent().removeClass("focused");
-  });
-  $(".field input, .field textarea").on("input", function() {
-    if($(this).val()){
-      $(this).parent().addClass("filled");
-    } else {
-      $(this).parent().removeClass("filled");
-    }
-  });
+
+  // Input field focused and filled classes
+$(".field input, .field textarea").focusin(function() {
+  $(this).parent().addClass("focused");
+});
+$(".field input, .field textarea").focusout(function() {
+  $(this).parent().removeClass("focused");
+});
+$(".field input, .field textarea").on("input", function() {
+  if($(this).val()){
+    $(this).parent().addClass("filled");
+  } else {
+    $(this).parent().removeClass("filled");
+  }
+});

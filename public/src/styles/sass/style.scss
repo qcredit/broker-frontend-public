@@ -28,7 +28,7 @@ p, span, a, strong, button, input, textarea {
 section > h1 {
   margin: 4.125rem 0 4.5rem;
 }
-.container {
+.page-body {
   min-height: 200px;
 }
 /* UTILITIES */
@@ -148,7 +148,7 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
-  .container {
+  .page-body {
     min-height: 400px;
   }
   .thank-you-row {
@@ -157,7 +157,7 @@ body {
   }
 }
 @media only screen and (min-width: 1024px) {
-  .container {
+  .page-body {
     min-height: 500px;
   }
   .thank-you-row {
