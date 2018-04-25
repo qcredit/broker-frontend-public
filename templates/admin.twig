@@ -29,12 +29,10 @@
           <li class="nav-item">
             <a class="nav-link text-uppercase" href="/admin/partners">Partners</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link text-uppercase" href="/admin/logout" onclick="signOut();">Logout</a>
-          </li>
         </ul>
         <div class="login-info my-2 my-lg-0">
          <span><strong>{{ user.email }}</strong></span>
+         {% if user.email %}<a class="nav-logout" href="/admin/logout" onclick="signOut();">Logout</a>{% endif %}
        </div>
       </div>
     </nav>

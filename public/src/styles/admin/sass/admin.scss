@@ -65,3 +65,17 @@ h4 {
 .nav-item.active a {
   border-bottom: 2px solid $blue;
 }
+
+/* ADMIN LOGIN PANEL */
+.login-container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: #f3f3f3;
+  text-align: center;
+  .abcRioButton {
+    margin: 33px auto 15px;
+  }
+}
+.login-info {
+  font-size: 0.875rem;
+}
