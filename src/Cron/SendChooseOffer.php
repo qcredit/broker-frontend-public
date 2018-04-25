@@ -73,6 +73,7 @@ class SendChooseOffer implements BaseJob
   {
     //$app = $this->getApplicationRepository()->getOneBy(['id' => 1]);
     print_r($this->getApplicationRepository()->getByJson('pin', '92090700966'));
+    $this->getApplicationRepository()->getByJsonContains('email_reminder_sent', )
     return true;
   }
 }

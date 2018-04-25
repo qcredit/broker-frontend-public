@@ -143,7 +143,9 @@ class AdminApplicationController extends AbstractController
   {
     //$entity = $this->getAppRepository()->getOneBy(['id' => $id]);
     $entity = $this->getAppRepository()->getByJsonContains('data', '92090700966', 'pin');
-    var_dump($entity);
+    $entity2 = $this->getAppRepository()->getByJsonContainsPath('data', 'one', 'email_reminder_sent');
+    var_dump($entity2);
+    //var_dump($entity);
     die();
 
     if (!$entity)
