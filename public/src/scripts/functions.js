@@ -1,21 +1,40 @@
 $(document).ready(function(){
+  populateOptions($('.landing-form-amount'), 'PLN');
+  populateOptions($('.landing-form-duration'), 'M');
   checkSize();
   $(window).resize(checkSize);
-
   /* URL check to add active class to correct navlink */
   $(function(){
-      var current = location.pathname;
-      $('.navbar-nav .nav-item a').each(function(){
-          var $this = $(this);
-          // if the current path is like this link, make it active
-          if($this.attr('href').indexOf(current) !== -1 && location.pathname != "/"){
-              $this.parent().addClass('active');
-          } else if (location.pathname == "/") {
-            $('.home-link').addClass('active');
-          }
-      })
+    var current = location.pathname;
+    $('.navbar-nav .nav-item a').each(function(){
+      var $this = $(this);
+      // if the current path is like this link, make it active
+      if($this.attr('href').indexOf(current) !== -1 && location.pathname != "/"){
+          $this.parent().addClass('active');
+      } else if (location.pathname == "/") {
+        $('.home-link').addClass('active');
+      }
+    })
   });
-
+ function populateOptions(slider, unit) {
+   var inputTarget = slider.find('input');
+   var min = parseInt(inputTarget.attr('min'));
+   var max = parseInt(inputTarget.attr('max'));
+   var step = parseInt(inputTarget.attr('step'));
+   var value = parseInt(inputTarget.attr('value'));
+   var target = slider.find('.range-slider-value');
+   for(var i = min; i <= max; i += step) {
+     if(i == value) {
+       target.append($("<option></option>")
+              .attr({'min': min, 'max': max, 'step': step, 'value': i, 'selected': true})
+              .text(i + " " + unit));
+     } else {
+       target.append($("<option></option>")
+              .attr({'min': min, 'max': max, 'step': step, 'value': i})
+              .text(i + " " + unit));
+     }
+   }
+ }
   // Loan landing form functions for laptops and desktops start here
   $(function() {
     var $loanAmountSlider = $('.landing-component-lg #loanAmount');

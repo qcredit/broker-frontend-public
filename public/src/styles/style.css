@@ -24,6 +24,11 @@
   to {
     opacity: 0.1;
     transform: translateY(-20px); } }
+@keyframes fadeItIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 /* Navigation styles */
 .navbar {
   padding: 1rem;
