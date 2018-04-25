@@ -28,15 +28,34 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
     $queryBuilder = $this->entityManager->createQueryBuilder();
     $query = $queryBuilder->select('a')
       ->from($this->entityClass, 'a')
-      ->where("JSON_CONTAINS(a.data, :value, :jsonPath) ");
+      ->where("JSON_CONTAINS(a.data, :jsonPath) = :value");
 
     $q = $query->getQuery();
 
     return $q->execute([
       'jsonPath' => '$.pin',
-      'value' => "$value"
+      'value' => $value
     ]);
 
     //return $query->getResult();
+  }
+
+  public function getByJsonContains(string $field, string $value, string $path)
+  {
+    $queryBuilder = $this->entityManager->createQueryBuilder();
+    $query = $queryBuilder->select('a')
+      ->from($this->entityClass, 'a')
+      ->where("JSON_CONTAINS(a.data, :value, '$.pin') = 1");
+
+    $query->setParameter('value', json_encode($value));
+
+    $q = $query->getQuery();
+
+    return $q->execute();
+  }
+
+  public function getByJsonContainsPath()
+  {
+
   }
 }
