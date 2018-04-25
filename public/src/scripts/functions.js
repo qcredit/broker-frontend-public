@@ -1,23 +1,40 @@
 $(document).ready(function(){
+  populateOptions($('.landing-form-amount'), 'PLN');
+  populateOptions($('.landing-form-duration'), 'M');
   checkSize();
   $(window).resize(checkSize);
-
-
   /* URL check to add active class to correct navlink */
   $(function(){
-      var current = location.pathname;
-      $('.navbar-nav .nav-item a').each(function(){
-          var $this = $(this);
-          // if the current path is like this link, make it active
-          if($this.attr('href').indexOf(current) !== -1 && location.pathname != "/"){
-              $this.parent().addClass('active');
-          } else if (location.pathname == "/") {
-            $('.home-link').addClass('active');
-          }
-      })
+    var current = location.pathname;
+    $('.navbar-nav .nav-item a').each(function(){
+      var $this = $(this);
+      // if the current path is like this link, make it active
+      if($this.attr('href').indexOf(current) !== -1 && location.pathname != "/"){
+          $this.parent().addClass('active');
+      } else if (location.pathname == "/") {
+        $('.home-link').addClass('active');
+      }
+    })
   });
-
-
+ function populateOptions(slider, unit) {
+   var inputTarget = slider.find('input');
+   var min = parseInt(inputTarget.attr('min'));
+   var max = parseInt(inputTarget.attr('max'));
+   var step = parseInt(inputTarget.attr('step'));
+   var value = parseInt(inputTarget.attr('value'));
+   var target = slider.find('.range-slider-value');
+   for(var i = min; i <= max; i += step) {
+     if(i == value) {
+       target.append($("<option></option>")
+              .attr({'min': min, 'max': max, 'step': step, 'value': i, 'selected': true})
+              .text(i + " " + unit));
+     } else {
+       target.append($("<option></option>")
+              .attr({'min': min, 'max': max, 'step': step, 'value': i})
+              .text(i + " " + unit));
+     }
+   }
+ }
   // Loan landing form functions for laptops and desktops start here
   $(function() {
     var $loanAmountSlider = $('.landing-component-lg #loanAmount');
@@ -43,7 +60,6 @@ $(document).ready(function(){
       $loanDurationSlider.val(this.value).change();
     });
   }); // Loan landing form functions for laptops and desktops end here
-
 
   // Loan landing form functions for mobile devices and tablets
   $(".landing-component-sm .landing-form-adjust-increase").click(function() {
@@ -83,12 +99,13 @@ $(document).ready(function(){
   $('.loan-offer-container:first-child').addClass('featured');
 });
 
+// Calculate approximate monthly installment
 function calculateMonthly(amount,months) {
-  console.log(amount,months);
-  var monthlyInstallment = Math.round((amount/months)*1.3);
-  console.log(monthlyInstallment);
+  var monthlyInstallment = Math.round((amount/months)*1.3); // Monthly fee calculation logic here
   $('.monthly-installment').text('PLN '+monthlyInstallment);
 }
+
+// Check the size of the screen to determine which slider is shown.
 function checkSize() {
     if ($(".landing-component-sm").css("display") == "block" && $(".landing-component-lg").css("display") == "none"){
         // your code here
@@ -104,17 +121,18 @@ function checkSize() {
       $('.landing-component-lg .landing-form-duration input').attr('id','loanTerm');
     }
   }
-  // Temporary input field focused and filled classes
-  $(".field input, .field textarea").focusin(function() {
-    $(this).parent().addClass("focused");
-  });
-  $(".field input, .field textarea").focusout(function() {
-    $(this).parent().removeClass("focused");
-  });
-  $(".field input, .field textarea").on("input", function() {
-    if($(this).val()){
-      $(this).parent().addClass("filled");
-    } else {
-      $(this).parent().removeClass("filled");
-    }
-  });
+
+  // Input field focused and filled classes
+$(".field input, .field textarea").focusin(function() {
+  $(this).parent().addClass("focused");
+});
+$(".field input, .field textarea").focusout(function() {
+  $(this).parent().removeClass("focused");
+});
+$(".field input, .field textarea").on("input", function() {
+  if($(this).val()){
+    $(this).parent().addClass("filled");
+  } else {
+    $(this).parent().removeClass("filled");
+  }
+});
