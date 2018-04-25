@@ -207,6 +207,8 @@
   border: 0; }
   .landing-component-sm select:focus {
     outline: none; }
+.landing-component-sm input {
+  display: none; }
 
 .landing-component-lg {
   display: none; }
