@@ -147,15 +147,6 @@ body {
   }
 }
 
-@media only screen and (max-width: 767px) {
-  .navbar-nav {
-    padding: 2rem 0 1rem;
-    .nav-link-outline {
-      margin-bottom: .5rem;
-    }
-  }
-}
-
 @media only screen and (min-width: 768px) {
   .container {
     min-height: 400px;
