@@ -20,6 +20,13 @@ h3 {
 h4 {
   font-size: 1.25rem;
 }
+.login-header {
+  margin: 1rem 0;
+}
+.logout {
+  display: block;
+  padding-top: .5rem;
+}
 /* IMPORTS */
 @import "../../sass/header";
 @import "tables";
@@ -57,4 +64,18 @@ h4 {
 }
 .nav-item.active a {
   border-bottom: 2px solid $blue;
+}
+
+/* ADMIN LOGIN PANEL */
+.login-container {
+  padding-top: 40px;
+  padding-bottom: 40px;
+  background: #f3f3f3;
+  text-align: center;
+  .abcRioButton {
+    margin: 33px auto 15px;
+  }
+}
+.login-info {
+  font-size: 0.875rem;
 }

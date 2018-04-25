@@ -14,7 +14,7 @@ use Firebase\JWT\JWT;
 class GoogleAuthenticator implements AuthenticationServiceInterface
 {
   const SERVICE_NAME = 'Google';
-  const CLIENT_ID = '876809952895-e1h19b6f0ia8tjlqu2ohta05k2stseaf.apps.googleusercontent.com';
+  const CLIENT_ID = '876809952895-5hg5tv7pj9d0f2bt3chijj2j68ttmi5m.apps.googleusercontent.com';
 
   /**
    * @var array

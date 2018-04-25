@@ -24,6 +24,11 @@
   to {
     opacity: 0.1;
     transform: translateY(-20px); } }
+@keyframes fadeItIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
 /* Navigation styles */
 .navbar {
   padding: 1rem;
@@ -49,6 +54,14 @@
   border: 0;
   outline: none; }
 
+@media only screen and (max-width: 767px) {
+  .navbar-nav {
+    padding: 2rem 0 1rem; }
+    .navbar-nav .nav-link-outline {
+      margin-bottom: .5rem; } }
+@media only screen and (min-width: 1024px) {
+  .navbar {
+    padding: 1rem 4rem; } }
 /* Home page hero sectio */
 .home-hero {
   padding-top: 1.25rem;
@@ -535,6 +548,9 @@ p, span, a, strong, button, input, textarea {
 section > h1 {
   margin: 4.125rem 0 4.5rem; }
 
+.page-body {
+  min-height: 200px; }
+
 /* UTILITIES */
 .broker-btn {
   padding: 1rem 3rem;
@@ -542,7 +558,8 @@ section > h1 {
   border: 0;
   text-transform: uppercase;
   font-weight: 700;
-  font-size: 14px; }
+  font-size: 14px;
+  cursor: pointer; }
   .broker-btn:focus {
     outline: none;
     box-shadow: none; }
@@ -626,10 +643,16 @@ body {
   .thank-you-row {
     padding: 1rem 1rem; } }
 @media only screen and (min-width: 768px) {
+  .page-body {
+    min-height: 400px; }
+
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem; } }
 @media only screen and (min-width: 1024px) {
+  .page-body {
+    min-height: 500px; }
+
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem; } }

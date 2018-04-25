@@ -12,7 +12,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'WEBSITE',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
             'level' => \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
