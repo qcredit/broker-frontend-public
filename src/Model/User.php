@@ -10,9 +10,12 @@ namespace App\Model;
 
 use App\Base\Interfaces\UserIdentityInterface;
 use Broker\Domain\Entity\AbstractEntity;
+use Broker\Domain\Entity\FluidDataTrait;
 
 class User extends AbstractEntity implements UserIdentityInterface
 {
+  use FluidDataTrait;
+
   const ACCESS_LVL_ADMIN = 1;
   /**
    * @var integer
