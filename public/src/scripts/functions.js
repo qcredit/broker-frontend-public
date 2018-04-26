@@ -1,8 +1,6 @@
 $(document).ready(function(){
-  populateOptions($('.landing-form-amount'), 'PLN');
-  populateOptions($('.landing-form-duration'), 'M');
-  checkSize();
-  $(window).resize(checkSize);
+  populateOptions($('.landing-form-amount'), 'PLN');  // Call function to populate loanAmount slider options dynamically. Second var is for units
+  populateOptions($('.landing-form-duration'), 'M');  // Call function to populate loanTerm slider options dynamically. Second var is for units
   /* URL check to add active class to correct navlink */
   $(function(){
     var current = location.pathname;
@@ -37,10 +35,10 @@ $(document).ready(function(){
  }
   // Loan landing form functions for laptops and desktops start here
   $(function() {
-    var $loanAmountSlider = $('.landing-component-lg #loanAmount');
-    var $loanAmount = $('.landing-component-lg #loanAmountOutput');
-    var $loanDurationSlider = $('.landing-component-lg #loanTerm');
-    var $loanDuration = $('.landing-component-lg #loanDurationOutput');
+    var $loanAmountSlider = $('.landing-component #loanAmountSlider');
+    var $loanAmount = $('.landing-component #loanAmount');
+    var $loanDurationSlider = $('.landing-component #loanTermSlider');
+    var $loanDuration = $('.landing-component #loanTerm');
     $loanAmountSlider.rangeslider({
         polyfill: false
       }).on('input', function() {
@@ -62,7 +60,7 @@ $(document).ready(function(){
   }); // Loan landing form functions for laptops and desktops end here
 
   // Loan landing form functions for mobile devices and tablets
-  $(".landing-component-sm .landing-form-adjust-increase").click(function() {
+  $(".landing-component .landing-form-adjust-increase").click(function() {
     var $curOpt = $(this).parent().find('select');  // Get the correct select
     var $targetOpt = $curOpt.children('option:selected'); // Get the current selected option
     $(this).parent().find('.landing-form-adjust-decrease').removeClass('disabled'); // If decrease button is disabled, enable it
@@ -74,7 +72,7 @@ $(document).ready(function(){
     $targetOpt.next().prop('selected', true); // Add selected to next element
     calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
-  $(".landing-component-sm .landing-form-adjust-decrease").click(function() {
+  $(".landing-component .landing-form-adjust-decrease").click(function() {
     var $curOpt = $(this).parent().find('select');
     var $targetOpt = $curOpt.children('option:selected'); // Get the current selected option
     $(this).parent().find('.landing-form-adjust-increase').removeClass('disabled');
@@ -86,17 +84,14 @@ $(document).ready(function(){
     $targetOpt.prev().prop('selected', true);
     calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
-  $('.landing-component-sm select').change(function() {
+  $('.landing-component select').change(function() {
     var $selectedOpt = $(this).find('option:selected');
     $(this).parent().find('.landing-form-adjust').removeClass('disabled');
     $(this).children('option').removeProp('selected');
     $selectedOpt.prop('selected', true);
     calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
-  // To get values of selected options
-  //$('.landing-component-sm #loanAmountOutput').val();
-  //$('.landing-component-sm #loanDurationOutput').val();
-  $('.loan-offer-container:first-child').addClass('featured');
+  $('.loan-offer-container:first-child').addClass('featured');  // FOR DEMO VERSION ONLY
 });
 
 // Calculate approximate monthly installment
@@ -104,23 +99,6 @@ function calculateMonthly(amount,months) {
   var monthlyInstallment = Math.round((amount/months)*1.3); // Monthly fee calculation logic here
   $('.monthly-installment').text('PLN '+monthlyInstallment);
 }
-
-// Check the size of the screen to determine which slider is shown.
-function checkSize() {
-    if ($(".landing-component-sm").css("display") == "block" && $(".landing-component-lg").css("display") == "none"){
-        // your code here
-        $('.landing-component-lg .landing-form-amount input').removeAttr('id');
-        $('.landing-component-lg .landing-form-duration input').removeAttr('id');
-        $('.landing-component-sm .landing-form-amount select').attr('id','loanAmount');
-        $('.landing-component-sm .landing-form-duration select').attr('id','loanTerm');
-
-    } else if ($(".landing-component-lg").css("display") == "block" && $(".landing-component-sm").css("display") == "none") {
-      $('.landing-component-sm .landing-form-duration select').removeAttr('id');
-      $('.landing-component-sm .landing-form-amount select').removeAttr('id');
-      $('.landing-component-lg .landing-form-amount input').attr('id','loanAmount');
-      $('.landing-component-lg .landing-form-duration input').attr('id','loanTerm');
-    }
-  }
 
   // Input field focused and filled classes
 $(".field input, .field textarea").focusin(function() {

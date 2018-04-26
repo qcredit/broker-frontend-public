@@ -1,4 +1,4 @@
-.landing-component-sm {
+.landing-component {
   .landing-slider {
     display: flex;
     .landing-form-adjust {
@@ -33,9 +33,6 @@
   input {
     display: none;
   }
-}
-.landing-component-lg {
-  display: none;
 }
 .range-slider-label {
   margin: 1rem 0 0;
@@ -103,10 +100,13 @@
     font-size: 1.25rem;
     font-weight: normal;
   }
-  .landing-component-lg {
+  .landing-component input {
     display: block;
   }
-  .landing-component-sm {
+  .landing-component .landing-slider {
+    align-items: baseline;
+  }
+  .landing-component .landing-form-adjust {
     display: none;
   }
 }

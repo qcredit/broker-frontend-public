@@ -182,9 +182,9 @@
 @media only screen and (min-width: 768px) {
   .lower-footer {
     flex-direction: row; } }
-.landing-component-sm .landing-slider {
+.landing-component .landing-slider {
   display: flex; }
-  .landing-component-sm .landing-slider .landing-form-adjust {
+  .landing-component .landing-slider .landing-form-adjust {
     width: 43px;
     height: 43px;
     padding: 0;
@@ -199,18 +199,15 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none; }
-  .landing-component-sm .landing-slider .landing-form-adjust.disabled {
+  .landing-component .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
-.landing-component-sm select {
+.landing-component select {
   flex-grow: 1;
   padding: 9px;
   border: 0; }
-  .landing-component-sm select:focus {
+  .landing-component select:focus {
     outline: none; }
-.landing-component-sm input {
-  display: none; }
-
-.landing-component-lg {
+.landing-component input {
   display: none; }
 
 .range-slider-label {
@@ -277,10 +274,13 @@
     font-size: 1.25rem;
     font-weight: normal; }
 
-  .landing-component-lg {
+  .landing-component input {
     display: block; }
 
-  .landing-component-sm {
+  .landing-component .landing-slider {
+    align-items: baseline; }
+
+  .landing-component .landing-form-adjust {
     display: none; } }
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
@@ -425,6 +425,11 @@ textarea {
 
   .loan-form-upper {
     padding: 2.5rem; } }
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+  /* IE10+ CSS styles go here */
+  .field select {
+    padding-right: 0;
+    background-image: none; } }
 .offer-list-head {
   margin: 2rem 0; }
 
