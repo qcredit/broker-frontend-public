@@ -166,3 +166,11 @@ textarea {
     padding: 2.5rem;
   }
 }
+
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+/* IE10+ CSS styles go here */
+  .field select {
+    padding-right: 0;
+    background-image: none;
+  }
+}
