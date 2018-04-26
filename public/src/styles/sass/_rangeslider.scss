@@ -43,6 +43,9 @@
   margin-top: 1.25rem;
   font-weight: normal;
 }
+.rangeslider--horizontal {
+  display: none;
+}
 
 @media only screen and (min-width: 769px) {
   .rangeslider, .rangeslider__fill {
