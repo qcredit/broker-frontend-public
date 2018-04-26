@@ -42,11 +42,19 @@
   display: inline-block;
   margin-top: 1.25rem;
   font-weight: normal;
+  span {
+    display: block;
+  }
 }
 .rangeslider--horizontal {
   display: none;
 }
 
+@media only screen and (min-width: 375px) {
+  .range-slider-monhly-label span {
+    display: inline-block;
+  }
+}
 @media only screen and (min-width: 769px) {
   .rangeslider, .rangeslider__fill {
     display: block;
