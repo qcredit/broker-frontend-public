@@ -140,6 +140,12 @@ $container['TermsController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\TermsController($view);
 };
+
+$container['MessageTemplateRepository'] = function($c)
+{
+  return new \App\Base\Repository\MessageTemplateRepository($c);
+};
+
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();

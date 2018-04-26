@@ -24,38 +24,18 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
   }
 
   /**
-   * @param string $field
-   * @param string $value
-   * @param string $path
-   * @param bool $not
    * @return mixed
    */
-  public function getByJsonContains(string $field, string $value, string $path, bool $not = false)
+  public function getAppsNeedingReminder()
   {
-    $queryBuilder = $this->entityManager->createQueryBuilder();
-    $query = $queryBuilder->select('a')
-      ->from($this->entityClass, 'a')
-      ->where("JSON_CONTAINS(a.$field, :value, :path) = :not");
+    $date = new \DateTime();
+    $query = $this->getQueryBuilder()->select('entity')
+      ->from($this->entityClass, 'entity')
+      ->where("JSON_EXTRACT(entity.data, '$.email_reminder_sent') < :value")
+      ->orWhere("JSON_CONTAINS_PATH(entity.data, 'all', '$.email_reminder_sent') = 0")
+      ->andWhere('entity.createdAt < :value')
+      ->setParameter('value', $date->modify('-1 day'));
 
-    $query->setParameter('path', '$.'.$path);
-    $query->setParameter('value', json_encode($value));
-    $query->setParameter('not', $not ? 0 : 1);
-
-    $q = $query->getQuery();
-
-    return $q->execute();
-  }
-
-  public function getByJsonContainsPath(string $field, string $oneOrAll, string $path)
-  {
-    $queryBuilder = $this->entityManager->createQueryBuilder();
-    $query = $queryBuilder->select('a')
-      ->from($this->entityClass, 'a')
-      ->where("JSON_CONTAINS_PATH(a.$field, 'one', :path) = 1");
-
-    $query->setParameter('path', '$.' . $path);
-
-    $q = $query->getQuery();
-    return $q->execute();
+    return $query->getQuery()->execute();
   }
 }

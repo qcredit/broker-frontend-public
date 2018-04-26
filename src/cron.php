@@ -8,22 +8,24 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $jobby = new Jobby\Jobby([
-  'debug' => true,
+  'debug' => false,
   'output' => __DIR__ . '/../logs/cron.log'
 ]);
 
-$jobby->add('SendChooseOffer', [
+$jobby->add('SendChooseOfferReminder', [
   'closure' => function() {
     require(__DIR__ . '/../vendor/autoload.php');
     $settings = require(__DIR__ . '/settings.php');
     $app = new \Slim\App($settings);
     require(__DIR__ . '/dependencies.php');
-    $job = new App\Cron\SendChooseOffer($container->get('MessageDeliveryService'), $container->get('ApplicationRepository'));
+    $job = new App\Cron\SendChooseOfferReminder($container->get('MessageDeliveryService'),
+      $container->get('ApplicationRepository'),
+      new \Broker\Domain\Factory\MessageFactory(),
+      $container->get('MessageTemplateRepository')
+    );
     return $job->run();
   },
   'schedule' => '* * * * *',
-  'debug' => true,
-  'output' => __DIR__ . '/../logs/cron.log'
 ]);
 
 $jobby->run();
