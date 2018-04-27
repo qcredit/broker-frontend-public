@@ -191,13 +191,6 @@ class ApplicationController extends AbstractController
    */
   public function indexAction($request, $response, $args)
   {
-/*    $message = new Message();
-    $message->setRecipient('hendrik.uibopuu@aasaglobal.com')
-      ->setBody('hellllo!')
-      ->setTitle('Johhaidii');
-    $delivery = new EmailDelivery($this->getContainer());
-    $delivery->send($message);*/
-
     $data = [
       'incomeSourceType' => 'Employed',
       'netPerMonth' => 4400,
