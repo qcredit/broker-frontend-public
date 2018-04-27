@@ -73,6 +73,12 @@ return [
           'port' => 587,
           'sender' => 'hendrik.uibopuu@aasaglobal.com',
           'senderName' => 'qCredit'
+        ],
+        'messente' => [
+          'senderName' => 'qCredit',
+          'sender' => '+48732232358', //dev
+          'username' => 'f7303187a44e84450d202debecb507ea',
+          'password' => '849556537bdce14bb797b42d32641a36'
         ]
     ],
 ];
