@@ -12,6 +12,7 @@ use App\Base\Validator\UserValidator;
 use App\Model\UserForm;
 use Broker\System\BaseTest;
 use App\Model\User;
+use Respect\Validation\Validator as V;
 
 class UserValidatorTest extends BaseTest
 {
@@ -37,11 +38,11 @@ class UserValidatorTest extends BaseTest
       'slava@bogu.ee',
       'vlad@putin.ru',
       'winteriscoming@holdthedoor.hodor',
-      'p@p.p'
+      'queen@gov.co.uk'
     ];
 
     $invalidValues = array_merge($this->invalidValues, [
-      'mine@ennu',
+      'mine@ennu.',
       '@',
       'p@.p',
       '@peep.ee',

@@ -19,7 +19,7 @@ return [
             ]
         ],
         'broker' => [
-          'environment' => 'BROKER_DEV',
+          'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
           'logger' => [
             'name' => 'BROKER',
             'loggerClass' => 'App\Base\Logger',
