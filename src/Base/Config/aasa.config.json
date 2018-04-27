@@ -71,7 +71,8 @@
       },
       "pin": {
         "type": "string",
-        "maxLength": 11
+        "maxLength": 11,
+        "pattern": "[0-9]{4}[0-3]{1}[0-9}{1}[0-9]{5}"
       },
       "contactAddress": {
         "$ref": "#/definitions/addressObject"
@@ -283,7 +284,8 @@
           },
           "postalCode": {
             "type": "string",
-            "example": "62-262"
+            "example": "62-262",
+            "pattern": "^[0-9]{2}-[0-9]{3}$"
           },
           "houseNumber": {
             "type": "string",

@@ -235,6 +235,26 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return $data;
   }
 
+  public function mapErrorsToForm(array $errors): array
+  {
+    $flat = $this->flattenArray($this->getRequestPayload());
+
+    $mapped = [];
+    foreach ($errors as $key => $value)
+    {
+      if (isset($flat[$key]))
+      {
+        $mapped[$flat[$key]] = $value;
+      }
+      else
+      {
+        $mapped[$key] = $value;
+      }
+    }
+
+    return $mapped;
+  }
+
   /**
    * @param array $data
    * @param PartnerResponse $response
