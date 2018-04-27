@@ -38,6 +38,7 @@
         <input type="text" name="email" id="email" value="{{ application.email }}"/>
         {% if application.errors.email %}<p class="rules">{{ application.errors.email }}</p>{% endif %}
     </div>
+    <!--
     <div class="field select mobilePhoneType">
       <label for="">Choose your phone type</label>
       <select name="mobilePhoneType">
@@ -47,7 +48,7 @@
         <option value="Mix"  {% if application.data.mobilePhoneType == "Mix" %}selected="true"{% endif %}>Mix</option>
       </select>
       {% if application.errors.mobilePhoneType %}<p class="rules">{{ application.errors.mobilePhoneType }}</p>{% endif %}
-    </div>
+    </div> -->
     <div class="field number phone required">
       <label for="">Insert your phone number*</label>
       <input type="text" name="phone" id="phone" value="{{ application.phone }}"/>
@@ -158,6 +159,7 @@
         </select>
         {% if application.errors.sourceType %}<p class="rules">{{ application.errors.sourceType }}</p>{% endif %}
     </div>
+    <!--
     <div class="field select position required">
       <label for="">Choose position*</label>
         <select name="position">
@@ -183,7 +185,7 @@
       <label for="">Insert the school's name</label>
       <input type="text" name="currentStudy" id="currentStudy" value="{{ application.data.currentStudy }}"/>
       {% if application.errors.currentStudy %}<p class="rules">{{ application.errors.currentStudy }}</p>{% endif %}
-    </div>
+    </div>-->
     <div class="field number netPerMonth required">
       <label for="">Insert your monthly net income*</label>
       <input type="text" name="netPerMonth" id="netPerMonth" value="{{ application.data.netPerMonth }}"/>
