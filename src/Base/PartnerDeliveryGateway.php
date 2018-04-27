@@ -8,7 +8,6 @@
 
 namespace App\Base;
 
-use Broker\Domain\Entity\Partner;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Entity\PartnerRequest;
 use Broker\Infrastructure\AbstractPartnerDeliveryGateway;

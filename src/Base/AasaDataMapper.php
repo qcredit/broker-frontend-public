@@ -235,6 +235,26 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return $data;
   }
 
+  public function mapErrorsToForm(array $errors): array
+  {
+    $flat = $this->flattenArray($this->getRequestPayload());
+
+    $mapped = [];
+    foreach ($errors as $key => $value)
+    {
+      if (isset($flat[$key]))
+      {
+        $mapped[$flat[$key]] = $value;
+      }
+      else
+      {
+        $mapped[$key] = $value;
+      }
+    }
+
+    return $mapped;
+  }
+
   /**
    * @param array $data
    * @param PartnerResponse $response
@@ -314,18 +334,36 @@ class AasaDataMapper implements PartnerDataMapperInterface
       {
         $map = $this->flattenArray($this->getRequestPayload());
 
-        if (isset($map[$row['field']]))
+        $field = $this->getFormattedField($row['field']);
+
+        if (isset($map[$field]))
         {
-          $errors[$map[$row['field']]] = $row['message'];
+          $errors[$map[$field]] = $row['message'];
         }
         else
         {
-          $errors[$row['field']] = $row['message'];
+          $errors[$field] = $row['message'];
         }
       }
     }
 
     return $errors;
+  }
+
+  /**
+   * @param string $field
+   * @return mixed|string
+   */
+  protected function getFormattedField(string $field)
+  {
+    $parts = explode('.', $field);
+    if ($parts)
+    {
+      return end($parts);
+    }
+    else {
+      return $field;
+    }
   }
 
   /**

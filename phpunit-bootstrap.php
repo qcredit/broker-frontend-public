@@ -5,4 +5,4 @@
  * Date: 11.04.18
  * Time: 14:21
  */
-putenv("BROKER_ENV=test");
+putenv("ENV_TYPE=testserver");

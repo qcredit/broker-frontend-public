@@ -141,7 +141,16 @@ class AdminApplicationController extends AbstractController
    */
   protected function findEntity($id, $request, $response)
   {
+    //$date = new \DateTime();
     $entity = $this->getAppRepository()->getOneBy(['id' => $id]);
+    /*$entity = $this->getAppRepository()->getWhereJsonContainsValue('data', '92090700966', 'pin');
+    $entity2 = $this->getAppRepository()->getWhereJsonContainsPath('data', 'one', 'email_reminder_sent');
+    $entity3 = $this->getAppRepository()->getByJsonExtract('data', ['email_reminder_sent', '>', $date]);
+    $entity4 = $this->getAppRepository()->getAppsNeedingReminder();
+    //var_dump($entity4);
+    var_dump($entity4[0]->getDataElement('pin'));
+    //var_dump($entity);
+    die();*/
 
     if (!$entity)
     {

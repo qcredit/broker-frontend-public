@@ -9,6 +9,7 @@ use App\Base\PartnerDeliveryGateway;
 use Broker\Domain\Factory\OfferFactory;
 use Broker\Domain\Service\PreparePartnerRequestsService;
 use Broker\Domain\Factory\PartnerRequestFactory;
+use Syslogic\DoctrineJsonFunctions\Query\AST\Functions\Mysql as DqlFunctions;
 
 $container = $app->getContainer();
 
@@ -64,6 +65,10 @@ $container['db'] = function($container) {
   $settings = $container->get('settings')['doctrine'];
 
   $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
+  $config->addCustomStringFunction(DqlFunctions\JsonExtract::FUNCTION_NAME, DqlFunctions\JsonExtract::class);
+  $config->addCustomStringFunction(DqlFunctions\JsonSearch::FUNCTION_NAME, DqlFunctions\JsonSearch::class);
+  $config->addCustomStringFunction(DqlFunctions\JsonContains::FUNCTION_NAME, DqlFunctions\JsonContains::class);
+  $config->addCustomStringFunction(DqlFunctions\JsonContainsPath::FUNCTION_NAME, DqlFunctions\JsonContainsPath::class);
 
   $dbConf = getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer";
 
@@ -82,6 +87,11 @@ $container['UserRepository'] = function($container) {
 /*  return new UserRepository(
     $container->get('db')
   );*/
+};
+
+$container['ApplicationRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
 };
 
 $container['AdminController'] = function($c)
@@ -130,6 +140,12 @@ $container['TermsController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\TermsController($view);
 };
+
+$container['MessageTemplateRepository'] = function($c)
+{
+  return new \App\Base\Repository\MessageTemplateRepository($c);
+};
+
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
