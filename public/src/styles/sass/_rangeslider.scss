@@ -1,4 +1,4 @@
-.landing-component-sm {
+.landing-component {
   .landing-slider {
     display: flex;
     .landing-form-adjust {
@@ -30,9 +30,9 @@
       outline: none;
     }
   }
-}
-.landing-component-lg {
-  display: none;
+  input {
+    display: none;
+  }
 }
 .range-slider-label {
   margin: 1rem 0 0;
@@ -42,6 +42,9 @@
   display: inline-block;
   margin-top: 1.25rem;
   font-weight: normal;
+}
+.rangeslider--horizontal {
+  display: none;
 }
 
 @media only screen and (min-width: 769px) {
@@ -100,10 +103,13 @@
     font-size: 1.25rem;
     font-weight: normal;
   }
-  .landing-component-lg {
+  .landing-component input {
     display: block;
   }
-  .landing-component-sm {
+  .landing-component .landing-slider {
+    align-items: baseline;
+  }
+  .landing-component .landing-form-adjust {
     display: none;
   }
 }

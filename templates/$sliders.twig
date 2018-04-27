@@ -1,39 +1,20 @@
-<!-- Slider component for laptops & desktops start-->
-<div class="landing-component-lg">
-  <div class="landing-slider landing-form-amount">
-    <p class="range-slider-label">How much do you want to borrow?</p>
-    <input type="range" min="1000" max="10000" step="500" value="2000">
-    <select name="loanAmount" class="range-slider-value range-slider-select-value" id="loanAmountOutput">
-
-    </select>
-  </div>
-  <div class="landing-slider landing-form-duration">
-    <p class="range-slider-label">How fast do you want to pay off (months)?</p>
-    <input type="range" min="6" max="72" step="3" value="12">
-    <select name="loanTerm" class="range-slider-value range-slider-select-value" id="loanDurationOutput">
-    </select>
-  </div>
-  <p class="range-slider-label range-slider-monhly-label">Approximate monthly installment</p>
-  <span class="monthly-installment">PLN 767</span>
-</div>
-<!-- Slider component for laptops & desktops end-->
-<!-- Landing form for mobile devices start-->
-<div class="landing-component-sm">
-  <p class="range-slider-label">How fast do you want to pay off?</p>
+<div class="landing-component">
+  <p class="range-slider-label">How much do you want to borrow?</p>
   <div class="landing-slider landing-form-amount">
     <div class="landing-form-adjust landing-form-adjust-decrease">&#8722;</div>
-    <select name="" class="range-slider-value range-slider-select-value">
+    <input type="range" min="1000" max="10000" step="500" value="{% if application.loanAmount %}{{ application.loanAmount }}{% else %}2000{% endif %}" id="loanAmountSlider">
+    <select name="loanAmount" id="loanAmount" class="range-slider-value range-slider-select-value">
     </select>
     <div class="landing-form-adjust landing-form-adjust-increase">&#43;</div>
   </div>
   <p class="range-slider-label">How fast do you want to pay off (months)?</p>
   <div class="landing-slider landing-form-duration">
     <div class="landing-form-adjust landing-form-adjust-decrease">&#8722;</div>
-    <select name="" class="range-slider-value range-slider-select-value">
+    <input type="range" min="6" max="72" step="3" value="{% if application.loanTerm %}{{ application.loanTerm }}{% else %}12{% endif %}" id="loanTermSlider">
+    <select name="loanTerm" id="loanTerm" class="range-slider-value range-slider-select-value">
     </select>
     <div class="landing-form-adjust landing-form-adjust-increase">&#43;</div>
   </div>
-  <!-- Landing form for mobile devices end-->
   <p class="range-slider-label range-slider-monhly-label">Approximate monthly installment</p>
   <span class="monthly-installment">PLN 767</span>
 </div>
