@@ -15,6 +15,7 @@ use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Service\MessageDeliveryServiceInterface;
 use Broker\System\Log;
+use Slim\Container;
 
 class SendChooseOfferReminder implements BaseJob
 {
@@ -34,21 +35,28 @@ class SendChooseOfferReminder implements BaseJob
    * @var MessageTemplateRepositoryInterface
    */
   protected $messageTemplateRepository;
+  /**
+   * @var Container
+   */
+  protected $container;
 
   /**
-   * SendChooseOffer constructor.
+   * SendChooseOfferReminder constructor.
+   * @param Container $container
    * @param MessageDeliveryServiceInterface $messageDeliveryService
    * @param ApplicationRepositoryInterface $applicationRepository
    * @param MessageFactoryInterface $messageFactory
    * @param MessageTemplateRepositoryInterface $messageTemplateRepository
    */
   public function __construct(
+    Container $container,
     MessageDeliveryServiceInterface $messageDeliveryService,
     ApplicationRepositoryInterface $applicationRepository,
     MessageFactoryInterface $messageFactory,
     MessageTemplateRepositoryInterface $messageTemplateRepository
   )
   {
+    $this->container = $container;
     $this->messageDeliveryService = $messageDeliveryService;
     $this->applicationRepository = $applicationRepository;
     $this->messageFactory = $messageFactory;
@@ -57,6 +65,7 @@ class SendChooseOfferReminder implements BaseJob
 
   /**
    * @return MessageDeliveryServiceInterface
+   * @codeCoverageIgnore
    */
   public function getMessageDeliveryService()
   {
@@ -66,6 +75,7 @@ class SendChooseOfferReminder implements BaseJob
   /**
    * @param MessageDeliveryServiceInterface $messageDeliveryService
    * @return SendChooseOfferReminder
+   * @codeCoverageIgnore
    */
   public function setMessageDeliveryService(MessageDeliveryServiceInterface $messageDeliveryService)
   {
@@ -75,6 +85,7 @@ class SendChooseOfferReminder implements BaseJob
 
   /**
    * @return ApplicationRepositoryInterface
+   * @codeCoverageIgnore
    */
   public function getApplicationRepository()
   {
@@ -84,6 +95,7 @@ class SendChooseOfferReminder implements BaseJob
   /**
    * @param ApplicationRepositoryInterface $applicationRepository
    * @return SendChooseOfferReminder
+   * @codeCoverageIgnore
    */
   public function setApplicationRepository(ApplicationRepositoryInterface $applicationRepository)
   {
@@ -93,6 +105,7 @@ class SendChooseOfferReminder implements BaseJob
 
   /**
    * @return MessageFactoryInterface
+   * @codeCoverageIgnore
    */
   public function getMessageFactory()
   {
@@ -102,6 +115,7 @@ class SendChooseOfferReminder implements BaseJob
   /**
    * @param MessageFactoryInterface $messageFactory
    * @return SendChooseOfferReminder
+   * @codeCoverageIgnore
    */
   public function setMessageFactory(MessageFactoryInterface $messageFactory)
   {
@@ -111,6 +125,7 @@ class SendChooseOfferReminder implements BaseJob
 
   /**
    * @return MessageTemplateRepositoryInterface
+   * @codeCoverageIgnore
    */
   public function getMessageTemplateRepository()
   {
@@ -120,6 +135,7 @@ class SendChooseOfferReminder implements BaseJob
   /**
    * @param MessageTemplateRepositoryInterface $messageTemplateRepository
    * @return SendChooseOfferReminder
+   * @codeCoverageIgnore
    */
   public function setMessageTemplateRepository(MessageTemplateRepositoryInterface $messageTemplateRepository)
   {
@@ -128,8 +144,29 @@ class SendChooseOfferReminder implements BaseJob
   }
 
   /**
+   * @return Container
+   * @codeCoverageIgnore
+   */
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
+  /**
+   * @param Container $container
+   * @return SendChooseOfferReminder
+   * @codeCoverageIgnore
+   */
+  public function setContainer(Container $container)
+  {
+    $this->container = $container;
+    return $this;
+  }
+
+  /**
    * @return bool
    * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function run(): bool
   {
@@ -146,6 +183,7 @@ class SendChooseOfferReminder implements BaseJob
   /**
    * @param Application $app
    * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function sendNeededReminders(Application $app)
   {
@@ -160,6 +198,7 @@ class SendChooseOfferReminder implements BaseJob
    * @param Application $app
    * @return bool
    * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function sendEmailReminder(Application $app)
   {
@@ -169,7 +208,7 @@ class SendChooseOfferReminder implements BaseJob
       ->setRecipient($app->getEmail())
       ->setBody($this->getMessageTemplateRepository()->getTemplateByPath('mail/offer-reminder.twig', ['application' => $app]));
 
-    if ($this->getMessageDeliveryService()->setMessage($message)->run())
+    if ($this->sendReminder($message))
     {
       $this->updateApplication($app, $message->getType());
       return true;
@@ -182,6 +221,7 @@ class SendChooseOfferReminder implements BaseJob
    * @param Application $app
    * @return bool
    * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function sendSmsReminder(Application $app)
   {
@@ -191,11 +231,32 @@ class SendChooseOfferReminder implements BaseJob
       ->setRecipient($app->getPhone())
       ->setBody($this->getMessageTemplateRepository()->getTemplateByPath('sms/offer-reminder.twig', ['application' => $app]));
 
-    if ($this->getMessageDeliveryService()->setMessage($message)->run())
+    if ($this->sendReminder($message))
     {
       $this->updateApplication($app, $message->getType());
       return true;
     }
+
+    return false;
+  }
+
+  /**
+   * @param Message $message
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function sendReminder(Message $message)
+  {
+    if ($this->getContainer()->get('settings')['broker']['environment'] !== 'BROKER_TEST')
+    {
+      if ($this->getMessageDeliveryService()->setMessage($message)->run())
+      {
+        return true;
+      }
+      return false;
+    }
+
+    return true;
   }
 
   /**

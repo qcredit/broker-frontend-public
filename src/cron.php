@@ -9,7 +9,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 $jobby = new Jobby\Jobby([
   'debug' => false,
-  'output' => __DIR__ . '/../logs/cron.log'
+  'output' => '/var/log/apache2/broker-cron.log'
 ]);
 
 $jobby->add('SendChooseOfferReminder', [
@@ -18,14 +18,16 @@ $jobby->add('SendChooseOfferReminder', [
     $settings = require(__DIR__ . '/settings.php');
     $app = new \Slim\App($settings);
     require(__DIR__ . '/dependencies.php');
-    $job = new App\Cron\SendChooseOfferReminder($container->get('MessageDeliveryService'),
+    $job = new App\Cron\SendChooseOfferReminder(
+      $container,
+      $container->get('MessageDeliveryService'),
       $container->get('ApplicationRepository'),
       new \Broker\Domain\Factory\MessageFactory(),
       $container->get('MessageTemplateRepository')
     );
     return $job->run();
   },
-  'schedule' => '* * * * *',
+  'schedule' => '*/10 * * * *',
 ]);
 
 $jobby->run();
