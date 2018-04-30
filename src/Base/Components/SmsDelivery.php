@@ -10,6 +10,8 @@ namespace App\Base\Components;
 
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
+use Broker\System\Log;
+use Monolog\Logger;
 use Slim\Container;
 
 class SmsDelivery implements MessageDeliveryInterface
@@ -84,18 +86,24 @@ class SmsDelivery implements MessageDeliveryInterface
     $this->container = $container;
   }
 
+  /**
+   * @param Message $message
+   * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
+   */
   public function send(Message $message)
   {
     $this->setMessage($message);
     $this->setup();
 
     $result = $this->getClient()->send();
-    //print_r($result);
-    //die();
 
-    $this->setOk($this->getClient()->isOk());
+    $this->handleResult($result);
   }
 
+  /**
+   * @throws \Interop\Container\Exception\ContainerException
+   */
   protected function setup()
   {
     $settings = $this->getSettings();
@@ -103,7 +111,7 @@ class SmsDelivery implements MessageDeliveryInterface
       http_build_query(
         [
           'username' => $settings['username'],
-          'password' => $settings['password'] . '123123',
+          'password' => $settings['password'],
           'from' => $settings['senderName'],
           'to' => $this->getMessage()->getRecipient(),
           'text' => $this->getMessage()->getBody()
@@ -113,6 +121,43 @@ class SmsDelivery implements MessageDeliveryInterface
     $this->getClient()->setBaseUrl($url);
     $this->getClient()->setClientOption(CURLOPT_RETURNTRANSFER, true);
     $this->getClient()->setClientOption(CURLOPT_SSL_VERIFYPEER, false);
+  }
+
+  /**
+   * @param $result
+   * @throws \Exception
+   */
+  protected function handleResult($result)
+  {
+    list($resp, $code) = explode(' ', $result);
+
+    if ($resp != 'OK')
+    {
+      Log::warning($this->resolveErrorCode($code), [$result]);
+      $this->setOk(false);
+    }
+
+    $this->setOk($this->getClient()->isOk() && true);
+  }
+
+  /**
+   * @param $code
+   * @return mixed|string
+   */
+  protected function resolveErrorCode($code)
+  {
+    $codes = [
+      101 => 'Access restricted, wrong credentials. Check the username and password values!',
+      102 => 'Parameters are wrong or missing. Check that all the required parameters are present.',
+      209 => 'Server failure, try again after a few seconds or try the api3.messente.com backup server.'
+    ];
+
+    if (!isset($codes[$code]))
+    {
+      return 'Unknown error!';
+    }
+
+    return $codes[$code];
   }
 
   /**

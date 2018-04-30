@@ -127,12 +127,6 @@ class AdminApplicationController extends AbstractController
    */
   public function viewAction(Request $request, Response $response, $args)
   {
-    //$sms = new Message();
-    //$sms->setRecipient('+3725171081')
-      //->setBody('Hello 123!');
-    //$smsdelivery = new SmsDelivery($this->getContainer());
-    //$smsdelivery
-      //->send($sms);
     $data = ['user' => $request->getAttribute('user')];
 
     $data['application'] = $this->findEntity($args['id'], $request, $response);

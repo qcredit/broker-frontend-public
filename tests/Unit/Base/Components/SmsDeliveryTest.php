@@ -12,6 +12,7 @@ use App\Base\Components\HttpClient;
 use App\Base\Components\SmsDelivery;
 use Broker\Domain\Entity\Message;
 use Broker\System\BaseTest;
+use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Slim\Container;
 
@@ -55,7 +56,7 @@ class SmsDeliveryTest extends BaseTest
   {
     $mock = $this->getMockBuilder(SmsDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setup', 'setMessage', 'getClient'])
+      ->setMethods(['setup', 'setMessage', 'getClient', 'handleResult'])
       ->getMock();
 
     $mock->expects($this->once())
@@ -70,6 +71,8 @@ class SmsDeliveryTest extends BaseTest
     $mock->expects($this->atLeastOnce())
       ->method('getClient')
       ->willReturn($this->clientMock);
+    $mock->expects($this->once())
+      ->method('handleResult');
 
     $mock->send(new Message());
   }
@@ -106,5 +109,54 @@ class SmsDeliveryTest extends BaseTest
       ->willReturn($this->clientMock);
 
     $result = $this->invokeMethod($mock, 'setup', []);
+  }
+
+  public function testHandleResult()
+  {
+    $resultMock = 'OK fuckyeahhh!!!';
+    $mock = $this->getMockBuilder(SmsDelivery::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['resolveErrorCode', 'getClient'])
+      ->getMock();
+
+    $mock->expects($this->never())
+      ->method('resolveErrorCode')
+      ->willReturn(false);
+    $mock->method('getClient')
+      ->willReturn($this->clientMock);
+
+    $this->invokeMethod($mock, 'handleResult', [$resultMock]);
+  }
+
+  public function testHandleResultWithError()
+  {
+    $resultMock = 'ERROR fuckyeahhh!!!';
+    $mock = $this->getMockBuilder(SmsDelivery::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['resolveErrorCode', 'getClient'])
+      ->getMock();
+
+    $mock->expects($this->once())
+      ->method('resolveErrorCode')
+      ->willReturn(false);
+    $mock->method('getClient')
+      ->willReturn($this->clientMock);
+
+    $this->invokeMethod($mock, 'handleResult', [$resultMock]);
+  }
+
+  public function testResolveErrorMessage()
+  {
+    $knownErrors = [101,102,209];
+
+    foreach ($knownErrors as $code)
+    {
+      $this->assertInternalType('string', $this->invokeMethod($this->mock, 'resolveErrorCode', [$code]));
+    }
+  }
+
+  public function testResolveUnknownErrorCode()
+  {
+    $this->assertSame('Unknown error!', $this->invokeMethod($this->mock, 'resolveErrorCode', [1337]));
   }
 }
