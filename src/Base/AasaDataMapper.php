@@ -282,7 +282,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    * @param PartnerResponse $response
    * @return array
    */
-  public function getResponseErrors(PartnerResponse $response)
+  public function getResponseErrors(PartnerResponse $response): array
   {
     $body = json_decode($response->getResponseBody(), true);
 
