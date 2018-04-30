@@ -16,6 +16,9 @@ use Broker\System\Log;
 
 class ApiDelivery implements MessageDeliveryInterface
 {
+  /**
+   * @var HttpClient
+   */
   protected $client;
   /**
    * @var Message
@@ -31,7 +34,7 @@ class ApiDelivery implements MessageDeliveryInterface
   protected $ok;
 
   /**
-   * @return mixed
+   * @return HttpClient
    */
   public function getClient()
   {
@@ -39,10 +42,10 @@ class ApiDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @param mixed $client
+   * @param HttpClient $client
    * @return ApiDelivery
    */
-  public function setClient($client)
+  public function setClient(HttpClient $client)
   {
     $this->client = $client;
     return $this;
@@ -89,7 +92,7 @@ class ApiDelivery implements MessageDeliveryInterface
    */
   public function __construct()
   {
-    $this->setClient(curl_init());
+    $this->setClient(new HttpClient());
     $this->setResponse(new PartnerResponse());
   }
 
@@ -101,19 +104,10 @@ class ApiDelivery implements MessageDeliveryInterface
   {
     $this->setMessage($message);
     $this->setup();
-    $this->makeCall();
-  }
 
-  /**
-   * @throws \Exception
-   */
-  protected function makeCall()
-  {
     try {
-      $result = $this->exec();
-      $code = $this->getResponseCode();
-      curl_close($this->getClient());
-
+      $result = $this->getClient()->send();
+      $code = $this->getClient()->getStatusCode();
       $this->getResponse()->setResponseBody($result);
 
       if ($code == 200)
@@ -139,22 +133,6 @@ class ApiDelivery implements MessageDeliveryInterface
     $this->getResponse()->setOk($this->isOk());
   }
 
-  /**
-   * @return mixed
-   */
-  protected function exec()
-  {
-    return curl_exec($this->getClient());
-  }
-
-  /**
-   * @return mixed
-   */
-  protected function getResponseCode()
-  {
-    return curl_getinfo($this->getClient(), CURLINFO_HTTP_CODE);
-  }
-
   protected function setup()
   {
     $this->setClientOptions();
@@ -171,47 +149,34 @@ class ApiDelivery implements MessageDeliveryInterface
       'Authorization: Basic a3Jpc3RqYW4tdGVzdDprcmlzdGphbi10ZXN0'
     ];
 
+    $options = [];
+
     $request = $this->getMessage()->getRelatedEntity();
     if ($request->getType() === PartnerRequest::REQUEST_TYPE_INITIAL)
     {
-      $this->setClientOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl());
-      $this->setClientOption(CURLOPT_POSTFIELDS, $request->getRequestPayload());
+      $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl();
+      $options[CURLOPT_POSTFIELDS] = $request->getRequestPayload();
     }
     else if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
     {
-      $this->setClientOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+      $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId();
       $headers[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
     }
     else if ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
     {
       $headers[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
-      $this->setClientOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
-      $this->setClientOption(CURLOPT_POSTFIELDS, $request->getRequestPayload());
-      $this->setClientOption(CURLOPT_CUSTOMREQUEST, 'PATCH');
+      $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId();
+      $options[CURLOPT_POSTFIELDS] = $request->getRequestPayload();
+      $options[CURLOPT_CUSTOMREQUEST] = 'PATCH';
 
       //@todo Move this line away from herrre!!!!11!1!11!!1
       $this->getResponse()->setOffer($request->getOffer());
     }
 
-    $this->setClientOption(CURLOPT_RETURNTRANSFER, true);
-    $this->setClientHeaders($headers);
-  }
+    $options[CURLOPT_RETURNTRANSFER] = true;
 
-  /**
-   * @param $option
-   * @param $value
-   */
-  protected function setClientOption($option, $value)
-  {
-    curl_setopt($this->getClient(), $option, $value);
-  }
-
-  /**
-   * @param $headers
-   */
-  protected function setClientHeaders($headers)
-  {
-    curl_setopt($this->getClient(), CURLOPT_HTTPHEADER, $headers);
+    $this->getClient()->setClientOptions($options);
+    $this->getClient()->setClientHeaders($headers);
   }
 
   /**

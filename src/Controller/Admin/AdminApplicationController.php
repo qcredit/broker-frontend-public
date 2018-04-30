@@ -9,6 +9,8 @@
 namespace App\Controller\Admin;
 
 use App\Base\Components\AbstractController;
+use App\Base\Components\SmsDelivery;
+use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Slim\Container;
@@ -125,6 +127,12 @@ class AdminApplicationController extends AbstractController
    */
   public function viewAction(Request $request, Response $response, $args)
   {
+    //$sms = new Message();
+    //$sms->setRecipient('+3725171081')
+      //->setBody('Hello 123!');
+    //$smsdelivery = new SmsDelivery($this->getContainer());
+    //$smsdelivery
+      //->send($sms);
     $data = ['user' => $request->getAttribute('user')];
 
     $data['application'] = $this->findEntity($args['id'], $request, $response);
@@ -141,16 +149,7 @@ class AdminApplicationController extends AbstractController
    */
   protected function findEntity($id, $request, $response)
   {
-    //$date = new \DateTime();
     $entity = $this->getAppRepository()->getOneBy(['id' => $id]);
-    /*$entity = $this->getAppRepository()->getWhereJsonContainsValue('data', '92090700966', 'pin');
-    $entity2 = $this->getAppRepository()->getWhereJsonContainsPath('data', 'one', 'email_reminder_sent');
-    $entity3 = $this->getAppRepository()->getByJsonExtract('data', ['email_reminder_sent', '>', $date]);
-    $entity4 = $this->getAppRepository()->getAppsNeedingReminder();
-    //var_dump($entity4);
-    var_dump($entity4[0]->getDataElement('pin'));
-    //var_dump($entity);
-    die();*/
 
     if (!$entity)
     {
