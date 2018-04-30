@@ -10,6 +10,24 @@ var not_zip = 'Incorrect ZIP. Expected format XX-XXX';
 var not_iban = 'Not a correct IBAN';
 
 $(document).ready(function() {
+  if($('.checkbox.emarketing input[type=checkbox]').is(':checked') && $('.loan-form').hasClass('loan-form-errors')) {
+    $('.step-2').css('display','block');
+  }
+  // Checkboxes
+  $('.checkbox.emarketing input[type=checkbox]').change(
+    function(){
+        if (this.checked) {
+          $('.step-1 .broker-btn').removeClass('broker-btn-disabled');
+        } else {
+          $('.step-1 .broker-btn').addClass('broker-btn-disabled');
+        }
+    });
+    // Step-1 button functionality
+    $('.step-1 .broker-btn').on('click', function(){
+      $(this).css('display','none');
+      $('.step-2').css('display','block');
+    })
+
   $('.field input, .field select').each(
     function(){
         var val = $(this).val().trim();
