@@ -229,6 +229,11 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $newAppService = $this->getNewApplicationService();
+      if ($this->isFromFrontpage())
+      {
+        $newAppService->setValidationEnabled(false);
+      }
+
       if ($newAppService->setData($request->getParsedBody())->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
@@ -572,5 +577,13 @@ JSON;
     ];
 
     return $response->withJson($combined);
+  }
+
+  /**
+   * @return bool
+   */
+  protected function isFromFrontpage()
+  {
+    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
   }
 }
