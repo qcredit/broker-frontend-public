@@ -10,6 +10,7 @@ namespace Tests\Unit\Controller;
 
 use App\Base\Persistence\Doctrine\OfferRepository;
 use App\Base\Persistence\Doctrine\PartnerRepository;
+use App\Base\Repository\PartnerDataMapperRepository;
 use App\Controller\ApplicationController;
 use Broker\Domain\Service\ChooseOfferService;
 use Broker\System\BaseTest;
@@ -222,6 +223,22 @@ class ApplicationControllerTest extends BaseTest
 
   public function testGetPartnersSchemas()
   {
+    $mock = $this->getMockBuilder(ApplicationController::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getPartnerDataMapperRepository', 'getPartners'])
+      ->getMock();
 
+    $dataMapperMock = $this->createMock(PartnerDataMapperRepository::class, ['getDataMapperByPartnerId']);
+    $dataMapperMock->method('getDataMapperByPartnerId')
+      ->with($this->equalTo('AASA'));
+    $mock->expects($this->once())
+      ->method('getPartnerDataMapperRepository')
+      ->willReturn($dataMapperMock);
+    $mock->expects($this->once())
+      ->method('getPartners')
+      ->willReturn([(new Partner())->setIdentifier('AASA')]);
+
+    $result = $this->invokeMethod($mock, 'getPartnersSchemas', []);
+    $this->assertTrue(is_array($result));
   }
 }
