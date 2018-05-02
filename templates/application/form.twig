@@ -145,7 +145,7 @@
     <p>Income information</p>
     <div class="field select sourceType required">
       <label for="">Choose income type*</label>
-        <select name="incomeSourceType">
+        <select name="sourceType">
             <option value></option>
             <option value="Employed" {% if application.data.incomeSourceType == 'Employed' %}selected="true"{% endif %}>Employed</option>
             <option value="Student" {% if application.data.incomeSourceType == 'Student' %}selected="true"{% endif %}>Student</option>
