@@ -346,7 +346,11 @@
       var err_obj = searchError(attrId, ajv.errors);
       if(err_obj) {
         parent.addClass('error');
-        parent.append('<p class="rules">'+err_obj.message+'</p>');
+        if(!parent.find('.rules').length){
+          parent.append('<p class="rules">'+err_obj.message+'</p>');
+        } else {
+          parent.find('.rules').text(err_obj.message);
+        }
       } else {
         parent.removeClass('error');
         parent.find('p.rules').text('');
