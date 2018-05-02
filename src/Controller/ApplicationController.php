@@ -24,6 +24,9 @@ use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
 use Broker\Domain\Entity\Application;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ApplicationController extends AbstractController
 {
@@ -183,6 +186,44 @@ class ApplicationController extends AbstractController
   {
     $this->newApplicationService = $newApplicationService;
     return $this;
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartnersSchemas()
+  {
+    $result = [];
+    foreach ($this->getPartners() as $partner)
+    {
+      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+    }
+
+    return $result;
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartners()
+  {
+    return $this->getContainer()->get('PartnerRepository')->getActivePartners();
+  }
+
+  /**
+   * @return PartnerDataMapperRepositoryInterface
+   */
+  protected function getPartnerDataMapperRepository()
+  {
+    return $this->getContainer()->get('PartnerDataMapperRepository');
+  }
+
+  /**
+   * @return bool
+   */
+  protected function isFromFrontpage()
+  {
+    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
   }
 
   /**
@@ -374,6 +415,62 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws NotFoundException
+   */
+  public function statusAction(Request $request, Response $response, $args)
+  {
+    $parts = explode('/', $_SERVER['HTTP_REFERER']);
+    $app = $this->findEntity(end($parts), $request, $response);
+    $partners = $this->getPartners();
+    $offers = $this->getOfferRepository()->getOffersByApplication($app);
+
+    $filtered = $this->serializeObjects($offers);
+
+    if (count($partners) === count($offers))
+    {
+      return $response->withJson([
+        'status' => 'done',
+        'offers' => $filtered
+      ]);
+    }
+    else {
+      return $response->withJson([
+        'status' => 'waiting',
+        'offers' => $offers
+      ]);
+    }
+  }
+
+  /**
+   * @param array $objects
+   * @return array
+   */
+  protected function serializeObjects(array $objects)
+  {
+    $filtered = [];
+    $encoders = [new JsonEncoder()];
+    $normalizer = new ObjectNormalizer();
+    $normalizer->setCircularReferenceLimit(1);
+    $normalizer->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+    $serializer = new Serializer([$normalizer], $encoders);
+
+    foreach ($objects as $object)
+    {
+      $object->setCreatedAt($object->getCreatedAt()->format('Y-m-d H:i:s'));
+      $object->setAcceptedDate($object->getAcceptedDate()->format('Y-m-d H:i:s'));
+      $object->setUpdatedAt($object->getUpdatedAt()->format('Y-m-d H:i:s'));
+      $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt());
+      $filtered[] = $serializer->serialize($object, 'json');
+    }
+
+    return $filtered;
+  }
+
+  /**
    * @param $request
    * @param Response $response
    * @param $args
@@ -400,43 +497,5 @@ class ApplicationController extends AbstractController
     }
 
     return $response->withJson($combined);
-  }
-
-  /**
-   * @return array
-   */
-  protected function getPartnersSchemas()
-  {
-    $result = [];
-    foreach ($this->getPartners() as $partner)
-    {
-      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
-    }
-
-    return $result;
-  }
-
-  /**
-   * @return array
-   */
-  protected function getPartners()
-  {
-    return $this->getContainer()->get('PartnerRepository')->getActivePartners();
-  }
-
-  /**
-   * @return PartnerDataMapperRepositoryInterface
-   */
-  protected function getPartnerDataMapperRepository()
-  {
-    return $this->getContainer()->get('PartnerDataMapperRepository');
-  }
-
-  /**
-   * @return bool
-   */
-  protected function isFromFrontpage()
-  {
-    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
   }
 }
