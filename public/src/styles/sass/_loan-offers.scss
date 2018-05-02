@@ -1,10 +1,15 @@
+.offers-listing-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .offer-list-head {
   margin: 2rem 0;
 }
 .loan-offer-container{
   display: flex;
   flex-direction: column;
-  margin: 2rem 0;
+  margin: .875rem 0;
   border: 1px solid $bluegray;
 }
 .loan-offer-head {
@@ -53,8 +58,9 @@
 
   }
 }
-.loan-offer-container.featured {
+.personal-offer-container.featured {
   position: relative;
+  order: 0;
   border: 3px solid $gold;
   &:before {
     content: "Top offer";
@@ -69,6 +75,16 @@
     background: $gold;
     color: #000;
   }
+  &:first-child {
+    margin-top: 2.125rem;
+  }
+}
+.offers-list-heading {
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #d0d0d0;
 }
 
 @media only screen and (min-width: 360px) {
@@ -142,5 +158,11 @@
   .loan-offer-body {
     margin-left: 2rem;
     justify-content: center;
+  }
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+/* IE10+ CSS styles go here */
+  .loan-offer-body {
+    max-width: 400px;
   }
 }

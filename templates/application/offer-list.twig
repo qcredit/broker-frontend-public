@@ -8,11 +8,12 @@
       </div>
     </div>
   </div>
-  <div class="row justify-content-md-center">
+  <section class="row justify-content-md-center">
+    <h4 class="col-sm-12 col-md-9 offers-list-heading">Personal offers:</h4>
     {% if application.offers %}
-    <div class="col-sm-12 col-md-9">
+    <div class="col-sm-12 col-md-9 offers-listing-wrap">
       {% for offer in application.offers %}
-      <article class="loan-offer-container">
+      <article class="loan-offer-container personal-offer-container {% if application.featured %}featured{% endif %}">
         <div class="loan-offer-head">
           <div class="loan-offerer-logo-container">
             <img src="/src/images/aasalogo.png" class="loan-offerer-logo" alt="{{ offer.partner.name }} logo">
@@ -41,7 +42,7 @@
       {% endfor %}
     </div>
     {% endif %}
-  </div>
+  </section>
   <div class="row justify-content-sm-center">
     <div class="col-sm-9">
       <div class="bouncing-loader">
@@ -51,4 +52,52 @@
       </div>
     </div>
   </div>
+  <section class="row justify-content-md-center">
+    <h4 class="col-sm-12 col-md-9 offers-list-heading">Affiliate's offers:</h4>
+    {% if application.offers %}
+    <div class="col-sm-12 col-md-9 offers-listing-wrap">
+      {% for offer in application.offers %}
+      <article class="loan-offer-container affiliate-offer-container">
+        <div class="loan-offer-head">
+          <div class="loan-offerer-logo-container">
+            <img src="/src/images/aasalogo.png" class="loan-offerer-logo" alt="{{ offer.partner.name }} logo">
+          </div>
+          <div class="loan-offerer-info">
+            <span class="loan-offerer-name">{{ offer.partner.name }}</span>
+            <span class="loan-offerer-website">www.aasa.fi</span>
+          </div>
+        </div>
+        <div class="loan-offer-body">
+          <span>Amount: 2400 €</span>
+          <span>Duration: 24 m</span>
+          <span>Interest: 19.9 %</span>
+          <span>APR: 238 %</span>
+        </div>
+        <div class="loan-offer-footer">
+          <a href="{{ offer.data.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">SIGN CONTRACT</a>
+        </div>
+        <!--
+        <p>{{ offer.partner.id }}</p>
+        <p>{{ offer.partner.name }}</p>
+        <p>{{ offer.loanAmount }}</p>
+        <p>{{ offer.remoteId }}</p>
+        <p>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</p>-->
+      </article>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+  <script>
+    var app_hash = '{{ application.applicationHash }}';
+    setInterval(function(){
+      console.log(app_hash);
+      /*$.post('/application/status', app_hash)
+        .done(function(data) {
+          console.log('Status: ' +data.status)
+          if(data.status === 'done') {
+            $('.bouncing-loader').hide();
+          }
+        });*/
+    },60000);
+  </script>
 {% endblock %}
