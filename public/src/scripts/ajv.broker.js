@@ -243,3 +243,13 @@ function searchError(attribute, errors){
     }
   }
 }
+
+function getFormData() {
+  var formData = new FormData(document.querySelector('form'));
+  var formValues = {};
+  for (var [key,value] of formData.entries())
+  {
+    formValues[key] = value;
+  }
+  return formValues;
+}
