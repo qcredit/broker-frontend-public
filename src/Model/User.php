@@ -92,24 +92,6 @@ class User extends AbstractEntity implements UserIdentityInterface
     return $this;
   }
 
-  /**
-   * @return \DateTime
-   */
-  public function getCreatedAt()
-  {
-    return $this->createdAt;
-  }
-
-  /**
-   * @param \DateTime $createdAt
-   * @return User
-   */
-  public function setCreatedAt(\DateTime $createdAt)
-  {
-    $this->createdAt = $createdAt;
-    return $this;
-  }
-
   public function getRole()
   {
     // TODO: Implement getRole() method.

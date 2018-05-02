@@ -60,7 +60,7 @@ class ApplicationControllerTest extends BaseTest
       ->getMock();
     $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy', 'getByHash'])
+      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication'])
       ->getMock();
 
     $twigMock = $this->getMockBuilder(Twig::class)
@@ -263,6 +263,11 @@ class ApplicationControllerTest extends BaseTest
     $this->mock->expects($this->once())
       ->method('serializeObjects')
       ->willReturn(['asdad','adasd']);
+    $this->offerRepoMock->method('getOffersByApplication')
+      ->willReturn([new Offer, new Offer]);
+    $this->mock->expects($this->once())
+      ->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
 
     $result = $this->mock->statusAction($this->requestMock, $this->responseMock, []);
     $this->assertArrayHasKey('status', $result);
@@ -288,6 +293,11 @@ class ApplicationControllerTest extends BaseTest
     $this->mock->expects($this->once())
       ->method('serializeObjects')
       ->willReturn(['asdad','adasd']);
+    $this->offerRepoMock->method('getOffersByApplication')
+      ->willReturn([new Offer]);
+    $this->mock->expects($this->once())
+      ->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
 
     $result = $this->mock->statusAction($this->requestMock, $this->responseMock, []);
     $this->assertArrayHasKey('status', $result);
