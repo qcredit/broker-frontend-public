@@ -290,17 +290,43 @@
         localize_en(ajv.errors);
         console.log(ajv.errors);
         console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
+        var error_list = ajv.errors;
+        for(var i = 0; i <= error_list.length; i++) {
+          var err_target = $('.field'+error_list[i].dataPath);
+          var err_msg = error_list[i].message;
+          if(err_msg){
+            if(!err_target.find('.rules').length){
+              err_target.addClass('error');
+              err_target.append('<p class="rules">'+err_msg+'</p>');
+            } else {
+              err_target.find('.rules').text(err_msg);
+            }
+          }
+        }
       }
-
     });
 
     $('input').on('change', function(e) {
       var attrId = $(this)[0].id;
       var formValues = getFormData();
+      var parent = $(this).parent();
 
       ajv.validate(schema, formValues);
       console.log(localize_en(ajv.errors));
       console.log(searchError(attrId, ajv.errors));
+
+      var err_obj = searchError(attrId, ajv.errors);
+      if(err_obj) {
+        parent.addClass('error');
+        if(!parent.find('.rules').length){
+          parent.append('<p class="rules">'+err_obj.message+'</p>');
+        } else {
+          parent.find('.rules').text(err_obj.message);
+        }
+      } else {
+        parent.removeClass('error');
+        parent.find('p.rules').text('');
+      }
     });
   </script>
 {% endblock %}
