@@ -277,3 +277,68 @@
   <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
 </form>
 {% endblock %}
+
+{% block endBody %}
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
+  <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>
+  <script type="text/javascript">
+    var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
+    ajv.addKeyword('documentNr', {
+      validate: function documentNr(schema,data)
+      {
+        documentNr.errors = [];
+        if (!validatePolandDocument(data))
+        {
+          documentNr.errors.push({
+            "keyword": "documentNr",
+            "dataPath": ".documentNr",
+            "params": {},
+            "message": "Invalid format provided."
+          });
+
+          return false;
+        }
+
+        return true;
+      },
+      errors: true
+    });
+
+    var schema = '';
+    fetch('/application/schema')
+      .then(function(response) {
+        return response.json();
+      }).then(function (json) { schema = json; });
+
+    $('button[type="submit"]').click(function(e) {
+      e.preventDefault();
+      var valid = ajv.validate(schema, getFormData());
+
+      if (!valid) {
+        localize_en(ajv.errors);
+        console.log(ajv.errors);
+        console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
+      }
+
+    });
+
+    $('input').on('change', function(e) {
+      var attrId = $(this)[0].id;
+      var formValues = getFormData();
+
+      ajv.validate(schema, formValues);
+      console.log(localize_en(ajv.errors));
+      console.log(searchError(attrId, ajv.errors));
+    });
+
+    function getFormData() {
+      var formData = new FormData(document.querySelector('form'));
+      var formValues = {};
+      for (var [key,value] of formData.entries())
+      {
+        formValues[key] = value;
+      }
+      return formValues;
+    }
+  </script>
+{% endblock %}
