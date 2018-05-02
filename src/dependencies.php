@@ -89,6 +89,11 @@ $container['UserRepository'] = function($container) {
   );*/
 };
 
+$container['PartnerRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Partner');
+};
+
 $container['ApplicationRepository'] = function($container)
 {
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
