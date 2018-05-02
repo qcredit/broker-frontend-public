@@ -8,6 +8,7 @@ use App\Middleware\Authenticator;
 
 $app->map(['GET', 'POST'], '/application', 'ApplicationController:indexAction');
 $app->get('/application/schema', 'ApplicationController:schemaAction');
+$app->get('/application/status', 'ApplicationController:statusAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
 $app->get('/', 'HomeController:indexAction');
