@@ -121,12 +121,12 @@
       {% if application.errors.street %}<p class="rules">{{ application.errors.street }}</p>{% endif %}
     </div>
     <div class="field text houseNr required">
-      <label for="">House number*</label>
+      <label for="">Insert house number*</label>
       <input type="text" name="houseNr" id="houseNr" value="{{ application.data.houseNr }}"/>
       {% if application.errors.houseNr %}<p class="rules">{{ application.errors.houseNr }}</p>{% endif %}
     </div>
-    <div class="field text apartmentNr required">
-      <label for="">Appartment number*</label>
+    <div class="field text apartmentNr">
+      <label for="">Insert appartment number</label>
       <input type="text" name="apartmentNr" id="apartmentNr" value="{{ application.data.apartmentNr }}"/>
       {% if application.errors.apartmentNr %}<p class="rules">{{ application.errors.apartmentNr }}</p>{% endif %}
     </div>
@@ -318,17 +318,39 @@
         localize_en(ajv.errors);
         console.log(ajv.errors);
         console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
+        var error_list = ajv.errors;
+        for(var i = 0; i <= error_list.length; i++) {
+          var err_target = $('.field'+error_list[i].dataPath);
+          var err_msg = error_list[i].message;
+          if(err_msg){
+            if(!err_target.find('.rules').length){
+              err_target.addClass('error');
+              err_target.append('<p class="rules">'+err_msg+'</p>');
+            } else {
+              err_target.find('.rules').text(err_msg);
+            }
+          }
+        }
       }
-
     });
 
     $('input').on('change', function(e) {
       var attrId = $(this)[0].id;
       var formValues = getFormData();
+      var parent = $(this).parent();
 
       ajv.validate(schema, formValues);
       console.log(localize_en(ajv.errors));
       console.log(searchError(attrId, ajv.errors));
+
+      var err_obj = searchError(attrId, ajv.errors);
+      if(err_obj) {
+        parent.addClass('error');
+        parent.append('<p class="rules">'+err_obj.message+'</p>');
+      } else {
+        parent.removeClass('error');
+        parent.find('p.rules').text('');
+      }
     });
   </script>
 {% endblock %}
