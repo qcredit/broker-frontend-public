@@ -36,7 +36,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getRequestSchema(): array
   {
-    return json_decode($this->getConfigFile(), true)['requestSchema'];
+    return $this->getDecodedConfigFile()['requestSchema'];
   }
 
   /**
@@ -46,7 +46,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfig(): array
   {
-    return json_decode($this->getConfigFile(), true)['config'];
+    return $this->getDecodedConfigFile()['config'];
   }
 
   /**
@@ -63,6 +63,16 @@ class AasaDataMapper implements PartnerDataMapperInterface
     }
 
     return file_get_contents($file);
+  }
+
+  /**
+   * @return mixed
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getDecodedConfigFile()
+  {
+    return json_decode($this->getConfigFile(), true);
   }
 
   /**

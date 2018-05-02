@@ -11,11 +11,14 @@ namespace App\Controller;
 use App\Base\Components\AbstractController;
 use App\Base\Components\EmailDelivery;
 use Broker\Domain\Entity\Message;
+use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
 use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
+use Broker\System\Helper;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -370,213 +373,63 @@ class ApplicationController extends AbstractController
     return $twig->fetch($template, $params);
   }
 
+  /**
+   * @param $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   */
   public function schemaAction($request, Response $response, $args)
   {
-    $aasa = <<<JSON
-{
-    "type": "object",
-    "required": [
-      "loanAmount",
-      "loanTerm",
-      "firstName",
-      "lastName",
-      "payoutMethod",
-      "documentNr",
-      "phone",
-      "educationType",
-      "pin",
-      "email",
-      "maritalStatusType",
-      "incomeSourceType",
-      "netPerMonth",
-      "street",
-      "houseNr",
-      "zip",
-      "city",
-      "accountNr",
-      "accountType",
-      "accountHolder",
-      "residentialType",
-      "propertyType"
-    ],
-    "properties": {
-      "incomeSourceType": {
-        "$ref": "#/definitions/sourceTypes"
-      },
-      "netPerMonth": {
-        "type": "number",
-        "minimum": 100
-      },
-      "pin": {
-        "type": "string",
-        "maxLength": 11,
-        "pattern": "[0-9]{4}[0-3]{1}[0-9}{1}[0-9]{5}"
-      },
-      "street": {
-        "type": "string",
-        "maxLength": 100,
-        "minLength": 2,
-        "example": "Ul.brzozowskiego 12 m. 15"
-      },
-      "zip": {
-        "type": "string",
-        "example": "62-262",
-        "pattern": "^[0-9]{2}-[0-9]{3}$"
-      },
-      "houseNr": {
-        "type": "string",
-        "maxLength": 10,
-        "minLength": 1,
-        "example": "1"
-      },
-      "apartmentNumber": {
-        "type": "string",
-        "maxLength": 10,
-        "example": "1"
-      },
-      "city": {
-        "type": "string",
-        "maxLength": 50,
-        "minLength": 2,
-        "example": "Zachowice"
-      },
-      "accountNr": {
-        "type": "string",
-        "maxLength": 26,
-        "minLength": 26,
-        "example": "61 1090 1014 0000 0712 1981 2874"
-      },
-      "accountType": {
-        "type": "string",
-        "enum": [
-          "-",
-          "Personal",
-          "Joint",
-          "Company"
-        ]
-      },
-      "accountHolder": {
-        "type": "string",
-        "example": "Anders Aas",
-        "minLength": 1
-      },
-      "documentNr": {
-        "type": "string",
-        "example": "ZZC900146",
-        "documentNr": "poland"
-      },
-      "payoutMethod": {
-        "type": "string",
-        "enum": [
-          "Giro",
-          "Account",
-          "BlueCash"
-        ]
-      },
-      "educationType": {
-        "type": "string",
-        "enum": [
-          "MBA",
-          "MSc",
-          "BA",
-          "Secondary",
-          "Vocational",
-          "Basic",
-          "Other"
-        ]
-      },
-      "maritalStatusType": {
-        "type": "string",
-        "enum": [
-          "Single",
-          "Married",
-          "MarriedDivorcing",
-          "Divorced",
-          "Separated",
-          "Widow",
-          "InformationRelationship",
-          "Other"
-        ]
-      },
-      "residentialType": {
-        "type": "string",
-        "enum": [
-          "Own",
-          "Rented",
-          "LivingWithFamily",
-          "Other",
-          "CouncilHousing",
-          "HousingAssociation"
-        ]
-      },
-      "propertyType": {
-        "type": "string",
-        "enum": [
-          "Apartment",
-          "House",
-          "TerracedHouse",
-          "Duplex",
-          "Other"
-        ]
-      },
-      "loanAmount": {
-        "type": "number",
-        "minimum": 10,
-        "example": "1000.00"
-      },
-      "loanTerm": {
-        "type": "number",
-        "minimum": 1,
-        "example": "12"
-      },
-      "firstName": {
-        "type": "string",
-        "maxLength": 50,
-        "minLength": 1,
-        "example": "Anders"
-      },
-      "lastName": {
-        "type": "string",
-        "maxLength": 50,
-        "minLength": 1,
-        "example": "Aas"
-      },
-      "email": {
-        "type": "string",
-        "example": "test.test@aasaglobal.com",
-        "pattern": "\\\\S+@\\\\S+\\\\.\\\\S+"
-      },
-      "phone": {
-        "type": "string",
-        "example": "+372987654321",
-        "pattern": "^(?:\\\\(?\\\\+?48)?(?:[-\\\\.\\\\(\\\\)\\\\s]*(\\\\d)){9}\\\\)?$"
-      }
-    },
-    "definitions": {
-      "sourceTypes": {
-        "enum": [
-          "Employed",
-          "Student",
-          "NormalPension",
-          "DisabilityPension",
-          "Unemployed",
-          "BenefitOrAlimony",
-          "SelfEmployed",
-          "Farmer",
-          "Other"
-        ]
-      }
-    }
-  }
-JSON;
-
     $combined = [
       'allOf' => [
-        json_decode($aasa)
+
+      ],
+      'definitions' => [
       ]
     ];
 
+    foreach ($this->getPartnersSchemas() as $collection)
+    {
+      $schema = $collection->getDecodedConfigFile()['flatRequestSchema'];
+      $combined['allOf'][] = json_decode(json_encode($schema));
+      if (isset($schema['definitions']))
+      {
+        $combined['definitions'] = Helper::mergeArraysRecursively($combined['definitions'], $schema['definitions']);
+      }
+    }
+
     return $response->withJson($combined);
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartnersSchemas()
+  {
+    $result = [];
+    foreach ($this->getPartners() as $partner)
+    {
+      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+    }
+
+    return $result;
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartners()
+  {
+    return $this->getContainer()->get('PartnerRepository')->getActivePartners();
+  }
+
+  /**
+   * @return PartnerDataMapperRepositoryInterface
+   */
+  protected function getPartnerDataMapperRepository()
+  {
+    return $this->getContainer()->get('PartnerDataMapperRepository');
   }
 
   /**

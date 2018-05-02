@@ -9,6 +9,7 @@
 namespace Tests\Unit\Controller;
 
 use App\Base\Persistence\Doctrine\OfferRepository;
+use App\Base\Persistence\Doctrine\PartnerRepository;
 use App\Controller\ApplicationController;
 use Broker\Domain\Service\ChooseOfferService;
 use Broker\System\BaseTest;
@@ -20,6 +21,7 @@ use Slim\Views\Twig;
 use App\Base\Persistence\Doctrine\ApplicationRepository;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Offer;
+use Broker\Domain\Entity\Partner;
 
 class ApplicationControllerTest extends BaseTest
 {
@@ -190,5 +192,36 @@ class ApplicationControllerTest extends BaseTest
     $this->expectException(NotFoundException::class);
 
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
+  }
+
+  public function testGetPartners()
+  {
+    $mock = $this->getMockBuilder(ApplicationController::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getContainer'])
+      ->getMock();
+    $partnerRepoMock = $this->getMockBuilder(PartnerRepository::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getActivePartners'])
+      ->getMock();
+    $partners = [new Partner(), new Partner()];
+    $partnerRepoMock->expects($this->once())
+      ->method('getActivePartners')
+      ->willReturn($partners);
+    $containerMock = $this->createMock(Container::class, ['get']);
+    $containerMock->method('get')
+      ->willReturn($partnerRepoMock);
+    $mock->expects($this->once())
+      ->method('getContainer')
+      ->willReturn($containerMock);
+
+    $result = $this->invokeMethod($mock, 'getPartners', []);
+    $this->assertTrue(is_array($result));
+    $this->assertSame($partners[0], $result[0]);
+  }
+
+  public function testGetPartnersSchemas()
+  {
+
   }
 }
