@@ -65,7 +65,7 @@ class MessageDeliveryStrategyFactory implements MessageDeliveryStrategyFactoryIn
         return new EmailDelivery($this->getContainer());
         break;
       case Message::MESSAGE_TYPE_SMS:
-        return new SmsDelivery();
+        return new SmsDelivery($this->getContainer());
         break;
       case Message::MESSAGE_TYPE_API:
         return new ApiDelivery();
