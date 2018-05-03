@@ -1,6 +1,6 @@
 # Broker web application
 
-[![CircleCI](https://circleci.com/gh/aasa-global/broker-frontend.svg?style=shield&circle-token=08389d4d974569df4b92e070aa1ffbb510a0d5df)](https://circleci.com/gh/aasa-global/broker-frontend)
+[![CircleCI](https://circleci.com/gh/aasa-global/broker-frontend-public.svg?style=shield&circle-token=08389d4d974569df4b92e070aa1ffbb510a0d5df)](https://circleci.com/gh/aasa-global/broker-frontend-public)
 
 This is the base web application skeleton for the Broker project. The main business logic is handled by [aasa-global/broker](https://github.com/aasa-global/broker)
 repository.
@@ -10,8 +10,8 @@ repository.
 Clone the project and run the following commands:
 
     docker-compose up -d
-    docker-compose exec php vendor/bin/phinx migrate
-    docker-compose exec php vendor/bin/phinx seed:run -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed
+    docker-compose exec php vendor/bin/phinx migrate -c phinx.php
+    docker-compose exec php vendor/bin/phinx seed:run -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed -c phinx.php
 
 Now you should have a local development up and running on port 8100 with some initial sample data.
 

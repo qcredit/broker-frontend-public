@@ -42,4 +42,5 @@ class ApplicationForm
   const ATTR_LAST_NAME = 'lastName';
   const ATTR_EMAIL = 'email';
   const ATTR_PHONE = 'phone';
+  const ATTR_MARKETING_CONSENT = 'marketingConsent';
 }
