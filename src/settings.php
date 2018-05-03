@@ -73,6 +73,13 @@ return [
           'port' => 587,
           'sender' => 'aasa.testaus@gmail.com',
           'senderName' => 'qCredit'
+        ],
+        'messente' => [
+          'apiUrl' => 'http://api2.messente.com/send_sms/',
+          'senderName' => 'qCredit',
+          'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
+          'username' => 'f7303187a44e84450d202debecb507ea',
+          'password' => '849556537bdce14bb797b42d32641a36'
         ]
     ],
 ];
