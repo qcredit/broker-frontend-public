@@ -26,8 +26,8 @@
     </div>
     <div class="form-block">
       <div class="checkbox emarketing">
-        <input type="checkbox" id="marketing" name="marketing" class="marketing-checkbox" checked>
-        <label for="marketing">
+        <input type="checkbox" id="marketingConsent" name="marketingConsent" class="marketing-checkbox" checked>
+        <label for="marketingConsent">
           Kyllä, minulle saa lähettää sähköisesti tietoa eduista, kilpailuista ja tarjouksista.<br>
               <a href="/rekisteriseloste" target="_blank">Rekisteriseloste</a>
         </label>
@@ -247,6 +247,7 @@
     <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
     <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
   </div>
+  <input type="hidden" name="applicationHash" id="applicationHash" value="">
 </form>
 {% endblock %}
 
@@ -310,11 +311,39 @@
       var attrId = $(this)[0].id;
       var formValues = getFormData();
       var parent = $(this).parent();
+      runSchemaLive(attrId, formValues, parent);
+    });
 
+    $('.step-1 .broker-btn').on('click', function() {
+      var formValues = getFormData();
+      var errors_list = []
+      $('.step-1').find('div.field').each(function(){
+        var parent = $(this);
+        var attrId = parent.find('input').attr('id');
+        var formValues = getFormData();
+        var noerrors = runSchemaLive(attrId, formValues, parent);
+        if(!noerrors){
+          return errors_list.push(noerrors);
+        } else {
+          return errors_list.push(noerrors);
+        }
+      });
+      if(errors_list[0] || errors_list[1] || errors_list[2] ) { // IF one of the three is validated
+        // Show rest of the form & save data
+        $('.step-1 .broker-btn').css('display','none');
+        $('.step-2').css('display','block');
+        sendpreData(formValues);
+      } else if(!errors_list[0] && !errors_list[1] && !errors_list[2]) {  // IF all are empty
+        // show form but don't send data yet
+        $('.step-1 .broker-btn').css('display','none');
+        $('.step-2').css('display','block');
+      }
+      console.log("error status: " + errors_list)
+    });
+
+    function runSchemaLive(attrId,formValues,parent) {
       ajv.validate(schema, formValues);
-      console.log(localize_en(ajv.errors));
-      console.log(searchError(attrId, ajv.errors));
-
+      localize_en(ajv.errors);
       var err_obj = searchError(attrId, ajv.errors);
       if(err_obj) {
         parent.addClass('error');
@@ -323,10 +352,27 @@
         } else {
           parent.find('.rules').text(err_obj.message);
         }
+        return false;
       } else {
         parent.removeClass('error');
         parent.find('p.rules').text('');
+        return true;
       }
-    });
+    }
+
+    function sendpreData(values) {
+      $.ajax({
+        method: "POST",
+        url: "/application",
+        data: {
+          values,
+          {{csrf.keys.name}}: '{{csrf.name}}',
+          {{csrf.keys.value}}: '{{csrf.value}}'
+        },
+      })
+        .done(function( data ) {
+          $('input#applicationHash').val(data.applicationHash);
+        });
+    }
   </script>
 {% endblock %}
