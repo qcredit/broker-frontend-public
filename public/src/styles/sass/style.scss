@@ -39,6 +39,7 @@ section > h1 {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 14px;
+  text-align: center;
   cursor: pointer;
   &:focus {
     outline: none;
@@ -61,7 +62,14 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
   color: #000;
   background: $gold;
 }
-
+.broker-btn-disabled {
+  color: #999;
+  background: $bluegray;
+  pointer-events: none;
+  &:hover {
+    box-shadow: none;
+  }
+}
 
 body {
   padding-top: 85px;
