@@ -24,8 +24,8 @@ $(document).ready(function() {
     });
     // Step-1 button functionality
     $('.step-1 .broker-btn').on('click', function(){
-      $(this).css('display','none');
-      $('.step-2').css('display','block');
+      //$(this).css('display','none');
+      //$('.step-2').css('display','block');
     })
 
   $('.field input, .field select').each(
