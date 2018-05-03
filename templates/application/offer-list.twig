@@ -95,12 +95,15 @@
         method: "GET",
         url: "/application/status",
       })
-        .done(function( statusResponse ) {
-          console.log( "Success " + statusResponse );
+        .done(function( data ) {
+          console.log( "Success " + data.status );
+          if(data.status === 'done') {
+            $('.bouncing-loader').hide();
+          }
         })
         .fail(function(){
           console.log('fail');
         });
-    },10000);
+    },60000);
   </script>
 {% endblock %}
