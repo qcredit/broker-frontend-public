@@ -371,6 +371,9 @@ class ApplicationController extends AbstractController
     return $application;
   }
 
+  /**
+   * @todo Move to MessageTemplateRepository
+   */
   protected function generateOfferConfirmationMessage()
   {
     $offer = $this->getChooseOfferService()->getOffer();
@@ -386,6 +389,9 @@ class ApplicationController extends AbstractController
     $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
   }
 
+  /**
+   * @todo Move to MessageTemplateRepository
+   */
   protected function generateOfferLinkMessage()
   {
     $application = $this->getPrepareService()->getApplication();
