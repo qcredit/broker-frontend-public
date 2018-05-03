@@ -51,12 +51,48 @@ $container['csrf'] = function()
 };
 
 $container['view'] = function($container) {
+  $domain = 'broker';
+  putenv('LC_ALL=pl_PL.utf-8');
+  if (setlocale(LC_ALL, 'pl_PL.utf-8') === false)
+  {
+    echo 'error';
+  }
+  bindtextdomain($domain, dirname(__DIR__) . '/locale');
+
+  bind_textdomain_codeset($domain, 'UTF-8');
+  textdomain($domain);
+
   $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
 
   // Instantiate and add Slim specific extension
   $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+  $view->addExtension(new Twig_Extensions_Extension_I18n());
+  $view->addExtension(new Twig_Extensions_Extension_Intl());
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+
+  echo gettext('Leverage agile frameworks');
+
+/*  $tplDir = dirname(__FILE__). '/../templates';
+  $tmpDir = dirname(__FILE__) . '/../tmp/cache/';
+  $loader = new Twig_Loader_Filesystem($tplDir);
+
+  // force auto-reload to always have the latest version of the template
+  $twig = new Twig_Environment($loader, array(
+    'cache' => $tmpDir,
+    'auto_reload' => true
+  ));
+  $twig->addExtension(new Twig_Extensions_Extension_I18n());
+  // configure Twig the way you want
+
+  // iterate over all your templates
+  foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tplDir), RecursiveIteratorIterator::LEAVES_ONLY) as $file)
+  {
+    // force compilation
+    if ($file->isFile()) {
+      $twig->loadTemplate(str_replace($tplDir.'/', '', $file));
+    }
+  }*/
 
   return $view;
 };
