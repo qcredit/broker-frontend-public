@@ -9,7 +9,7 @@ ENV TZ=Europe/Tallinn
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev
+    apt-get install -y git zip unzip libicu-dev locales
 
 ADD ./conf/apache_php.ini          /usr/local/etc/php/php.ini
 ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
@@ -48,7 +48,8 @@ RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
-       else exit 1; fi
+       else exit 1; fi \
+       && locale-gen pl_PL.UTF-8
 
 EXPOSE 80
 
