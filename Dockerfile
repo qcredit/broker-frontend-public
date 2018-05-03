@@ -49,7 +49,8 @@ RUN    if cd /var/www/html; then\
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
        else exit 1; fi \
-       && locale-gen pl_PL.UTF-8
+        && echo 'pl_PL.UTF-8 UTF-8\n' >> /etc/locale.gen \
+        && locale-gen
 
 EXPOSE 80
 
