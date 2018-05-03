@@ -8,6 +8,7 @@
 
 namespace App\Base\Components;
 
+use Slim\Http\Request;
 use Slim\Http\Response;
 
 abstract class AbstractController
@@ -48,5 +49,14 @@ abstract class AbstractController
   protected function getFlash()
   {
     return $this->getContainer()->get('flash');
+  }
+
+  /**
+   * @param Request $request
+   * @return bool
+   */
+  protected function isAjax(Request $request)
+  {
+    return $request->hasHeader('HTTP_X_REQUESTED_WITH');
   }
 }
