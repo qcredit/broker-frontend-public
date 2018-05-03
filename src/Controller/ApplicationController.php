@@ -272,6 +272,7 @@ class ApplicationController extends AbstractController
     //$data = [];
     if ($request->isPost())
     {
+      print_r($request->getHeaders());
       $newAppService = $this->getNewApplicationService();
       if ($this->isFromFrontpage())
       {
@@ -371,6 +372,9 @@ class ApplicationController extends AbstractController
     return $application;
   }
 
+  /**
+   * @todo Move to MessageTemplateRepository
+   */
   protected function generateOfferConfirmationMessage()
   {
     $offer = $this->getChooseOfferService()->getOffer();
@@ -386,6 +390,9 @@ class ApplicationController extends AbstractController
     $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
   }
 
+  /**
+   * @todo Move to MessageTemplateRepository
+   */
   protected function generateOfferLinkMessage()
   {
     $application = $this->getPrepareService()->getApplication();
@@ -460,10 +467,13 @@ class ApplicationController extends AbstractController
 
     foreach ($objects as $object)
     {
-      $object->setCreatedAt($object->getCreatedAt()->format('Y-m-d H:i:s'));
-      $object->setAcceptedDate($object->getAcceptedDate()->format('Y-m-d H:i:s'));
-      $object->setUpdatedAt($object->getUpdatedAt()->format('Y-m-d H:i:s'));
-      $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt());
+      $object->setCreatedAt($object->getCreatedAt() ? $object->getCreatedAt()->format('Y-m-d H:i:s') : null);
+      $object->setAcceptedDate($object->getAcceptedDate() ? $object->getAcceptedDate()->format('Y-m-d H:i:s') : null);
+      $object->setUpdatedAt($object->getUpdatedAt() ? $object->getUpdatedAt()->format('Y-m-d H:i:s') : null);
+      if ($object->getApplication()->getCreatedAt() instanceof \DateTime)
+      {
+        $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt()->format('Y-m-d H:i:s'));
+      }
       $filtered[] = $serializer->serialize($object, 'json');
     }
 
