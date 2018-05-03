@@ -311,23 +311,36 @@
       var attrId = $(this)[0].id;
       var formValues = getFormData();
       var parent = $(this).parent();
-      runSchemaLive(attrId,formValues,parent);
+      runSchemaLive(attrId, formValues, parent);
     });
 
     $('.step-1 .broker-btn').on('click', function() {
       var formValues = getFormData();
+      var errors_list = []
       $('.step-1').find('div.field').each(function(){
         var parent = $(this);
         var attrId = parent.find('input').attr('id');
-        console.log(formValues);
-        var noerrors = runSchemaLive(attrId,formValues,parent);
-        if(noerrors){
-          $('.step-1 .broker-btn').css('display','none');
-          $('.step-2').css('display','block');
+        var formValues = getFormData();
+        var noerrors = runSchemaLive(attrId, formValues, parent);
+        if(!noerrors){
+          return errors_list.push(noerrors);
+        } else {
+          return errors_list.push(noerrors);
         }
       });
-      sendpreData(formValues);
+      if(errors_list[0] || errors_list[1] || errors_list[2] ) { // IF one of the three is validated
+        // Show rest of the form & save data
+        $('.step-1 .broker-btn').css('display','none');
+        $('.step-2').css('display','block');
+        sendpreData(formValues);
+      } else if(!errors_list[0] && !errors_list[1] && !errors_list[2]) {  // IF all are empty
+        // show form but don't send data yet
+        $('.step-1 .broker-btn').css('display','none');
+        $('.step-2').css('display','block');
+      }
+      console.log("error status: " + errors_list)
     });
+
     function runSchemaLive(attrId,formValues,parent) {
       ajv.validate(schema, formValues);
       localize_en(ajv.errors);
@@ -339,12 +352,14 @@
         } else {
           parent.find('.rules').text(err_obj.message);
         }
+        return false;
       } else {
         parent.removeClass('error');
         parent.find('p.rules').text('');
         return true;
       }
     }
+
     function sendpreData(values) {
       $.ajax({
         method: "POST",
@@ -356,7 +371,6 @@
         },
       })
         .done(function( data ) {
-          console.log( "Data Saved: " + data.applicationHash );
           $('input#applicationHash').val(data.applicationHash);
         });
     }
