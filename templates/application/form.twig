@@ -313,6 +313,12 @@
       var parent = $(this).parent();
       runSchemaLive(attrId, formValues, parent);
     });
+    $('select').on('change', function(e) {
+      var attrId = $(this)[0].id;
+      var formValues = getFormData();
+      var parent = $(this).parent();
+      runSchemaLive(attrId, formValues, parent);
+    });
 
     $('.step-1 .broker-btn').on('click', function() {
       var formValues = getFormData();
