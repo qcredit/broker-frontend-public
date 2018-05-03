@@ -470,7 +470,10 @@ class ApplicationController extends AbstractController
       $object->setCreatedAt($object->getCreatedAt() ? $object->getCreatedAt()->format('Y-m-d H:i:s') : null);
       $object->setAcceptedDate($object->getAcceptedDate() ? $object->getAcceptedDate()->format('Y-m-d H:i:s') : null);
       $object->setUpdatedAt($object->getUpdatedAt() ? $object->getUpdatedAt()->format('Y-m-d H:i:s') : null);
-      $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt() ? $object->getApplication()->getCreatedAt()->format('Y-m-d H:i:s') : null);
+      if ($object->getApplication()->getCreatedAt() instanceof \DateTime)
+      {
+        $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt()->format('Y-m-d H:i:s'));
+      }
       $filtered[] = $serializer->serialize($object, 'json');
     }
 
