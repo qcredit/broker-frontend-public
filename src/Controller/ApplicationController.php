@@ -272,14 +272,17 @@ class ApplicationController extends AbstractController
     //$data = [];
     if ($request->isPost())
     {
-      print_r($request->getHeaders());
       $newAppService = $this->getNewApplicationService();
       if ($this->isFromFrontpage())
       {
         $newAppService->setValidationEnabled(false);
       }
 
-      if ($newAppService->setData($request->getParsedBody())->run())
+      $data = $request->getParsedBody();
+      unset($data['csrf_name']);
+      unset($data['csrf_value']);
+
+      if ($newAppService->setData($data)->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());
@@ -291,6 +294,12 @@ class ApplicationController extends AbstractController
           //$newAppService->saveApp();
           return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
         }
+      }
+
+      if ($this->isAjax($request))
+      {
+        $newAppService->saveApp();
+        return $response->withJson(['applicationHash' => $newAppService->getApplication()->getApplicationHash()]);
       }
 
       $data['application'] = $newAppService->getApplication();
