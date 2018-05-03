@@ -91,12 +91,16 @@
     var app_hash = '{{ application.applicationHash }}';
     setInterval(function(){
       console.log(app_hash);
-      $.post('/application/status', app_hash ,
-        function(returnedData){
-             console.log("Success:" + returnedData);
-    }).fail(function(){
-          console.log("error");
-    });
+      $.ajax({
+        method: "GET",
+        url: "/application/status",
+      })
+        .done(function( statusResponse ) {
+          console.log( "Success " + statusResponse );
+        })
+        .fail(function(){
+          console.log('fail');
+        });
     },10000);
   </script>
 {% endblock %}
