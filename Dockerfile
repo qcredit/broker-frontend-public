@@ -29,6 +29,7 @@ RUN    apt-get update \
     && echo 'session.save_path="tcp://redis:6379"' >> /usr/local/etc/php/php.ini \
     && pecl install redis xdebug \
     && docker-php-ext-install pdo pdo_mysql intl gettext >> /dev/null \
+    && docker-php-ext-configure intl >> /dev/null \
     && docker-php-ext-enable redis pdo pdo_mysql xdebug >> /dev/null \
     && if [ -d /tmp/pear ]; then /bin/rm -rv /tmp/pear; fi \
     && mkdir -p /var/www/html/cache \
@@ -41,7 +42,8 @@ RUN    apt-get update \
          for file in start.sh; do \
            test -f $file && /bin/rm $file; done; fi; \
          for folder in mysql nginx php; do \
-           test -d $folder && /bin/rm -r $folder; done; fi
+           test -d $folder && /bin/rm -r $folder; done; fi \
+    && locale-gen pl_PL.UTF-8
 
 RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
