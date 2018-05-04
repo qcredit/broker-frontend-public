@@ -128,10 +128,10 @@ class LanguageSwitcher
   {
     $domain = $this->getDomain();
 
-    $this->putenv(sprintf('LC_ALL=%s.UTF-8', $language));
-    if ($this->setLocale(LC_ALL, sprintf('%s.UTF-8', $language)) === false)
+    $this->putenv(sprintf('LC_MESSAGES=%s.UTF-8', $language));
+    if ($this->setLocale(LC_MESSAGES, sprintf('%s.UTF-8', $language)) === false)
     {
-      $this->getContainer()->get('logger')->debug('Unable to set PHP locale by browser preference!');
+      $this->getContainer()->get('logger')->debug(sprintf('Unable to set PHP locale (%s)!', $language));
       return false;
     }
 
