@@ -127,9 +127,19 @@ $container['ApplicationRepository'] = function($container)
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
 };
 
+$container['OfferRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer');
+};
+
 $container['AdminController'] = function($c)
 {
   return new \App\Controller\Admin\AdminController($c);
+};
+
+$container['TestController'] = function($c)
+{
+  return new \App\Controller\TestController($c);
 };
 
 $container['PartnerController'] = function($c) {

@@ -15,6 +15,7 @@ $app->get('/language', 'HomeController:languageAction');
 $app->get('/about', 'AboutController:indexAction');
 $app->get('/contact', 'ContactController:indexAction');
 $app->get('/terms', 'TermsController:indexAction');
+$app->get('/test', 'TestController:mailAction');
 
 $app->group('/admin', function() {
   $this->get('', 'AdminController:indexAction');
