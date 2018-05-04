@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
 
-      - run: sudo apt-get install -y libicu-dev locales php7.2-intl
+      - run: docker-php-ext-install intl gettext
 
       # Download and cache dependencies
       - restore_cache:
