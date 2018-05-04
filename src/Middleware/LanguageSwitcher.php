@@ -108,7 +108,6 @@ class LanguageSwitcher
    */
   public function __invoke(Request $request, Response $response, $next)
   {
-    //die($this->getContainer()->get('session')->get('lang'));
     if ($this->isLanguageSetByCookie())
     {
       $this->setLanguageByCookie();
