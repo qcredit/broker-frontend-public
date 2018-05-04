@@ -135,7 +135,7 @@ class LanguageSwitcher
       return false;
     }
 
-    $this->bindTextDomain($domain, dirname(__DIR__) . '/locale');
+    $this->bindTextDomain($domain, dirname(dirname(__DIR__)) . '/locale');
     $this->bindTextDomainCodeset($domain, 'UTF-8');
     $this->setTextDomain($domain);
 
