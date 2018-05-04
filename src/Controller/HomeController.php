@@ -8,18 +8,66 @@
 
 namespace App\Controller;
 
-use Slim\Views\Twig;
+use App\Base\Components\AbstractController;
+use App\Middleware\LanguageSwitcher;
+use Slim\Container;
+use Slim\Http\Cookies;
+use Slim\Http\Request;
+use Slim\Http\Response;
+use SlimSession\Helper;
 
-class HomeController
+class HomeController extends AbstractController
 {
   /**
-   * @var \Twig
+   * @var Container
    */
-  protected $view;
+  protected $container;
 
-  public function __construct(Twig $view)
+  /**
+   * @return Container
+   * @codeCoverageIgnore
+   */
+  public function getContainer()
   {
-    $this->view = $view;
+    return $this->container;
+  }
+
+  /**
+   * @param Container $container
+   * @return HomeController
+   * @codeCoverageIgnore
+   */
+  public function setContainer(Container $container)
+  {
+    $this->container = $container;
+    return $this;
+  }
+
+  /**
+   * @return Cookies
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getCookies()
+  {
+    return $this->getContainer()->get('cookies');
+  }
+
+  /**
+   * @return Helper
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getSession()
+  {
+    return $this->getContainer()->get('session');
+  }
+
+  /**
+   * HomeController constructor.
+   * @param Container $container
+   */
+  public function __construct(Container $container)
+  {
+    $this->setContainer($container);
   }
 
   /**
@@ -29,6 +77,32 @@ class HomeController
    */
   public function indexAction($request, $response)
   {
-    return $this->view->render($response, 'index.twig');
+    print_r($this->getSession()->get(LanguageSwitcher::COOKIE_LANGUAGE));
+    return $this->render($response, 'index.twig');
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function languageAction(Request $request, Response $response, $args)
+  {
+    $language = $request->getQueryParam('lang');
+    $language = sprintf('%s_%s', $language, strtoupper($language));
+
+    $this->getSession()->set(LanguageSwitcher::COOKIE_LANGUAGE, $language);
+
+    return $response->withRedirect($this->getReferer());
+  }
+
+  /**
+   * @return string
+   */
+  protected function getReferer()
+  {
+    return !empty($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '/';
   }
 }

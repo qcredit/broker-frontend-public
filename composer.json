@@ -31,7 +31,8 @@
     "hellogerard/jobby": "^3.4",
     "syslogic/doctrine-json-functions": "^2.1",
     "symfony/serializer": "^4.0",
-    "symfony/property-access": "^4.0"
+    "symfony/property-access": "^4.0",
+    "twig/extensions": "^1.5"
   },
   "require-dev": {
     "phpunit/phpunit": "^7"

@@ -41,6 +41,11 @@ $container['session'] = function() {
   return new \SlimSession\Helper;
 };
 
+$container['cookies'] = function()
+{
+  return new \Slim\Http\Cookies();
+};
+
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
 };
@@ -55,8 +60,31 @@ $container['view'] = function($container) {
 
   // Instantiate and add Slim specific extension
   $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+  $view->addExtension(new Twig_Extensions_Extension_I18n());
+  $view->addExtension(new Twig_Extensions_Extension_Intl());
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+
+/*  $tplDir = dirname(__FILE__). '/../templates';
+  $tmpDir = dirname(__FILE__) . '/../tmp/cache/';
+  $loader = new Twig_Loader_Filesystem($tplDir);
+
+  // force auto-reload to always have the latest version of the template
+  $twig = new Twig_Environment($loader, array(
+    'cache' => $tmpDir,
+    'auto_reload' => true
+  ));
+  $twig->addExtension(new Twig_Extensions_Extension_I18n());
+  // configure Twig the way you want
+
+  // iterate over all your templates
+  foreach (new RecursiveIteratorIterator(new RecursiveDirectoryIterator($tplDir), RecursiveIteratorIterator::LEAVES_ONLY) as $file)
+  {
+    // force compilation
+    if ($file->isFile()) {
+      $twig->loadTemplate(str_replace($tplDir.'/', '', $file));
+    }
+  }*/
 
   return $view;
 };
@@ -99,9 +127,19 @@ $container['ApplicationRepository'] = function($container)
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
 };
 
+$container['OfferRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer');
+};
+
 $container['AdminController'] = function($c)
 {
   return new \App\Controller\Admin\AdminController($c);
+};
+
+$container['TestController'] = function($c)
+{
+  return new \App\Controller\TestController($c);
 };
 
 $container['PartnerController'] = function($c) {
@@ -127,8 +165,7 @@ $container['UserController'] = function($c) {
 
 $container['HomeController'] = function($c)
 {
-  $view = $c->get('view');
-  return new \App\Controller\HomeController($view);
+  return new \App\Controller\HomeController($c);
 };
 $container['AboutController'] = function($c)
 {
