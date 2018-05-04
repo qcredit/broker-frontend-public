@@ -10,25 +10,42 @@ var not_zip = 'Incorrect ZIP. Expected format XX-XXX';
 var not_iban = 'Not a correct IBAN';
 
 $(document).ready(function() {
+  if($('.checkbox.emarketing input[type=checkbox]').is(':checked') && $('.loan-form').hasClass('loan-form-errors')) {
+    $('.step-2').css('display','block');
+  }
+  // Checkboxes
+  $('.checkbox.emarketing input[type=checkbox]').change(
+    function(){
+        if (this.checked) {
+          $('.step-1 .broker-btn').removeClass('broker-btn-disabled');
+        } else {
+          $('.step-1 .broker-btn').addClass('broker-btn-disabled');
+        }
+    });
+    // Step-1 button functionality
+    $('.step-1 .broker-btn').on('click', function(){
+      //$(this).css('display','none');
+      //$('.step-2').css('display','block');
+    })
+
   $('.field input, .field select').each(
     function(){
         var val = $(this).val().trim();
         if (val != ''){
             // do stuff with the non-valued element
             $(this).parent().addClass("filled");
-            console.log($(this));
         }
     });
   // Temporary input field focused and filled classes
   $(".field input").focusin(function() {
-    if(!$(this).next('.rules').length) {
+    /*if(!$(this).next('.rules').length) {
       $(this).parent().append("<p class='rules'></p>");
-    }
+    }*/
     $(this).parent().addClass("focused");
   });
   $(".field input").focusout(function() {
     $(this).parent().removeClass("focused");
-    if($(this).parent().hasClass('number') && !$(this).parent().hasClass('phone') && !$(this).parent().hasClass('yearSince') && !$(this).parent().hasClass('pin') && !$(this).parent().hasClass('zip')) {
+    /*if($(this).parent().hasClass('number') && !$(this).parent().hasClass('phone') && !$(this).parent().hasClass('yearSince') && !$(this).parent().hasClass('pin') && !$(this).parent().hasClass('zip')) {
       checkIfNumber($(this));
     } else if ($(this).parent().hasClass('email')) {
       checkIfEmail($(this));
@@ -45,21 +62,21 @@ $(document).ready(function() {
     } else if($(this).parent().hasClass('zip')) {
       checkZip($(this));
     } else {
-      if ($(this).parent().hasClass('required')) {
-      checkIfInput($(this));
-      }
+    }*/
+    if ($(this).parent().hasClass('required') && !$(this).val()) {
+      //checkIfInput($(this));
     }
   });
   $(".field select").focusin(function() {
-    if(!$(this).next('.rules').length) {
+    /*if(!$(this).next('.rules').length) {
       $(this).parent().append("<p class='rules'></p>");
-    }
+    }*/
     $(this).parent().addClass("focused");
   });
   $(".field select").focusout(function() {
     $(this).parent().removeClass("focused");
     if($(this).parent().hasClass('required')) {
-      checkIfInput($(this));
+      //checkIfInput($(this));
     }
   });
   $(".field input").on("input", function() {
@@ -79,21 +96,22 @@ $(document).ready(function() {
 });
 
 //Functions to validate fields
+
 function checkIfInput(a) {
   var $parent = a.parent();
   var value = a.val();
   if(value == '') {
     $parent.addClass('error empty');
     $parent.removeClass('notnumber notemail');
-    $parent.find('.rules').text(empty_field);
+    //$parent.find('.rules').text(empty_field);
   } else if(value != '' && $parent.hasClass('notnumber')) {
     $parent.removeClass('empty');
   } else {
     $parent.removeClass('error empty');
-    $parent.find('.rules').text('');
+    //$parent.find('.rules').text('');
   }
 }
-
+/*
 function checkIfNumber(a) {
   var $parent = a.parent();
   var value = a.val();
@@ -254,4 +272,4 @@ function checkIdNum(id) {
     else {
       return false;
     }
-}
+}*/

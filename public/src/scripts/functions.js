@@ -91,7 +91,7 @@ $(document).ready(function(){
     $selectedOpt.prop('selected', true);
     calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
-  $('.loan-offer-container:first-child').addClass('featured');  // FOR DEMO VERSION ONLY
+  $('.personal-offer-container:first-child').addClass('featured');  // FOR DEMO VERSION ONLY
 });
 
 // Calculate approximate monthly installment

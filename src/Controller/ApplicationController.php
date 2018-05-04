@@ -11,16 +11,22 @@ namespace App\Controller;
 use App\Base\Components\AbstractController;
 use App\Base\Components\EmailDelivery;
 use Broker\Domain\Entity\Message;
+use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
 use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
+use Broker\System\Helper;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
 use Broker\Domain\Entity\Application;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class ApplicationController extends AbstractController
 {
@@ -183,6 +189,44 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return array
+   */
+  protected function getPartnersSchemas()
+  {
+    $result = [];
+    foreach ($this->getPartners() as $partner)
+    {
+      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+    }
+
+    return $result;
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartners()
+  {
+    return $this->getContainer()->get('PartnerRepository')->getActivePartners();
+  }
+
+  /**
+   * @return PartnerDataMapperRepositoryInterface
+   */
+  protected function getPartnerDataMapperRepository()
+  {
+    return $this->getContainer()->get('PartnerDataMapperRepository');
+  }
+
+  /**
+   * @return bool
+   */
+  protected function isFromFrontpage()
+  {
+    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
+  }
+
+  /**
    * @param $request
    * @param $response
    * @param $args
@@ -229,7 +273,16 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $newAppService = $this->getNewApplicationService();
-      if ($newAppService->setData($request->getParsedBody())->run())
+      if ($this->isFromFrontpage())
+      {
+        $newAppService->setValidationEnabled(false);
+      }
+
+      $data = $request->getParsedBody();
+      unset($data['csrf_name']);
+      unset($data['csrf_value']);
+
+      if ($newAppService->setData($data)->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());
@@ -241,6 +294,12 @@ class ApplicationController extends AbstractController
           //$newAppService->saveApp();
           return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
         }
+      }
+
+      if ($this->isAjax($request))
+      {
+        $newAppService->saveApp();
+        return $response->withJson(['applicationHash' => $newAppService->getApplication()->getApplicationHash()]);
       }
 
       $data['application'] = $newAppService->getApplication();
@@ -322,6 +381,9 @@ class ApplicationController extends AbstractController
     return $application;
   }
 
+  /**
+   * @todo Move to MessageTemplateRepository
+   */
   protected function generateOfferConfirmationMessage()
   {
     $offer = $this->getChooseOfferService()->getOffer();
@@ -337,6 +399,9 @@ class ApplicationController extends AbstractController
     $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
   }
 
+  /**
+   * @todo Move to MessageTemplateRepository
+   */
   protected function generateOfferLinkMessage()
   {
     $application = $this->getPrepareService()->getApplication();
@@ -363,5 +428,93 @@ class ApplicationController extends AbstractController
     $twig = $this->getContainer()->get('view');
 
     return $twig->fetch($template, $params);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws NotFoundException
+   */
+  public function statusAction(Request $request, Response $response, $args)
+  {
+    $parts = explode('/', $_SERVER['HTTP_REFERER']);
+    $app = $this->findEntity(end($parts), $request, $response);
+    $partners = $this->getPartners();
+    $offers = $this->getOfferRepository()->getOffersByApplication($app);
+
+    $filtered = $this->serializeObjects($offers);
+
+    if (count($partners) === count($offers))
+    {
+      return $response->withJson([
+        'status' => 'done',
+        'offers' => $filtered
+      ]);
+    }
+    else {
+      return $response->withJson([
+        'status' => 'waiting',
+        'offers' => $offers
+      ]);
+    }
+  }
+
+  /**
+   * @param array $objects
+   * @return array
+   */
+  protected function serializeObjects(array $objects)
+  {
+    $filtered = [];
+    $encoders = [new JsonEncoder()];
+    $normalizer = new ObjectNormalizer();
+    $normalizer->setCircularReferenceLimit(1);
+    $normalizer->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+    $serializer = new Serializer([$normalizer], $encoders);
+
+    foreach ($objects as $object)
+    {
+      $object->setCreatedAt($object->getCreatedAt() ? $object->getCreatedAt()->format('Y-m-d H:i:s') : null);
+      $object->setAcceptedDate($object->getAcceptedDate() ? $object->getAcceptedDate()->format('Y-m-d H:i:s') : null);
+      $object->setUpdatedAt($object->getUpdatedAt() ? $object->getUpdatedAt()->format('Y-m-d H:i:s') : null);
+      if ($object->getApplication()->getCreatedAt() instanceof \DateTime)
+      {
+        $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt()->format('Y-m-d H:i:s'));
+      }
+      $filtered[] = $serializer->serialize($object, 'json');
+    }
+
+    return $filtered;
+  }
+
+  /**
+   * @param $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   */
+  public function schemaAction($request, Response $response, $args)
+  {
+    $combined = [
+      'allOf' => [
+
+      ],
+      'definitions' => [
+      ]
+    ];
+
+    foreach ($this->getPartnersSchemas() as $collection)
+    {
+      $schema = $collection->getDecodedConfigFile()['flatRequestSchema'];
+      $combined['allOf'][] = json_decode(json_encode($schema));
+      if (isset($schema['definitions']))
+      {
+        $combined['definitions'] = Helper::mergeArraysRecursively($combined['definitions'], $schema['definitions']);
+      }
+    }
+
+    return $response->withJson($combined);
   }
 }

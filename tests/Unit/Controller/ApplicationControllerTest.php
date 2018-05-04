@@ -9,6 +9,8 @@
 namespace Tests\Unit\Controller;
 
 use App\Base\Persistence\Doctrine\OfferRepository;
+use App\Base\Persistence\Doctrine\PartnerRepository;
+use App\Base\Repository\PartnerDataMapperRepository;
 use App\Controller\ApplicationController;
 use Broker\Domain\Service\ChooseOfferService;
 use Broker\System\BaseTest;
@@ -20,6 +22,7 @@ use Slim\Views\Twig;
 use App\Base\Persistence\Doctrine\ApplicationRepository;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Offer;
+use Broker\Domain\Entity\Partner;
 
 class ApplicationControllerTest extends BaseTest
 {
@@ -37,11 +40,13 @@ class ApplicationControllerTest extends BaseTest
       ->setMethods([
         'getAppRepository',
         'getContainer',
+        'getPartners',
         'render',
         'findEntity',
         'getOfferRepository',
         'getChooseOfferService',
-        'generateOfferConfirmationMessage'
+        'generateOfferConfirmationMessage',
+        'serializeObjects'
       ])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
@@ -55,7 +60,7 @@ class ApplicationControllerTest extends BaseTest
       ->getMock();
     $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy', 'getByHash'])
+      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication'])
       ->getMock();
 
     $twigMock = $this->getMockBuilder(Twig::class)
@@ -190,5 +195,112 @@ class ApplicationControllerTest extends BaseTest
     $this->expectException(NotFoundException::class);
 
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
+  }
+
+  public function testGetPartners()
+  {
+    $mock = $this->getMockBuilder(ApplicationController::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getContainer'])
+      ->getMock();
+    $partnerRepoMock = $this->getMockBuilder(PartnerRepository::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getActivePartners'])
+      ->getMock();
+    $partners = [new Partner(), new Partner()];
+    $partnerRepoMock->expects($this->once())
+      ->method('getActivePartners')
+      ->willReturn($partners);
+    $containerMock = $this->createMock(Container::class, ['get']);
+    $containerMock->method('get')
+      ->willReturn($partnerRepoMock);
+    $mock->expects($this->once())
+      ->method('getContainer')
+      ->willReturn($containerMock);
+
+    $result = $this->invokeMethod($mock, 'getPartners', []);
+    $this->assertTrue(is_array($result));
+    $this->assertSame($partners[0], $result[0]);
+  }
+
+  public function testGetPartnersSchemas()
+  {
+    $mock = $this->getMockBuilder(ApplicationController::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getPartnerDataMapperRepository', 'getPartners'])
+      ->getMock();
+
+    $dataMapperMock = $this->createMock(PartnerDataMapperRepository::class, ['getDataMapperByPartnerId']);
+    $dataMapperMock->method('getDataMapperByPartnerId')
+      ->with($this->equalTo('AASA'));
+    $mock->expects($this->once())
+      ->method('getPartnerDataMapperRepository')
+      ->willReturn($dataMapperMock);
+    $mock->expects($this->once())
+      ->method('getPartners')
+      ->willReturn([(new Partner())->setIdentifier('AASA')]);
+
+    $result = $this->invokeMethod($mock, 'getPartnersSchemas', []);
+    $this->assertTrue(is_array($result));
+  }
+
+  public function testStatusAction()
+  {
+    $app = new Application();
+    $app->setOffers([new Offer, new Offer]);
+    $partnerArray = [new Partner(), new Partner()];
+
+    $this->responseMock->method('withJson')
+      ->willReturnArgument(0);
+    $this->mock->expects($this->once())
+      ->method('findEntity')
+      ->willReturn($app);
+    $this->requestMock->method('getParsedBody')
+      ->willReturn(['hash' => 'adasdasdae3e342e3r']);
+    $this->mock->expects($this->once())
+      ->method('getPartners')
+      ->willReturn($partnerArray);
+    $this->mock->expects($this->once())
+      ->method('serializeObjects')
+      ->willReturn(['asdad','adasd']);
+    $this->offerRepoMock->method('getOffersByApplication')
+      ->willReturn([new Offer, new Offer]);
+    $this->mock->expects($this->once())
+      ->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
+
+    $result = $this->mock->statusAction($this->requestMock, $this->responseMock, []);
+    $this->assertArrayHasKey('status', $result);
+    $this->assertSame('done', $result['status']);
+  }
+
+  public function testStatusActionWaiting()
+  {
+    $app = new Application();
+    $app->setOffers([new Offer]);
+    $partnerArray = [new Partner(), new Partner()];
+
+    $this->responseMock->method('withJson')
+      ->willReturnArgument(0);
+    $this->mock->expects($this->once())
+      ->method('findEntity')
+      ->willReturn($app);
+    $this->requestMock->method('getParsedBody')
+      ->willReturn(['hash' => 'adasdasdae3e342e3r']);
+    $this->mock->expects($this->once())
+      ->method('getPartners')
+      ->willReturn($partnerArray);
+    $this->mock->expects($this->once())
+      ->method('serializeObjects')
+      ->willReturn(['asdad','adasd']);
+    $this->offerRepoMock->method('getOffersByApplication')
+      ->willReturn([new Offer]);
+    $this->mock->expects($this->once())
+      ->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
+
+    $result = $this->mock->statusAction($this->requestMock, $this->responseMock, []);
+    $this->assertArrayHasKey('status', $result);
+    $this->assertSame('waiting', $result['status']);
   }
 }
