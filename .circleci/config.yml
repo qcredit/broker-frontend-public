@@ -19,7 +19,7 @@ jobs:
     steps:
       - checkout
 
-      - run: docker-php-ext-install intl gettext
+      - run: sudo docker-php-ext-install intl gettext
 
       # Download and cache dependencies
       - restore_cache:
