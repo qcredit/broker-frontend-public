@@ -134,7 +134,7 @@ class LanguageSwitcherTest extends BaseTest
   {
     $mock = $this->getMockBuilder(LanguageSwitcher::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setLocale', 'bindTextDomain'])
+      ->setMethods(['setLocale', 'bindTextDomain', 'bindTextDomainCodeset'])
       ->getMock();
     $mock->method('setLocale')
       ->willReturn(true);
