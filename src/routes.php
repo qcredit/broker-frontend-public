@@ -2,7 +2,6 @@
 
 use Slim\Http\Request;
 use Slim\Http\Response;
-use App\Controller\UserController;
 use App\Middleware\Authenticator;
 // Routes
 
@@ -12,6 +11,7 @@ $app->get('/application/status', 'ApplicationController:statusAction');
 $app->get('/application/{hash}', 'ApplicationController:offersAction');
 $app->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
 $app->get('/', 'HomeController:indexAction');
+$app->get('/language', 'HomeController:languageAction');
 $app->get('/about', 'AboutController:indexAction');
 $app->get('/contact', 'ContactController:indexAction');
 $app->get('/terms', 'TermsController:indexAction');

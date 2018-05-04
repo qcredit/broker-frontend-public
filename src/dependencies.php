@@ -41,6 +41,11 @@ $container['session'] = function() {
   return new \SlimSession\Helper;
 };
 
+$container['cookies'] = function()
+{
+  return new \Slim\Http\Cookies();
+};
+
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
 };
@@ -51,17 +56,6 @@ $container['csrf'] = function()
 };
 
 $container['view'] = function($container) {
-  $domain = 'broker';
-  putenv('LC_ALL=pl_PL.utf-8');
-  if (setlocale(LC_ALL, 'pl_PL.utf-8') === false)
-  {
-    echo 'error';
-  }
-  bindtextdomain($domain, dirname(__DIR__) . '/locale');
-
-  bind_textdomain_codeset($domain, 'UTF-8');
-  textdomain($domain);
-
   $view = new \Slim\Views\Twig(dirname(__DIR__) . '/templates');
 
   // Instantiate and add Slim specific extension
@@ -70,8 +64,6 @@ $container['view'] = function($container) {
   $view->addExtension(new Twig_Extensions_Extension_Intl());
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
-
-  echo gettext('Leverage agile frameworks');
 
 /*  $tplDir = dirname(__FILE__). '/../templates';
   $tmpDir = dirname(__FILE__) . '/../tmp/cache/';
@@ -163,8 +155,7 @@ $container['UserController'] = function($c) {
 
 $container['HomeController'] = function($c)
 {
-  $view = $c->get('view');
-  return new \App\Controller\HomeController($view);
+  return new \App\Controller\HomeController($c);
 };
 $container['AboutController'] = function($c)
 {
