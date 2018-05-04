@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Base\AasaDataMapper;
 use App\Base\Components\AbstractController;
 use Slim\Container;
 use Slim\Http\Request;
@@ -44,11 +45,13 @@ class TestController extends AbstractController
 
   public function mailAction(Request $request, Response $response, $args)
   {
-    $data = [];
+    $aasaMapper = new AasaDataMapper();
+    print_r($aasaMapper->getRequestSchema());
+/*    $data = [];
     $data['offer'] = $this->getContainer()->get('OfferRepository')->getOneBy(['id' => 8]);
     $data['application'] = $this->getContainer()->get('ApplicationRepository')->getOneBy(['id' => 10]);
 
     $template = $request->getQueryParam('template');
-    return $this->render($response, sprintf('mail/%s.twig', $template), $data);
+    return $this->render($response, sprintf('mail/%s.twig', $template), $data);*/
   }
 }
