@@ -187,12 +187,12 @@
 .landing-component .landing-slider {
   display: flex; }
   .landing-component .landing-slider .landing-form-adjust {
-    width: 43px;
-    height: 43px;
+    width: 53px;
+    height: 53px;
     padding: 0;
     background: #00aeef;
     color: #FFF;
-    font-size: 36px;
+    font-size: 43px;
     font-weight: bold;
     line-height: 1;
     text-align: center;
@@ -366,20 +366,23 @@
     border: 0;
     border-bottom: 1px solid #999;
     font-size: 1rem;
-    color: #000;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url(../images/ic_down.png);
-    background-repeat: no-repeat;
-    background-position: right 0.875rem center;
-    background-size: 0.8125rem;
-    cursor: pointer; }
+    color: #000; }
   .field .rules {
     position: absolute;
     bottom: -1.875rem;
     font-size: 0.675rem;
     color: #CE0000; }
+
+.field select, .range-slider-select-value {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-image: url(../images/ic_down.png);
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 0.8125rem;
+  cursor: pointer; }
 
 .form-block .field {
   flex: 1 1 18.75rem; }
