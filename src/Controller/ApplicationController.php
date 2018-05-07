@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Base\Components\AbstractController;
+use App\Component\FormBuilder;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
@@ -225,6 +226,14 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return FormBuilder
+   */
+  protected function getFormBuilder()
+  {
+    return $this->getContainer()->get('FormBuilder');
+  }
+
+  /**
    * @param $request
    * @param $response
    * @param $args
@@ -267,7 +276,8 @@ class ApplicationController extends AbstractController
       'phone' => '+48739050381'
     ];
 
-    //$data = [];
+    $data = [];
+    $data['fields'] = $this->getFormBuilder()->getFormFields();
     if ($request->isPost())
     {
       $newAppService = $this->getNewApplicationService();
@@ -276,11 +286,11 @@ class ApplicationController extends AbstractController
         $newAppService->setValidationEnabled(false);
       }
 
-      $data = $request->getParsedBody();
+      $postData = $request->getParsedBody();
       unset($data['csrf_name']);
       unset($data['csrf_value']);
 
-      if ($newAppService->setData($data)->run())
+      if ($newAppService->setData($postData)->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());

@@ -285,6 +285,11 @@ $container['LoginController'] = function ($c)
   return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
 
+$container['FormBuilder'] = function($c)
+{
+  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
+};
+
 $brokerSettings = $container->get('settings')['broker'];
 $brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
 
