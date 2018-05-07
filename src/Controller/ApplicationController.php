@@ -9,9 +9,7 @@
 namespace App\Controller;
 
 use App\Base\Components\AbstractController;
-use App\Base\Components\EmailDelivery;
 use Broker\Domain\Entity\Message;
-use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
@@ -23,10 +21,10 @@ use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
-use Broker\Domain\Entity\Application;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use App\Base\Components\SchemaHelper;
 
 class ApplicationController extends AbstractController
 {
@@ -191,7 +189,7 @@ class ApplicationController extends AbstractController
   /**
    * @return array
    */
-  protected function getPartnersSchemas()
+  protected function getPartnersDataMappers()
   {
     $result = [];
     foreach ($this->getPartners() as $partner)
@@ -497,24 +495,8 @@ class ApplicationController extends AbstractController
    */
   public function schemaAction($request, Response $response, $args)
   {
-    $combined = [
-      'allOf' => [
+    $helper = new SchemaHelper();
 
-      ],
-      'definitions' => [
-      ]
-    ];
-
-    foreach ($this->getPartnersSchemas() as $collection)
-    {
-      $schema = $collection->getDecodedConfigFile()['flatRequestSchema'];
-      $combined['allOf'][] = json_decode(json_encode($schema));
-      if (isset($schema['definitions']))
-      {
-        $combined['definitions'] = Helper::mergeArraysRecursively($combined['definitions'], $schema['definitions']);
-      }
-    }
-
-    return $response->withJson($combined);
+    return $response->withJson($helper->mergePartnersSchemas($this->getPartnersDataMappers()));
   }
 }
