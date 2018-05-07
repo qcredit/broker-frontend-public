@@ -39,6 +39,19 @@
           "netPerMonth": {
             "type": "number",
             "section": "income"
+          },
+          "yearSince": {
+            "type": "string",
+            "minimum": 1900,
+            "maximum": 2030
+          },
+          "monthSince": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 12
+          },
+          "currentStudy": {
+            "type": "string"
           }
         }
       },

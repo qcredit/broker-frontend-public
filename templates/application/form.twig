@@ -292,7 +292,7 @@
         console.log(ajv.errors);
         console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
         var error_list = ajv.errors;
-        for(var i = 0; i <= error_list.length; i++) {
+        for(var i = 0; i < error_list.length; i++) {
           var err_target = $('.field'+error_list[i].dataPath);
           var err_msg = error_list[i].message;
           if(err_msg){
