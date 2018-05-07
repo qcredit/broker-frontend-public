@@ -223,7 +223,7 @@ class ApplicationControllerTest extends BaseTest
     $this->assertSame($partners[0], $result[0]);
   }
 
-  public function testGetPartnersSchemas()
+  public function testGetPartnersDataMappers()
   {
     $mock = $this->getMockBuilder(ApplicationController::class)
       ->disableOriginalConstructor()
@@ -240,7 +240,7 @@ class ApplicationControllerTest extends BaseTest
       ->method('getPartners')
       ->willReturn([(new Partner())->setIdentifier('AASA')]);
 
-    $result = $this->invokeMethod($mock, 'getPartnersSchemas', []);
+    $result = $this->invokeMethod($mock, 'getPartnersDataMappers', []);
     $this->assertTrue(is_array($result));
   }
 
