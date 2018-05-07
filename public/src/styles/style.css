@@ -69,6 +69,7 @@
   background-color: #eaeaea; }
   .home-hero .home-hero-left h2 {
     text-align: center;
+    margin-top: 1.25rem;
     margin-bottom: 1.25rem; }
   .home-hero .home-hero-left button, .home-hero .home-hero-left p {
     display: none; }
@@ -141,6 +142,7 @@
         flex: 1 0 200px; }
     .home-hero .home-hero-left h2 {
       text-align: left;
+      margin-top: 0;
       margin-bottom: .5rem; }
     .home-hero .home-hero-left button, .home-hero .home-hero-left p {
       display: block; }
@@ -185,20 +187,22 @@
 .landing-component .landing-slider {
   display: flex; }
   .landing-component .landing-slider .landing-form-adjust {
-    width: 43px;
-    height: 43px;
+    width: 53px;
+    height: 53px;
     padding: 0;
     background: #00aeef;
-    color: #FFF;
-    font-size: 36px;
-    font-weight: bold;
-    line-height: 1;
     text-align: center;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none;
+    touch-action: manipulation; }
+    .landing-component .landing-slider .landing-form-adjust span {
+      color: #FFF;
+      font-size: 43px;
+      font-weight: bold;
+      line-height: 53px; }
   .landing-component .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
 .landing-component select {
@@ -299,6 +303,11 @@
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px; } }
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+    border-radius: 0; } }
 .loan-form {
   max-width: 800px;
   margin: 0 auto 3rem; }
@@ -358,20 +367,23 @@
     border: 0;
     border-bottom: 1px solid #999;
     font-size: 1rem;
-    color: #000;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url(../images/ic_down.png);
-    background-repeat: no-repeat;
-    background-position: right 0.875rem center;
-    background-size: 0.8125rem;
-    cursor: pointer; }
+    color: #000; }
   .field .rules {
     position: absolute;
     bottom: -1.875rem;
     font-size: 0.675rem;
     color: #CE0000; }
+
+.field select, .range-slider-select-value {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-image: url(../images/ic_down.png);
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 0.8125rem;
+  cursor: pointer; }
 
 .form-block .field {
   flex: 1 1 18.75rem; }
