@@ -20,3 +20,6 @@ Broker\Domain\Entity\Partner:
       type: decimal
       precision: 5
       scale: 2
+    featured:
+      type: boolean
+      nullable: false

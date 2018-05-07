@@ -52,7 +52,8 @@ $container['flash'] = function() {
 
 $container['csrf'] = function()
 {
-  return new \Slim\Csrf\Guard();
+  $storage = null;
+  return new \Slim\Csrf\Guard('csrf', $storage, null, 200, 16, true);
 };
 
 $container['view'] = function($container) {
