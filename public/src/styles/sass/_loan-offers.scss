@@ -86,9 +86,21 @@
   text-transform: uppercase;
   color: #d0d0d0;
 }
+.affiliate-offer-container {
+  .loan-offer-head {
+    justify-content: center;
+  }
+  .loan-offer-body {
+    span {
+     flex: 0 0 100%;
+     font-size: 1rem;
+     text-align: center;
+   }
+  }
+}
 
 @media only screen and (min-width: 360px) {
-  .loan-offer-body {
+  .personal-offer-container .loan-offer-body {
     span {
       font-size: 1rem;
       flex: 0 0 118px;
@@ -100,8 +112,34 @@
   .offer-list-head {
     margin: 3rem 0;
   }
-  .loan-offer-body span {
+  .personal-offer-container .loan-offer-body span {
     flex: 0 0 140px;
+  }
+  .affiliate-offer-container {
+    flex-direction: row;
+    .loan-offer-head {
+      flex: 0 0 160px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom-width: 0px;
+      padding: 0 .5rem;
+      .loan-offerer-name {
+        display: none;
+      }
+    }
+    .loan-offer-body {
+      span {
+        font-size: .875rem;
+        text-align: left;
+      }
+    }
+    .loan-offer-footer {
+      padding: 0 .5rem;
+      .broker-btn {
+        padding: 1rem;
+      }
+    }
   }
 }
 
@@ -139,6 +177,15 @@
       padding: 1rem;
     }
   }
+  .affiliate-offer-container {
+    .loan-offer-head {
+      flex-direction: column;
+      flex: 0 0 230px;
+    }
+    .loan-offer-body span {
+      font-size: 1rem;
+    }
+  }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -159,10 +206,17 @@
     margin-left: 2rem;
     justify-content: center;
   }
+  .affiliate-offer-container .loan-offer-head {
+    flex-direction: row;
+    flex: 0 0 270px;
+  }
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
 /* IE10+ CSS styles go here */
   .loan-offer-body {
     max-width: 400px;
+  }
+  .affiliate-offer-container .loan-offer-body {
+    flex: 0 0 328px;
   }
 }
