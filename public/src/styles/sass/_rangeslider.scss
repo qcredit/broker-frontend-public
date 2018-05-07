@@ -16,6 +16,7 @@
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
+      touch-action: manipulation;
     }
 
     .landing-form-adjust.disabled {
@@ -131,5 +132,12 @@
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px;
+  }
+}
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 }

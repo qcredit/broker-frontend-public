@@ -153,10 +153,6 @@
 @media only screen and (min-width: 1650px) {
   .home-hero-left p {
     max-width: 80%; } }
-@supports (-webkit-overflow-scrolling: touch) {
-  /* CSS specific to iOS devices */
-  .landing-component select {
-    -webkit-appearance: none; } }
 .page-footer {
   margin: 5rem 0 0;
   padding: 0;
@@ -202,7 +198,8 @@
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none;
+    touch-action: manipulation; }
   .landing-component .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
 .landing-component select {
@@ -303,6 +300,11 @@
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px; } }
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+    border-radius: 0; } }
 .loan-form {
   max-width: 800px;
   margin: 0 auto 3rem; }
