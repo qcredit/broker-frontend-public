@@ -153,6 +153,10 @@
 @media only screen and (min-width: 1650px) {
   .home-hero-left p {
     max-width: 80%; } }
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none; } }
 .page-footer {
   margin: 5rem 0 0;
   padding: 0;

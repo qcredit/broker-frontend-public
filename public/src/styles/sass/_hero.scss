@@ -137,3 +137,9 @@
     }
   }
 }
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+  }
+}
