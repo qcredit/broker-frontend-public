@@ -15,4 +15,5 @@ class PartnerForm
   const ATTR_IDENTIFIER = 'identifier';
   const ATTR_STATUS = 'status';
   const ATTR_COMMISSION = 'commission';
+  const ATTR_FEATURED = 'featured';
 }

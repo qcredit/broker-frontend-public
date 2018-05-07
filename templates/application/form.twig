@@ -247,7 +247,7 @@
     <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
     <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
   </div>
-  <input type="hidden" name="applicationHash" id="applicationHash" value="">
+  <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
 {% endblock %}
 
@@ -284,10 +284,10 @@
       }).then(function (json) { schema = json; });
 
     $('button[type="submit"]').click(function(e) {
-      e.preventDefault();
       var valid = ajv.validate(schema, getFormData());
 
       if (!valid) {
+        e.preventDefault();
         localize_en(ajv.errors);
         console.log(ajv.errors);
         console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
