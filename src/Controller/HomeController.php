@@ -77,7 +77,6 @@ class HomeController extends AbstractController
    */
   public function indexAction($request, $response)
   {
-    print_r($this->getSession()->get(LanguageSwitcher::COOKIE_LANGUAGE));
     return $this->render($response, 'index.twig');
   }
 

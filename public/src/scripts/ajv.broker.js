@@ -237,6 +237,7 @@ function validatePolandDocument(number) {
 }
 
 function searchError(attribute, errors){
+  if (!errors) return;
   for (var i=0; i < errors.length; i++) {
     if (errors[i].dataPath === '.' + attribute) {
       return errors[i];

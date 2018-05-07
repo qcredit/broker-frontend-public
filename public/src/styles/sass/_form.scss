@@ -62,14 +62,6 @@
     border-bottom: 1px solid #999;
     font-size: 1rem;
     color: #000;
-    -webkit-appearance: none;
-       -moz-appearance: none;
-            appearance: none;
-    background-image: url(../images/ic_down.png);
-    background-repeat: no-repeat;
-    background-position: right 0.875rem center;
-    background-size: 0.8125rem;
-    cursor: pointer;
   }
   .rules {
     position: absolute;
@@ -77,6 +69,17 @@
     font-size: 0.675rem;
     color: $error;
   }
+}
+.field select, .range-slider-select-value{
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: #fff;
+  background-image: url(../images/ic_down.png);
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 0.8125rem;
+  cursor: pointer;
 }
 .form-block .field{
   flex: 1 1 18.75rem;

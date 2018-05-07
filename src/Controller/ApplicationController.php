@@ -240,42 +240,8 @@ class ApplicationController extends AbstractController
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
    */
-  public function indexAction($request, $response, $args)
+  public function indexAction(Request $request, Response $response, $args)
   {
-    $data = [
-      'incomeSourceType' => 'Employed',
-      'netPerMonth' => 4400,
-      'employerName' => 'European Parliament',
-      'position' => 'Cleaning man',
-      'yearSince' => 2013,
-      'monthSince' => 1,
-      'currentStudy' => '',
-      'trade' => 'unknown',
-      'loanPurposeType' => 'Bills',
-      'pin' => '71121513234',
-      'street' => 'Wolności',
-      'zip' => '44-285',
-      'houseNr' => '60',
-      'apartmentNr' => ' ',
-      'city' => 'Kornowac',
-      'documentNr' => 'CCY014054',
-      'mobilePhoneType' => 'PrePaid',
-      'payoutMethod' => 'Account',
-      'educationType' => 'MSc',
-      'accountType' => 'Personal',
-      'accountNr' => '32132345678901234569415123',
-      'accountHolder' => 'Anu Saagim',
-      'maritalStatusType' => 'Single',
-      'residentialType' => 'Own',
-      'propertyType' => 'Apartment',
-      'loanAmount' => 2100,
-      'loanTerm' => 18,
-      'firstName' => 'Adam',
-      'lastName' => 'Barański',
-      'email' => 'hendrik.uibopuu@aasaglobal.com',
-      'phone' => '+48739050381'
-    ];
-
     $data = [];
     $data['fields'] = $this->getFormBuilder()->getFormFields();
     if ($request->isPost())
