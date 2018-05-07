@@ -12,6 +12,7 @@ use App\Base\Components\SchemaHelper;
 use App\Base\Persistence\Doctrine\PartnerRepository;
 use App\Base\Repository\PartnerDataMapperRepository;
 use App\Component\FormBuilder;
+use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\PartnerRepositoryInterface;
@@ -136,6 +137,8 @@ class FormBuilderTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['getMergedPartnerSchemas'])
       ->getMock();
+
+    $mock->setApplicationForm(new ApplicationForm());
 
     $this->invokeMethod($mock, 'extractSchemaFields', [$schema]);
     $result = $mock->getFields();
