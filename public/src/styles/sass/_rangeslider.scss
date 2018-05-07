@@ -6,10 +6,6 @@
       height: 53px;
       padding: 0;
       background: $blue;
-      color: #FFF;
-      font-size: 43px;
-      font-weight: bold;
-      line-height: 53px;
       text-align: center;
       cursor: pointer;
       -webkit-user-select: none;
@@ -17,6 +13,12 @@
           -ms-user-select: none;
               user-select: none;
       touch-action: manipulation;
+      span {
+        color: #FFF;
+        font-size: 43px;
+        font-weight: bold;
+        line-height: 53px;
+      }
     }
 
     .landing-form-adjust.disabled {

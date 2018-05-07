@@ -191,10 +191,6 @@
     height: 53px;
     padding: 0;
     background: #00aeef;
-    color: #FFF;
-    font-size: 43px;
-    font-weight: bold;
-    line-height: 53px;
     text-align: center;
     cursor: pointer;
     -webkit-user-select: none;
@@ -202,6 +198,11 @@
     -ms-user-select: none;
     user-select: none;
     touch-action: manipulation; }
+    .landing-component .landing-slider .landing-form-adjust span {
+      color: #FFF;
+      font-size: 43px;
+      font-weight: bold;
+      line-height: 53px; }
   .landing-component .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
 .landing-component select {
