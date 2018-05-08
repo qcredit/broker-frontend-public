@@ -7,7 +7,7 @@
     {% include '$sliders.twig' %}
   </div>
   <div class="step-1">
-    <div class="form-block">
+    <div class="form-block form-block-general">
       {% for field in fields.general %}
         {% if field.type is same as('checkbox') %}
           <div class="{{ field.type }} {{ field.name }}">
@@ -20,9 +20,7 @@
             <div class="field {{ field.type }} {{ field.name }}">
               <label for="">{{ field.label }}</label>
               <input type="{{ field.type }}" name="{{ field.name }}">
-              {% if application.errors[field.name] is defined %}
-                <p class="rules">{{ application.errors[field.name] }}</p>
-              {% endif %}
+              {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
             </div>
         {% endif %}
       {% endfor %}
@@ -35,37 +33,48 @@
   </div>
   <div class="step-2">
     {% for sectionId,section in fields %}
-      <div class="form-block">
-        {% if sectionId is not same as('general') %}
-          {% for field in section %}
-            {% if field.type is same as('checkbox') %}
-              <div class="{{ field.type }} {{ field.name }}">
-                <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" class="{{ field.name }}-checkbox" {% if field.name is same as('marketingConsent') %}checked{% endif %}>
-                <label for="{{ field.name }}">{{ field.label }}</label>
+    {% if sectionId is not same as('general') %}
+      <div class="form-block form-block-{{ sectionId }}">
+        <p>
+          {% if sectionId is same as('personal') %}
+            Personal information
+          {% elseif sectionId is same as('housing') %}
+            Housing information
+          {% elseif sectionId is same as('income') %}
+            Income information
+          {% elseif sectionId is same as('account') %}
+            Account information
+          {% elseif sectionId is same as('additional') %}
+            Additional information
+          {% endif %}
+        </p>
+        {% for field in section %}
+          {% if field.type is same as('checkbox') %}
+            <div class="{{ field.type }} {{ field.name }}">
+              <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" class="{{ field.name }}-checkbox" {% if field.name is same as('marketingConsent') %}checked{% endif %}>
+              <label for="{{ field.name }}">{{ field.label }}</label>
+            </div>
+            {% elseif field.name is same as('loanTerm') or field.name is same as('loanAmount') %}
+              {# Don't render #}
+            {% else %}
+              <div class="field {{ field.type }} {{ field.name }}">
+                <label for="">{{ field.label }}</label>
+                {% if field.type is same as('select') %}
+                  <select name="{{ field.name }}">
+                    <option></option>
+                    {% for option in field.enum %}
+                    <option value="{{ option }}">{{ option }}</option>
+                    {% endfor %}
+                  </select>
+                  {% else %}
+                  <input type="{{ field.type }}" name="{{ field.name }}">
+                {% endif %}
+                {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
               </div>
-              {% elseif field.name is same as('loanTerm') or field.name is same as('loanAmount') %}
-                {# Don't render #}
-              {% else %}
-                <div class="field {{ field.type }} {{ field.name }}">
-                  <label for="">{{ field.label }}</label>
-                  {% if field.type is same as('select') %}
-                    <select name="{{ field.name }}">
-                      <option></option>
-                      {% for option in field.enum %}
-                      <option value="{{ option }}">{{ option }}</option>
-                      {% endfor %}
-                    </select>
-                    {% else %}
-                    <input type="{{ field.type }}" name="{{ field.name }}">
-                  {% endif %}
-                  {% if application.errors[field.name] is defined %}
-                    <p class="rules">{{ application.errors[field.name] }}</p>
-                  {% endif %}
-                </div>
-            {% endif %}
-          {% endfor %}
-        {% endif %}
-      </div>
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
     {% endfor %}
     <div class="form-block form-block-submit">
       <button type="submit" class="broker-btn broker-btn-gold">Submit form</button>
@@ -183,6 +192,7 @@
         parent.addClass('error');
         if(!parent.find('.rules').length){
           parent.append('<p class="rules">'+err_obj.message+'</p>');
+          console.log(err_obj);
         } else {
           parent.find('.rules').text(err_obj.message);
         }

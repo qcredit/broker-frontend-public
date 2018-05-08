@@ -30,7 +30,9 @@
         "type": "object",
         "required": [
           "sourceType",
-          "netPerMonth"
+          "netPerMonth",
+          "yearSince",
+          "monthSince"
         ],
         "properties": {
           "sourceType": {
