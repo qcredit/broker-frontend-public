@@ -401,7 +401,8 @@
   font-size: 0.75rem; }
 
 .checkbox {
-  flex: 1 1 100% !important; }
+  flex: 1 1 100% !important;
+  margin: 3rem 0 0; }
   .checkbox input[type=checkbox] {
     opacity: 0;
     float: left; }

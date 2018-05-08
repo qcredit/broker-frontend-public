@@ -30,7 +30,9 @@
         "type": "object",
         "required": [
           "sourceType",
-          "netPerMonth"
+          "netPerMonth",
+          "yearSince",
+          "monthSince"
         ],
         "properties": {
           "sourceType": {
@@ -43,12 +45,14 @@
           "yearSince": {
             "type": "number",
             "minimum": 1900,
-            "maximum": 2030
+            "maximum": 2030,
+            "section": "income"
           },
           "monthSince": {
             "type": "integer",
             "minimum": 1,
-            "maximum": 12
+            "maximum": 12,
+            "section": "income"
           }
         }
       },

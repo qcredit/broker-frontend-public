@@ -7,31 +7,23 @@
     {% include '$sliders.twig' %}
   </div>
   <div class="step-1">
-    <div class="form-block form-block-first">
-      <div class="field text pin required">
-        <label for="">Insert your personal ID*</label>
-          <input type="text" name="pin" id="pin" value="{{ application.pin }}"/>
-          {% if application.errors.pin %}<p class="rules">{{ application.errors.pin }}</p>{% endif %}
-      </div>
-      <div class="field number phone required">
-        <label for="">Insert your phone number*</label>
-        <input type="text" name="phone" id="phone" value="{{ application.phone }}"/>
-        {% if application.errors.phone %}<p class="rules">{{ application.errors.phone }}</p>{% endif %}
-      </div>
-      <div class="field text email required">
-        <label for="">Insert your email*</label>
-          <input type="text" name="email" id="email" value="{{ application.email }}"/>
-          {% if application.errors.email %}<p class="rules">{{ application.errors.email }}</p>{% endif %}
-      </div>
-    </div>
-    <div class="form-block">
-      <div class="checkbox emarketing">
-        <input type="checkbox" id="marketingConsent" name="marketingConsent" class="marketing-checkbox" checked>
-        <label for="marketingConsent">
-          Kyllä, minulle saa lähettää sähköisesti tietoa eduista, kilpailuista ja tarjouksista.<br>
-              <a href="/rekisteriseloste" target="_blank">Rekisteriseloste</a>
-        </label>
-      </div>
+    <div class="form-block form-block-general">
+      {% for field in fields.general %}
+        {% if field.type is same as('checkbox') %}
+          <div class="{{ field.type }} {{ field.name }}">
+            <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" class="{{ field.name }}-checkbox" {% if field.name is same as('marketingConsent') %}checked{% endif %}>
+            <label for="{{ field.name }}">{{ field.label }}</label>
+          </div>
+          {% elseif field.name is same as('loanTerm') or field.name is same as('loanAmount') %}
+            {# Don't render #}
+          {% else %}
+            <div class="field {{ field.type }} {{ field.name }}">
+              <label for="">{{ field.label }}</label>
+              <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
+              {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
+            </div>
+        {% endif %}
+      {% endfor %}
     </div>
     {% if not application.errors %}
     <div class="form-block form-block-submit">
@@ -40,210 +32,55 @@
     {% endif %}
   </div>
   <div class="step-2">
-    <div class="form-block form-block-personal">
-      <p>Personal information</p>
-      <div class="field text firstName required">
-        <label for="">Insert your first name*</label>
-          <input type="text" name="firstName" id="firstName" value="{{ application.firstName }}"/>
-          {% if application.errors.firstName %}<p class="rules">{{ application.errors.firstName }}</p>{% endif %}
-      </div>
-      <div class="field text lastName required">
-        <label for="">Insert your last name*</label>
-          <input type="text" name="lastName" id="lastName" value="{{ application.lastName }}"/>
-          {% if application.errors.lastName %}<p class="rules">{{ application.errors.lastName }}</p>{% endif %}
-      </div>
-      <div class="field text documentNr required">
-        <label for="">Insert your document number*</label>
-        <input type="text" name="documentNr" id="documentNr" value="{{ application.documentNr }}"/>
-        {% if application.errors.documentNr %}<p class="rules">{{ application.errors.documentNr }}</p>{% endif %}
-      </div>
-      <div class="field select maritalStatusType required">
-        <label for="">Choose your marital status*</label>
-        <select name="maritalStatusType">
-          <option value></option>
-          <option value="Single" {% if application.data.maritalStatusType == 'Single' %}selected="true"{% endif %}>Single</option>
-          <option value="Married" {% if application.data.maritalStatusType == 'Married' %}selected="true"{% endif %}>Married</option>
-          <option value="MarriedDivorcing" {% if application.data.maritalStatusType == 'MarriedDivorcing' %}selected="true"{% endif %}>MarriedDivorcing</option>
-          <option value="Separated" {% if applicaiton.data.maritalStatusType == 'Separated' %}selected="true"{% endif %}>Separated</option>
-          <option value="Widow" {% if application.data.maritalStatusType == 'Widow' %}selected="true"{% endif %}>Widow</option>
-          <option value="Divorced" {% if application.data.maritalStatusType == 'Divorced' %}selected="true"{% endif %}>Divorced</option>
-          <option value="InformationRelationship" {% if application.data.maritalStatusType == 'InformationRelationship' %}selected="true"{% endif %}>InformationRelationship</option>
-          <option value="Other" {% if application.data.maritalStatusType == 'Other' %}selected="true"{% endif %}>Other</option>
-        </select>
-        {% if application.errors.maritalStatusType %}<p class="rules">{{ application.errors.maritalStatusType }}</p>{% endif %}
-      </div>
-      <div class="field select educationType required">
-        <label for="">Choose you education*</label>
-        <select name="educationType">
-          <option value></option>
-          <option value="MBA" {% if application.data.educationType == 'MBA' %}selected="true"{% endif %}>MBA</option>
-          <option value="MSc" {% if application.data.educationType == 'MSc' %}selected="true"{% endif %}>MSc</option>
-          <option value="BA" {% if application.data.educationType == 'BA' %}selected="true"{% endif %}>BA</option>
-          <option value="Secondary" {% if application.data.educationType == 'Secondary' %}selected="true"{% endif %}>Secondary</option>
-          <option value="Vocational" {% if application.data.educationType == 'Vocational' %}selected="true"{% endif %}>Vocational</option>
-          <option value="Basic" {% if application.data.educationType == 'Basic' %}selected="true"{% endif %}>Basic</option>
-          <option value="Other" {% if application.data.educationType == 'Other' %}selected="true"{% endif %}>Other</option>
-        </select>
-        {% if application.errors.educationType %}<p class="rules">{{ application.errors.educationType }}</p>{% endif %}
-      </div>
-    </div>
-    <div class="form-block form-block-housing">
-      <p>Housing information</p>
-      <div class="field select residentialType required">
-        <label for="">Choose housing type*</label>
-        <select name="residentialType" id="residentialType">
-          <option value></option>
-          <option value="Own" {% if application.data.residentialType == 'Own' %}selected="true"{% endif %}>Own</option>
-          <option value="Rented" {% if application.data.residentialType == 'Rented' %}selected="true"{% endif %}>Rented</option>
-          <option value="Other" {% if application.data.residentialType == 'HousingAssociation' %}selected="true"{% endif %}>Other</option>
-          <option value="LivingWithFamily" {% if application.data.residentialType == 'LivingWithFamily' %}selected="true"{% endif %}>LivingWithFamily</option>
-          <option value="CouncilHousing" {% if application.data.residentialType == 'CouncilHousing' %}selected="true"{% endif %}>CouncilHousing</option>
-        </select>
-        {% if application.errors.residentialType %}<p class="rules">{{ application.errors.residentialType }}</p>{% endif %}
-      </div>
-      <div class="field text propertyType required">
-        <label for="">Insert the propery type*</label>
-        <select name="propertyType" id="propertyType">
-          <option value></option>
-          <option value="Apartment" {% if application.data.propertyType == 'Apartment' %}selected="true"{% endif %}>Apartment</option>
-          <option value="House" {% if application.data.propertyType == 'House' %}selected="true"{% endif %}>House</option>
-          <option value="TerracedHouse" {% if application.data.propertyType == 'TerracedHouse' %}selected="true"{% endif %}>TerracedHouse</option>
-          <option value="Duplex" {% if application.data.propertyType == 'Duplex' %}selected="true"{% endif %}>Duplex</option>
-          <option value="Other" {% if application.data.propertyType == 'Other' %}selected="true"{% endif %}>Other</option>
-        </select>
-        {% if application.errors.propertyType %}<p class="rules">{{ application.errors.propertyType }}</p>{% endif %}
-      </div>
-      <div class="field text street required">
-        <label for="">Insert the street name*</label>
-        <input type="text" name="street" id="street" value="{{ application.data.street }}"/>
-        {% if application.errors.street %}<p class="rules">{{ application.errors.street }}</p>{% endif %}
-      </div>
-      <div class="field text houseNr required">
-        <label for="">House number*</label>
-        <input type="text" name="houseNr" id="houseNr" value="{{ application.data.houseNr }}"/>
-        {% if application.errors.houseNr %}<p class="rules">{{ application.errors.houseNr }}</p>{% endif %}
-      </div>
-      <div class="field text apartmentNr required">
-        <label for="">Appartment number*</label>
-        <input type="text" name="apartmentNr" id="apartmentNr" value="{{ application.data.apartmentNr }}"/>
-        {% if application.errors.apartmentNr %}<p class="rules">{{ application.errors.apartmentNr }}</p>{% endif %}
-      </div>
-      <div class="field text city required">
-        <label for="">Insert city*</label>
-          <input type="text" name="city" id="city" value="{{ application.data.city }}"/>
-          {% if application.errors.city %}<p class="rules">{{ application.errors.city }}</p>{% endif %}
-      </div>
-      <div class="field number zip required">
-        <label for="">ZIP*</label>
-        <input type="text" name="zip" id="zip" value="{{ application.data.zip }}"/>
-        {% if application.errors.zip %}<p class="rules">{{ application.errors.zip }}</p>{% endif %}
-      </div>
-    </div>
-    <div class="form-block form-block-income ">
-      <p>Income information</p>
-      <div class="field select incomeSourceType required">
-        <label for="">Choose income type*</label>
-          <select name="incomeSourceType">
-              <option value></option>
-              <option value="Employed" {% if application.data.incomeSourceType == 'Employed' %}selected="true"{% endif %}>Employed</option>
-              <option value="Student" {% if application.data.incomeSourceType == 'Student' %}selected="true"{% endif %}>Student</option>
-              <option value="NormalPension" {% if application.data.incomeSourceType == 'NormalPension' %}selected="true"{% endif %}>NormalPension</option>
-              <option value="DisabilityPension" {% if application.data.incomeSourceType == 'DisabilityPension' %}selected="true"{% endif %}>DisabilityPension</option>
-              <option value="Unemployed" {% if application.data.incomeSourceType == 'Unemployed' %}selected="true"{% endif %}>Unemployed</option>
-              <option value="BenefitOrAlimony" {% if application.data.incomeSourceType == 'BenefitOrAlimony' %}selected="true"{% endif %}>BenefirOrAlimony</option>
-              <option value="SelfEmployed" {% if application.data.incomeSourceType == 'SelfEmployed' %}selected="true"{% endif %}>SelfEmployed</option>
-              <option value="Farmer" {% if application.data.incomeSourceType == 'Farmer' %}selected="true"{% endif %}>Farmer</option>
-              <option value="Other" {% if application.data.incomeSourceType == 'Other' %}selected="true"{% endif %}>Other</option>
-          </select>
-          {% if application.errors.sourceType %}<p class="rules">{{ application.errors.sourceType }}</p>{% endif %}
-      </div>
-      <div class="field number netPerMonth required">
-        <label for="">Insert your monthly net income*</label>
-        <input type="text" name="netPerMonth" id="netPerMonth" value="{{ application.data.netPerMonth }}"/>
-        {% if application.errors.netPerMonth %}<p class="rules">{{ application.errors.netPerMonth }}</p>{% endif %}
-      </div>
-      <div class="field select monthSince required">
-        <label for="">Choose starting month*</label>
-          <select name="monthSince" id="monthSince">
-              <option value></option>
-              <option value="01" {% if application.data.monthSince == 01 %}selected="true"{% endif %}>January</option>
-              <option value="02" {% if application.data.monthSince == 02 %}selected="true"{% endif %}>February</option>
-              <option value="03" {% if application.data.monthSince == 03 %}selected="true"{% endif %}>March</option>
-              <option value="04" {% if application.data.monthSince == 04 %}selected="true"{% endif %}>April</option>
-              <option value="05" {% if application.data.monthSince == 05 %}selected="true"{% endif %}>May</option>
-              <option value="06" {% if application.data.monthSince == 06 %}selected="true"{% endif %}>June</option>
-              <option value="07" {% if application.data.monthSince == 07 %}selected="true"{% endif %}>July</option>
-              <option value="08" {% if application.data.monthSince == 08 %}selected="true"{% endif %}>August</option>
-              <option value="09" {% if application.data.monthSince == 09 %}selected="true"{% endif %}>September</option>
-              <option value="10" {% if application.data.monthSince == 10 %}selected="true"{% endif %}>October</option>
-              <option value="11" {% if application.data.monthSince == 11 %}selected="true"{% endif %}>November</option>
-              <option value="12" {% if application.data.monthSince == 12 %}selected="true"{% endif %}>December</option>
-          </select>
-          {% if application.errors.monthSince %}<p class="rules">{{ application.errors.monthSince }}</p>{% endif %}
-      </div>
-      <div class="field number yearSince required">
-        <label for="">Insert starting year*</label>
-        <input type="text" name="yearSince" id="yearSince" value="{{ application.data.yearSince }}"/>
-        {% if application.errors.yearSince %}<p class="rules">{{ application.errors.yearSince }}</p>{% endif %}
-      </div>
-    </div>
-    <div class="form-block form-block-accoun">
-      <p>Account information</p>
-      <div class="field select accountType required">
-        <label for="">Choose account type*</label>
-        <select name="accountType" id="accountType">
-            <option value></option>
-            <option value="Personal" {% if application.data.accountType == "Personal" %}selected="true"{% endif %}>Personal</option>
-            <option value="Joint" {% if application.data.accountType == "Joint" %}selected="true"{% endif %}>Joint</option>
-            <option value="Company" {% if application.data.accountType == "Company" %}selected="true"{% endif %}>Company</option>
-        </select>
-        {% if application.errors.accountType %}<p class="rules">{{ application.errors.accountType }}</p>{% endif %}
-      </div>
-      <div class="field text accountNr required">
-        <label for="">Insert account number*</label>
-        <input type="text" name="accountNr" id="accountNr" value="{{ application.data.accountNr }}"/>
-        {% if application.errors.accountNr %}<p class="rules">{{ application.errors.accountNr }}</p>{% endif %}
-      </div>
-      <div class="field text accountHolder required">
-        <label for="">Insert account holder name*</label>
-        <input type="text" name="accountHolder" id="accountHolder" value="{{ application.data.accountHolder }}"/>
-        {% if application.errors.accountHolder %}<p class="rules">{{ application.errors.accountHolder }}</p>{% endif %}
-      </div>
-    </div>
-    <div class="form-block form-block-additional">
-      <p>Additional information</p>
-      <div class="field select loanPurposeType">
-        <label for="">Choose the loan purpose</label>
-        <select name="loanPurposeType" id="loanPurposeType">
-          <option value></option>
-          <option value="Bills" {% if application.data.loanPurposeType == "Bills" %}selected="true"{% endif %}>Bills</option>
-          <option value="Vacation" {% if application.data.loanPurposeType == "Vacation" %}selected="true"{% endif %}>Vacation</option>
-          <option value="RentOrMortgage" {% if application.data.loanPurposeType == "RentOrMortgage" %}selected="true"{% endif %}>RentOrMortgage</option>
-          <option value="Car" {% if application.data.loanPurposeType == "Car" %}selected="true"{% endif %}>Car</option>
-          <option value="Entertainment" {% if application.data.loanPurposeType == "Entertainment" %}selected="true"{% endif %}>Entertainment</option>
-          <option value="Groceries" {% if application.data.loanPurposeType == "Groceries" %}selected="true"{% endif %}>Groceries</option>
-          <option value="Renovation" {% if application.data.loanPurposeType == "Renovation" %}selected="true"{% endif %}>Renovation</option>
-          <option value="Electronics" {% if application.data.loanPurposeType == "Electronics" %}selected="true"{% endif %}>Electronics</option>
-          <option value="Furniture" {% if application.data.loanPurposeType == "Furniture" %}selected="true"{% endif %}>Furniture</option>
-          <option value="School" {% if application.data.loanPurposeType == "School" %}selected="true"{% endif %}>School</option>
-          <option value="Other" {% if application.data.loanPurposeType == "Other" %}selected="true"{% endif %}>Other</option>
-        </select>
-        {% if application.errors.loanPurposeType %}<p class="rules">{{ application.errors.loanPurposeType }}</p>{% endif %}
-      </div>
-      <div class="field select payoutMethod">
-        <label for="">Payout method</label>
-        <select name="payoutMethod" id="payoutMethod">
-          <option value=""></option>
-          <option value="Giro" {% if application.data.payoutMethod == "Giro" %}selected="true"{% endif %}>Giro</option>
-          <option value="Account" {% if application.data.payoutMethod == "Account" %}selected="true"{% endif %}>Account</option>
-          <option value="BlueCash" {% if application.data.payoutMethod == "BlueCash" %}selected="true"{% endif %}>BlueCash</option>
-        </select>
-        {% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %}
-      </div>
-    </div>
+    {% for sectionId,section in fields %}
+    {% if sectionId is not same as('general') %}
+      <div class="form-block form-block-{{ sectionId }}">
+        <p>
+          {% if sectionId is same as('personal') %}
+            Personal information
+          {% elseif sectionId is same as('housing') %}
+            Housing information
+          {% elseif sectionId is same as('income') %}
+            Income information
+          {% elseif sectionId is same as('account') %}
+            Account information
+          {% elseif sectionId is same as('additional') %}
+            Additional information
+          {% endif %}
+        </p>
+        {% for field in section %}
+          {% if field.type is same as('checkbox') %}
+            <div class="{{ field.type }} {{ field.name }}">
+              <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" class="{{ field.name }}-checkbox" {% if field.name is same as('marketingConsent') %}checked{% endif %}>
+              <label for="{{ field.name }}">{{ field.label }}</label>
+            </div>
+            {% elseif field.name is same as('loanTerm') or field.name is same as('loanAmount') %}
+              {# Don't render #}
+            {% else %}
+              <div class="field {{ field.type }} {{ field.name }}">
+                <label for="">{{ field.label }}</label>
+                {% if field.type is same as('select') %}
+                  <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
+                    <option></option>
+                    {% for option in field.enum %}
+                    <option value="{{ option }}" {% if application.getAttribute(field.name) == option %}selected="true"{% endif %}>{{ option }}</option>
+                    {% endfor %}
+                  </select>
+                  {% else %}
+                  <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
+                {% endif %}
+                {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
+              </div>
+          {% endif %}
+        {% endfor %}
+        </div>
+      {% endif %}
+    {% endfor %}
     <div class="form-block form-block-submit">
       <button type="submit" class="broker-btn broker-btn-gold">Submit form</button>
     </div>
+  </div>
+  <!--{% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %} -->
     <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
     <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
   </div>
@@ -355,6 +192,7 @@
         parent.addClass('error');
         if(!parent.find('.rules').length){
           parent.append('<p class="rules">'+err_obj.message+'</p>');
+          console.log(err_obj);
         } else {
           parent.find('.rules').text(err_obj.message);
         }
