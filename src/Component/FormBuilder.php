@@ -226,7 +226,8 @@ class FormBuilder
         'type' => $this->determineFieldType($field),
         'section' => $field['section'] ?? 'general',
         'enum' => $field['enum'] ?? false,
-        'label' => $this->getApplicationForm()->getFieldLabel($fieldName)
+        'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
+        'order' => $field['priority'] ?? 100
       ]);
     }
   }
@@ -258,6 +259,22 @@ class FormBuilder
       'label' => $this->getApplicationForm()->getFieldLabel('marketingConsent')
     ]);
 
+    $this->sortFields();
+
     return $this->getFields();
+  }
+
+  protected function sortFields()
+  {
+    $fields = $this->getFields();
+
+    foreach ($fields as $section => &$set)
+    {
+      usort($set, function($a, $b) {
+        return $a['order'] <=> $b['order'];
+      });
+    }
+
+    $this->setFields($fields);
   }
 }
