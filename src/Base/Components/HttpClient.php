@@ -8,6 +8,8 @@
 
 namespace App\Base\Components;
 
+use Broker\System\Log;
+
 class HttpClient
 {
   /**
@@ -120,7 +122,7 @@ class HttpClient
   {
     $result = curl_exec($this->getClient());
     $this->setStatusCode($this->getResponseCode());
-
+    Log::debug('Request error:', [curl_error($this->getClient())]);
     curl_close($this->getClient());
 
     $this->setOk($this->getStatusCode() === 200);
