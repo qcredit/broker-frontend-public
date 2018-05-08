@@ -173,6 +173,8 @@ class ApiDelivery implements MessageDeliveryInterface
       $this->getResponse()->setOffer($request->getOffer());
     }
 
+    Log::debug('Sending API request with body...', [$request->getRequestPayload()]);
+
     $options[CURLOPT_RETURNTRANSFER] = true;
 
     $this->getClient()->setClientOptions($options);
