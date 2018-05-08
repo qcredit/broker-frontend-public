@@ -180,7 +180,7 @@ class ApiDelivery implements MessageDeliveryInterface
 
     $options[CURLOPT_RETURNTRANSFER] = true;
     $options[CURLOPT_SSL_VERIFYPEER] = false;
-    $options[CURLOPT_SSL_VERIFYHOST] = false;
+    $options[CURLOPT_CONNECTTIMEOUT] = 30;
 
     $this->getClient()->setClientOptions($options);
     $this->getClient()->setClientHeaders($headers);
