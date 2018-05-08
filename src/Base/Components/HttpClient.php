@@ -118,11 +118,20 @@ class HttpClient
     $this->_client = curl_init();
   }
 
+  /**
+   * @return mixed
+   * @throws \Exception
+   */
   public function send()
   {
     $result = curl_exec($this->getClient());
     $this->setStatusCode($this->getResponseCode());
-    Log::debug('Request error:', [curl_error($this->getClient())]);
+
+    if (curl_errno($this->getClient()))
+    {
+      Log::warning('Got error when making CURL request...', [curl_error($this->getClient())]);
+    }
+
     curl_close($this->getClient());
 
     $this->setOk($this->getStatusCode() === 200);
