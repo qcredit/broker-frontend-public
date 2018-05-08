@@ -367,14 +367,12 @@
     }
 
     function sendpreData(values) {
+      values['{{ csrf.keys.name }}'] = '{{ csrf.name }}';
+      values['{{ csrf.keys.value }}'] = '{{ csrf.value }}';
       $.ajax({
         method: "POST",
         url: "/application",
-        data: {
-          values,
-          {{csrf.keys.name}}: '{{csrf.name}}',
-          {{csrf.keys.value}}: '{{csrf.value}}'
-        },
+        data: values
       })
         .done(function( data ) {
           $('input#applicationHash').val(data.applicationHash);

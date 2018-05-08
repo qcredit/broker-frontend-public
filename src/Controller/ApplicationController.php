@@ -247,15 +247,16 @@ class ApplicationController extends AbstractController
     $data['fields'] = $this->getFormBuilder()->getFormFields();
     if ($request->isPost())
     {
+      $postData = $request->getParsedBody();
       $newAppService = $this->getNewApplicationService();
       if ($this->isFromFrontpage() || $this->isAjax($request))
       {
+        unset($postData['applicationHash']);
         $newAppService->setValidationEnabled(false);
       }
 
-      $postData = $request->getParsedBody();
-      unset($data['csrf_name']);
-      unset($data['csrf_value']);
+      unset($postData['csrf_name']);
+      unset($postData['csrf_value']);
 
       if ($newAppService->setData($postData)->run())
       {
