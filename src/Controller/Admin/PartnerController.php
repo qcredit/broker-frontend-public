@@ -222,6 +222,25 @@ class PartnerController extends AbstractController
   }
 
   /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws \Slim\Exception\NotFoundException
+   */
+  public function deleteAction(Request $request, Response $response, $args)
+  {
+    $partner = $this->findEntity($args['id'], $request, $response);
+
+    if ($this->getPartnerRepository()->delete($partner))
+    {
+      return $response->withRedirect('/admin/partners');
+    }
+
+    return $this->withRedirect('/admin/partners');
+  }
+
+  /**
    * @param $id
    * @param $request
    * @param $response
