@@ -2,7 +2,7 @@
   "config": {
     "useApi": true,
     "apiLiveUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
-    "apiTestUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
+    "apiTestUrl": "https://api-test.aasapolska.pl/api/v1/loans",
     "logo": "/assets/img/aasa.jpg",
     "email": "offers@aasa.global"
   },
