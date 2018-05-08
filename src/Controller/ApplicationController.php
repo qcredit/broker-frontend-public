@@ -239,6 +239,7 @@ class ApplicationController extends AbstractController
    * @param $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @todo Should allow validation according to scenarios
    */
   public function indexAction(Request $request, Response $response, $args)
   {
@@ -247,7 +248,7 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $newAppService = $this->getNewApplicationService();
-      if ($this->isFromFrontpage())
+      if ($this->isFromFrontpage() || $this->isAjax($request))
       {
         $newAppService->setValidationEnabled(false);
       }
@@ -279,7 +280,7 @@ class ApplicationController extends AbstractController
       $data['application'] = $newAppService->getApplication();
     }
 
-    return $this->container->get('view')->render($response, 'application/form.twig', $data);
+    return $this->render($response, 'application/form.twig', $data);
   }
 
   /**
