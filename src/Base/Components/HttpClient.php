@@ -8,6 +8,8 @@
 
 namespace App\Base\Components;
 
+use Broker\System\Log;
+
 class HttpClient
 {
   /**
@@ -116,10 +118,19 @@ class HttpClient
     $this->_client = curl_init();
   }
 
+  /**
+   * @return mixed
+   * @throws \Exception
+   */
   public function send()
   {
     $result = curl_exec($this->getClient());
     $this->setStatusCode($this->getResponseCode());
+
+    if (curl_errno($this->getClient()))
+    {
+      Log::warning('Got error when making CURL request...', [curl_error($this->getClient())]);
+    }
 
     curl_close($this->getClient());
 
