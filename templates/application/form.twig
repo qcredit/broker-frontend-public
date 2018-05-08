@@ -19,7 +19,7 @@
           {% else %}
             <div class="field {{ field.type }} {{ field.name }}">
               <label for="">{{ field.label }}</label>
-              <input type="{{ field.type }}" name="{{ field.name }}">
+              <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
               {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
             </div>
         {% endif %}
@@ -60,14 +60,14 @@
               <div class="field {{ field.type }} {{ field.name }}">
                 <label for="">{{ field.label }}</label>
                 {% if field.type is same as('select') %}
-                  <select name="{{ field.name }}">
+                  <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                     <option></option>
                     {% for option in field.enum %}
                     <option value="{{ option }}">{{ option }}</option>
                     {% endfor %}
                   </select>
                   {% else %}
-                  <input type="{{ field.type }}" name="{{ field.name }}">
+                  <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                 {% endif %}
                 {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
               </div>
