@@ -119,6 +119,11 @@ class ApiDelivery implements MessageDeliveryInterface
         $this->setOk(false);
         Log::error(sprintf('%s API request returned with code 400!', $this->getResponse()->getPartner()->getIdentifier()), json_decode($result, true));
       }
+      else if ($this->getClient()->hasError())
+      {
+        $this->setOk(false);
+        Log::critical(sprintf('%s API request got error!', $this->getResponse()->getPartner()->getIdentifier()), [$this->getClient()->getError()]);
+      }
       else {
         $this->setOk(false);
         Log::critical(sprintf('%s API request returned unhandled response (code %s)!', $this->getResponse()->getPartner()->getIdentifier(), $code), [$result] ?? []);
@@ -174,6 +179,8 @@ class ApiDelivery implements MessageDeliveryInterface
     }
 
     $options[CURLOPT_RETURNTRANSFER] = true;
+    $options[CURLOPT_SSL_VERIFYPEER] = false;
+    $options[CURLOPT_CONNECTTIMEOUT] = 30;
 
     $this->getClient()->setClientOptions($options);
     $this->getClient()->setClientHeaders($headers);
