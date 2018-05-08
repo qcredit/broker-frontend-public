@@ -176,6 +176,7 @@ class ApiDelivery implements MessageDeliveryInterface
     Log::debug('Sending API request with body...', [$request->getRequestPayload()]);
 
     $options[CURLOPT_RETURNTRANSFER] = true;
+    $options[CURLOPT_SSL_VERIFYPEER] = false;
 
     $this->getClient()->setClientOptions($options);
     $this->getClient()->setClientHeaders($headers);
