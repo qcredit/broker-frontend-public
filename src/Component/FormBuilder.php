@@ -227,7 +227,7 @@ class FormBuilder
         'section' => $field['section'] ?? 'general',
         'enum' => $field['enum'] ?? false,
         'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
-        'order' => $field['priority'] ?? 100
+        'order' => $field['order'] ?? 100
       ]);
     }
   }
@@ -256,7 +256,8 @@ class FormBuilder
       'name' => 'marketingConsent',
       'type' => 'checkbox',
       'section' => 'general',
-      'label' => $this->getApplicationForm()->getFieldLabel('marketingConsent')
+      'label' => $this->getApplicationForm()->getFieldLabel('marketingConsent'),
+      'order' => 4
     ]);
 
     $this->sortFields();

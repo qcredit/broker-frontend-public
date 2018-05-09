@@ -280,7 +280,7 @@ class ApplicationController extends AbstractController
 
       $data['application'] = $newAppService->getApplication();
     }
-
+    var_dump($data['fields']);
     return $this->render($response, 'application/form.twig', $data);
   }
 
