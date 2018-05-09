@@ -25,11 +25,11 @@ class FormBuilder
   const DEFAULT_ORDER = 100;
   const SECTION_ORDER = [
     self::SECTION_GENERAL,
-    self::SECTION_INCOME,
+    self::SECTION_PERSONAL,
     self::SECTION_HOUSING,
+    self::SECTION_INCOME,
     self::SECTION_ACCOUNT,
-    self::SECTION_ADDITIONAL,
-    self::SECTION_PERSONAL
+    self::SECTION_ADDITIONAL
   ];
 
   /**
