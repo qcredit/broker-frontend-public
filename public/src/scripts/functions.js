@@ -1,6 +1,7 @@
 $(document).ready(function(){
   populateOptions($('.landing-form-amount'), 'PLN');  // Call function to populate loanAmount slider options dynamically. Second var is for units
   populateOptions($('.landing-form-duration'), 'M');  // Call function to populate loanTerm slider options dynamically. Second var is for units
+  calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   /* URL check to add active class to correct navlink */
   $(function(){
     var current = location.pathname;
@@ -91,15 +92,26 @@ $(document).ready(function(){
     $selectedOpt.prop('selected', true);
     calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
-  $('.personal-offer-container:first-child').addClass('featured');  // FOR DEMO VERSION ONLY
+  $('.loan-form .broker-btn-send').on('click', function() {
+    if($('.loan-form .field').hasClass('error')) {
+      var first_el = $('.loan-form .field.error').first();
+      $('html, body').animate({
+                    scrollTop: first_el.offset().top - 200
+                }, 300);
+      console.log($('.loan-form .field.error'));
+    }
+  });
 });
 
 // Calculate approximate monthly installment
 function calculateMonthly(amount,months) {
-  var monthlyInstallment = Math.round((amount/months)*1.3); // Monthly fee calculation logic here
-  $('.monthly-installment').text('PLN '+monthlyInstallment);
+  var monthlyInstallment1 = calculateInstallment(amount, months, 1.3); // Monthly fee calculation logic here
+  var monthlyInstallment2 = calculateInstallment(amount, months, 1.5); // Monthly fee calculation logic here
+  $('.monthly-installment').text(monthlyInstallment1 +" - "+ monthlyInstallment2 +" PLN");
 }
-
+function calculateInstallment(amount, months, a) {
+  return Math.round((amount/months)*a);
+}
   // Input field focused and filled classes
 $(".field input, .field textarea").focusin(function() {
   $(this).parent().addClass("focused");

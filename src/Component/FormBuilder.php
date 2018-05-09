@@ -15,6 +15,23 @@ use Broker\Domain\Interfaces\Repository\PartnerRepositoryInterface;
 
 class FormBuilder
 {
+  const SECTION_GENERAL = 'general';
+  const SECTION_INCOME = 'income';
+  const SECTION_PERSONAL = 'personal';
+  const SECTION_ADDITIONAL = 'additional';
+  const SECTION_HOUSING = 'housing';
+  const SECTION_ACCOUNT = 'account';
+
+  const DEFAULT_ORDER = 100;
+  const SECTION_ORDER = [
+    self::SECTION_GENERAL,
+    self::SECTION_INCOME,
+    self::SECTION_HOUSING,
+    self::SECTION_ACCOUNT,
+    self::SECTION_ADDITIONAL,
+    self::SECTION_PERSONAL
+  ];
+
   /**
    * @var PartnerDataMapperRepositoryInterface
    */
@@ -168,6 +185,14 @@ class FormBuilder
   }
 
   /**
+   * @return array
+   */
+  public function getSectionOrder()
+  {
+    return self::SECTION_ORDER;
+  }
+
+  /**
    * FormBuilder constructor.
    * @param PartnerDataMapperRepositoryInterface $partnerDataMapperRepository
    * @param PartnerRepositoryInterface $partnerRepository
@@ -221,13 +246,13 @@ class FormBuilder
     {
       if ($this->hasField($fieldName)) continue;
 
-      $this->addFieldToSection($field['section'] ?? 'general', [
+      $this->addFieldToSection($field['section'] ?? self::SECTION_GENERAL, [
         'name' => $fieldName,
         'type' => $this->determineFieldType($field),
-        'section' => $field['section'] ?? 'general',
+        'section' => $field['section'] ?? self::SECTION_GENERAL,
         'enum' => $field['enum'] ?? false,
         'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
-        'order' => $field['priority'] ?? 100
+        'order' => $field['order'] ?? self::DEFAULT_ORDER
       ]);
     }
   }
@@ -252,11 +277,12 @@ class FormBuilder
   {
     $this->searchSchemasForUniqueFields();
 
-    $this->addFieldToSection('general', [
+    $this->addFieldToSection(self::SECTION_GENERAL, [
       'name' => 'marketingConsent',
       'type' => 'checkbox',
-      'section' => 'general',
-      'label' => $this->getApplicationForm()->getFieldLabel('marketingConsent')
+      'section' => self::SECTION_GENERAL,
+      'label' => $this->getApplicationForm()->getFieldLabel('marketingConsent'),
+      'order' => 4
     ]);
 
     $this->sortFields();
@@ -266,15 +292,26 @@ class FormBuilder
 
   protected function sortFields()
   {
-    $fields = $this->getFields();
+    $sections = $this->getFields();
 
-    foreach ($fields as $section => &$set)
+    foreach ($sections as $section => &$set)
     {
       usort($set, function($a, $b) {
         return $a['order'] <=> $b['order'];
       });
     }
 
-    $this->setFields($fields);
+    $this->setFields($sections);
+  }
+
+  protected function sortSections()
+  {
+    $sections = $this->getFields();
+
+    uksort($sections, function($a, $b) {
+      return array_search($a, $this->getSectionOrder()) <=> array_search($b, $this->getSectionOrder());
+    });
+
+    $this->setFields($sections);
   }
 }

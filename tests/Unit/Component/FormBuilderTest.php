@@ -44,7 +44,7 @@ class FormBuilderTest extends BaseTest
 
     $this->mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(null)
+      ->setMethods(['getSectionOrder'])
       ->getMock();
   }
 
@@ -173,5 +173,57 @@ class FormBuilderTest extends BaseTest
     $this->mock->setFields($fields);
 
     $this->assertFalse($this->mock->hasField('lastName'));
+  }
+
+  public function testSortSections()
+  {
+    $order = [
+      'fruits',
+      'vegetables',
+      'meat',
+      'dairy'
+    ];
+
+    $sections = [
+      'dairy' => [],
+      'fruits' => [],
+      'vegetables' => [],
+      'meat' => []
+    ];
+
+    $this->mock->setFields($sections);
+    $this->mock->method('getSectionOrder')
+      ->willReturn($order);
+
+    $this->invokeMethod($this->mock, 'sortSections', []);
+
+    $this->assertSame($order, array_keys($this->mock->getFields()));
+  }
+
+  public function testSortFields()
+  {
+    $fields = [
+      'section1' => [
+        [
+          'name' => 'fname',
+          'type' => 'string',
+          'order' => 3
+        ],
+        [
+          'name' => 'lname',
+          'type' => 'string',
+          'order' => 1
+        ],
+        [
+          'name' => 'email',
+          'type' => 'string',
+          'order' => 0
+        ]
+      ]
+    ];
+
+    $this->mock->setFields($fields);
+    $this->invokeMethod($this->mock, 'sortFields', []);
+    $this->assertSame(['email', 'lname','fname'], array_column($this->mock->getFields()['section1'], 'name'));
   }
 }

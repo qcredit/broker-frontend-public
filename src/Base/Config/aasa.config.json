@@ -30,7 +30,9 @@
         "type": "object",
         "required": [
           "sourceType",
-          "netPerMonth"
+          "netPerMonth",
+          "yearSince",
+          "monthSince"
         ],
         "properties": {
           "sourceType": {
@@ -39,19 +41,24 @@
           "netPerMonth": {
             "type": "number",
             "section": "income",
-            "order": 3
+            "order": 2
           },
           "yearSince": {
             "type": "number",
             "minimum": 1900,
             "maximum": 2030,
-            "order": 1
+            "section": "income",
+            "order": 4
           },
           "monthSince": {
             "type": "integer",
             "minimum": 1,
             "maximum": 12,
-            "order": 1
+            "section": "income",
+            "order": 3,
+            "enum": [
+              1,2,3,4,5,6,7,8,9,10,11,12
+            ]
           }
         }
       },
@@ -75,7 +82,7 @@
         "type": "string",
         "example": "ZZC900146",
         "section": "personal",
-        "order": 1
+        "order": 3
       },
       "payoutMethod": {
         "type": "string",
@@ -99,7 +106,7 @@
           "Other"
         ],
         "section": "personal",
-        "order": 1
+        "order": 4
       },
       "maritalStatusType": {
         "type": "string",
@@ -114,7 +121,7 @@
           "Other"
         ],
         "section": "personal",
-        "order": 1
+        "order": 5
       },
       "housing": {
         "$ref": "#/definitions/housingObject"
@@ -145,7 +152,7 @@
         "maxLength": 50,
         "minLength": 1,
         "section": "personal",
-        "order": 1
+        "order": 2
       },
       "emailAddress": {
         "type": "string",
@@ -192,14 +199,14 @@
             "maxLength": 100,
             "minLength": 2,
             "section": "housing",
-            "order": 1
+            "order": 3
           },
           "postalCode": {
             "type": "string",
             "example": "62-262",
             "pattern": "^[0-9]{2}-[0-9]{3}$",
             "section": "housing",
-            "order": 1
+            "order": 7
           },
           "houseNumber": {
             "type": "string",
@@ -207,14 +214,14 @@
             "minLength": 1,
             "example": "1",
             "section": "housing",
-            "order": 1
+            "order": 4
           },
           "apartmentNumber": {
             "type": "string",
             "maxLength": 10,
             "example": "1",
             "section": "housing",
-            "order": 1
+            "order": 5
           },
           "city": {
             "type": "string",
@@ -222,7 +229,7 @@
             "minLength": 2,
             "example": "Zachowice",
             "section": "housing",
-            "order": 1
+            "order": 6
           }
         }
       },
@@ -244,7 +251,6 @@
           "accountType": {
             "type": "string",
             "enum": [
-              "-",
               "Personal",
               "Joint",
               "Company"
@@ -290,7 +296,7 @@
               "Other"
             ],
             "section": "housing",
-            "order": 1
+            "order": 2
           }
         }
       }
