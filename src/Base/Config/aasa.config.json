@@ -251,7 +251,6 @@
           "accountType": {
             "type": "string",
             "enum": [
-              "-",
               "Personal",
               "Joint",
               "Company"

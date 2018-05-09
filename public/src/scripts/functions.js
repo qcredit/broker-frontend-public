@@ -91,6 +91,15 @@ $(document).ready(function(){
     $selectedOpt.prop('selected', true);
     calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
   });
+  $('.loan-form .broker-btn-send').on('click', function() {
+    if($('.loan-form .field').hasClass('error')) {
+      var first_el = $('.loan-form .field.error').first();
+      $('html, body').animate({
+                    scrollTop: first_el.offset().top - 200
+                }, 500);
+      console.log($('.loan-form .field.error'));
+    }
+  });
 });
 
 // Calculate approximate monthly installment
