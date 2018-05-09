@@ -286,6 +286,7 @@ class FormBuilder
     ]);
 
     $this->sortFields();
+    $this->sortSections();
 
     return $this->getFields();
   }
