@@ -465,4 +465,38 @@ class AasaDataMapper implements PartnerDataMapperInterface
       ]
     ];
   }
+
+  /**
+   * @return array
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getIncomingUpdateSchema(): array
+  {
+    return $this->getDecodedConfigFile()['incomingUpdateSchema'];
+  }
+
+
+  public function getIncomingUpdateResponse(PartnerResponse $partnerResponse)
+  {
+    if ($partnerResponse->isOk())
+    {
+      return [
+        'updateResponse' => [
+          'status' => 'OK'
+        ]
+      ];
+    }
+
+
+  }
+
+  /**
+   * @param PartnerResponse $partnerResponse
+   * @return mixed
+   */
+  public function extractRemoteOfferId(PartnerResponse $partnerResponse)
+  {
+    return $partnerResponse->getResponseBody()['id'];
+  }
 }
