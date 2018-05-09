@@ -111,6 +111,11 @@ $container['RepositoryFactory'] = function($c)
   return new \App\Base\Factory\RepositoryFactory();
 };
 
+$container['PartnerResponseFactory'] = function($c)
+{
+  return new \Broker\Domain\Factory\PartnerResponseFactory();
+};
+
 $container['UserRepository'] = function($container) {
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
 /*  return new UserRepository(
@@ -186,7 +191,7 @@ $container['TermsController'] = function($c)
 
 $container['ApiController'] = function($c)
 {
-  return new \App\Controller\ApiController();
+  return new \App\Controller\ApiController($c->get('PartnerUpdateService'), $c);
 };
 
 $container['MessageTemplateRepository'] = function($c)
@@ -231,6 +236,15 @@ $container['ChooseOfferService'] = function($c)
     new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
     new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+  );
+};
+
+$container['PartnerUpdateService'] = function($c)
+{
+  return new \Broker\Domain\Service\PartnerUpdateService(
+    $c->get('OfferRepository'),
+    $c->get('PartnerDataMapperRepository'),
+    new \App\Base\Validator\SchemaValidator()
   );
 };
 

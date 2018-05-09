@@ -34,7 +34,7 @@ $app->group('/', function() {
   })->add(new Authenticator($this));
 })->add($container->get('csrf'));
 
-$app->post('/api/update', 'ApiController:updateAction');
+$app->post('/api/aasa', 'ApiController:aasaUpdateAction');
 
 $app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
 $app->get('/admin/logout', 'LoginController:logoutAction');
