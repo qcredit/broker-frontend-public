@@ -96,7 +96,7 @@ $(document).ready(function(){
       var first_el = $('.loan-form .field.error').first();
       $('html, body').animate({
                     scrollTop: first_el.offset().top - 200
-                }, 500);
+                }, 300);
       console.log($('.loan-form .field.error'));
     }
   });
