@@ -95,9 +95,11 @@
 }
 @media only screen and (min-width: 768px) {
   .home-hero {
+    position: relative;
     min-height: 400px;
     align-items: center;
-    background: url(../images/hero-bg.jpg) center;
+    background: url(../images/hero-bg2.jpg) no-repeat;
+    background-position: 50% 10%;
     background-size: cover;
     .landing-form {
       min-height: 400px;
@@ -106,6 +108,7 @@
       }
     }
     .home-hero-left {
+      color: #fefefe;
       h2{
         text-align: left;
         margin-top: 0;
@@ -114,6 +117,18 @@
       button, p {
         display: block;
       }
+    }
+    .home-hero-right {
+      padding-top: 1.25rem;
+    }
+    &:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(0,0,0,0.2);
     }
   }
   .monthly-installment {
