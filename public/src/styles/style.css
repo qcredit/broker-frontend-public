@@ -107,6 +107,9 @@
   color: #00aeef;
   font-weight: bold; }
 
+.landing-form-upper .bouncing-loader, .loan-form-upper .bouncing-loader {
+  display: none; }
+
 @media only screen and (max-width: 420px) {
   .home-hero-right {
     padding: 0; } }
@@ -163,6 +166,19 @@
 
   .monthly-installment {
     font-size: 1.25rem; } }
+@media only screen and (min-width: 769px) {
+  .landing-form-upper, .loan-form-upper {
+    position: relative; }
+    .landing-form-upper .landing-component, .loan-form-upper .landing-component {
+      opacity: 0;
+      transition: opacity 0.15s ease-in-out; }
+    .landing-form-upper .bouncing-loader, .loan-form-upper .bouncing-loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      margin-top: 0;
+      margin-left: -40px; } }
 @media only screen and (min-width: 1400px) {
   .home-hero {
     padding: 3rem 10%; } }
