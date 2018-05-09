@@ -78,3 +78,5 @@ Broker\Domain\Entity\Offer:
         referencedColumnName: id
         onDelete: RESTRICT
         onUpdate: CASCADE
+  lifecycleCallbacks:
+    preUpdate: [preStorageUpdate]

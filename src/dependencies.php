@@ -184,6 +184,11 @@ $container['TermsController'] = function($c)
   return new \App\Controller\TermsController($view);
 };
 
+$container['ApiController'] = function($c)
+{
+  return new \App\Controller\ApiController();
+};
+
 $container['MessageTemplateRepository'] = function($c)
 {
   return new \App\Base\Repository\MessageTemplateRepository($c);
