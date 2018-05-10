@@ -18,7 +18,7 @@
             {# Don't render #}
           {% else %}
             <div class="field {{ field.type }} {{ field.name }}">
-              <label for="">{{ field.label }}</label>
+              <label for="">{{ field.label }}*</label>
               <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
               {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
             </div>
@@ -58,7 +58,7 @@
               {# Don't render #}
             {% else %}
               <div class="field {{ field.type }} {{ field.name }}">
-                <label for="">{{ field.label }}</label>
+                <label for="">{{ field.label }}*</label>
                 {% if field.type is same as('select') %}
                   <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                     <option></option>
