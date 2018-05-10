@@ -212,7 +212,6 @@ $container['PartnerExtraDataLoader'] = function($c)
 $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
-    new PartnerDeliveryGateway(),
     $c->get('PartnerDataMapperRepository'),
     $c->get('MessageDeliveryService')
   );
