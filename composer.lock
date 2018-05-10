@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "881824dbb32723f899a7e7e99fd61a2bad481736"
+                "reference": "d26c2a7baa07dbc5d510781bc9a55a90109d6523"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/881824dbb32723f899a7e7e99fd61a2bad481736",
-                "reference": "881824dbb32723f899a7e7e99fd61a2bad481736",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/d26c2a7baa07dbc5d510781bc9a55a90109d6523",
+                "reference": "d26c2a7baa07dbc5d510781bc9a55a90109d6523",
                 "shasum": ""
             },
             "require-dev": {
@@ -34,7 +34,7 @@
                 "source": "https://github.com/aasa-global/broker/tree/master",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-05-08T09:37:50+00:00"
+            "time": "2018-05-10T12:39:34+00:00"
         },
         {
             "name": "bryanjhv/slim-session",

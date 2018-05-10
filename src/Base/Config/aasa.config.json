@@ -4,7 +4,10 @@
     "apiLiveUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
     "apiTestUrl": "https://api-test.aasapolska.pl/api/v1/loans",
     "logo": "/assets/img/aasa.jpg",
-    "email": "offers@aasa.global"
+    "email": "offers@aasa.global",
+    "localUsername": "aasa",
+    "localPassword": "xyz",
+    "authorization": "Basic"
   },
   "requestSchema": {
     "type": "object",
@@ -395,6 +398,86 @@
               "Y",
               "N"
             ]
+          }
+        }
+      }
+    }
+  },
+  "incomingUpdateSchema": {
+    "type": "object",
+    "required": ["update"],
+    "properties": {
+      "update": {
+        "type": "object",
+        "required": [
+          "status"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Accepted",
+              "InProcess",
+              "Rejected",
+              "Signed",
+              "Active",
+              "PaidBack"
+            ]
+          },
+          "amount": {
+            "type": "number"
+          },
+          "period": {
+            "type": "string"
+          },
+          "message": {
+            "type": "string"
+          },
+          "esignUrl": {
+            "type": "string"
+          },
+          "acceptancePageUrl": {
+            "type": "string"
+          },
+          "requiredDocuments": {
+            "type": "object"
+          },
+          "loanDetails": {
+            "type": "object",
+            "properties": {
+              "toBankAccount": {
+                "type": "number"
+              },
+              "interest": {
+                "type": "string"
+              },
+              "arrangementFee": {
+                "type": "string"
+              },
+              "administrationFee": {
+                "type": "string"
+              },
+              "apr": {
+                "type": "number"
+              },
+              "monthly": {
+                "type": "object",
+                "properties": {
+                  "first": {
+                    "type": "string"
+                  },
+                  "avg": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "signingMethod": {
+            "type": "string"
           }
         }
       }
