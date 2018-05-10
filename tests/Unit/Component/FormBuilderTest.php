@@ -86,7 +86,7 @@ class FormBuilderTest extends BaseTest
     $this->assertInstanceOf(PartnerDataMapperInterface::class, $result[0]);
   }
 
-  public function testSearchSchemasForUniqueFields()
+  public function testExtractMergedSchemasFields()
   {
     $mergedSchemas = [
       'allOf' => [
@@ -117,7 +117,7 @@ class FormBuilderTest extends BaseTest
     $mock->expects($this->exactly(count($mergedSchemas['allOf'])))
       ->method('extractSchemaFields');
 
-    $this->invokeMethod($mock, 'searchSchemasForUniqueFields', []);
+    $this->invokeMethod($mock, 'extractMergedSchemasFields', []);
   }
 
   public function testExtractSchemaFields()
@@ -145,6 +145,35 @@ class FormBuilderTest extends BaseTest
 
     $this->assertArraySubset(['general' => [0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general']]], $result);
     $this->assertArraySubset(['personal' => [0 => ['name' => 'firstName', 'type' => 'text', 'section' => 'personal']]], $result);
+  }
+
+  public function testExtractSchemaFieldsWithRequiredFields()
+  {
+    $schema = [
+      'required' => [
+        'netPerMonth'
+      ],
+      'properties' => [
+        'netPerMonth' => [
+          'type' => 'number'
+        ],
+        'firstName' => [
+          'type' => 'string',
+          'section' => 'personal'
+        ]
+      ]
+    ];
+    $mock = $this->getMockBuilder(FormBuilder::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getMergedPartnerSchemas'])
+      ->getMock();
+
+    $mock->setApplicationForm(new ApplicationForm());
+
+    $this->invokeMethod($mock, 'extractSchemaFields', [$schema]);
+    $result = $mock->getFields();
+
+    $this->assertArraySubset(['general' => [0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general', 'required' => true]]], $result);
   }
 
   public function testHasField()
