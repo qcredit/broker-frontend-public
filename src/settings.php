@@ -67,11 +67,11 @@ return [
         ],
         'mailer' => [
           'host' => 'smtp.gmail.com',
-          'username' => 'aasa.testaus@gmail.com',
-          'password' => 'Aasa2014',
+          'username' => 'qcredit.test@gmail.com',
+          'password' => 'URXpY7xGDL',
           'secure' => 'tls',
           'port' => 587,
-          'sender' => 'aasa.testaus@gmail.com',
+          'sender' => 'qcredit.test@gmail.com',
           'senderName' => 'qCredit'
         ],
         'messente' => [
