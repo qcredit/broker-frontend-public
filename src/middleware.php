@@ -10,5 +10,3 @@ $app->add(new \App\Middleware\Session([
 ]));
 
 $app->add(new LanguageSwitcher($app));
-
-$app->add($container->get('csrf'));

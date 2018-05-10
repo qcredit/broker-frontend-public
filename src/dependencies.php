@@ -111,6 +111,11 @@ $container['RepositoryFactory'] = function($c)
   return new \App\Base\Factory\RepositoryFactory();
 };
 
+$container['PartnerResponseFactory'] = function($c)
+{
+  return new \Broker\Domain\Factory\PartnerResponseFactory();
+};
+
 $container['UserRepository'] = function($container) {
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
 /*  return new UserRepository(
@@ -146,7 +151,7 @@ $container['TestController'] = function($c)
 $container['PartnerController'] = function($c) {
   $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 
-  $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
+  $partnerDataLoader = $c->get('PartnerExtraDataLoader');
   return new \App\Controller\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
 };
 
@@ -184,6 +189,11 @@ $container['TermsController'] = function($c)
   return new \App\Controller\TermsController($view);
 };
 
+$container['ApiController'] = function($c)
+{
+  return new \App\Controller\ApiController($c->get('PartnerUpdateService'), $c);
+};
+
 $container['MessageTemplateRepository'] = function($c)
 {
   return new \App\Base\Repository\MessageTemplateRepository($c);
@@ -192,6 +202,11 @@ $container['MessageTemplateRepository'] = function($c)
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
+};
+
+$container['PartnerExtraDataLoader'] = function($c)
+{
+  return new \App\Base\Repository\PartnerExtraDataLoader($c->get('PartnerDataMapperRepository'));
 };
 
 $container['PartnerRequestsService'] = function($c)
@@ -226,6 +241,15 @@ $container['ChooseOfferService'] = function($c)
     new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
     new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+  );
+};
+
+$container['PartnerUpdateService'] = function($c)
+{
+  return new \Broker\Domain\Service\PartnerUpdateService(
+    $c->get('OfferRepository'),
+    $c->get('PartnerDataMapperRepository'),
+    new \App\Base\Validator\SchemaValidator()
   );
 };
 
