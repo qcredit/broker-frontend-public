@@ -8,9 +8,11 @@
 
 namespace App\Controller;
 
+use Broker\Domain\Entity\Partner;
+use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\Factory\PartnerResponseFactoryInterface;
+use App\Base\Persistence\Doctrine\PartnerRepository;
 use Broker\Domain\Interfaces\Service\PartnerUpdateServiceInterface;
-use Broker\System\Log;
 use Monolog\Logger;
 use Slim\Container;
 use Slim\Http\Request;
@@ -54,10 +56,11 @@ class ApiController
   /**
    * @return PartnerResponseFactoryInterface
    * @codeCoverageIgnore
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function getPartnerResponseFactory()
   {
-    return $this->partnerResponseFactory;
+    return $this->getContainer()->get('PartnerResponseFactory');
   }
 
   /**
@@ -114,12 +117,40 @@ class ApiController
     $this->setContainer($container);
   }
 
-  public function aasaUpdateAction(Request $request, Response $response, $args)
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function updateAction(Request $request, Response $response, $args)
   {
-    $data = $request->getParsedBody();
-    $this->getLogger()->debug('Incoming Aasa update request...', $data);
+    $data = $request->getParsedBody() ?? [];
+    $this->getLogger()->debug('Incoming Aasa update request...');
 
+    $partnerResponse = $this->preparePartnerResponse($data, $request->getAttribute('partner'));
 
-    return $response->withJson(['message' => 'OK']);
+    $service = $this->getPartnerUpdateService();
+    $service->setPartnerResponse($partnerResponse)->run();
+
+    return $response->withJson($service->getResponseForPartner());
   }
+
+  /**
+   * @param array $data
+   * @param Partner $partner
+   * @return PartnerResponse
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function preparePartnerResponse(array $data, Partner $partner)
+  {
+    $partnerResponse = $this->getPartnerResponseFactory()->create();
+    $partnerResponse->setType(PartnerResponse::TYPE_EXTERNAL_UPDATE)
+      ->setResponseBody(json_encode($data))
+      ->setPartner($partner);
+
+    return $partnerResponse;
+  }
+
 }

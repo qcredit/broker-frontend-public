@@ -4,7 +4,10 @@
     "apiLiveUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
     "apiTestUrl": "http://crm-test.asakredyt.pl/api/v1/loans",
     "logo": "/assets/img/aasa.jpg",
-    "email": "offers@aasa.global"
+    "email": "offers@aasa.global",
+    "localUsername": "aasa",
+    "localPassword": "xyz",
+    "authorization": "Basic"
   },
   "requestSchema": {
     "type": "object",
@@ -371,75 +374,81 @@
   },
   "incomingUpdateSchema": {
     "type": "object",
-    "required": [
-      "status"
-    ],
+    "required": ["update"],
     "properties": {
-      "id": {
-        "type": "string"
-      },
-      "status": {
-        "type": "string",
-        "enum": [
-          "Accepted",
-          "InProcess",
-          "Rejected",
-          "Signed",
-          "Active",
-          "PaidBack"
-        ]
-      },
-      "amount": {
-        "type": "number"
-      },
-      "period": {
-        "type": "string"
-      },
-      "message": {
-        "type": "string"
-      },
-      "esignUrl": {
-        "type": "string"
-      },
-      "acceptancePageUrl": {
-        "type": "string"
-      },
-      "requiredDocuments": {
-        "type": "object"
-      },
-      "loanDetails": {
+      "update": {
         "type": "object",
+        "required": [
+          "status"
+        ],
         "properties": {
-          "toBankAccount": {
+          "id": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "Accepted",
+              "InProcess",
+              "Rejected",
+              "Signed",
+              "Active",
+              "PaidBack"
+            ]
+          },
+          "amount": {
             "type": "number"
           },
-          "interest": {
+          "period": {
             "type": "string"
           },
-          "arrangementFee": {
+          "message": {
             "type": "string"
           },
-          "administrationFee": {
+          "esignUrl": {
             "type": "string"
           },
-          "apr": {
-            "type": "number"
+          "acceptancePageUrl": {
+            "type": "string"
           },
-          "monthly": {
+          "requiredDocuments": {
+            "type": "object"
+          },
+          "loanDetails": {
             "type": "object",
             "properties": {
-              "first": {
+              "toBankAccount": {
+                "type": "number"
+              },
+              "interest": {
                 "type": "string"
               },
-              "avg": {
+              "arrangementFee": {
+                "type": "string"
+              },
+              "administrationFee": {
+                "type": "string"
+              },
+              "apr": {
                 "type": "number"
+              },
+              "monthly": {
+                "type": "object",
+                "properties": {
+                  "first": {
+                    "type": "string"
+                  },
+                  "avg": {
+                    "type": "number"
+                  }
+                }
               }
             }
+          },
+          "signingMethod": {
+            "type": "string"
           }
         }
-      },
-      "signingMethod": {
-        "type": "string"
       }
     }
   }

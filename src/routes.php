@@ -3,6 +3,7 @@
 use Slim\Http\Request;
 use Slim\Http\Response;
 use App\Middleware\Authenticator;
+use App\Middleware\PartnerAuthenticator;
 // Routes
 
 $app->group('/', function() {
@@ -34,7 +35,7 @@ $app->group('/', function() {
   })->add(new Authenticator($this));
 })->add($container->get('csrf'));
 
-$app->post('/api/aasa', 'ApiController:aasaUpdateAction');
+$app->post('/api/update', 'ApiController:updateAction')->add(new PartnerAuthenticator($app));
 
 $app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
 $app->get('/admin/logout', 'LoginController:logoutAction');

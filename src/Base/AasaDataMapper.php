@@ -156,7 +156,10 @@ class AasaDataMapper implements PartnerDataMapperInterface
       'amount' => 'loanAmount',
       'period' => 'loanTerm',
       'interest' => 'interest',
-      'avg' => 'monthlyFee'
+      'avg' => 'monthlyFee',
+      'apr' => 'apr',
+      'acceptancePageUrl' => 'acceptancePageUrl',
+      'esignUrl' => 'signingPageUrl'
     ];
   }
 
@@ -476,19 +479,29 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return $this->getDecodedConfigFile()['incomingUpdateSchema'];
   }
 
-
+  /**
+   * @param PartnerResponse $partnerResponse
+   * @return array
+   */
   public function getIncomingUpdateResponse(PartnerResponse $partnerResponse)
   {
-    if ($partnerResponse->isOk())
+    if (!$partnerResponse->isOk())
     {
+      $errors = $partnerResponse->getErrors();
+
       return [
         'updateResponse' => [
-          'status' => 'OK'
+          'status' => 'ERROR',
+          'message' => !empty($errors) ? $errors[0] : 'Unknown error'
         ]
       ];
     }
 
-
+    return [
+      'updateResponse' => [
+        'status' => 'OK'
+      ]
+    ];
   }
 
   /**
@@ -497,6 +510,6 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function extractRemoteOfferId(PartnerResponse $partnerResponse)
   {
-    return $partnerResponse->getResponseBody()['id'];
+    return json_decode($partnerResponse->getResponseBody(), true)['update']['id'];
   }
 }

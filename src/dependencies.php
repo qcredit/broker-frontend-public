@@ -151,7 +151,7 @@ $container['TestController'] = function($c)
 $container['PartnerController'] = function($c) {
   $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 
-  $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
+  $partnerDataLoader = $c->get('PartnerExtraDataLoader');
   return new \App\Controller\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
 };
 
@@ -202,6 +202,11 @@ $container['MessageTemplateRepository'] = function($c)
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
+};
+
+$container['PartnerExtraDataLoader'] = function($c)
+{
+  return new \App\Base\Repository\PartnerExtraDataLoader($c->get('PartnerDataMapperRepository'));
 };
 
 $container['PartnerRequestsService'] = function($c)
