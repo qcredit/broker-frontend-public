@@ -380,13 +380,14 @@ class ApplicationController extends AbstractController
   protected function generateOfferLinkMessage()
   {
     $application = $this->getPrepareService()->getApplication();
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
     $message = new Message();
     $message->setTitle('Offers for your application')
       ->setType(Message::MESSAGE_TYPE_EMAIL)
       ->setBody($this->generateEmailContent('mail/offer-link.twig', [
         'application' => $application,
         'title' => 'Our offers for your application',
-        'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
       ]))
       ->setRecipient($application->getEmail());
 

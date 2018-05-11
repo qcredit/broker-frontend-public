@@ -49,6 +49,10 @@ class FormBuilder
    */
   protected $fields = [];
   /**
+   * @var array
+   */
+  protected $requiredFields = [];
+  /**
    * @var ApplicationForm
    */
   protected $applicationForm;
@@ -145,6 +149,35 @@ class FormBuilder
   }
 
   /**
+   * @return array
+   * @codeCoverageIgnore
+   */
+  public function getRequiredFields()
+  {
+    return $this->requiredFields;
+  }
+
+  /**
+   * @param array $requiredFields
+   * @return FormBuilder
+   * @codeCoverageIgnore
+   */
+  public function setRequiredFields(array $requiredFields)
+  {
+    $this->requiredFields = $requiredFields;
+    return $this;
+  }
+
+  /**
+   * @param string $fieldName
+   * @return bool
+   */
+  public function isFieldRequired(string $fieldName): bool
+  {
+    return in_array($fieldName, $this->getRequiredFields());
+  }
+
+  /**
    * @param string $section
    * @param array $field
    * @return $this
@@ -226,37 +259,6 @@ class FormBuilder
     return $this->getSchemaHelper()->mergePartnersSchemas($dataMappers);
   }
 
-
-  protected function searchSchemasForUniqueFields()
-  {
-    $mergedSchema = $this->getMergedPartnerSchemas();
-    foreach ($mergedSchema['allOf'] as $set)
-    {
-      $set = json_decode(json_encode($set), true);
-      $this->extractSchemaFields($set);
-    }
-  }
-
-  /**
-   * @param array $set
-   */
-  protected function extractSchemaFields(array $set)
-  {
-    foreach ($set['properties'] as $fieldName => $field)
-    {
-      if ($this->hasField($fieldName)) continue;
-
-      $this->addFieldToSection($field['section'] ?? self::SECTION_GENERAL, [
-        'name' => $fieldName,
-        'type' => $this->determineFieldType($field),
-        'section' => $field['section'] ?? self::SECTION_GENERAL,
-        'enum' => $field['enum'] ?? false,
-        'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
-        'order' => $field['order'] ?? self::DEFAULT_ORDER
-      ]);
-    }
-  }
-
   /**
    * @param $field
    * @return string
@@ -275,7 +277,7 @@ class FormBuilder
    */
   public function getFormFields()
   {
-    $this->searchSchemasForUniqueFields();
+    $this->extractMergedSchemasFields();
 
     $this->addFieldToSection(self::SECTION_GENERAL, [
       'name' => 'marketingConsent',
@@ -289,6 +291,43 @@ class FormBuilder
     $this->sortSections();
 
     return $this->getFields();
+  }
+
+  protected function extractMergedSchemasFields()
+  {
+    $mergedSchema = $this->getMergedPartnerSchemas();
+
+    foreach ($mergedSchema['allOf'] as $set)
+    {
+      $set = json_decode(json_encode($set), true);
+      $this->extractSchemaFields($set);
+    }
+  }
+
+  /**
+   * @param array $set
+   */
+  protected function extractSchemaFields(array $set)
+  {
+    if (isset($set['required']) && !empty($set['required']))
+    {
+      $this->setRequiredFields(array_unique(array_merge($this->getRequiredFields(), $set['required'])));
+    }
+
+    foreach ($set['properties'] as $fieldName => $field)
+    {
+      if ($this->hasField($fieldName)) continue;
+
+      $this->addFieldToSection($field['section'] ?? self::SECTION_GENERAL, [
+        'name' => $fieldName,
+        'type' => $this->determineFieldType($field),
+        'required' => $this->isFieldRequired($fieldName),
+        'section' => $field['section'] ?? self::SECTION_GENERAL,
+        'enum' => $field['enum'] ?? false,
+        'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
+        'order' => $field['order'] ?? self::DEFAULT_ORDER
+      ]);
+    }
   }
 
   protected function sortFields()
