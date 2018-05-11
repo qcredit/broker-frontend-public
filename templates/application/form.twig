@@ -17,8 +17,8 @@
           {% elseif field.name is same as('loanTerm') or field.name is same as('loanAmount') %}
             {# Don't render #}
           {% else %}
-            <div class="field {{ field.type }} {{ field.name }}">
-              <label for="">{{ field.label }}*</label>
+            <div class="field {{ field.type }} {{ field.name }} {% if field.required %}required{% endif %}">
+              <label for="">{{ field.label }}{% if field.required %}*{% endif %}</label>
               <input type="{{ field.type }}" id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
               {% if application.errors[field.name] %}<p class="rules">{{ application.errors[field.name] }}</p>{% endif %}
             </div>
@@ -57,8 +57,8 @@
             {% elseif field.name is same as('loanTerm') or field.name is same as('loanAmount') %}
               {# Don't render #}
             {% else %}
-              <div class="field {{ field.type }} {{ field.name }}">
-                <label for="">{{ field.label }}*</label>
+              <div class="field {{ field.type }} {{ field.name }} {% if field.required %}required{% endif %}">
+                <label for="">{{ field.label }}{% if field.required %}*{% endif %}</label>
                 {% if field.type is same as('select') %}
                   <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                     <option></option>
@@ -83,7 +83,6 @@
   <!--{% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %} -->
     <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
     <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
-  </div>
   <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
 {% endblock %}
