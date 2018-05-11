@@ -35,7 +35,7 @@ $app->group('/', function() {
   })->add(new Authenticator($this));
 })->add($container->get('csrf'));
 
-$app->post('/api/update', 'ApiController:updateAction')->add(new PartnerAuthenticator($app));
+$app->post('/api/partner/update-offer', 'ApiController:updateAction')->add(new PartnerAuthenticator($app));
 
 $app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
 $app->get('/admin/logout', 'LoginController:logoutAction');
