@@ -6,8 +6,10 @@
     "logo": "/assets/img/aasa.jpg",
     "email": "offers@aasa.global",
     "localUsername": "aasa",
-    "localPassword": "xyz",
-    "authorization": "Basic"
+    "localPassword": "2q.aL3n7c@mP(X>[",
+    "authorization": "Basic",
+    "remoteUsername": "qCredit",
+    "remotePassword": "Nm3gpzW(Th$quf)R"
   },
   "requestSchema": {
     "type": "object",
