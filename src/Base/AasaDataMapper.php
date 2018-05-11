@@ -289,9 +289,13 @@ class AasaDataMapper implements PartnerDataMapperInterface
     {
       $data['paidOutDate'] = new \DateTime();
     }
-    else if (in_array($data['data']['status'], [self::STATUS_ACCEPTED, self::STATUS_SIGNED, self::STATUS_WAITING_PAID_OUT]))
+    else if ($data['data']['status'] === self::STATUS_ACCEPTED)
     {
       $data['acceptedDate'] = new \DateTime();
+    }
+    else if (in_array($data['data']['status'], [self::STATUS_SIGNED, self::STATUS_WAITING_PAID_OUT]))
+    {
+      $data['chosenDate'] = new \DateTime();
     }
     else if ($data['data']['status'] === self::STATUS_REJECTED)
     {
