@@ -107,6 +107,9 @@
   color: #00aeef;
   font-weight: bold; }
 
+.landing-form-upper .bouncing-loader, .loan-form-upper .bouncing-loader {
+  display: none; }
+
 @media only screen and (max-width: 420px) {
   .home-hero-right {
     padding: 0; } }
@@ -132,23 +135,50 @@
     margin: 0 .625rem 1rem; } }
 @media only screen and (min-width: 768px) {
   .home-hero {
+    position: relative;
     min-height: 400px;
     align-items: center;
-    background: url(../images/hero-bg.jpg) center;
+    background: url(../images/hero-bg2.jpg) no-repeat;
+    background-position: 50% 10%;
     background-size: cover; }
     .home-hero .landing-form {
       min-height: 400px; }
       .home-hero .landing-form .field {
         flex: 1 0 200px; }
-    .home-hero .home-hero-left h2 {
-      text-align: left;
-      margin-top: 0;
-      margin-bottom: .5rem; }
-    .home-hero .home-hero-left button, .home-hero .home-hero-left p {
-      display: block; }
+    .home-hero .home-hero-left {
+      color: #fefefe; }
+      .home-hero .home-hero-left h2 {
+        text-align: left;
+        margin-top: 0;
+        margin-bottom: .5rem; }
+      .home-hero .home-hero-left button, .home-hero .home-hero-left p {
+        display: block; }
+    .home-hero .home-hero-right {
+      padding-top: 1.25rem; }
+    .home-hero:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.2); }
 
   .monthly-installment {
     font-size: 1.25rem; } }
+@media only screen and (min-width: 769px) {
+  .landing-form-upper, .loan-form-upper {
+    position: relative; }
+    .landing-form-upper .landing-component, .loan-form-upper .landing-component {
+      opacity: 0;
+      transition: opacity 0.15s ease-in-out; }
+    .landing-form-upper .bouncing-loader, .loan-form-upper .bouncing-loader {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      display: flex;
+      margin-top: 0;
+      margin-left: -40px; } }
 @media only screen and (min-width: 1400px) {
   .home-hero {
     padding: 3rem 10%; } }
@@ -705,7 +735,8 @@ section > h1 {
   font-weight: 700;
   font-size: 14px;
   text-align: center;
-  cursor: pointer; }
+  cursor: pointer;
+  transition: all .15s ease-in-out; }
   .broker-btn:focus {
     outline: none;
     box-shadow: none; }

@@ -2,6 +2,7 @@ $(document).ready(function(){
   populateOptions($('.landing-form-amount'), 'PLN');  // Call function to populate loanAmount slider options dynamically. Second var is for units
   populateOptions($('.landing-form-duration'), 'M');  // Call function to populate loanTerm slider options dynamically. Second var is for units
   calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+
   /* URL check to add active class to correct navlink */
   $(function(){
     var current = location.pathname;
@@ -58,6 +59,8 @@ $(document).ready(function(){
     $loanDuration.on('change', function() {
       $loanDurationSlider.val(this.value).change();
     });
+    $('.landing-component').css('opacity', 1);
+    $('.landing-form-upper .bouncing-loader, .loan-form-upper .bouncing-loader').css('opacity', 0);
   }); // Loan landing form functions for laptops and desktops end here
 
   // Loan landing form functions for mobile devices and tablets
