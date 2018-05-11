@@ -148,15 +148,18 @@ class ApiDelivery implements MessageDeliveryInterface
 
   protected function setClientOptions()
   {
+    $request = $this->getMessage()->getRelatedEntity();
+    $username = $request->getPartner()->getAttribute('remoteUsername');
+    $password = $request->getPartner()->getAttribute('remotePassword');
+
     $headers = [
       'Accept: application/json',
       'Content-Type: application/json',
-      'Authorization: Basic a3Jpc3RqYW4tdGVzdDprcmlzdGphbi10ZXN0'
+      sprintf('Authorization: Basic %s', base64_encode(sprintf('%s:%s', $username, $password)))
     ];
 
     $options = [];
 
-    $request = $this->getMessage()->getRelatedEntity();
     if ($request->getType() === PartnerRequest::REQUEST_TYPE_INITIAL)
     {
       $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl();
