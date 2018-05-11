@@ -239,56 +239,24 @@ class ApplicationController extends AbstractController
    * @param $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @todo Should allow validation according to scenarios
    */
-  public function indexAction($request, $response, $args)
+  public function indexAction(Request $request, Response $response, $args)
   {
-    $data = [
-      'incomeSourceType' => 'Employed',
-      'netPerMonth' => 4400,
-      'employerName' => 'European Parliament',
-      'position' => 'Cleaning man',
-      'yearSince' => 2013,
-      'monthSince' => 1,
-      'currentStudy' => '',
-      'trade' => 'unknown',
-      'loanPurposeType' => 'Bills',
-      'pin' => '71121513234',
-      'street' => 'Wolności',
-      'zip' => '44-285',
-      'houseNr' => '60',
-      'apartmentNr' => ' ',
-      'city' => 'Kornowac',
-      'documentNr' => 'CCY014054',
-      'mobilePhoneType' => 'PrePaid',
-      'payoutMethod' => 'Account',
-      'educationType' => 'MSc',
-      'accountType' => 'Personal',
-      'accountNr' => '32132345678901234569415123',
-      'accountHolder' => 'Anu Saagim',
-      'maritalStatusType' => 'Single',
-      'residentialType' => 'Own',
-      'propertyType' => 'Apartment',
-      'loanAmount' => 2100,
-      'loanTerm' => 18,
-      'firstName' => 'Adam',
-      'lastName' => 'Barański',
-      'email' => 'hendrik.uibopuu@aasaglobal.com',
-      'phone' => '+48739050381'
-    ];
-
     $data = [];
     $data['fields'] = $this->getFormBuilder()->getFormFields();
     if ($request->isPost())
     {
+      $postData = $request->getParsedBody();
       $newAppService = $this->getNewApplicationService();
-      if ($this->isFromFrontpage())
+      if ($this->isFromFrontpage() || $this->isAjax($request))
       {
+        unset($postData['applicationHash']);
         $newAppService->setValidationEnabled(false);
       }
 
-      $postData = $request->getParsedBody();
-      unset($data['csrf_name']);
-      unset($data['csrf_value']);
+      unset($postData['csrf_name']);
+      unset($postData['csrf_value']);
 
       if ($newAppService->setData($postData)->run())
       {
@@ -312,8 +280,7 @@ class ApplicationController extends AbstractController
 
       $data['application'] = $newAppService->getApplication();
     }
-
-    return $this->container->get('view')->render($response, 'application/form.twig', $data);
+    return $this->render($response, 'application/form.twig', $data);
   }
 
   /**
@@ -413,13 +380,14 @@ class ApplicationController extends AbstractController
   protected function generateOfferLinkMessage()
   {
     $application = $this->getPrepareService()->getApplication();
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
     $message = new Message();
     $message->setTitle('Offers for your application')
       ->setType(Message::MESSAGE_TYPE_EMAIL)
       ->setBody($this->generateEmailContent('mail/offer-link.twig', [
         'application' => $application,
         'title' => 'Our offers for your application',
-        'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
       ]))
       ->setRecipient($application->getEmail());
 

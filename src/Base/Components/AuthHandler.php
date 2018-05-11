@@ -200,7 +200,14 @@ class AuthHandler
       throw new \Exception('No e-mail given!');
     }
 
-    $this->setUser($this->getUserRepository()->getByEmail($payload['email']));
+    $user = $this->getUserRepository()->getByEmail($payload['email']);
+
+    if (!$user)
+    {
+      return false;
+    }
+
+    $this->setUser($user);
   }
 
   /**

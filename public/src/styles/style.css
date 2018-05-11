@@ -69,6 +69,7 @@
   background-color: #eaeaea; }
   .home-hero .home-hero-left h2 {
     text-align: center;
+    margin-top: 1.25rem;
     margin-bottom: 1.25rem; }
   .home-hero .home-hero-left button, .home-hero .home-hero-left p {
     display: none; }
@@ -141,6 +142,7 @@
         flex: 1 0 200px; }
     .home-hero .home-hero-left h2 {
       text-align: left;
+      margin-top: 0;
       margin-bottom: .5rem; }
     .home-hero .home-hero-left button, .home-hero .home-hero-left p {
       display: block; }
@@ -185,20 +187,22 @@
 .landing-component .landing-slider {
   display: flex; }
   .landing-component .landing-slider .landing-form-adjust {
-    width: 43px;
-    height: 43px;
+    width: 53px;
+    height: 53px;
     padding: 0;
     background: #00aeef;
-    color: #FFF;
-    font-size: 36px;
-    font-weight: bold;
-    line-height: 1;
     text-align: center;
     cursor: pointer;
     -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
-    user-select: none; }
+    user-select: none;
+    touch-action: manipulation; }
+    .landing-component .landing-slider .landing-form-adjust span {
+      color: #FFF;
+      font-size: 43px;
+      font-weight: bold;
+      line-height: 53px; }
   .landing-component .landing-slider .landing-form-adjust.disabled {
     background-color: #e6e9ee; }
 .landing-component select {
@@ -299,6 +303,11 @@
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px; } }
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+    border-radius: 0; } }
 .loan-form {
   max-width: 800px;
   margin: 0 auto 3rem; }
@@ -358,20 +367,23 @@
     border: 0;
     border-bottom: 1px solid #999;
     font-size: 1rem;
-    color: #000;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    background-image: url(../images/ic_down.png);
-    background-repeat: no-repeat;
-    background-position: right 0.875rem center;
-    background-size: 0.8125rem;
-    cursor: pointer; }
+    color: #000; }
   .field .rules {
     position: absolute;
     bottom: -1.875rem;
     font-size: 0.675rem;
     color: #CE0000; }
+
+.field select, .range-slider-select-value {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-color: #fff;
+  background-image: url(../images/ic_down.png);
+  background-repeat: no-repeat;
+  background-position: right 0.875rem center;
+  background-size: 0.8125rem;
+  cursor: pointer; }
 
 .form-block .field {
   flex: 1 1 18.75rem; }
@@ -389,7 +401,8 @@
   font-size: 0.75rem; }
 
 .checkbox {
-  flex: 1 1 100% !important; }
+  flex: 1 1 100% !important;
+  margin: 3rem 0 0; }
   .checkbox input[type=checkbox] {
     opacity: 0;
     float: left; }
@@ -570,16 +583,42 @@ textarea {
   text-transform: uppercase;
   color: #d0d0d0; }
 
+.affiliate-offer-container .loan-offer-head {
+  justify-content: center; }
+.affiliate-offer-container .loan-offer-body span {
+  flex: 0 0 100%;
+  font-size: 1rem;
+  text-align: center; }
+
 @media only screen and (min-width: 360px) {
-  .loan-offer-body span {
+  .personal-offer-container .loan-offer-body span {
     font-size: 1rem;
     flex: 0 0 118px; } }
 @media only screen and (min-width: 768px) {
   .offer-list-head {
     margin: 3rem 0; }
 
-  .loan-offer-body span {
-    flex: 0 0 140px; } }
+  .personal-offer-container .loan-offer-body span {
+    flex: 0 0 140px; }
+
+  .affiliate-offer-container {
+    flex-direction: row; }
+    .affiliate-offer-container .loan-offer-head {
+      flex: 0 0 160px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom-width: 0px;
+      padding: 0 .5rem; }
+      .affiliate-offer-container .loan-offer-head .loan-offerer-name {
+        display: none; }
+    .affiliate-offer-container .loan-offer-body span {
+      font-size: .875rem;
+      text-align: left; }
+    .affiliate-offer-container .loan-offer-footer {
+      padding: 0 .5rem; }
+      .affiliate-offer-container .loan-offer-footer .broker-btn {
+        padding: 1rem; } }
 @media only screen and (min-width: 1024px) {
   .offer-list-head {
     margin: 4rem 0; }
@@ -608,7 +647,13 @@ textarea {
   .loan-offer-footer {
     flex: 0 0 200px; }
     .loan-offer-footer .broker-btn-gold {
-      padding: 1rem; } }
+      padding: 1rem; }
+
+  .affiliate-offer-container .loan-offer-head {
+    flex-direction: column;
+    flex: 0 0 230px; }
+  .affiliate-offer-container .loan-offer-body span {
+    font-size: 1rem; } }
 @media only screen and (min-width: 1200px) {
   .loan-offer-head {
     flex-direction: row;
@@ -622,11 +667,18 @@ textarea {
 
   .loan-offer-body {
     margin-left: 2rem;
-    justify-content: center; } }
+    justify-content: center; }
+
+  .affiliate-offer-container .loan-offer-head {
+    flex-direction: row;
+    flex: 0 0 270px; } }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   /* IE10+ CSS styles go here */
   .loan-offer-body {
-    max-width: 400px; } }
+    max-width: 400px; }
+
+  .affiliate-offer-container .loan-offer-body {
+    flex: 0 0 328px; } }
 /* Typography */
 * {
   -webkit-font-smoothing: antialiased;

@@ -156,7 +156,10 @@ class AasaDataMapper implements PartnerDataMapperInterface
       'amount' => 'loanAmount',
       'period' => 'loanTerm',
       'interest' => 'interest',
-      'avg' => 'monthlyFee'
+      'avg' => 'monthlyFee',
+      'apr' => 'apr',
+      'acceptancePageUrl' => 'acceptancePageUrl',
+      'esignUrl' => 'signingPageUrl'
     ];
   }
 
@@ -464,5 +467,49 @@ class AasaDataMapper implements PartnerDataMapperInterface
         'message' => 'Signing method not allowed!'
       ]
     ];
+  }
+
+  /**
+   * @return array
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getIncomingUpdateSchema(): array
+  {
+    return $this->getDecodedConfigFile()['incomingUpdateSchema'];
+  }
+
+  /**
+   * @param PartnerResponse $partnerResponse
+   * @return array
+   */
+  public function getIncomingUpdateResponse(PartnerResponse $partnerResponse)
+  {
+    if (!$partnerResponse->isOk())
+    {
+      $errors = $partnerResponse->getErrors();
+
+      return [
+        'updateResponse' => [
+          'status' => 'ERROR',
+          'message' => !empty($errors) ? $errors[0] : 'Unknown error'
+        ]
+      ];
+    }
+
+    return [
+      'updateResponse' => [
+        'status' => 'OK'
+      ]
+    ];
+  }
+
+  /**
+   * @param PartnerResponse $partnerResponse
+   * @return mixed
+   */
+  public function extractRemoteOfferId(PartnerResponse $partnerResponse)
+  {
+    return json_decode($partnerResponse->getResponseBody(), true)['update']['id'];
   }
 }

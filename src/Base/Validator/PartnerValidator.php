@@ -79,4 +79,18 @@ class PartnerValidator extends AbstractEntityValidator
 
     return true;
   }
+
+  /**
+   * @return bool
+   */
+  public function validateFeatured()
+  {
+    if (!V::boolVal())
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_FEATURED => 'Invalid value!']);
+      return false;
+    }
+
+    return true;
+  }
 }

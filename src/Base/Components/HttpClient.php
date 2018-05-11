@@ -8,6 +8,8 @@
 
 namespace App\Base\Components;
 
+use Broker\System\Log;
+
 class HttpClient
 {
   /**
@@ -26,6 +28,10 @@ class HttpClient
    * @var int
    */
   protected $statusCode;
+  /**
+   * @var mixed
+   */
+  protected $error;
 
   /**
    * @return string
@@ -109,6 +115,34 @@ class HttpClient
   }
 
   /**
+   * @return mixed
+   * @codeCoverageIgnore
+   */
+  public function getError()
+  {
+    return $this->error;
+  }
+
+  /**
+   * @param mixed $error
+   * @return HttpClient
+   * @codeCoverageIgnore
+   */
+  public function setError($error)
+  {
+    $this->error = $error;
+    return $this;
+  }
+
+  /**
+   * @return bool
+   */
+  public function hasError()
+  {
+    return $this->error !== null;
+  }
+
+  /**
    * HttpClient constructor.
    */
   public function __construct()
@@ -116,10 +150,19 @@ class HttpClient
     $this->_client = curl_init();
   }
 
+  /**
+   * @return mixed
+   * @throws \Exception
+   */
   public function send()
   {
     $result = curl_exec($this->getClient());
     $this->setStatusCode($this->getResponseCode());
+
+    if (curl_errno($this->getClient()))
+    {
+      $this->setError(curl_error($this->getClient()));
+    }
 
     curl_close($this->getClient());
 

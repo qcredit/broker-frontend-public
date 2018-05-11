@@ -24,4 +24,13 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
   {
     return $this->getBy(['applicationId' => $application->getId()]) ?? [];
   }
+
+  /**
+   * @param $remoteId
+   * @return null|object
+   */
+  public function getOfferByRemoteId($remoteId)
+  {
+    return $this->getOneBy(['remoteId' => $remoteId]);
+  }
 }

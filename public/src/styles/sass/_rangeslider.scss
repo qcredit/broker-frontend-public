@@ -2,20 +2,23 @@
   .landing-slider {
     display: flex;
     .landing-form-adjust {
-      width: 43px;
-      height: 43px;
+      width: 53px;
+      height: 53px;
       padding: 0;
       background: $blue;
-      color: #FFF;
-      font-size: 36px;
-      font-weight: bold;
-      line-height: 1;
       text-align: center;
       cursor: pointer;
       -webkit-user-select: none;
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
+      touch-action: manipulation;
+      span {
+        color: #FFF;
+        font-size: 43px;
+        font-weight: bold;
+        line-height: 53px;
+      }
     }
 
     .landing-form-adjust.disabled {
@@ -131,5 +134,12 @@
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px;
+  }
+}
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 }
