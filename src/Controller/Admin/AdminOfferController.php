@@ -118,7 +118,7 @@ class AdminOfferController
     }
     else
     {
-      $this->getContainer()->get('flash')->addMessage('error', 'Could not update the offer.');
+      $this->getContainer()->get('flash')->addMessage('error', 'Could not update the offer. Probably the token has expired...');
     }
 
     return $response->withRedirect(sprintf('/admin/applications/%d', $offer->getApplicationId()));
