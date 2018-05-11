@@ -1,3 +1,6 @@
+.show-large{
+  display: none;
+}
 .offers-listing-wrap {
   display: flex;
   flex-direction: column;
@@ -15,10 +18,11 @@
 .loan-offer-head {
   display: flex;
   align-items: center;
-  padding: 1rem 1rem;
+  position: relative;
+  padding: .375rem;
   border-bottom: 1px solid #d7d7d7;
   .loan-offerer-logo {
-    max-width: 100px;
+    max-width: 75px;
   }
   span {
     display: block;
@@ -27,14 +31,24 @@
   .loan-offerer-info {
     margin-left: 1rem;
   }
-  .loan-offerer-name {
-
-  }
   .loan-offerer-website {
     font-size: 0.875rem;
     color: #a1a1a1;
   }
-
+}
+.text-focus {
+  position: absolute;
+  top: 6px;
+  right: 7px;
+  .name {
+    font-size: .875rem;
+    color: #a1a1a1;
+  }
+  .value {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: $blue;
+  }
 }
 .loan-offer-body {
   display: flex;
@@ -43,19 +57,15 @@
   justify-content: center;
   margin: 1rem 0;
   span {
-    margin: 0 1rem;
-    font-size: .875rem;
+    margin: .125rem 1rem;
+    font-size: 1rem;
   }
 
 }
 .loan-offer-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: $bluegray;
-  padding: 1.5rem 0;
+  padding: 0;
   .loan-offer-cta {
-
+    width: 100%;
   }
 }
 .personal-offer-container.featured {
@@ -93,18 +103,8 @@
   .loan-offer-body {
     span {
      flex: 0 0 100%;
-     font-size: 1rem;
      text-align: center;
    }
-  }
-}
-
-@media only screen and (min-width: 360px) {
-  .personal-offer-container .loan-offer-body {
-    span {
-      font-size: 1rem;
-      flex: 0 0 118px;
-    }
   }
 }
 
@@ -113,7 +113,7 @@
     margin: 3rem 0;
   }
   .personal-offer-container .loan-offer-body span {
-    flex: 0 0 140px;
+    flex: 0 0 146px;
   }
   .affiliate-offer-container {
     flex-direction: row;
@@ -143,6 +143,15 @@
   }
 }
 
+@media only screen and (min-width: 769px) {
+  .show-mobile{
+    display: none;
+  }
+  .show-large{
+    display: block;
+  }
+}
+
 @media only screen and (min-width: 1024px) {
   .offer-list-head {
     margin: 4rem 0;
@@ -169,11 +178,28 @@
     }
   }
   .loan-offer-body {
-    justify-content: flex-start;
+    position: relative;
+    justify-content: center;
   }
   .loan-offer-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     flex: 0 0 200px;
+    padding: .5rem;
+    background: #ececec;
+    .text-focus {
+      position: static;
+      margin-bottom: .375rem;
+      span{
+        flex: none;
+        margin: 0;
+        font-size: 1rem;
+      }
+    }
     .broker-btn-gold {
+      width: auto;
       padding: 1rem;
     }
   }
@@ -183,7 +209,10 @@
       flex: 0 0 230px;
     }
     .loan-offer-body span {
-      font-size: 1rem;
+      font-size: .875rem;
+    }
+    .loan-offer-footer {
+      justify-content: center;
     }
   }
 }
@@ -218,5 +247,6 @@
   }
   .affiliate-offer-container .loan-offer-body {
     flex: 0 0 328px;
+    max-width: 295px;
   }
 }
