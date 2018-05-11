@@ -79,3 +79,104 @@ h4 {
 .login-info {
   font-size: 0.875rem;
 }
+
+
+/* DASHBOARD */
+.loan-stats-wrap {
+  margin-bottom: 4rem;
+}
+.loan-stats-header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: #f8f8f8;
+  p:first-child {
+    font-weight: bold;
+  }
+  p {
+    margin: 0;
+  }
+  .date-select {
+    display: inline-block;
+    margin: 0 .5rem;
+    font-weight: bold;
+    color: $gray;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .1s ease-in-out;
+  }
+  .date-select.active, .date-select:hover {
+    border-bottom: 2px solid $blue;
+    color: #333;
+  }
+}
+.loan-stats-body {
+  position: relative;
+  background: #f2f2f2;
+}
+.stat-box {
+  position: relative;
+  padding-top: 16%;
+  .stat-box-content {
+    position: absolute;
+    top: 25%;
+    text-align: center;
+  }
+  .amount {
+    display: none;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1;
+  }
+  .amount.show {
+    display: block;
+  }
+  .name {
+    font-weight: bold;
+  }
+  .stat-box-content-accepted {
+    .amount{
+      color: $accept;
+    }
+  }
+  .stat-box-content-paid-out {
+    .amount{
+      color: $blue;
+    }
+  }
+  .stat-box-content-rejected {
+    .amount{
+      color: $error;
+    }
+  }
+  .stat-box-content-in-process {
+    .amount{
+      color: $hold;
+    }
+  }
+}
+.stats-line {
+  position: absolute;
+  bottom: -6px;
+  left: 15px;
+  width: 100%;
+  margin: 0 -15px;
+  .stats-line-item {
+    display: inline-block;
+    height: 6px;
+    width: 25%;
+  }
+  .stats-accepted {
+    background: $accept;
+  }
+  .stats-paid-out {
+    background:  $blue;
+  }
+  .stats-rejected {
+  background: $error;
+  }
+  .stats-in-process {
+    background: $hold;
+  }
+}

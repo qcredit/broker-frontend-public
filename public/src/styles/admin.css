@@ -143,3 +143,77 @@ h4 {
 
 .login-info {
   font-size: 0.875rem; }
+
+/* DASHBOARD */
+.loan-stats-wrap {
+  margin-bottom: 4rem; }
+
+.loan-stats-header {
+  display: flex;
+  justify-content: space-between;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: #f8f8f8; }
+  .loan-stats-header p:first-child {
+    font-weight: bold; }
+  .loan-stats-header p {
+    margin: 0; }
+  .loan-stats-header .date-select {
+    display: inline-block;
+    margin: 0 .5rem;
+    font-weight: bold;
+    color: #c7c6c8;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all .1s ease-in-out; }
+  .loan-stats-header .date-select.active, .loan-stats-header .date-select:hover {
+    border-bottom: 2px solid #0097d5;
+    color: #333; }
+
+.loan-stats-body {
+  position: relative;
+  background: #f2f2f2; }
+
+.stat-box {
+  position: relative;
+  padding-top: 16%; }
+  .stat-box .stat-box-content {
+    position: absolute;
+    top: 25%;
+    text-align: center; }
+  .stat-box .amount {
+    display: none;
+    font-size: 3rem;
+    font-weight: bold;
+    line-height: 1; }
+  .stat-box .amount.show {
+    display: block; }
+  .stat-box .name {
+    font-weight: bold; }
+  .stat-box .stat-box-content-accepted .amount {
+    color: #07b846; }
+  .stat-box .stat-box-content-paid-out .amount {
+    color: #0097d5; }
+  .stat-box .stat-box-content-rejected .amount {
+    color: #e00404; }
+  .stat-box .stat-box-content-in-process .amount {
+    color: #ffc328; }
+
+.stats-line {
+  position: absolute;
+  bottom: -6px;
+  left: 15px;
+  width: 100%;
+  margin: 0 -15px; }
+  .stats-line .stats-line-item {
+    display: inline-block;
+    height: 6px;
+    width: 25%; }
+  .stats-line .stats-accepted {
+    background: #07b846; }
+  .stats-line .stats-paid-out {
+    background: #0097d5; }
+  .stats-line .stats-rejected {
+    background: #e00404; }
+  .stats-line .stats-in-process {
+    background: #ffc328; }
