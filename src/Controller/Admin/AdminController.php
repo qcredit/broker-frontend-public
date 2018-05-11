@@ -52,12 +52,28 @@ class AdminController extends AbstractController
    */
   public function indexAction(Request $request, Response $response, $args)
   {
+    $stats = $this->getApplicationStats();
+
     $factory = $this->getContainer()->get('RepositoryFactory');
     $repo = $factory->createGateway($this->getContainer()->get('db'), 'Partner');
     $data = ['user' => $request->getAttribute('user')];
 
     $data['partners'] = $repo->getPartnersWithStats();
+    $data['stats'] = $stats;
 
     return $this->render($response, 'admin/index.twig', $data);
+  }
+
+  /**
+   * @return array
+   */
+  protected function getApplicationStats()
+  {
+    $stats = [];
+    $appRepository = $this->getContainer()->get('ApplicationRepository');
+    $stats['month'] = $appRepository->getApplicationStats('-1 month');
+    $stats['day'] = $appRepository->getApplicationStats('-1 day');
+    $stats['week'] = $appRepository->getApplicationStats('-1 week');
+    return $stats;
   }
 }
