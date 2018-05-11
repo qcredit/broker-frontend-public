@@ -22,15 +22,17 @@
             <span class="loan-offerer-name">{{ offer.partner.name }}</span>
             <span class="loan-offerer-website">www.aasa.fi</span>
           </div>
+          <div class="text-focus show-mobile"><span class="name">Monthly:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 2400 €</span>
-          <span><strong>Duration:</strong> 24 m</span>
-          <span><strong>Interest:</strong> 19.9 %</span>
-          <span><strong>APR:</strong> 238 %</span>
+          <span><strong>Amount:</strong> {{ offer.loanAmount }} PLN</span>
+          <span><strong>Duration:</strong> {{ offer.loanTerm }}m</span>
+          <span><strong>Interest:</strong> {{ offer.interest }} %</span>
+          <span><strong>APR:</strong> {{ offer.apr }}%</span>
         </div>
         <div class="loan-offer-footer">
-          <a href="{{ offer.data.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">SIGN CONTRACT</a>
+          <div class="text-focus show-large"><span class="name">Monthly:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
+          <a href="{{ offer.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">SIGN CONTRACT</a>
         </div>
         <!--
         <p>{{ offer.partner.id }}</p>
