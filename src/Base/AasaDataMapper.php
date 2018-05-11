@@ -20,11 +20,13 @@ use Broker\System\Error\InvalidConfigException;
 class AasaDataMapper implements PartnerDataMapperInterface
 {
   const STATUS_IN_PROCESS = 'InProcess';
+  const STATUS_ACCEPTED = 'Accepted';
+  const STATUS_REJECTED = 'Rejected';
+  const STATUS_SIGNED = 'Signed';
+  const STATUS_WAITING_PAID_OUT = 'WaitingPaidOut';
+  const STATUS_IN_DEBT = 'InDebt';
   const STATUS_ACTIVE = 'Active';
   const STATUS_PAID_BACK = 'PaidBack';
-  const STATUS_IN_DEBT = 'InDebt';
-  const STATUS_REJECTED = 'Rejected';
-  const STATUS_ACCEPTED = 'Accepted';
   const STATUS_OK = 'OK';
 
   protected $configFile = 'aasa.config.json';
@@ -56,7 +58,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfigFile()
   {
-    $file = dirname(__FILE__) . '/Config/aasa.config.json';
+    $file = sprintf('%s/Config/%s', dirname(__FILE__), $this->configFile);
     if (!file_exists($file))
     {
       throw new InvalidConfigException('No configuration file found for Aasa!');
@@ -279,7 +281,15 @@ class AasaDataMapper implements PartnerDataMapperInterface
     {
       $data['chosenDate'] = new \DateTime();
     }
-    else if ($data['data']['status'] === self::STATUS_ACCEPTED)
+    else if ($data['data']['status'] === self::STATUS_PAID_BACK)
+    {
+      $data['paidBackDate'] = new \DateTime();
+    }
+    else if ($data['data']['status'] === self::STATUS_ACTIVE)
+    {
+      $data['paidOutDate'] = new \DateTime();
+    }
+    else if (in_array($data['data']['status'], [self::STATUS_ACCEPTED, self::STATUS_SIGNED, self::STATUS_WAITING_PAID_OUT]))
     {
       $data['acceptedDate'] = new \DateTime();
     }
