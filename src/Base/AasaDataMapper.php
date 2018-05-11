@@ -470,15 +470,15 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return [
       1125 => [
         'field' => 'general',
-        'message' => 'Contract already signed!'
+        'message' => _('Contract already signed!')
       ],
       1126 => [
         'field' => ChooseOfferForm::ATTR_FIRST_PAYMENT_DATE,
-        'message' => 'Invalid payment date!'
+        'message' => _('Invalid payment date!')
       ],
       1127 => [
         'field' => ChooseOfferForm::ATTR_SIGN_METHOD,
-        'message' => 'Signing method not allowed!'
+        'message' => _('Signing method not allowed!')
       ]
     ];
   }

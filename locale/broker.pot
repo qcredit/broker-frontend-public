@@ -8,3 +8,15 @@ msgid ""
 "corporate strategy foster collaborative thinking to further the overall "
 "value proposition."
 msgstr ""
+
+#: src/Model/ApplicationForm.php:63
+msgid "Income type"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:64
+msgid "Your monthly net income"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:65
+msgid "Employer name"
+msgstr ""
