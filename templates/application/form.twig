@@ -89,10 +89,11 @@
 {% endblock %}
 
 {% block endBody %}
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
-  <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>
+{#  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
+  <script type="text/javascript" src="/src/scripts/gettext.min.js"></script>
+  <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>#}
   <script type="text/javascript">
-    var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
+/*    var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
     ajv.addKeyword('documentNr', {
       validate: function documentNr(schema,data)
       {
@@ -215,6 +216,6 @@
         .done(function( data ) {
           $('input#applicationHash').val(data.applicationHash);
         });
-    }
+    }*/
   </script>
 {% endblock %}

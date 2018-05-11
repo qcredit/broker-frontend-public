@@ -1,0 +1,127 @@
+requirejs.config({
+  'baseUrl': '/src/scripts',
+  'paths': {
+    'jquery': '//code.jquery.com/jquery-3.3.1.min',
+    'jquery.bootstrap': '//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min'
+  },
+  'shim': {
+    'jquery.bootstrap': ['jquery']
+  }
+});
+
+require(['jquery.bootstrap', 'rangeslider.min', 'app/optionsPopulator'], function (bs, rangeSlider, optionsPopulator)
+{
+  console.log('yeaaah!');
+
+  optionsPopulator.populate($('.landing-form-amount'), 'PLN');
+  optionsPopulator.populate($('.langing-form-duration'), 'M');
+
+  calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+  /* URL check to add active class to correct navlink */
+  $(function(){
+    var current = location.pathname;
+    $('.navbar-nav .nav-item a').each(function(){
+      var $this = $(this);
+      // if the current path is like this link, make it active
+      if($this.attr('href').indexOf(current) !== -1 && location.pathname != "/"){
+        $this.parent().addClass('active');
+      } else if (location.pathname == "/") {
+        $('.home-link').addClass('active');
+      }
+    })
+  });
+
+  // Loan landing form functions for laptops and desktops start here
+  $(function() {
+    var $loanAmountSlider = $('.landing-component #loanAmountSlider');
+    var $loanAmount = $('.landing-component #loanAmount');
+    var $loanDurationSlider = $('.landing-component #loanTermSlider');
+    var $loanDuration = $('.landing-component #loanTerm');
+    $loanAmountSlider.rangeslider({
+      polyfill: false
+    }).on('input', function() {
+      $loanAmount.val(this.value);
+      calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+    });
+    $loanAmount.on('change', function() {
+      $loanAmountSlider.val(this.value).change();
+    });
+    $loanDurationSlider.rangeslider({
+      polyfill: false
+    }).on('input', function() {
+      $loanDuration.val(this.value);
+      calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+    });
+    $loanDuration.on('change', function() {
+      $loanDurationSlider.val(this.value).change();
+    });
+  }); // Loan landing form functions for laptops and desktops end here
+
+  // Loan landing form functions for mobile devices and tablets
+  $(".landing-component .landing-form-adjust-increase").click(function() {
+    var $curOpt = $(this).parent().find('select');  // Get the correct select
+    var $targetOpt = $curOpt.children('option:selected'); // Get the current selected option
+    $(this).parent().find('.landing-form-adjust-decrease').removeClass('disabled'); // If decrease button is disabled, enable it
+    if($curOpt.children('option:last-child').is(':selected')) { // if the last element is already selected end the function with return false
+      $(this).addClass('disabled');
+      return false;
+    }
+    $curOpt.children('option').removeProp('selected'); // Remove seleced from all the options
+    $targetOpt.next().prop('selected', true); // Add selected to next element
+    calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+  });
+  $(".landing-component .landing-form-adjust-decrease").click(function() {
+    var $curOpt = $(this).parent().find('select');
+    var $targetOpt = $curOpt.children('option:selected'); // Get the current selected option
+    $(this).parent().find('.landing-form-adjust-increase').removeClass('disabled');
+    if($curOpt.children('option:first-child').is(':selected')) {
+      $(this).addClass('disabled');
+      return false;
+    }
+    $curOpt.children('option').removeProp('selected'); // Remove seleced from all the options
+    $targetOpt.prev().prop('selected', true);
+    calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+  });
+  $('.landing-component select').change(function() {
+    var $selectedOpt = $(this).find('option:selected');
+    $(this).parent().find('.landing-form-adjust').removeClass('disabled');
+    $(this).children('option').removeProp('selected');
+    $selectedOpt.prop('selected', true);
+    calculateMonthly($('#loanAmount').val(), $('#loanTerm').val());
+  });
+  $('.loan-form .broker-btn-send').on('click', function() {
+    if($('.loan-form .field').hasClass('error')) {
+      var first_el = $('.loan-form .field.error').first();
+      $('html, body').animate({
+        scrollTop: first_el.offset().top - 200
+      }, 300);
+      console.log($('.loan-form .field.error'));
+    }
+  });
+
+// Calculate approximate monthly installment
+  function calculateMonthly(amount,months) {
+    console.log(amount);
+    console.log(months);
+    var monthlyInstallment1 = calculateInstallment(amount, months, 1.3); // Monthly fee calculation logic here
+    var monthlyInstallment2 = calculateInstallment(amount, months, 1.5); // Monthly fee calculation logic here
+    $('.monthly-installment').text(monthlyInstallment1 +" - "+ monthlyInstallment2 +" PLN");
+  }
+  function calculateInstallment(amount, months, a) {
+    return Math.round((amount/months)*a);
+  }
+  // Input field focused and filled classes
+  $(".field input, .field textarea").focusin(function() {
+    $(this).parent().addClass("focused");
+  });
+  $(".field input, .field textarea").focusout(function() {
+    $(this).parent().removeClass("focused");
+  });
+  $(".field input, .field textarea").on("input", function() {
+    if($(this).val()){
+      $(this).parent().addClass("filled");
+    } else {
+      $(this).parent().removeClass("filled");
+    }
+  });
+});
