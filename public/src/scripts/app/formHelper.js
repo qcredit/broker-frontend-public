@@ -95,7 +95,6 @@ define('app/formHelper', ['jquery', 'app/app'], function($, app) {
       console.log($('.loan-form .field.error'));
     }
   });
-
   // Input field focused and filled classes
   $(".field input, .field textarea").focusin(function() {
     $(this).parent().addClass("focused");

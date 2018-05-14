@@ -37,6 +37,8 @@ define('app/domReady', ['jquery', 'rangeSlider', 'app/formHelper'], function($, 
     $loanDuration.on('change', function() {
       $loanDurationSlider.val(this.value).change();
     });
+    $('.landing-component').css('opacity', 1);
+    $('.landing-form-upper .bouncing-loader, .loan-form-upper .bouncing-loader').css('opacity', 0);
   });
 
 });
