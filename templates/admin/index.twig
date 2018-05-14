@@ -3,6 +3,53 @@
 {% block container %}
 <h3>Dashboard</h3>
   <div class="container">
+    <div class="row loan-stats-wrap">
+      <div class="col-sm-12 loan-stats-header">
+        <p class="table-lead">Application data</p>
+        <p>
+          <span class="date-select date-select-day active">1 day</span>
+          <span class="date-select date-select-week">A week</span>
+          <span class="date-select date-select-month">A month</span>
+        </p>
+      </div>
+      <div class="col-sm-12 loan-stats-body">
+        <div class="stat-boxes">
+          <div class="stat-box">
+            <div class="stat-box-content">
+              <span class="amount total day show">{{ stats.day.total }}</span><span class="amount total week">{{ stats.week.total }}</span><span class="amount total month">{{ stats.month.total }}</span>
+              <span class="name">Total apps</span>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-content stat-box-content-accepted">
+              <span class="amount accepted day show">{{ stats.day.accepted }}</span><span class="amount accepted week">{{ stats.week.accepted }}</span><span class="amount accepted month">{{ stats.month.accepted }}</span>
+              <span class="name">Accepted</span>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-content stat-box-content-paid-out">
+              <span class="amount paid-out day show">{{ stats.day.paidOut }}</span><span class="amount paid-out week">{{ stats.week.paidOut }}</span><span class="amount paid-out month">{{ stats.month.paidOut }}</span>
+              <span class="name">Paid out</span>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-content stat-box-content-rejected">
+              <span class="amount rejected day show">{{ stats.day.rejected }}</span><span class="amount rejected week">{{ stats.week.rejected }}</span><span class="amount  rejected month">{{ stats.month.rejected }}</span>
+              <span class="name">Rejected</span>
+            </div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-box-content stat-box-content-in-process">
+              <span class="amount in-process day show">{{ stats.day.inProcess }}</span><span class="amount in-process week">{{ stats.week.inProcess }}</span><span class="amount in-process month">{{ stats.month.inProcess }}</span>
+              <span class="name">In process</span>
+            </div>
+          </div>
+        </div>
+        <div class="stats-line">
+          <span class="stats-line-item stats-accepted" id="stats-accepted" data-toggle="tooltip" data-placement="top" title="Accepted"></span><span class="stats-line-item stats-paid-out" id="stats-paid-out" data-toggle="tooltip" data-placement="top" title="Paid out"></span><span class="stats-line-item stats-rejected" id="stats-rejected" data-toggle="tooltip" data-placement="top" title="Rejected"></span><span class="stats-line-item stats-in-process" id="stats-in-process" data-toggle="tooltip" data-placement="top" title="In process"></span>
+        </div>
+      </div>
+    </div>
     <table class="table">
       <caption>Partners data</caption>
       <thead>
