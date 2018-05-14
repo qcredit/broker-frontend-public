@@ -4,3 +4,4 @@
 /logs/
 /logs/*
 !/logs/README.md
+/tmp
