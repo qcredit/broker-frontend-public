@@ -13,7 +13,8 @@ Clone the project and run the following commands:
     docker-compose exec php vendor/bin/phinx migrate -c phinx.php
     docker-compose exec php vendor/bin/phinx seed:run -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed -c phinx.php
 
-Now you should have a local development up and running on port 8100 with some initial sample data.
+Now you should have a local development up and running on port 8100 with some initial sample data. Please do note that the seed command
+should only be ran once to prevent duplicate data.
 
 ## Updating the base system
 
@@ -32,3 +33,15 @@ core system as well.
 ### Running tests
 
     docker-compose exec php vendor/bin/phpunit tests/Unit --bootstrap phpunit-bootstrap.php
+    
+    
+### Updating translations
+
+The project uses [gettext](http://php.net/manual/en/book.gettext.php) for internationalization. After making modifications to translatable source files,
+please run the following command to collect modifications to translatable strings.
+
+    docker-compose exec php /bin/bash -c /app/infrastructure/php/scanGettext.sh
+    
+Running the above command will create/update the language file `locale/broker.pot`. You can use software like Poedit
+to open the newly created `.pot` file. After you're finished with the translations, please save the generated `.po` file to
+folder `locale/pl_PL/LC_MESSAGES/`.
