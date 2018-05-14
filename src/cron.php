@@ -17,6 +17,7 @@ $jobby->add('SendChooseOfferReminder', [
     require(__DIR__ . '/../vendor/autoload.php');
     $settings = require(__DIR__ . '/settings.php');
     $app = new \Slim\App($settings);
+    $container = $app->getContainer();
     require(__DIR__ . '/dependencies.php');
     $job = new App\Cron\SendChooseOfferReminder(
       $container,
@@ -27,7 +28,7 @@ $jobby->add('SendChooseOfferReminder', [
     );
     return $job->run();
   },
-  'schedule' => '*/10 * * * *',
+  'schedule' => '*/2 * * * *',
 ]);
 
 $jobby->run();
