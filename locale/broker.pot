@@ -8,3 +8,40 @@ msgid ""
 "corporate strategy foster collaborative thinking to further the overall "
 "value proposition."
 msgstr ""
+
+#: src/Model/ApplicationForm.php:63
+msgid "Income type"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:64
+msgid "Your monthly net income"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:65
+msgid "Employer name"
+msgstr ""
+
+#: src/Base/AasaDataMapper.php:418 src/Base/AasaDataMapper.php:418
+msgid "Please provide a value in provided range."
+msgstr ""
+
+#: src/Base/AasaDataMapper.php:423 src/Base/AasaDataMapper.php:423
+msgid "Invalid format provided."
+msgstr ""
+
+#: src/Base/AasaDataMapper.php:516 src/Base/AasaDataMapper.php:516
+msgid "Contract already signed!"
+msgstr ""
+
+#: src/Base/AasaDataMapper.php:520 src/Base/AasaDataMapper.php:520
+msgid "Invalid payment date!"
+msgstr ""
+
+#: src/Base/AasaDataMapper.php:524 src/Base/AasaDataMapper.php:524
+msgid "Signing method not allowed!"
+msgstr ""
+
+#: src/Base/AasaDataMapper.php:428
+#, php-format
+msgid "Must have a length between %d and %d characters"
+msgstr ""

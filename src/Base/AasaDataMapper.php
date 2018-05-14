@@ -362,14 +362,15 @@ class AasaDataMapper implements PartnerDataMapperInterface
         $map = $this->flattenArray($this->getRequestPayload());
 
         $field = $this->getFormattedField($row['field']);
+        $message = $this->getFormattedMessage($row['message'], $row['field']);
 
         if (isset($map[$field]))
         {
-          $errors[$map[$field]] = $row['message'];
+          $errors[$map[$field]] = $message;
         }
         else
         {
-          $errors[$field] = $row['message'];
+          $errors[$field] = $message;
         }
       }
     }
@@ -391,6 +392,46 @@ class AasaDataMapper implements PartnerDataMapperInterface
     else {
       return $field;
     }
+  }
+
+  protected function getFormattedMessage(string $message, string $field)
+  {
+    $formattedField = $this->getFormattedField($field);
+    if (strpos($message, $field) !== false)
+    {
+      $message = str_replace($field, $formattedField, $message);
+    }
+
+    return $this->beautifyErrorMessage($message);
+  }
+
+  /**
+   * @param $message
+   * @return string
+   */
+  protected function beautifyErrorMessage($message)
+  {
+    if (strpos($message, 'Does not have a value in the enumeration') !== false)
+    {
+      return _('Please provide a value in provided range.');
+    }
+
+    if (strpos($message, 'Does not match the regex pattern') !== false)
+    {
+      return _('Invalid format provided.');
+    }
+
+    if (preg_match('/(\w+)\smust\shave\sa\slength\sbetween\s(\d+)\sand\s(\d+)$/', $message, $matches))
+    {
+      return sprintf(_('Must have a length between %d and %d characters'), $matches[2], $matches[3]);
+    }
+
+/*    if (strpos($message, 'must have a length between') !== false)
+    {
+      return _('Must have a length between X and Y');
+    }*/
+
+    return $message;
   }
 
   /**
@@ -470,15 +511,15 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return [
       1125 => [
         'field' => 'general',
-        'message' => 'Contract already signed!'
+        'message' => _('Contract already signed!')
       ],
       1126 => [
         'field' => ChooseOfferForm::ATTR_FIRST_PAYMENT_DATE,
-        'message' => 'Invalid payment date!'
+        'message' => _('Invalid payment date!')
       ],
       1127 => [
         'field' => ChooseOfferForm::ATTR_SIGN_METHOD,
-        'message' => 'Signing method not allowed!'
+        'message' => _('Signing method not allowed!')
       ]
     ];
   }
