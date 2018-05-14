@@ -247,7 +247,7 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendReminder(Message $message)
   {
-    if ($this->getContainer()->get('settings')['broker']['environment'] !== 'BROKER_TEST')
+    if ($this->getContainer()->get('settings')['broker']['environment'] !== 'testserver')
     {
       if ($this->getMessageDeliveryService()->setMessage($message)->run())
       {
