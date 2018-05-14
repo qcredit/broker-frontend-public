@@ -41,6 +41,7 @@ section > h1 {
   font-size: 14px;
   text-align: center;
   cursor: pointer;
+  transition: all .15s ease-in-out;
   &:focus {
     outline: none;
     box-shadow: none;
