@@ -246,14 +246,13 @@ class ApplicationController extends AbstractController
   {
     $data = [];
     $data['fields'] = $this->getFormBuilder()->getFormFields();
+    $newAppService = $this->getNewApplicationService();
 
     if ($request->isPost())
     {
       $postData = $request->getParsedBody();
-      $newAppService = $this->getNewApplicationService();
       if ($this->isFromFrontpage() || $this->isAjax($request))
       {
-        unset($postData['applicationHash']);
         $newAppService->setValidationEnabled(false);
       }
 
@@ -269,7 +268,7 @@ class ApplicationController extends AbstractController
 
         if ($this->getPrepareService()->run())
         {
-          //$newAppService->saveApp();
+          $newAppService->saveApp();
           return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
         }
       }
@@ -282,6 +281,12 @@ class ApplicationController extends AbstractController
 
       $data['application'] = $newAppService->getApplication();
     }
+    else {
+      $newAppService->setValidationEnabled(false);
+      $newAppService->run();
+      $data['application'] = $newAppService->getApplication();
+    }
+
     return $this->render($response, 'application/form.twig', $data);
   }
 

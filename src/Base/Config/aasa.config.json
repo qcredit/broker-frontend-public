@@ -87,6 +87,7 @@
         "type": "string",
         "example": "ZZC900146",
         "section": "personal",
+        "documentNr": "Poland",
         "order": 3
       },
       "payoutMethod": {
@@ -169,7 +170,7 @@
       "mobilePhoneNumber": {
         "type": "string",
         "example": "+372987654321",
-        "pattern": "^(?:\\(?\\+?48)?(?:[-\\.\\(\\)\\s]*(\\d)){9}\\)?$",
+        "pattern": "(?<!\\w)[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)",
         "section": "general",
         "order": 1
       }
@@ -246,7 +247,7 @@
         ],
         "properties": {
           "accountNumber": {
-            "type": "string",
+            "type": "number",
             "maxLength": 26,
             "minLength": 26,
             "example": "61 1090 1014 0000 0712 1981 2874",
