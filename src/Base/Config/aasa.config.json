@@ -246,7 +246,7 @@
         ],
         "properties": {
           "accountNumber": {
-            "type": "string",
+            "type": "number",
             "maxLength": 26,
             "minLength": 26,
             "example": "61 1090 1014 0000 0712 1981 2874",

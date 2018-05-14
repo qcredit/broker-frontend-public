@@ -5,7 +5,6 @@ use Broker\Domain\Service\NewApplicationService;
 use Broker\Domain\Factory\ApplicationFactory;
 use Broker\Domain\Service\PartnerRequestsService;
 use Broker\Domain\Service\PartnerResponseService;
-use App\Base\PartnerDeliveryGateway;
 use Broker\Domain\Factory\OfferFactory;
 use Broker\Domain\Service\PreparePartnerRequestsService;
 use Broker\Domain\Factory\PartnerRequestFactory;
