@@ -42,7 +42,7 @@ class LanguageSwitcherTest extends BaseTest
 
     $this->altMock = $this->getMockBuilder(LanguageSwitcher::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getPreferredLanguage', 'setLocale', 'putenv', 'bindTextDomain', 'setLanguage'])
+      ->setMethods(['getPreferredLanguage', 'setSystemLocale', 'putenv', 'bindTextDomain', 'setLanguage'])
       ->getMock();
 
     $this->containerMock = $this->getMockBuilder(Container::class)
@@ -116,9 +116,9 @@ class LanguageSwitcherTest extends BaseTest
   {
     $mock = $this->getMockBuilder(LanguageSwitcher::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setLocale', 'bindTextDomain'])
+      ->setMethods(['setSystemLocale', 'bindTextDomain'])
       ->getMock();
-    $mock->method('setLocale')
+    $mock->method('setSystemLocale')
       ->willReturn(false);
     $this->containerMock->method('get')
       ->willReturn($this->createMock(Logger::class));
@@ -134,9 +134,9 @@ class LanguageSwitcherTest extends BaseTest
   {
     $mock = $this->getMockBuilder(LanguageSwitcher::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setLocale', 'bindTextDomain', 'bindTextDomainCodeset'])
+      ->setMethods(['setSystemLocale', 'bindTextDomain', 'bindTextDomainCodeset'])
       ->getMock();
-    $mock->method('setLocale')
+    $mock->method('setSystemLocale')
       ->willReturn(true);
     $this->containerMock->method('get')
       ->willReturn($this->createMock(Logger::class));
