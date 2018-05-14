@@ -34,12 +34,6 @@
           <div class="text-focus show-large"><span class="name">Monthly:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
           <a href="{{ offer.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">SIGN CONTRACT</a>
         </div>
-        <!--
-        <p>{{ offer.partner.id }}</p>
-        <p>{{ offer.partner.name }}</p>
-        <p>{{ offer.loanAmount }}</p>
-        <p>{{ offer.remoteId }}</p>
-        <p>{% if offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</p>-->
       </article>
       {% endfor %}
     </div>

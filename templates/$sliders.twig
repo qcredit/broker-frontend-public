@@ -1,5 +1,5 @@
 <div class="landing-component">
-  <p class="range-slider-label">How much do you want to borrow?</p>
+  <p class="range-slider-label">{% trans "How much do you want to borrow?" %}</p>
   <div class="landing-slider landing-form-amount">
     <div class="landing-form-adjust landing-form-adjust-decrease"><span>&#8722;</span></div>
     <input type="range" min="1000" max="10000" step="500" value="{% if application.loanAmount %}{{ application.loanAmount }}{% else %}2000{% endif %}" id="loanAmountSlider">
@@ -7,7 +7,7 @@
     </select>
     <div class="landing-form-adjust landing-form-adjust-increase"><span>&#43;</span></div>
   </div>
-  <p class="range-slider-label">How fast do you want to pay off (months)?</p>
+  <p class="range-slider-label">{% trans "How fast do you want to pay off (months)?" %}</p>
   <div class="landing-slider landing-form-duration">
     <div class="landing-form-adjust landing-form-adjust-decrease"><span>&#8722;</span></div>
     <input type="range" min="6" max="72" step="3" value="{% if application.loanTerm %}{{ application.loanTerm }}{% else %}12{% endif %}" id="loanTermSlider">
@@ -15,7 +15,7 @@
     </select>
     <div class="landing-form-adjust landing-form-adjust-increase"><span>&#43;</span></div>
   </div>
-  <p class="range-slider-label range-slider-monhly-label">Approximate monthly installment <span class="monthly-installment"></span></p>
+  <p class="range-slider-label range-slider-monhly-label">{% trans "Approximate monthly installment " %}<span class="monthly-installment"></span></p>
 </div>
 <div class="bouncing-loader">
   <div class="bouncing-loader__round"></div>

@@ -66,7 +66,7 @@ $container['view'] = function($container) {
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
 
-/*  $tplDir = dirname(__FILE__). '/../templates';
+/* $tplDir = dirname(__FILE__). '/../templates';
   $tmpDir = dirname(__FILE__) . '/../tmp/cache/';
   $loader = new Twig_Loader_Filesystem($tplDir);
 

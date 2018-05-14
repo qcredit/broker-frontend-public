@@ -15,17 +15,17 @@
       <div class="landing-form-lower">
         <div class="landing-inputs form-fields">
           <div class="field text firstName">
-            <label for="">Insert your first name</label>
+            <label for="">{% trans "Insert your first name" %}</label>
             <input type="text" name="firstName" id="firstName">
           </div>
           <div class="field text email">
-            <label for="">Insert your email address</label>
+            <label for="">{% trans "Insert your email address" %}</label>
             <input type="email" name="email" id="email">
           </div>
         </div>
         <div class="landing-form-lower-footer">
-          <p class="landing-terms">*Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. </p>
-          <button class="btn broker-btn broker-btn-gold">Apply for a loan</button>
+          <p class="landing-terms">{% trans "*Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. " %}</p>
+          <button class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</button>
         </div>
       </div>
       <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
@@ -95,6 +95,6 @@
   <section class="row justify-content-md-center">
     <h1 class="col-sm-12 text-center small-mar">W QCredit jesteś w dobrych rękach</h1>
     <p class="col-sm-12 col-md-8 text-center">Każdego dnia nasz zespół dostarcza profesjonalne rozwiązania finansowe dla Klientów. Jesteśmy w stałym kontakcie z wieloma pożyczkodawcami, którzy mogą Ci zaoferować nawet do 50 000 PLN z natychmiastową decyzją.</p>
-    <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">Apply for a loan</a></p>
+    <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
   </section>
 {% endblock %}
