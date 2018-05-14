@@ -7,13 +7,15 @@ $(document).ready(function() {
   } else if(document.URL.indexOf("admin/users") >= 0) {
     $('.nav-item a[href$="/users"]').parent().addClass('active');
   }
+  calculateLines('day');
+  $('[data-toggle="tooltip"]').tooltip();
   $('.date-select').on('click', function() {
     var new_range = getRange($(this));
     $('.date-select').removeClass('active');
     $(this).addClass('active');
     $('.amount').removeClass('show');
     $('.amount.'+new_range).addClass('show');
-    calculateLines();
+    calculateLines(new_range);
   });
 });
 
@@ -44,8 +46,20 @@ function getRange(a) {
   }
 }
 
-function calculateLines() {
-  $('.stats-line-item').each(function() {
-
+function calculateLines(a) {
+  var loan_stats = [];
+  var total = $('.amount.total.'+a).text();
+  loan_stats.push($('.amount.accepted.'+a).text());
+  loan_stats.push($('.amount.paid-out.'+a).text());
+  loan_stats.push($('.amount.rejected.'+a).text());
+  loan_stats.push($('.amount.in-process.'+a).text());
+  $('.stats-line-item').each(function(i) {
+    var line_width = (loan_stats[i] / total) * 100;
+    console.log(line_width)
+    if(!line_width) {
+      $(this).css('flex-basis', '0%');
+    } else {
+      $(this).css('flex-basis', line_width+'%');
+    }
   });
 }

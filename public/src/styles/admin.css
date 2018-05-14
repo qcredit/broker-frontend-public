@@ -174,12 +174,21 @@ h4 {
   position: relative;
   background: #f2f2f2; }
 
+.stat-boxes {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  cursor: default; }
+
 .stat-box {
   position: relative;
-  padding-top: 16%; }
+  flex: 1 0 100%;
+  padding-top: 35%; }
   .stat-box .stat-box-content {
     position: absolute;
     top: 25%;
+    width: 100%;
     text-align: center; }
   .stat-box .amount {
     display: none;
@@ -204,11 +213,13 @@ h4 {
   bottom: -6px;
   left: 15px;
   width: 100%;
+  display: flex;
   margin: 0 -15px; }
   .stats-line .stats-line-item {
     display: inline-block;
-    height: 6px;
-    width: 25%; }
+    height: 9px;
+    cursor: pointer;
+    transition: all .5s ease-in-out; }
   .stats-line .stats-accepted {
     background: #07b846; }
   .stats-line .stats-paid-out {
@@ -217,3 +228,11 @@ h4 {
     background: #e00404; }
   .stats-line .stats-in-process {
     background: #ffc328; }
+
+@media only screen and (min-width: 768px) {
+  .stat-box {
+    flex: 0 0 20%;
+    padding-top: 22%; } }
+@media only screen and (min-width: 1024px) {
+  .stat-box {
+    padding-top: 16.5%; } }
