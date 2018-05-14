@@ -28,6 +28,10 @@ class LanguageSwitcher
    * @var string
    */
   protected $domain = 'broker';
+  /**
+   * @var string
+   */
+  protected $locale;
 
   /**
    * @return App
@@ -90,6 +94,26 @@ class LanguageSwitcher
   }
 
   /**
+   * @return string
+   * @codeCoverageIgnore
+   */
+  public function getLocale()
+  {
+    return $this->locale;
+  }
+
+  /**
+   * @param string $locale
+   * @return LanguageSwitcher
+   * @codeCoverageIgnore
+   */
+  public function setLocale(string $locale)
+  {
+    $this->locale = $locale;
+    return $this;
+  }
+
+  /**
    * LanguageSwitcher constructor.
    * @param App $application
    */
@@ -116,6 +140,8 @@ class LanguageSwitcher
       $this->setLanguageByBrowser();
     }
 
+    $response = $response->withAddedHeader('X-Locale', $this->getLocale());
+
     return $next($request, $response);
   }
 
@@ -129,7 +155,7 @@ class LanguageSwitcher
     $domain = $this->getDomain();
 
     $this->putenv(sprintf('LC_MESSAGES=%s.UTF-8', $language));
-    if ($this->setLocale(LC_MESSAGES, sprintf('%s.UTF-8', $language)) === false)
+    if ($this->setSystemLocale(LC_MESSAGES, sprintf('%s.utf8', $language)) === false)
     {
       $this->getContainer()->get('logger')->debug(sprintf('Unable to set PHP locale (%s)!', $language));
       return false;
@@ -138,6 +164,8 @@ class LanguageSwitcher
     $this->bindTextDomain($domain, dirname(dirname(__DIR__)) . '/locale');
     $this->bindTextDomainCodeset($domain, 'UTF-8');
     $this->setTextDomain($domain);
+
+    $this->setLocale($language);
 
     return true;
   }
@@ -211,7 +239,7 @@ class LanguageSwitcher
    * @param string $locale
    * @return string
    */
-  protected function setLocale(int $category, string $locale)
+  protected function setSystemLocale(int $category, string $locale)
   {
     return setlocale($category, $locale);
   }

@@ -445,7 +445,7 @@
             "type": "string"
           },
           "requiredDocuments": {
-            "type": "object"
+            "type": "array"
           },
           "loanDetails": {
             "type": "object",
