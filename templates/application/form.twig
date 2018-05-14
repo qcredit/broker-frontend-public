@@ -81,14 +81,19 @@
     </div>
   </div>
   <!--{% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %} -->
-    <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
-    <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
   </div>
   <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
 {% endblock %}
 
 {% block endBody %}
+  <script type="text/javascript">
+    require(['./src/scripts/common'], function (common) {
+      require(['app/domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+
+      });
+    });
+  </script>
 {#  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
   <script type="text/javascript" src="/src/scripts/gettext.min.js"></script>
   <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>#}
