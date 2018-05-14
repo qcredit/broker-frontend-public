@@ -26,7 +26,11 @@ p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif;
 }
 section > h1 {
-  margin: 4.125rem 0 4.5rem;
+  margin: 4.125rem 0 3.5rem;
+  font-size: 2rem;
+}
+section h1.small-mar {
+  margin-bottom: 2rem;
 }
 .page-body {
   min-height: 200px;
@@ -137,7 +141,18 @@ body {
     }
   }
 }
-
+.about-image-container-1 {
+  margin-top: 2rem;
+}
+.about-image-container-2 {
+  margin-bottom: 2rem;
+}
+.quote-text {
+  margin: 3rem 0 0 0;
+  font-size: 21px;
+  font-style: italic;
+  text-align: center;
+}
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6;
@@ -159,6 +174,17 @@ body {
 @media only screen and (min-width: 768px) {
   .page-body {
     min-height: 400px;
+  }
+  .home-about-half {
+    margin: 1.5rem 0;
+  }
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .quote-text {
+    font-size: 24px;
   }
   .thank-you-row {
     padding-top: 4rem;
