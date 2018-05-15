@@ -1,15 +1,15 @@
 {% extends 'base.twig' %}
-{% block title %}Application's offer list{% endblock %}
+{% block title %}{% trans 'Application offers list' %}{% endblock %}
 {% block container %}
   <div class="row justify-content-md-center">
     <div class="col-sm-12 col-md-9">
       <div class="offer-list-head">
-        <p>Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:</p>
+        <p>{% trans 'Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:' %}</p>
       </div>
     </div>
   </div>
   <section class="row justify-content-md-center">
-    <h4 class="col-sm-12 col-md-9 offers-list-heading">Personal offers:</h4>
+    <h4 class="col-sm-12 col-md-9 offers-list-heading">{% trans 'Personal offers' %}:</h4>
     {% if application.offers %}
     <div class="col-sm-12 col-md-9 offers-listing-wrap">
       {% for offer in application.offers %}
@@ -20,19 +20,19 @@
           </div>
           <div class="loan-offerer-info">
             <span class="loan-offerer-name">{{ offer.partner.name }}</span>
-            <span class="loan-offerer-website">www.aasa.fi</span>
+            <span class="loan-offerer-website">{{ offer.partner.website }}</span>
           </div>
-          <div class="text-focus show-mobile"><span class="name">Monthly:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
+          <div class="text-focus show-mobile"><span class="name">{% trans 'Monthly' %}:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> {{ offer.loanAmount }} PLN</span>
-          <span><strong>Duration:</strong> {{ offer.loanTerm }}m</span>
-          <span><strong>Interest:</strong> {{ offer.interest }} %</span>
-          <span><strong>APR:</strong> {{ offer.apr }}%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> {{ offer.loanAmount }} PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> {{ offer.loanTerm }}m</span>
+          <span><strong>{% trans 'Interest' %}:</strong> {{ offer.interest }} %</span>
+          <span><strong>{% trans 'APR' %}:</strong> {{ offer.apr }}%</span>
         </div>
         <div class="loan-offer-footer">
-          <div class="text-focus show-large"><span class="name">Monthly:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
-          <a href="{{ offer.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">SIGN CONTRACT</a>
+          <div class="text-focus show-large"><span class="name">{% trans 'Monthly' %}:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
+          <a href="{{ offer.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">{% trans 'SIGN CONTRACT' %}</a>
         </div>
       </article>
       {% endfor %}
@@ -49,7 +49,7 @@
     </div>
   </div>
   <section class="row justify-content-md-center">
-    <h4 class="col-sm-12 col-md-9 offers-list-heading">Other offers:</h4>
+    <h4 class="col-sm-12 col-md-9 offers-list-heading">{% trans 'Other offers' %}:</h4>
     <div class="col-sm-12 col-md-9 offers-listing-wrap">
       <article class="loan-offer-container affiliate-offer-container">
         <div class="loan-offer-head">
@@ -62,12 +62,12 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 500 - 15000 PLN</span>
-          <span><strong>Duration:</strong> 3 - 36 m</span>
-          <span><strong>APR:</strong> 78% - 251%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 500 - 15000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 3 - 36 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 78% - 251%</span>
         </div>
         <div class="loan-offer-footer">
-          <a href="http://tracking.affiliate44.com/aff_c?offer_id=24&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
+          <a href="http://tracking.affiliate44.com/aff_c?offer_id=24&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a>
         </div>
       </article>
       <article class="loan-offer-container affiliate-offer-container">
@@ -81,9 +81,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 1000 - 7000 PLN</span>
-          <span><strong>Duration:</strong> 3 - 30 m</span>
-          <span><strong>APR:</strong> 97% - 538%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 1000 - 7000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 3 - 30 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 97% - 538%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=41&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
@@ -100,9 +100,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 800 - 15000 PLN</span>
-          <span><strong>Duration:</strong> 3 - 36 m</span>
-          <span><strong>APR:</strong> 78% - 491%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 800 - 15000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 3 - 36 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 78% - 491%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=47&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
@@ -119,9 +119,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 1500 - 7000 PLN</span>
-          <span><strong>Duration:</strong> 6 - 30 m</span>
-          <span><strong>APR:</strong> 97% - 261%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 1500 - 7000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 6 - 30 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 97% - 261%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=91&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
@@ -138,9 +138,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 3000 - 15000 PLN</span>
-          <span><strong>Duration:</strong> 6 - 24 m</span>
-          <span><strong>APR:</strong> 80% - 271%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 3000 - 15000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 6 - 24 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 80% - 271%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=111&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
@@ -157,9 +157,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 1000 - 15000 PLN</span>
-          <span><strong>Duration:</strong> 4 - 48 m</span>
-          <span><strong>APR:</strong> 58% - 378%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 1000 - 15000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 4 - 48 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 58% - 378%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=150&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
@@ -176,9 +176,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 2000 - 20000 PLN</span>
-          <span><strong>Duration:</strong> 5 - 48 m</span>
-          <span><strong>APR:</strong> 47% - 154%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 2000 - 20000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 5 - 48 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 47% - 154%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=458&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
@@ -195,9 +195,9 @@
           </div>
         </div>
         <div class="loan-offer-body">
-          <span><strong>Amount:</strong> 1000 - 10000 PLN</span>
-          <span><strong>Duration:</strong> 12 - 24 m</span>
-          <span><strong>APR:</strong> 75% - 138%</span>
+          <span><strong>{% trans 'Amount' %}:</strong> 1000 - 10000 PLN</span>
+          <span><strong>{% trans 'Duration' %}:</strong> 12 - 24 m</span>
+          <span><strong>{% trans 'APR' %}:</strong> 75% - 138%</span>
         </div>
         <div class="loan-offer-footer">
           <a href="http://tracking.affiliate44.com/aff_c?offer_id=2&aff_id=447" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">Apply for a loan</a>
