@@ -1,23 +1,53 @@
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:47
-msgid "Leverage agile frameworks"
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:63
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:62
+msgid "Insert your first name"
 msgstr ""
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:51
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:70
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:69
+msgid "Insert your email address"
+msgstr ""
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:78
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:77
 msgid ""
-"Provide a robust synopsis for high level overviews. Iterative approaches to "
-"corporate strategy foster collaborative thinking to further the overall "
-"value proposition."
+"*Bring to the table win-win survival strategies to ensure proactive "
+"domination. At the end of the day, going forward, a new normal that has "
+"evolved from generation X is on the runway heading towards a streamlined "
+"cloud solution. "
 msgstr ""
 
-#: src/Model/ApplicationForm.php:63 src/Model/ApplicationForm.php:63
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:82
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:158
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:81
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:169
+msgid "Apply for a loan"
+msgstr ""
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:26
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:26
+msgid "How much do you want to borrow?"
+msgstr ""
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:44
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:44
+msgid "How fast do you want to pay off (months)?"
+msgstr ""
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:62
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:62
+msgid "Approximate monthly installment "
+msgstr ""
+
+#: src/Model/ApplicationForm.php:63
 msgid "Income type"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:64 src/Model/ApplicationForm.php:64
+#: src/Model/ApplicationForm.php:64
 msgid "Your monthly net income"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:65 src/Model/ApplicationForm.php:65
+#: src/Model/ApplicationForm.php:65
 msgid "Employer name"
 msgstr ""
 
