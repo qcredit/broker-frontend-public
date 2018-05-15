@@ -1,9 +1,12 @@
 {% extends 'admin.twig' %}
-{% block title %}Login{% endblock %}
+{% block title %}Login to continue{% endblock %}
 {% block container %}
-  <div class="container">
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <a href="#" class="mt-5" onclick="signOut();">Logout</a>
+  <div class="row justify-content-sm-center">
+    <div class="col-sm-9 col-md-5 login-container">
+      <h4 class="login-header">Log in to continue</h4>
+        <div class="g-signin2" data-onsuccess="onSignIn"></div>
+        <a href="#" class="logout" onclick="signOut();">Logout</a>
+    </div>
   </div>
 {% endblock %}
 {% block endBody %}

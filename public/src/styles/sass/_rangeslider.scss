@@ -1,21 +1,24 @@
-.landing-component-sm {
+.landing-component {
   .landing-slider {
     display: flex;
     .landing-form-adjust {
-      width: 43px;
-      height: 43px;
+      width: 53px;
+      height: 53px;
       padding: 0;
       background: $blue;
-      color: #FFF;
-      font-size: 36px;
-      font-weight: bold;
-      line-height: 1;
       text-align: center;
       cursor: pointer;
       -webkit-user-select: none;
          -moz-user-select: none;
           -ms-user-select: none;
               user-select: none;
+      touch-action: manipulation;
+      span {
+        color: #FFF;
+        font-size: 43px;
+        font-weight: bold;
+        line-height: 53px;
+      }
     }
 
     .landing-form-adjust.disabled {
@@ -30,9 +33,9 @@
       outline: none;
     }
   }
-}
-.landing-component-lg {
-  display: none;
+  input {
+    display: none;
+  }
 }
 .range-slider-label {
   margin: 1rem 0 0;
@@ -42,8 +45,25 @@
   display: inline-block;
   margin-top: 1.25rem;
   font-weight: normal;
+  span {
+    display: block;
+  }
+}
+.rangeslider--horizontal {
+  display: none;
+}
+.rangeslider--horizontal {
+  display: none;
+}
+.rangeslider--horizontal {
+  display: none;
 }
 
+@media only screen and (min-width: 375px) {
+  .range-slider-monhly-label span {
+    display: inline-block;
+  }
+}
 @media only screen and (min-width: 769px) {
   .rangeslider, .rangeslider__fill {
     display: block;
@@ -100,10 +120,13 @@
     font-size: 1.25rem;
     font-weight: normal;
   }
-  .landing-component-lg {
+  .landing-component input {
     display: block;
   }
-  .landing-component-sm {
+  .landing-component .landing-slider {
+    align-items: baseline;
+  }
+  .landing-component .landing-form-adjust {
     display: none;
   }
 }
@@ -111,5 +134,12 @@
 @media only screen and (min-width: 1150px) {
   .range-slider-select-value {
     padding-left: 10px;
+  }
+}
+@supports (-webkit-overflow-scrolling: touch) {
+  /* CSS specific to iOS devices */
+  .landing-component select {
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 }

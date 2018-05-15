@@ -111,6 +111,16 @@ class SchemaValidator implements SchemaValidatorInterface
       return 'Please provide a value in provided range.';
     }
 
+    if (strpos($message, 'Does not match the regex pattern') !== false)
+    {
+      return 'Invalid format provided.';
+    }
+
+    if (strpos($message, 'String value found, but a number is required') !== false)
+    {
+      return _('Please provide a number');
+    }
+
     return $message;
   }
 }

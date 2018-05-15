@@ -12,14 +12,14 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'WEBSITE',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../logs/app.log',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
             'level' => \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
             ]
         ],
         'broker' => [
-          'environment' => 'BROKER_DEV',
+          'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
           'logger' => [
             'name' => 'BROKER',
             'loggerClass' => 'App\Base\Logger',
@@ -67,12 +67,19 @@ return [
         ],
         'mailer' => [
           'host' => 'smtp.gmail.com',
-          'username' => 'hendrik.uibopuu@aasaglobal.com',
-          'password' => '',
+          'username' => 'qcredit.test@gmail.com',
+          'password' => 'URXpY7xGDL',
           'secure' => 'tls',
           'port' => 587,
-          'sender' => 'hendrik.uibopuu@aasaglobal.com',
+          'sender' => 'qcredit.test@gmail.com',
           'senderName' => 'qCredit'
+        ],
+        'messente' => [
+          'apiUrl' => 'http://api2.messente.com/send_sms/',
+          'senderName' => 'qCredit',
+          'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
+          'username' => 'f7303187a44e84450d202debecb507ea',
+          'password' => '849556537bdce14bb797b42d32641a36'
         ]
     ],
 ];

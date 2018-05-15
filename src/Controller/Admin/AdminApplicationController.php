@@ -9,6 +9,8 @@
 namespace App\Controller\Admin;
 
 use App\Base\Components\AbstractController;
+use App\Base\Components\SmsDelivery;
+use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Slim\Container;

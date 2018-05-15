@@ -1,6 +1,6 @@
 <?php
 // Application middleware
-
+use App\Middleware\LanguageSwitcher;
 // e.g: $app->add(new \Slim\Csrf\Guard);
 
 $app->add(new \App\Middleware\Session([
@@ -9,4 +9,4 @@ $app->add(new \App\Middleware\Session([
   'lifetime' => '20 minutes'
 ]));
 
-$app->add($container->get('csrf'));
+$app->add(new LanguageSwitcher($app));

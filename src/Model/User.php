@@ -10,9 +10,12 @@ namespace App\Model;
 
 use App\Base\Interfaces\UserIdentityInterface;
 use Broker\Domain\Entity\AbstractEntity;
+use Broker\Domain\Entity\FluidDataTrait;
 
 class User extends AbstractEntity implements UserIdentityInterface
 {
+  use FluidDataTrait;
+
   const ACCESS_LVL_ADMIN = 1;
   /**
    * @var integer
@@ -86,24 +89,6 @@ class User extends AbstractEntity implements UserIdentityInterface
   public function setAccessLevel($accessLevel)
   {
     $this->accessLevel = $accessLevel;
-    return $this;
-  }
-
-  /**
-   * @return \DateTime
-   */
-  public function getCreatedAt()
-  {
-    return $this->createdAt;
-  }
-
-  /**
-   * @param \DateTime $createdAt
-   * @return User
-   */
-  public function setCreatedAt(\DateTime $createdAt)
-  {
-    $this->createdAt = $createdAt;
     return $this;
   }
 

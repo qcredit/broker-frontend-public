@@ -1,10 +1,15 @@
+.offers-listing-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .offer-list-head {
   margin: 2rem 0;
 }
 .loan-offer-container{
   display: flex;
   flex-direction: column;
-  margin: 2rem 0;
+  margin: .875rem 0;
   border: 1px solid $bluegray;
 }
 .loan-offer-head {
@@ -53,8 +58,9 @@
 
   }
 }
-.loan-offer-container.featured {
+.personal-offer-container.featured {
   position: relative;
+  order: 0;
   border: 3px solid $gold;
   &:before {
     content: "Top offer";
@@ -69,10 +75,32 @@
     background: $gold;
     color: #000;
   }
+  &:first-child {
+    margin-top: 2.125rem;
+  }
+}
+.offers-list-heading {
+  font-family: 'Lato', sans-serif;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #d0d0d0;
+}
+.affiliate-offer-container {
+  .loan-offer-head {
+    justify-content: center;
+  }
+  .loan-offer-body {
+    span {
+     flex: 0 0 100%;
+     font-size: 1rem;
+     text-align: center;
+   }
+  }
 }
 
 @media only screen and (min-width: 360px) {
-  .loan-offer-body {
+  .personal-offer-container .loan-offer-body {
     span {
       font-size: 1rem;
       flex: 0 0 118px;
@@ -84,8 +112,34 @@
   .offer-list-head {
     margin: 3rem 0;
   }
-  .loan-offer-body span {
+  .personal-offer-container .loan-offer-body span {
     flex: 0 0 140px;
+  }
+  .affiliate-offer-container {
+    flex-direction: row;
+    .loan-offer-head {
+      flex: 0 0 160px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-bottom-width: 0px;
+      padding: 0 .5rem;
+      .loan-offerer-name {
+        display: none;
+      }
+    }
+    .loan-offer-body {
+      span {
+        font-size: .875rem;
+        text-align: left;
+      }
+    }
+    .loan-offer-footer {
+      padding: 0 .5rem;
+      .broker-btn {
+        padding: 1rem;
+      }
+    }
   }
 }
 
@@ -123,6 +177,15 @@
       padding: 1rem;
     }
   }
+  .affiliate-offer-container {
+    .loan-offer-head {
+      flex-direction: column;
+      flex: 0 0 230px;
+    }
+    .loan-offer-body span {
+      font-size: 1rem;
+    }
+  }
 }
 
 @media only screen and (min-width: 1200px) {
@@ -142,5 +205,18 @@
   .loan-offer-body {
     margin-left: 2rem;
     justify-content: center;
+  }
+  .affiliate-offer-container .loan-offer-head {
+    flex-direction: row;
+    flex: 0 0 270px;
+  }
+}
+@media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
+/* IE10+ CSS styles go here */
+  .loan-offer-body {
+    max-width: 400px;
+  }
+  .affiliate-offer-container .loan-offer-body {
+    flex: 0 0 328px;
   }
 }

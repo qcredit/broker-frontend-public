@@ -1,0 +1,140 @@
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:47
+msgid "Leverage agile frameworks"
+msgstr ""
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:51
+msgid ""
+"Provide a robust synopsis for high level overviews. Iterative approaches to "
+"corporate strategy foster collaborative thinking to further the overall "
+"value proposition."
+msgstr ""
+
+#: src/Model/ApplicationForm.php:63
+msgid "Income type"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:64
+msgid "Your monthly net income"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:65
+msgid "Employer name"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:66
+msgid "Your position"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:67
+msgid "Organization's field of activity"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:68
+msgid "Year started at the organization"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:69
+msgid "Month started at the organization"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:70
+msgid "Education provider"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:71
+msgid "Purpose of loan"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:72
+msgid "Personal identification number"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:73
+msgid "Street"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:74
+msgid "ZIP"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:75
+msgid "House number"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:76
+msgid "Apartment number"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:77
+msgid "City"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:78
+msgid "Account number"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:79
+msgid "Account type"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:80
+msgid "Account holder's name"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:81
+msgid "Document number"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:82
+msgid "Phone type"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:83
+msgid "Payout method"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:84
+msgid "Education level"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:85
+msgid "Marital status"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:86
+msgid "Type of residency"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:87
+msgid "Type of property"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:88
+msgid "Loan amount"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:89
+msgid "Loan term"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:90
+msgid "First name"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:91
+msgid "Last name"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:92
+msgid "Email"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:93
+msgid "Phone"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:94
+msgid ""
+"Yes, you can send me information about promotions, competitions, offers and "
+"such."
+msgstr ""

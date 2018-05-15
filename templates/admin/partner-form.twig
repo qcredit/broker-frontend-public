@@ -1,5 +1,5 @@
 {% extends 'admin.twig' %}
-{% block title %}{{ partner.name }}{% endblock %}
+{% block title %}Update info for {{ partner.name }}{% endblock %}
 {% block container %}
     <form method="POST">
         <div class="row">
@@ -35,8 +35,10 @@
         </div>
         <div class="row">
             <div class="col-sm-6 mx-auto">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn broker-btn broker-btn-blue">Submit</button>
             </div>
         </div>
+        <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
+        <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
     </form>
 {% endblock %}

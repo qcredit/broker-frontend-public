@@ -15,6 +15,7 @@ abstract class AbstractRepository implements RepositoryInterface
 {
   protected $entityManager;
   protected $entityClass;
+  protected $queryBuilder;
 
   /**
    * AbstractRepository constructor.
@@ -29,6 +30,42 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     $this->entityManager = $entityManager;
+  }
+
+  /**
+   * @return EntityManager
+   */
+  public function getEntityManager()
+  {
+    return $this->entityManager;
+  }
+
+  /**
+   * @param EntityManager $entityManager
+   * @return AbstractRepository
+   */
+  public function setEntityManager(EntityManager $entityManager)
+  {
+    $this->entityManager = $entityManager;
+    return $this;
+  }
+
+  /**
+   * @return mixed
+   */
+  public function getEntityClass()
+  {
+    return $this->entityClass;
+  }
+
+  /**
+   * @param mixed $entityClass
+   * @return AbstractRepository
+   */
+  public function setEntityClass($entityClass)
+  {
+    $this->entityClass = $entityClass;
+    return $this;
   }
 
   /**
@@ -80,6 +117,8 @@ abstract class AbstractRepository implements RepositoryInterface
   /**
    * @param $entity
    * @return $this
+   * @throws \Doctrine\ORM\ORMException
+   * @throws \Doctrine\ORM\OptimisticLockException
    */
   public function save($entity)
   {
@@ -92,6 +131,8 @@ abstract class AbstractRepository implements RepositoryInterface
   /**
    * @param $entity
    * @return bool
+   * @throws \Doctrine\ORM\ORMException
+   * @throws \Doctrine\ORM\OptimisticLockException
    */
   public function delete($entity)
   {
@@ -99,5 +140,74 @@ abstract class AbstractRepository implements RepositoryInterface
     $this->entityManager->flush();
 
     return true;
+  }
+
+  /**
+   * @param string $field
+   * @param string $value
+   * @param string $path
+   * @param bool $not
+   * @return mixed
+   * @see https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-contains
+   */
+  public function getWhereJsonContainsValue(string $field, string $value, string $path, bool $not = false)
+  {
+    $queryBuilder = $this->entityManager->createQueryBuilder();
+    $query = $queryBuilder->select('entity')
+      ->from($this->entityClass, 'entity')
+      ->where("JSON_CONTAINS(entity.$field, :value, :path) = :not");
+
+    $query->setParameter('path', '$.'.$path);
+    $query->setParameter('value', json_encode($value));
+    $query->setParameter('not', $not ? 0 : 1);
+
+    $q = $query->getQuery();
+
+    return $q->execute();
+  }
+
+  /**
+   * @param string $field
+   * @param string $oneOrAll
+   * @param string $path
+   * @return mixed
+   * @todo Make improvements by providing a way to use nested or multiple paths!
+   * @see https://dev.mysql.com/doc/refman/5.7/en/json-search-functions.html#function_json-contains-path
+   */
+  public function getWhereJsonContainsPath(string $field, string $oneOrAll, string $path)
+  {
+    $queryBuilder = $this->getQueryBuilder();
+    $query = $queryBuilder->select('entity')
+      ->from($this->entityClass, 'entity')
+      ->where("JSON_CONTAINS_PATH(entity.$field, 'one', :path) = 1");
+
+    $query->setParameter('path', '$.' . $path);
+
+    $q = $query->getQuery();
+    return $q->execute();
+  }
+
+  /**
+   * @param string $field
+   * @param array $condition
+   * @return mixed
+   */
+  public function getByJsonExtract(string $field, array $condition)
+  {
+    $query = $this->getQueryBuilder()->select('entity')
+      ->from($this->entityClass, 'entity')
+      ->where("JSON_EXTRACT(entity.$field, :path) $condition[1] :value")
+      ->setParameter('path', '$.' . $condition[0])
+      ->setParameter('value', $condition[2]);
+
+    return $query->getQuery()->execute();
+  }
+
+  /**
+   * @return \Doctrine\ORM\QueryBuilder
+   */
+  public function getQueryBuilder()
+  {
+    return $this->getEntityManager()->createQueryBuilder();
   }
 }

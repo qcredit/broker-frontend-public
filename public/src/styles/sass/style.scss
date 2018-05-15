@@ -28,6 +28,9 @@ p, span, a, strong, button, input, textarea {
 section > h1 {
   margin: 4.125rem 0 4.5rem;
 }
+.page-body {
+  min-height: 200px;
+}
 /* UTILITIES */
 .broker-btn {
   padding: 1rem 3rem;
@@ -36,6 +39,9 @@ section > h1 {
   text-transform: uppercase;
   font-weight: 700;
   font-size: 14px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .15s ease-in-out;
   &:focus {
     outline: none;
     box-shadow: none;
@@ -57,7 +63,14 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
   color: #000;
   background: $gold;
 }
-
+.broker-btn-disabled {
+  color: #999;
+  background: $bluegray;
+  pointer-events: none;
+  &:hover {
+    box-shadow: none;
+  }
+}
 
 body {
   padding-top: 85px;
@@ -144,12 +157,18 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+  .page-body {
+    min-height: 400px;
+  }
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 1024px) {
+  .page-body {
+    min-height: 500px;
+  }
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem;

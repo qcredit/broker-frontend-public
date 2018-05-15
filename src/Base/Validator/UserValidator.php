@@ -28,7 +28,7 @@ class UserValidator extends AbstractEntityValidator
   public function validateEmail()
   {
     $value = $this->getEntity()->getEmail();
-    if (!V::stringType()->email()->validate($value))
+    if (!V::stringType()->regex('/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,8}$/')->validate($value))
     {
       $this->getEntity()->setErrors([UserForm::ATTR_EMAIL => 'Invalid email!']);
       return false;

@@ -1,5 +1,5 @@
 {% extends 'admin.twig' %}
-{% block title %}{{ application.id }}{% endblock %}
+{% block title %}Application {{ application.id }} details{% endblock %}
 {% block container %}
   {% if flash %}
       <div class="row">
@@ -27,31 +27,60 @@
           </table>
       </div>
       <div class="col col-sm-12 col-md-6 col-lg-6 application-loan-accepted-table">
-          <h5>Loan status</h5>
+          <h5>Signed loans</h5>
           <table class="table">
               <thead>
                   <tr>
                       <th>Lender Id</th>
-                      <th>Lender Id</th>
+                      <th>Lender Name</th>
                       <th>Amount</th>
                       <th>Status</th>
                   </tr>
               </thead>
               <tbody>
-                <tr>
-                    <td>5435432</td>
-                    <td>1231232</td>
-                    <td>6000 PLN</td>
-                    <td class="status-accepted">Accepted</td>
-                </tr>
-                <tr>
-                    <td>7676755</td>
-                    <td>1442122</td>
-                    <td>5000 PLN</td>
-                    <td class="status-accepted">Accepted</td>
-                </tr>
+                {% for offer in application.offers %}
+                  {% if offer.isAccepted %}
+                    <tr>
+                        <td>{{ offer.partner.id }}</td>
+                        <td>{{ offer.partner.name }}</td>
+                        <td>{{ offer.loanAmount }} PLN</td>
+                        <td class="status-accepted">Accepted</td>
+                    </tr>
+                  {% endif %}
+                {% endfor %}
               </tbody>
             </table>
+      </div>
+  </div>
+  <div class="row">
+      <div class="col-sm-12">
+          <h5>Partners' offers</h5>
+          {% if application.offers %}
+          <table class="table">
+              <thead>
+                  <tr>
+                      <th>Lender Id</th>
+                      <th>Lender Name</th>
+                      <th>Amount</th>
+                      <th>Remote Id</th>
+                      <th>Status</th>
+                      <th></th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {% for offer in application.offers %}
+                      <tr>
+                          <td>{{ offer.partner.id }}</td>
+                          <td>{{ offer.partner.name }}</td>
+                          <td>{% if offer.loanAmount %}{{ offer.loanAmount }} PLN{% endif %}</td>
+                          <td>{{ offer.remoteId }}</td>
+                          <td class="{% if offer.isAccepted %}status-accepted{% elseif offer.isInProcess %}status-in-process{% elseif offer.isPaidOut %}status-paidout{% else %}status-rejected{% endif %}">{% if offer.isAccepted %}Accepted{% elseif offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                          <td><a href="/admin/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
+                      </tr>
+                  {% endfor %}
+              </tbody>
+          </table>
+          {% endif %}
       </div>
   </div>
   <div class="row application-information-table-container">
@@ -175,36 +204,5 @@
         </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-      <div class="col">
-          <h5>Partners' offers</h5>
-          {% if application.offers %}
-          <table class="table">
-              <thead>
-                  <tr>
-                      <th>Lender Id</th>
-                      <th>Lender Name</th>
-                      <th>Amount</th>
-                      <th>Remote Id</th>
-                      <th>Status</th>
-                      <th></th>
-                  </tr>
-              </thead>
-              <tbody>
-                  {% for offer in application.offers %}
-                      <tr>
-                          <td>{{ offer.partner.id }}</td>
-                          <td>{{ offer.partner.name }}</td>
-                          <td>{% if offer.loanAmount %}{{ offer.loanAmount }} PLN{% endif %}</td>
-                          <td>{{ offer.remoteId }}</td>
-                          <td class="{% if offer.isAccepted %}status-accepted{% elseif offer.isInProcess %}status-in-process{% elseif offer.isPaidOut %}status-paidout{% else %}status-rejected{% endif %}">{% if offer.isAccepted %}Accepted{% elseif offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
-                          <td><a href="/admin/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
-                      </tr>
-                  {% endfor %}
-              </tbody>
-          </table>
-          {% endif %}
-      </div>
   </div>
 {% endblock %}

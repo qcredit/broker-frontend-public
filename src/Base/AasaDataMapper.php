@@ -20,11 +20,13 @@ use Broker\System\Error\InvalidConfigException;
 class AasaDataMapper implements PartnerDataMapperInterface
 {
   const STATUS_IN_PROCESS = 'InProcess';
+  const STATUS_ACCEPTED = 'Accepted';
+  const STATUS_REJECTED = 'Rejected';
+  const STATUS_SIGNED = 'Signed';
+  const STATUS_WAITING_PAID_OUT = 'WaitingPaidOut';
+  const STATUS_IN_DEBT = 'InDebt';
   const STATUS_ACTIVE = 'Active';
   const STATUS_PAID_BACK = 'PaidBack';
-  const STATUS_IN_DEBT = 'InDebt';
-  const STATUS_REJECTED = 'Rejected';
-  const STATUS_ACCEPTED = 'Accepted';
   const STATUS_OK = 'OK';
 
   protected $configFile = 'aasa.config.json';
@@ -36,7 +38,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getRequestSchema(): array
   {
-    return json_decode($this->getConfigFile(), true)['requestSchema'];
+    return $this->getDecodedConfigFile()['requestSchema'];
   }
 
   /**
@@ -46,7 +48,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfig(): array
   {
-    return json_decode($this->getConfigFile(), true)['config'];
+    return $this->getDecodedConfigFile()['config'];
   }
 
   /**
@@ -56,13 +58,23 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfigFile()
   {
-    $file = dirname(__FILE__) . '/Config/aasa.config.json';
+    $file = sprintf('%s/Config/%s', dirname(__FILE__), $this->configFile);
     if (!file_exists($file))
     {
       throw new InvalidConfigException('No configuration file found for Aasa!');
     }
 
     return file_get_contents($file);
+  }
+
+  /**
+   * @return mixed
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getDecodedConfigFile()
+  {
+    return json_decode($this->getConfigFile(), true);
   }
 
   /**
@@ -146,7 +158,10 @@ class AasaDataMapper implements PartnerDataMapperInterface
       'amount' => 'loanAmount',
       'period' => 'loanTerm',
       'interest' => 'interest',
-      'avg' => 'monthlyFee'
+      'avg' => 'monthlyFee',
+      'apr' => 'apr',
+      'acceptancePageUrl' => 'acceptancePageUrl',
+      'esignUrl' => 'signingPageUrl'
     ];
   }
 
@@ -235,6 +250,26 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return $data;
   }
 
+  public function mapErrorsToForm(array $errors): array
+  {
+    $flat = $this->flattenArray($this->getRequestPayload());
+
+    $mapped = [];
+    foreach ($errors as $key => $value)
+    {
+      if (isset($flat[$key]))
+      {
+        $mapped[$flat[$key]] = $value;
+      }
+      else
+      {
+        $mapped[$key] = $value;
+      }
+    }
+
+    return $mapped;
+  }
+
   /**
    * @param array $data
    * @param PartnerResponse $response
@@ -246,9 +281,21 @@ class AasaDataMapper implements PartnerDataMapperInterface
     {
       $data['chosenDate'] = new \DateTime();
     }
+    else if ($data['data']['status'] === self::STATUS_PAID_BACK)
+    {
+      $data['paidBackDate'] = new \DateTime();
+    }
+    else if ($data['data']['status'] === self::STATUS_ACTIVE)
+    {
+      $data['paidOutDate'] = new \DateTime();
+    }
     else if ($data['data']['status'] === self::STATUS_ACCEPTED)
     {
       $data['acceptedDate'] = new \DateTime();
+    }
+    else if (in_array($data['data']['status'], [self::STATUS_SIGNED, self::STATUS_WAITING_PAID_OUT]))
+    {
+      $data['chosenDate'] = new \DateTime();
     }
     else if ($data['data']['status'] === self::STATUS_REJECTED)
     {
@@ -262,7 +309,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    * @param PartnerResponse $response
    * @return array
    */
-  public function getAdditionalErrors(PartnerResponse $response)
+  public function getResponseErrors(PartnerResponse $response): array
   {
     $body = json_decode($response->getResponseBody(), true);
 
@@ -314,18 +361,77 @@ class AasaDataMapper implements PartnerDataMapperInterface
       {
         $map = $this->flattenArray($this->getRequestPayload());
 
-        if (isset($map[$row['field']]))
+        $field = $this->getFormattedField($row['field']);
+        $message = $this->getFormattedMessage($row['message'], $row['field']);
+
+        if (isset($map[$field]))
         {
-          $errors[$map[$row['field']]] = $row['message'];
+          $errors[$map[$field]] = $message;
         }
         else
         {
-          $errors[$row['field']] = $row['message'];
+          $errors[$field] = $message;
         }
       }
     }
 
     return $errors;
+  }
+
+  /**
+   * @param string $field
+   * @return mixed|string
+   */
+  protected function getFormattedField(string $field)
+  {
+    $parts = explode('.', $field);
+    if ($parts)
+    {
+      return end($parts);
+    }
+    else {
+      return $field;
+    }
+  }
+
+  protected function getFormattedMessage(string $message, string $field)
+  {
+    $formattedField = $this->getFormattedField($field);
+    if (strpos($message, $field) !== false)
+    {
+      $message = str_replace($field, $formattedField, $message);
+    }
+
+    return $this->beautifyErrorMessage($message);
+  }
+
+  /**
+   * @param $message
+   * @return string
+   */
+  protected function beautifyErrorMessage($message)
+  {
+    if (strpos($message, 'Does not have a value in the enumeration') !== false)
+    {
+      return _('Please provide a value in provided range.');
+    }
+
+    if (strpos($message, 'Does not match the regex pattern') !== false)
+    {
+      return _('Invalid format provided.');
+    }
+
+    if (preg_match('/(\w+)\smust\shave\sa\slength\sbetween\s(\d+)\sand\s(\d+)$/', $message, $matches))
+    {
+      return sprintf(_('Must have a length between %d and %d characters'), $matches[2], $matches[3]);
+    }
+
+/*    if (strpos($message, 'must have a length between') !== false)
+    {
+      return _('Must have a length between X and Y');
+    }*/
+
+    return $message;
   }
 
   /**
@@ -405,16 +511,60 @@ class AasaDataMapper implements PartnerDataMapperInterface
     return [
       1125 => [
         'field' => 'general',
-        'message' => 'Contract already signed!'
+        'message' => _('Contract already signed!')
       ],
       1126 => [
         'field' => ChooseOfferForm::ATTR_FIRST_PAYMENT_DATE,
-        'message' => 'Invalid payment date!'
+        'message' => _('Invalid payment date!')
       ],
       1127 => [
         'field' => ChooseOfferForm::ATTR_SIGN_METHOD,
-        'message' => 'Signing method not allowed!'
+        'message' => _('Signing method not allowed!')
       ]
     ];
+  }
+
+  /**
+   * @return array
+   * @throws InvalidConfigException
+   * @throws \Exception
+   */
+  public function getIncomingUpdateSchema(): array
+  {
+    return $this->getDecodedConfigFile()['incomingUpdateSchema'];
+  }
+
+  /**
+   * @param PartnerResponse $partnerResponse
+   * @return array
+   */
+  public function getIncomingUpdateResponse(PartnerResponse $partnerResponse)
+  {
+    if (!$partnerResponse->isOk())
+    {
+      $errors = $partnerResponse->getErrors();
+
+      return [
+        'updateResponse' => [
+          'status' => 'ERROR',
+          'message' => !empty($errors) ? $errors[0] : 'Unknown error'
+        ]
+      ];
+    }
+
+    return [
+      'updateResponse' => [
+        'status' => 'OK'
+      ]
+    ];
+  }
+
+  /**
+   * @param PartnerResponse $partnerResponse
+   * @return mixed
+   */
+  public function extractRemoteOfferId(PartnerResponse $partnerResponse)
+  {
+    return json_decode($partnerResponse->getResponseBody(), true)['update']['id'];
   }
 }

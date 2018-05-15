@@ -9,18 +9,24 @@
 namespace App\Controller;
 
 use App\Base\Components\AbstractController;
-use App\Base\Components\EmailDelivery;
+use App\Base\Interfaces\MessageTemplateRepositoryInterface;
+use App\Component\FormBuilder;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
 use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
+use Broker\System\Helper;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
-use Broker\Domain\Entity\Application;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use App\Base\Components\SchemaHelper;
 
 class ApplicationController extends AbstractController
 {
@@ -183,77 +189,114 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return MessageTemplateRepositoryInterface
+   */
+  public function getMessageTemplateRepository()
+  {
+    return $this->getContainer()->get('MessageTemplateRepository');
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartnersDataMappers()
+  {
+    $result = [];
+    foreach ($this->getPartners() as $partner)
+    {
+      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+    }
+
+    return $result;
+  }
+
+  /**
+   * @return array
+   */
+  protected function getPartners()
+  {
+    return $this->getContainer()->get('PartnerRepository')->getActivePartners();
+  }
+
+  /**
+   * @return PartnerDataMapperRepositoryInterface
+   */
+  protected function getPartnerDataMapperRepository()
+  {
+    return $this->getContainer()->get('PartnerDataMapperRepository');
+  }
+
+  /**
+   * @return bool
+   */
+  protected function isFromFrontpage()
+  {
+    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
+  }
+
+  /**
+   * @return FormBuilder
+   */
+  protected function getFormBuilder()
+  {
+    return $this->getContainer()->get('FormBuilder');
+  }
+
+  /**
    * @param $request
    * @param $response
    * @param $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @todo Should allow validation according to scenarios
    */
-  public function indexAction($request, $response, $args)
+  public function indexAction(Request $request, Response $response, $args)
   {
-/*    $message = new Message();
-    $message->setRecipient('hendrik.uibopuu@aasaglobal.com')
-      ->setBody('hellllo!')
-      ->setTitle('Johhaidii');
-    $delivery = new EmailDelivery($this->getContainer());
-    $delivery->send($message);*/
+    $data = [];
+    $data['fields'] = $this->getFormBuilder()->getFormFields();
+    $newAppService = $this->getNewApplicationService();
 
-    $data = [
-      'incomeSourceType' => 'Employed',
-      'netPerMonth' => 4400,
-      'employerName' => 'European Parliament',
-      'position' => 'Cleaning man',
-      'yearSince' => 2013,
-      'monthSince' => 1,
-      'currentStudy' => '',
-      'trade' => 'unknown',
-      'loanPurposeType' => 'Bills',
-      'pin' => '71121513234',
-      'street' => 'Wolności',
-      'zip' => '44-285',
-      'houseNr' => '60',
-      'apartmentNr' => ' ',
-      'city' => 'Kornowac',
-      'documentNr' => 'CCY014054',
-      'mobilePhoneType' => 'PrePaid',
-      'payoutMethod' => 'Account',
-      'educationType' => 'MSc',
-      'accountType' => 'Personal',
-      'accountNr' => '32132345678901234569415123',
-      'accountHolder' => 'Anu Saagim',
-      'maritalStatusType' => 'Single',
-      'residentialType' => 'Own',
-      'propertyType' => 'Apartment',
-      'loanAmount' => 2100,
-      'loanTerm' => 18,
-      'firstName' => 'Adam',
-      'lastName' => 'Barański',
-      'email' => 'hendrik.uibopuu@aasaglobal.com',
-      'phone' => '+48739050381'
-    ];
-
-    //$data = [];
     if ($request->isPost())
     {
-      $newAppService = $this->getNewApplicationService();
-      if ($newAppService->setData($request->getParsedBody())->run())
+      $postData = $request->getParsedBody();
+      if ($this->isFromFrontpage() || $this->isAjax($request))
+      {
+        $newAppService->setValidationEnabled(false);
+      }
+
+      unset($postData['csrf_name']);
+      unset($postData['csrf_value']);
+
+      if ($newAppService->setData($postData)->run())
       {
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());
 
-        $this->generateOfferLinkMessage();
+        $offerMessage = $this->getMessageTemplateRepository()->getOfferLinkMessage($this->getPrepareService()->getApplication());
+        $this->getPrepareService()->getMessageDeliveryService()->setMessage($offerMessage);
 
         if ($this->getPrepareService()->run())
         {
-          //$newAppService->saveApp();
+          $newAppService->saveApp();
           return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
         }
       }
 
+      if ($this->isAjax($request))
+      {
+        $newAppService->saveApp();
+        return $response->withJson(['applicationHash' => $newAppService->getApplication()->getApplicationHash()]);
+      }
+
+      $data['application'] = $newAppService->getApplication();
+    }
+    else {
+      $newAppService->setValidationEnabled(false);
+      $newAppService->run();
       $data['application'] = $newAppService->getApplication();
     }
 
-    return $this->container->get('view')->render($response, 'application/form.twig', $data);
+    return $this->render($response, 'application/form.twig', $data);
   }
 
   /**
@@ -297,7 +340,8 @@ class ApplicationController extends AbstractController
       $service = $this->getChooseOfferService()
         ->setData($request->getParsedBody())->setOffer($data['offer']);
 
-      $this->generateOfferConfirmationMessage();
+      $message = $this->getMessageTemplateRepository()->getOfferConfirmationMessage($this->getChooseOfferService()->getOffer());
+      $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
 
       if ($service->run())
       {
@@ -329,46 +373,76 @@ class ApplicationController extends AbstractController
     return $application;
   }
 
-  protected function generateOfferConfirmationMessage()
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   * @throws NotFoundException
+   */
+  public function statusAction(Request $request, Response $response, $args)
   {
-    $offer = $this->getChooseOfferService()->getOffer();
-    $message = new Message();
-    $message->setTitle('Thank you for choosing us!')
-      ->setRecipient($offer->getApplication()->getEmail())
-      ->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setBody($this->generateEmailContent('mail/offer-confirmation.twig', [
-        'offer' => $offer,
-        'title' => 'Your selected offer'
-      ]));
+    $parts = explode('/', $_SERVER['HTTP_REFERER']);
+    $app = $this->findEntity(end($parts), $request, $response);
+    $partners = $this->getPartners();
+    $offers = $this->getOfferRepository()->getOffersByApplication($app);
 
-    $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
-  }
+    $filtered = $this->serializeObjects($offers);
 
-  protected function generateOfferLinkMessage()
-  {
-    $application = $this->getPrepareService()->getApplication();
-    $message = new Message();
-    $message->setTitle('Offers for your application')
-      ->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setBody($this->generateEmailContent('mail/offer-link.twig', [
-        'application' => $application,
-        'title' => 'Our offers for your application',
-        'link' => sprintf('http://localhost:8100/application/%s', $application->getApplicationHash())
-      ]))
-      ->setRecipient($application->getEmail());
-
-    $this->getPrepareService()->getMessageDeliveryService()->setMessage($message);
+    if (count($partners) === count($offers))
+    {
+      return $response->withJson([
+        'status' => 'done',
+        'offers' => $filtered
+      ]);
+    }
+    else {
+      return $response->withJson([
+        'status' => 'waiting',
+        'offers' => $offers
+      ]);
+    }
   }
 
   /**
-   * @param $template
-   * @param $params
-   * @return mixed
+   * @param array $objects
+   * @return array
    */
-  protected function generateEmailContent($template, $params)
+  protected function serializeObjects(array $objects)
   {
-    $twig = $this->getContainer()->get('view');
+    $filtered = [];
+    $encoders = [new JsonEncoder()];
+    $normalizer = new ObjectNormalizer();
+    $normalizer->setCircularReferenceLimit(1);
+    $normalizer->setCircularReferenceHandler(function ($object) { return $object->getId(); });
+    $serializer = new Serializer([$normalizer], $encoders);
 
-    return $twig->fetch($template, $params);
+    foreach ($objects as $object)
+    {
+      $object->setCreatedAt($object->getCreatedAt() ? $object->getCreatedAt()->format('Y-m-d H:i:s') : null);
+      $object->setAcceptedDate($object->getAcceptedDate() ? $object->getAcceptedDate()->format('Y-m-d H:i:s') : null);
+      $object->setUpdatedAt($object->getUpdatedAt() ? $object->getUpdatedAt()->format('Y-m-d H:i:s') : null);
+      if ($object->getApplication()->getCreatedAt() instanceof \DateTime)
+      {
+        $object->getApplication()->setCreatedAt($object->getApplication()->getCreatedAt()->format('Y-m-d H:i:s'));
+      }
+      $filtered[] = $serializer->serialize($object, 'json');
+    }
+
+    return $filtered;
+  }
+
+  /**
+   * @param $request
+   * @param Response $response
+   * @param $args
+   * @return Response
+   */
+  public function schemaAction($request, Response $response, $args)
+  {
+    $helper = new SchemaHelper();
+
+    return $response->withJson($helper->mergePartnersSchemas($this->getPartnersDataMappers()));
   }
 }

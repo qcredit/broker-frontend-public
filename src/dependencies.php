@@ -5,10 +5,10 @@ use Broker\Domain\Service\NewApplicationService;
 use Broker\Domain\Factory\ApplicationFactory;
 use Broker\Domain\Service\PartnerRequestsService;
 use Broker\Domain\Service\PartnerResponseService;
-use App\Base\PartnerDeliveryGateway;
 use Broker\Domain\Factory\OfferFactory;
 use Broker\Domain\Service\PreparePartnerRequestsService;
 use Broker\Domain\Factory\PartnerRequestFactory;
+use Syslogic\DoctrineJsonFunctions\Query\AST\Functions\Mysql as DqlFunctions;
 
 $container = $app->getContainer();
 
@@ -40,13 +40,19 @@ $container['session'] = function() {
   return new \SlimSession\Helper;
 };
 
+$container['cookies'] = function()
+{
+  return new \Slim\Http\Cookies();
+};
+
 $container['flash'] = function() {
   return new \Slim\Flash\Messages();
 };
 
 $container['csrf'] = function()
 {
-  return new \Slim\Csrf\Guard();
+  $storage = null;
+  return new \Slim\Csrf\Guard('csrf', $storage, null, 200, 16, true);
 };
 
 $container['view'] = function($container) {
@@ -54,6 +60,8 @@ $container['view'] = function($container) {
 
   // Instantiate and add Slim specific extension
   $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');
+  $view->addExtension(new Twig_Extensions_Extension_I18n());
+  $view->addExtension(new Twig_Extensions_Extension_Intl());
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
 
@@ -64,6 +72,10 @@ $container['db'] = function($container) {
   $settings = $container->get('settings')['doctrine'];
 
   $config = \Doctrine\ORM\Tools\Setup::createYAMLMetadataConfiguration([dirname(__DIR__) . '/src/Base/Persistence/Doctrine/Mapping'], true);
+  $config->addCustomStringFunction(DqlFunctions\JsonExtract::FUNCTION_NAME, DqlFunctions\JsonExtract::class);
+  $config->addCustomStringFunction(DqlFunctions\JsonSearch::FUNCTION_NAME, DqlFunctions\JsonSearch::class);
+  $config->addCustomStringFunction(DqlFunctions\JsonContains::FUNCTION_NAME, DqlFunctions\JsonContains::class);
+  $config->addCustomStringFunction(DqlFunctions\JsonContainsPath::FUNCTION_NAME, DqlFunctions\JsonContainsPath::class);
 
   $dbConf = getenv("ENV_TYPE") ? getenv("ENV_TYPE") : "developer";
 
@@ -77,6 +89,11 @@ $container['RepositoryFactory'] = function($c)
   return new \App\Base\Factory\RepositoryFactory();
 };
 
+$container['PartnerResponseFactory'] = function($c)
+{
+  return new \Broker\Domain\Factory\PartnerResponseFactory();
+};
+
 $container['UserRepository'] = function($container) {
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
 /*  return new UserRepository(
@@ -84,15 +101,35 @@ $container['UserRepository'] = function($container) {
   );*/
 };
 
+$container['PartnerRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Partner');
+};
+
+$container['ApplicationRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
+};
+
+$container['OfferRepository'] = function($container)
+{
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer');
+};
+
 $container['AdminController'] = function($c)
 {
   return new \App\Controller\Admin\AdminController($c);
 };
 
+$container['TestController'] = function($c)
+{
+  return new \App\Controller\TestController($c);
+};
+
 $container['PartnerController'] = function($c) {
   $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
 
-  $partnerDataLoader = new \App\Base\Repository\PartnerExtraDataLoader(new PartnerDataMapperRepository());
+  $partnerDataLoader = $c->get('PartnerExtraDataLoader');
   return new \App\Controller\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
 };
 
@@ -112,8 +149,7 @@ $container['UserController'] = function($c) {
 
 $container['HomeController'] = function($c)
 {
-  $view = $c->get('view');
-  return new \App\Controller\HomeController($view);
+  return new \App\Controller\HomeController($c);
 };
 $container['AboutController'] = function($c)
 {
@@ -130,15 +166,30 @@ $container['TermsController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\TermsController($view);
 };
+
+$container['ApiController'] = function($c)
+{
+  return new \App\Controller\ApiController($c->get('PartnerUpdateService'), $c);
+};
+
+$container['MessageTemplateRepository'] = function($c)
+{
+  return new \App\Base\Repository\MessageTemplateRepository($c, new \Broker\Domain\Factory\MessageFactory());
+};
+
 $container['PartnerDataMapperRepository'] = function($c)
 {
   return new PartnerDataMapperRepository();
 };
 
+$container['PartnerExtraDataLoader'] = function($c)
+{
+  return new \App\Base\Repository\PartnerExtraDataLoader($c->get('PartnerDataMapperRepository'));
+};
+
 $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
-    new PartnerDeliveryGateway(),
     $c->get('PartnerDataMapperRepository'),
     $c->get('MessageDeliveryService')
   );
@@ -167,6 +218,15 @@ $container['ChooseOfferService'] = function($c)
     new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
     new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+  );
+};
+
+$container['PartnerUpdateService'] = function($c)
+{
+  return new \Broker\Domain\Service\PartnerUpdateService(
+    $c->get('OfferRepository'),
+    $c->get('PartnerDataMapperRepository'),
+    new \App\Base\Validator\SchemaValidator()
   );
 };
 
@@ -225,6 +285,11 @@ $container['LoginController'] = function ($c)
   $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
   $authHandler = new \App\Base\Components\AuthHandler($authService, $userRepository, $c);
   return new \App\Controller\Admin\LoginController($c, $authHandler);
+};
+
+$container['FormBuilder'] = function($c)
+{
+  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
 };
 
 $brokerSettings = $container->get('settings')['broker'];

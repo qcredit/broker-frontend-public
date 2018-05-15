@@ -98,6 +98,6 @@ class LoginControllerTest extends BaseTest
       ->willReturnArgument(0);
 
     $result = $this->mock->logoutAction($this->requestMock, $this->responseMock, []);
-    $this->assertSame('/', $result);
+    $this->assertSame('/admin/login', $result);
   }
 }

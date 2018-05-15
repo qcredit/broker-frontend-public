@@ -4,7 +4,8 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="google-signin-client_id" content="876809952895-e1h19b6f0ia8tjlqu2ohta05k2stseaf.apps.googleusercontent.com">
+    <meta name="google-signin-client_id" content="876809952895-5hg5tv7pj9d0f2bt3chijj2j68ttmi5m.apps.googleusercontent.com">
+    <link rel="shortcut icon" type="image/png" href="src/images/favicon.png"/>
   <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700|Playfair+Display:700" rel="stylesheet">
@@ -14,7 +15,7 @@
 <body>
   <header class="page-header">
       <nav class="navbar fixed-top navbar-expand-md navbar-light">
-      <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/broker_logo.png" alt="logo"></a>
+      <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/qcredit_logo.png" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -32,6 +33,15 @@
           <li class="nav-item">
             <a class="nav-link text-uppercase" href="/contact">Contact</a>
           </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Language
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="/language?lang=en">English</a>
+            <a class="dropdown-item" href="/language?lang=pl">Polska</a>
+          </div>
+          </li>
         </ul>
       </div>
     </nav>
@@ -40,7 +50,7 @@
   {% block hero %}
   {% endblock %}
   </div>
-  <div class="container">
+  <div class="container page-body">
       {% block container %}
       {% endblock %}
   </div>
@@ -50,7 +60,7 @@
         <div class="container">
           <section class="row upper-footer">
             <div class="col-sm-12 col-md-6 col-lg-3 footer-section">
-              <p class="footer-heading font-weight-bold text-uppercase">BROKER</p>
+              <p class="footer-heading font-weight-bold text-uppercase">qCredit</p>
               <nav class="navigation footer-navigation">
                 <ul class="list-unstyled">
                   <li><a href="/">Home</a></li>
@@ -64,7 +74,7 @@
             <div class="col-sm-12 col-md-6 col-lg-3 footer-section">
               <p class="footer-heading font-weight-bold text-uppercase">Contact</p>
               <p class="footer-contacts">
-                <span><strong>E-mail:</strong> <a href="mailto:broker@brokers.pl">brokers@brokers.pl</a></span>
+                <span><strong>E-mail:</strong> <a href="mailto:info@qcredit.pl">info@qcredit.pl</a></span>
                 <span><strong>Address:</strong> Lorem ipsum 28, 115 50,
                 Tallinn, Estonia</span>
                 <span><strong>Phone:</strong> <a href="tel:+4834311254">+4834311254</a></span>
@@ -74,7 +84,7 @@
         </div>
       </div>
       <section class="row lower-footer text-center">
-        <a class="navbar-brand" href="#"><img src="/src/images/broker_logo.png" alt="logo"></a>
+        <a class="navbar-brand" href="#"><img src="/src/images/qcredit_logo.png" alt="logo"></a>
         <p>Copyright © 2018 Brokers - Lorem ipsum 28, 115 50, Tallinn, Estonia</p>
       </section>
     </div>
@@ -82,8 +92,12 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+{% if lang is defined %}
+<script type="text/javascript">
+  const LOCALE = '{{ lang }}';
+</script>
+{% endif %}
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="/src/scripts/rangeslider.min.js"></script>
 <script src="/src/scripts/functions.js"></script>

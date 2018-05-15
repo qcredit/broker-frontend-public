@@ -22,6 +22,9 @@ RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
 # COPY ./infrastructure/start.sh ./infrastructure/start.sh
 # RUN chmod 755 ./infrastructure/start.sh
 
+# COPY ./infrastructure/start.sh ./infrastructure/start.sh
+# RUN chmod 755 ./infrastructure/start.sh
+
 RUN    apt-get update \
     && usermod -u 1000 www-data \
     && a2enmod rewrite headers expires remoteip \
