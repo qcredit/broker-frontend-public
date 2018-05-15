@@ -24,3 +24,4 @@ cat /app/infrastructure/php/crontab | crontab
 cron
 
 exec "$@"
+

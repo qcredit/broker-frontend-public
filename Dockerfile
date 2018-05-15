@@ -8,15 +8,16 @@ ENV HOME=/root
 ENV TZ=Europe/Tallinn
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev locales
-
 ADD ./conf/apache_php.ini          /usr/local/etc/php/php.ini
 ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
+COPY ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
+#ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 ADD .                              /var/www/html
-ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
+
+RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
+    apt-get install -y git zip unzip libicu-dev locales
 
 # COPY ./infrastructure/start.sh ./infrastructure/start.sh
 # RUN chmod 755 ./infrastructure/start.sh
