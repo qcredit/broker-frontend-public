@@ -134,6 +134,7 @@ class SmsDelivery implements MessageDeliveryInterface
     if ($resp != 'OK')
     {
       Log::warning($this->resolveErrorCode($code), [$result]);
+      Log::debug('The unsuccessful call to API was using this URL', [$this->getClient()->getBaseUrl()]);
       $this->setOk(false);
     }
 
