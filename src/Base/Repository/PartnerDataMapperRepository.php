@@ -26,6 +26,9 @@ class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterfac
       case 'AASA';
         $class = 'App\Base\AasaDataMapper';
         break;
+      case 'FERR':
+        $class = 'App\Base\FerratumDataMapper';
+        break;
       default:
         throw new \Broker\System\Error\InvalidConfigException(sprintf('No data mapper for "%s"!', $identifier));
         break;

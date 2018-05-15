@@ -108,14 +108,14 @@ class FormBuilderTest extends BaseTest
     ];
     $mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMergedPartnerSchemas', 'extractSchemaFields'])
+      ->setMethods(['getMergedPartnerSchemas', 'exploreSchema'])
       ->getMock();
 
     $mock->expects($this->once())
       ->method('getMergedPartnerSchemas')
       ->willReturn($mergedSchemas);
     $mock->expects($this->exactly(count($mergedSchemas['allOf'])))
-      ->method('extractSchemaFields');
+      ->method('exploreSchema');
 
     $this->invokeMethod($mock, 'extractMergedSchemasFields', []);
   }
@@ -140,7 +140,7 @@ class FormBuilderTest extends BaseTest
 
     $mock->setApplicationForm(new ApplicationForm());
 
-    $this->invokeMethod($mock, 'extractSchemaFields', [$schema]);
+    $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();
 
     $this->assertArraySubset(['general' => [0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general']]], $result);
@@ -170,7 +170,7 @@ class FormBuilderTest extends BaseTest
 
     $mock->setApplicationForm(new ApplicationForm());
 
-    $this->invokeMethod($mock, 'extractSchemaFields', [$schema]);
+    $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();
 
     $this->assertArraySubset(['general' => [0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general', 'required' => true]]], $result);

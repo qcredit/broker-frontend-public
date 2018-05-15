@@ -44,6 +44,23 @@ class ApplicationForm
   const ATTR_PHONE = 'phone';
   const ATTR_MARKETING_CONSENT = 'marketingConsent';
 
+  const ENUM_INCOME_EMPLOYED = 'employed';
+  const ENUM_INCOME_STUDENT = 'student';
+  const ENUM_INCOME_PENSION = 'pension';
+  const ENUM_INCOME_DISABILITY = 'disabilityPension';
+  const ENUM_INCOME_UNEMPLOYED = 'unemployed';
+  const ENUM_INCOME_ALIMONY = 'alimony';
+  const ENUM_INCOME_SELF_EMPLOYED = 'selfEmployed';
+  const ENUM_INCOME_FARMER = 'farmer';
+  const ENUM_INCOME_OTHER = 'other';
+
+  const ENUM_EDUCATION_BASIC = 'basic';
+  const ENUM_EDUCATION_SECONDARY = 'secondary';
+  const ENUM_EDUCATION_VOCATIONAL = 'vocational';
+  const ENUM_EDUCATION_BA = 'bachelors';
+  const ENUM_EDUCATION_MA = 'masters';
+  const ENUM_EDUCATION_DR = 'doctors';
+
   /**
    * @param string $field
    * @return mixed|null
