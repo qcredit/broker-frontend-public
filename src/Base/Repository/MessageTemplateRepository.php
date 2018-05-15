@@ -9,7 +9,10 @@
 namespace App\Base\Repository;
 
 use App\Base\Interfaces\MessageTemplateRepositoryInterface;
+use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Message;
+use Broker\Domain\Entity\Offer;
+use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
 use Slim\Container;
 use Slim\Views\Twig;
 
@@ -19,14 +22,20 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
    * @var Container
    */
   protected $container;
+  /**
+   * @var MessageFactoryInterface
+   */
+  protected $messageFactory;
 
   /**
    * MessageTemplateRepository constructor.
    * @param Container $container
+   * @param MessageFactoryInterface $messageFactory
    */
-  public function __construct(Container $container)
+  public function __construct(Container $container, MessageFactoryInterface $messageFactory)
   {
     $this->container = $container;
+    $this->messageFactory = $messageFactory;
   }
 
   /**
@@ -44,6 +53,26 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
   public function setContainer(Container $container)
   {
     $this->container = $container;
+    return $this;
+  }
+
+  /**
+   * @return MessageFactoryInterface
+   * @codeCoverageIgnore
+   */
+  public function getMessageFactory()
+  {
+    return $this->messageFactory;
+  }
+
+  /**
+   * @param MessageFactoryInterface $messageFactory
+   * @return MessageTemplateRepository
+   * @codeCoverageIgnore
+   */
+  public function setMessageFactory(MessageFactoryInterface $messageFactory)
+  {
+    $this->messageFactory = $messageFactory;
     return $this;
   }
 
@@ -67,5 +96,58 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
     $view = $this->getView();
 
     return $view->fetch($path, $arguments);
+  }
+
+  /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getOfferLinkMessage(Application $application)
+  {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
+    $message = $this->getMessageFactory()->create();
+    $message->setTitle(_('Offers for your application'))
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/offer-link.twig', [
+        'application' => $application,
+        'title' => $message->getTitle(),
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+      ]))
+      ->setRecipient($application->getEmail());
+
+    return $message;
+  }
+
+  /**
+   * @param Offer $offer
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getOfferConfirmationMessage(Offer $offer)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setTitle(_('Thank you for choosing us!'))
+      ->setRecipient($offer->getApplication()->getEmail())
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/offer-confirmation.twig', [
+        'offer' => $offer,
+        'title' => $message->getTitle()
+      ]));
+
+    return $message;
+  }
+
+  /**
+   * @param string $template
+   * @param array $params
+   * @return string
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function generateEmailContent(string $template, array $params = [])
+  {
+    $twig = $this->getView();
+
+    return $twig->fetch($template, $params);
   }
 }
