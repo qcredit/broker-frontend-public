@@ -8,15 +8,19 @@ ENV HOME=/root
 ENV TZ=Europe/Tallinn
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev locales
-
+ADD ./conf/start.sh                /usr/local/bin/docker-php-entrypoint
 ADD ./conf/apache_php.ini          /usr/local/etc/php/php.ini
 ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
+#ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 ADD .                              /var/www/html
-ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
+
+RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
+    apt-get install -y git zip unzip libicu-dev locales
+
+# COPY ./infrastructure/start.sh ./infrastructure/start.sh
+# RUN chmod 755 ./infrastructure/start.sh
 
 # COPY ./infrastructure/start.sh ./infrastructure/start.sh
 # RUN chmod 755 ./infrastructure/start.sh
@@ -36,13 +40,15 @@ RUN    apt-get update \
     && chown www-data /var/www/html/cache \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
     && if cd /var/www/html/conf; then \
-         for file in apache_php.ini apache_000-default.conf apache_apache2.conf apache_security.conf; do \
-           test -f $file && /bin/rm $file; done; fi \
+         for file in apache_000-default.conf apache_apache2.conf apache_php.ini apache_security.conf start.sh; do \
+           test -f $file && /bin/rm $file; done; \
+       fi \
     && if cd /var/www/html/infrastructure; then \
          for file in start.sh; do \
-           test -f $file && /bin/rm $file; done; fi; \
+           test -f $file && /bin/rm $file; done; \
          for folder in mysql nginx php; do \
-           test -d $folder && /bin/rm -r $folder; done; fi
+           test -d $folder && /bin/rm -r $folder; done; \
+       fi
 
 RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
@@ -54,6 +60,7 @@ RUN    if cd /var/www/html; then\
         && locale-gen
 
 EXPOSE 80
+
 
 # docker build -t broker-frontend-public .
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest
