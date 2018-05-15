@@ -117,7 +117,7 @@ class SmsDelivery implements MessageDeliveryInterface
           'text' => $this->getMessage()->getBody()
         ]
       );
-    print_r($url);
+
     $this->getClient()->setBaseUrl($url);
     $this->getClient()->setClientOption(CURLOPT_RETURNTRANSFER, true);
     $this->getClient()->setClientOption(CURLOPT_SSL_VERIFYPEER, false);

@@ -10,9 +10,11 @@ namespace Tests\Unit\Controller;
 
 use App\Base\Persistence\Doctrine\OfferRepository;
 use App\Base\Persistence\Doctrine\PartnerRepository;
+use App\Base\Repository\MessageTemplateRepository;
 use App\Base\Repository\PartnerDataMapperRepository;
 use App\Controller\ApplicationController;
 use Broker\Domain\Service\ChooseOfferService;
+use Broker\Domain\Service\MessageDeliveryService;
 use Broker\System\BaseTest;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
@@ -23,6 +25,7 @@ use App\Base\Persistence\Doctrine\ApplicationRepository;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Offer;
 use Broker\Domain\Entity\Partner;
+use Broker\Domain\Entity\Message;
 
 class ApplicationControllerTest extends BaseTest
 {
@@ -32,6 +35,7 @@ class ApplicationControllerTest extends BaseTest
   protected $containerMock;
   protected $repositoryMock;
   protected $offerRepoMock;
+  protected $messageTemplateRepoMock;
 
   public function setUp()
   {
@@ -46,7 +50,8 @@ class ApplicationControllerTest extends BaseTest
         'getOfferRepository',
         'getChooseOfferService',
         'generateOfferConfirmationMessage',
-        'serializeObjects'
+        'serializeObjects',
+        'getMessageTemplateRepository'
       ])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
@@ -73,7 +78,10 @@ class ApplicationControllerTest extends BaseTest
       ->willReturn($twigMock);
 
     $this->mock->method('getContainer')->willReturn($this->containerMock);
-    //$this->mock->method('render')->willReturnArgument(2);
+    $this->messageTemplateRepoMock = $this->getMockBuilder(MessageTemplateRepository::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getOfferConfirmationMessage'])
+      ->getMock();
   }
 
   public function testOfferListAction()
@@ -119,6 +127,7 @@ class ApplicationControllerTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['run', 'setData'])
       ->getMock();
+    $serviceMock->setMessageDeliveryService($this->createMock(MessageDeliveryService::class));
     $serviceMock->expects($this->once())
       ->method('run')
       ->willReturn(true);
@@ -126,7 +135,7 @@ class ApplicationControllerTest extends BaseTest
       ->method('setData')
       ->willReturnSelf();
 
-    $this->mock->expects($this->once())
+    $this->mock->expects($this->atLeastOnce())
       ->method('getChooseOfferService')
       ->willReturn($serviceMock);
 
@@ -140,6 +149,10 @@ class ApplicationControllerTest extends BaseTest
       ->willReturnSelf();
 
     $this->mock->method('render')->willReturnArgument(1);
+    $this->messageTemplateRepoMock->method('getOfferConfirmationMessage')
+      ->willReturn(new Message());
+    $this->mock->method('getMessageTemplateRepository')
+      ->willReturn($this->messageTemplateRepoMock);
 
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
     $this->assertSame('application/thankyou.twig', $result);
@@ -155,6 +168,7 @@ class ApplicationControllerTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['run', 'setData'])
       ->getMock();
+    $serviceMock->setMessageDeliveryService($this->createMock(MessageDeliveryService::class));
     $serviceMock->expects($this->once())
       ->method('run')
       ->willReturn(false);
@@ -162,7 +176,7 @@ class ApplicationControllerTest extends BaseTest
       ->method('setData')
       ->willReturnSelf();
 
-    $this->mock->expects($this->once())
+    $this->mock->expects($this->atLeastOnce())
       ->method('getChooseOfferService')
       ->willReturn($serviceMock);
 
@@ -176,6 +190,11 @@ class ApplicationControllerTest extends BaseTest
       ->willReturnSelf();
 
     $this->mock->method('render')->willReturnArgument(2);
+
+    $this->messageTemplateRepoMock->method('getOfferConfirmationMessage')
+      ->willReturn(new Message());
+    $this->mock->method('getMessageTemplateRepository')
+      ->willReturn($this->messageTemplateRepoMock);
 
     $result = $this->mock->selectOfferAction($this->requestMock, $this->responseMock, ['hash' => 'asd']);
     $this->assertTrue(is_array($result));
