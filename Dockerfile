@@ -8,11 +8,11 @@ ENV HOME=/root
 ENV TZ=Europe/Tallinn
 ENV DEBIAN_FRONTEND=noninteractive
 
+ADD ./conf/start.sh                /usr/local/bin/docker-php-entrypoint
 ADD ./conf/apache_php.ini          /usr/local/etc/php/php.ini
 ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
-COPY ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 #ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 ADD .                              /var/www/html
 
@@ -43,7 +43,10 @@ RUN    apt-get update \
          for file in start.sh; do \
            test -f $file && /bin/rm $file; done; fi; \
          for folder in mysql nginx php; do \
-           test -d $folder && /bin/rm -r $folder; done; fi
+           test -d $folder && /bin/rm -r $folder; done; fi \
+    && if cd /var/www/html/conf; then \
+         for file in apache_000-default.conf  apache_apache2.conf  apache_php.ini  apache_security.conf  start.sh; do \
+           test -f $file && /bin/rm $file; done; fi
 
 RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
