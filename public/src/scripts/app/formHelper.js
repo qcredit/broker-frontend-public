@@ -102,7 +102,7 @@ define('app/formHelper', ['jquery', 'app/app'], function($, app) {
   $(".field input, .field textarea").focusout(function() {
     $(this).parent().removeClass("focused");
   });
-  $(".field input, .field textarea").on("input", function() {
+  $(".field input, .field textarea, .field select").on("input", function() {
     if($(this).val()){
       $(this).parent().addClass("filled");
     } else {
