@@ -8,3 +8,5 @@ RUN pecl install xdebug && docker-php-ext-install intl gettext pdo pdo_mysql && 
         && echo 'pl_PL.UTF-8 UTF-8\n' >> /etc/locale.gen \
         && ln -s /etc/locale.alias /usr/share/locale/locale.alias \
         && locale-gen
+
+ADD ./entrypoint.sh      /usr/local/bin/docker-php-entrypoint
