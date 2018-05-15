@@ -170,7 +170,13 @@ class SendChooseOfferReminder implements BaseJob
    */
   public function run(): bool
   {
+    Log::debug('Running SendChooseOfferReminder...');
     $apps = $this->getApplicationRepository()->getAppsNeedingReminder();
+
+    if (empty($apps))
+    {
+      Log::info('No applications found for offer reminders!');
+    }
 
     foreach ($apps as $app)
     {
@@ -205,6 +211,7 @@ class SendChooseOfferReminder implements BaseJob
     Log::info(sprintf('Sending e-mail reminder for app #%s', $app->getId()));
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setTitle(_('Check out these offers for you loan application!'))
       ->setRecipient($app->getEmail())
       ->setBody($this->getMessageTemplateRepository()->getTemplateByPath('mail/offer-reminder.twig', ['application' => $app]));
 

@@ -174,7 +174,7 @@ $container['ApiController'] = function($c)
 
 $container['MessageTemplateRepository'] = function($c)
 {
-  return new \App\Base\Repository\MessageTemplateRepository($c);
+  return new \App\Base\Repository\MessageTemplateRepository($c, new \Broker\Domain\Factory\MessageFactory());
 };
 
 $container['PartnerDataMapperRepository'] = function($c)

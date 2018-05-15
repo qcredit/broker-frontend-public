@@ -9,6 +9,7 @@
 namespace App\Controller;
 
 use App\Base\Components\AbstractController;
+use App\Base\Interfaces\MessageTemplateRepositoryInterface;
 use App\Component\FormBuilder;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
@@ -188,6 +189,14 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return MessageTemplateRepositoryInterface
+   */
+  public function getMessageTemplateRepository()
+  {
+    return $this->getContainer()->get('MessageTemplateRepository');
+  }
+
+  /**
    * @return array
    */
   protected function getPartnersDataMappers()
@@ -263,7 +272,8 @@ class ApplicationController extends AbstractController
         $this->getPrepareService()->setApplication($newAppService->getApplication())
           ->setData($newAppService->getPreparedData());
 
-        $this->generateOfferLinkMessage();
+        $offerMessage = $this->getMessageTemplateRepository()->getOfferLinkMessage($this->getPrepareService()->getApplication());
+        $this->getPrepareService()->getMessageDeliveryService()->setMessage($offerMessage);
 
         if ($this->getPrepareService()->run())
         {
@@ -330,7 +340,8 @@ class ApplicationController extends AbstractController
       $service = $this->getChooseOfferService()
         ->setData($request->getParsedBody())->setOffer($data['offer']);
 
-      $this->generateOfferConfirmationMessage();
+      $message = $this->getMessageTemplateRepository()->getOfferConfirmationMessage($this->getChooseOfferService()->getOffer());
+      $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
 
       if ($service->run())
       {
@@ -362,55 +373,6 @@ class ApplicationController extends AbstractController
     return $application;
   }
 
-  /**
-   * @todo Move to MessageTemplateRepository
-   */
-  protected function generateOfferConfirmationMessage()
-  {
-    $offer = $this->getChooseOfferService()->getOffer();
-    $message = new Message();
-    $message->setTitle('Thank you for choosing us!')
-      ->setRecipient($offer->getApplication()->getEmail())
-      ->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setBody($this->generateEmailContent('mail/offer-confirmation.twig', [
-        'offer' => $offer,
-        'title' => 'Your selected offer'
-      ]));
-
-    $this->getChooseOfferService()->getMessageDeliveryService()->setMessage($message);
-  }
-
-  /**
-   * @todo Move to MessageTemplateRepository
-   */
-  protected function generateOfferLinkMessage()
-  {
-    $application = $this->getPrepareService()->getApplication();
-    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
-    $message = new Message();
-    $message->setTitle('Offers for your application')
-      ->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setBody($this->generateEmailContent('mail/offer-link.twig', [
-        'application' => $application,
-        'title' => 'Our offers for your application',
-        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
-      ]))
-      ->setRecipient($application->getEmail());
-
-    $this->getPrepareService()->getMessageDeliveryService()->setMessage($message);
-  }
-
-  /**
-   * @param $template
-   * @param $params
-   * @return mixed
-   */
-  protected function generateEmailContent($template, $params)
-  {
-    $twig = $this->getContainer()->get('view');
-
-    return $twig->fetch($template, $params);
-  }
 
   /**
    * @param Request $request
