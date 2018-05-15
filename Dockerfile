@@ -59,6 +59,7 @@ RUN    if cd /var/www/html; then\
 
 EXPOSE 80
 
+
 # docker build -t broker-frontend-public .
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest$GitCommitAppendix
