@@ -1,4 +1,4 @@
-define(['jquery', 'jquery.bootstrap'], function($, bootstrap) {
+define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.polyfill'], function($, bootstrap) {
   var app = {
     csrf: {
       keys: {
@@ -55,9 +55,11 @@ define(['jquery', 'jquery.bootstrap'], function($, bootstrap) {
   app.getFormData = function() {
     var formData = new FormData(document.querySelector('form'));
     var formValues = {};
-    for (var [key,value] of formData.entries())
-    {
-      formValues[key] = value;
+    var formDataEntries = formData.entries(), formDataEntry = formDataEntries.next(), pair;
+    while (!formDataEntry.done) {
+      pair = formDataEntry.value;
+      formValues[pair[0]] = pair[1];
+      formDataEntry = formDataEntries.next();
     }
     return formValues;
   };
