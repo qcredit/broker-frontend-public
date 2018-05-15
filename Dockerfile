@@ -8,15 +8,19 @@ ENV HOME=/root
 ENV TZ=Europe/Tallinn
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip
-
+ADD ./conf/start.sh                /usr/local/bin/docker-php-entrypoint
 ADD ./conf/apache_php.ini          /usr/local/etc/php/php.ini
 ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
 ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
+#ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 ADD .                              /var/www/html
-ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
+
+RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
+    apt-get install -y git zip unzip libicu-dev locales
+
+# COPY ./infrastructure/start.sh ./infrastructure/start.sh
+# RUN chmod 755 ./infrastructure/start.sh
 
 RUN    apt-get update \
     && usermod -u 1000 www-data \
@@ -25,7 +29,8 @@ RUN    apt-get update \
     && echo 'session.save_handler=redis' >> /usr/local/etc/php/php.ini \
     && echo 'session.save_path="tcp://redis:6379"' >> /usr/local/etc/php/php.ini \
     && pecl install redis xdebug \
-    && docker-php-ext-install pdo pdo_mysql >> /dev/null \
+    && docker-php-ext-install pdo pdo_mysql intl gettext >> /dev/null \
+    && docker-php-ext-configure intl >> /dev/null \
     && docker-php-ext-enable redis pdo pdo_mysql xdebug >> /dev/null \
     && if [ -d /tmp/pear ]; then /bin/rm -rv /tmp/pear; fi \
     && mkdir -p /var/www/html/cache \
@@ -38,13 +43,19 @@ RUN    apt-get update \
          for file in start.sh; do \
            test -f $file && /bin/rm $file; done; fi; \
          for folder in mysql nginx php; do \
-           test -d $folder && /bin/rm -r $folder; done; fi
+           test -d $folder && /bin/rm -r $folder; done; fi \
+    && if cd /var/www/html/conf; then \
+         for file in apache_000-default.conf  apache_apache2.conf  apache_php.ini  apache_security.conf  start.sh; do \
+           test -f $file && /bin/rm $file; done; fi
 
 RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
-       else exit 1; fi
+       else exit 1; fi \
+        && echo 'pl_PL.UTF-8 UTF-8\n' >> /etc/locale.gen \
+        && ln -s /etc/locale.alias /usr/share/locale/locale.alias \
+        && locale-gen
 
 EXPOSE 80
 
