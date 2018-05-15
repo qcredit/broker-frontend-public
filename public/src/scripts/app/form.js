@@ -2,14 +2,15 @@ define('app/form', ['jquery', 'app/app', 'ajv', 'ajv.broker'], function($, app, 
   var schema = '';
   var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
 
-  var request = new Request('/application/schema', {
-    credentials: 'same-origin'
+  $.ajax({
+    'url': '/application/schema',
+    'method': 'GET'
+  }).done(function(response) {
+    schema = response.schema;
+    app.setMessages(response.messages);
+  }).fail(function(response) {
+    console.log('Unable to fetch schema!');
   });
-
-  fetch(request)
-    .then(function(response) {
-      return response.json();
-    }).then(function (json) { schema = json.schema; app.setMessages(json.messages); });
 
   $('button[type="submit"]').click(function(e) {
     var valid = ajv.validate(schema, app.getFormData());
