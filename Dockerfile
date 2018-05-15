@@ -37,16 +37,15 @@ RUN    apt-get update \
     && chown www-data /var/www/html/cache \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
     && if cd /var/www/html/conf; then \
-         for file in apache_php.ini apache_000-default.conf apache_apache2.conf apache_security.conf; do \
-           test -f $file && /bin/rm $file; done; fi \
+         for file in apache_000-default.conf apache_apache2.conf apache_php.ini apache_security.conf start.sh; do \
+           test -f $file && /bin/rm $file; done; \
+       fi \
     && if cd /var/www/html/infrastructure; then \
          for file in start.sh; do \
-           test -f $file && /bin/rm $file; done; fi; \
+           test -f $file && /bin/rm $file; done; \
          for folder in mysql nginx php; do \
-           test -d $folder && /bin/rm -r $folder; done; fi \
-    && if cd /var/www/html/conf; then \
-         for file in apache_000-default.conf  apache_apache2.conf  apache_php.ini  apache_security.conf  start.sh; do \
-           test -f $file && /bin/rm $file; done; fi
+           test -d $folder && /bin/rm -r $folder; done; \
+       fi
 
 RUN    if cd /var/www/html; then\
          curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
