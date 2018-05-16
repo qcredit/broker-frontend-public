@@ -8,7 +8,6 @@
 
 namespace App\Model;
 
-
 class ApplicationForm
 {
   const ATTR_INCOME_SOURCE = 'incomeSourceType';
@@ -58,8 +57,125 @@ class ApplicationForm
   const ENUM_EDUCATION_SECONDARY = 'secondary';
   const ENUM_EDUCATION_VOCATIONAL = 'vocational';
   const ENUM_EDUCATION_BA = 'bachelors';
-  const ENUM_EDUCATION_MA = 'masters';
-  const ENUM_EDUCATION_DR = 'doctors';
+  const ENUM_EDUCATION_MA = 'mastersOfArt';
+  const ENUM_EDUCATION_MBA = 'mastersOfBusiness';
+  const ENUM_EDUCATION_MAs = 'mastersOfScience';
+  const ENUM_EDUCATION_MD = 'doctors';
+  const ENUM_EDUCATION_OTHER = 'other';
+
+  const ENUM_PAYOUT_ACCOUNT = 'account';
+  const ENUM_PAYOUT_GIRO = 'giro';
+  const ENUM_PAYOUT_BLUECASH = 'bluecash';
+
+  const ENUM_ACCOUNT_PERSONAL = 'personal';
+  const ENUM_ACCOUNT_JOINT = 'joint';
+  const ENUM_ACCOUNT_COMPANY = 'company';
+
+  const ENUM_MARITAL_SINGLE = 'single';
+  const ENUM_MARITAL_MARRIED = 'married';
+  const ENUM_MARITAL_MARRIED_DIVORCING = 'marriedDivorcing';
+  const ENUM_MARITAL_DIVORCED = 'divorced';
+  const ENUM_MARITAL_SEPARATED = 'separated';
+  const ENUM_MARITAL_WIDOW = 'widow';
+  const ENUM_MARITAL_OTHER = 'other';
+
+  const ENUM_RESIDENCY_OWN = 'own';
+  const ENUM_RESIDENCY_RENT = 'rented';
+  const ENUM_RESIDENCY_FAMILY = 'family';
+  const ENUM_RESIDENCY_SOCIAL = 'social';
+  const ENUM_RESIDENCY_OTHER = 'other';
+
+  const ENUM_PROPERTY_FLAT = 'flat';
+  const ENUM_PROPERTY_HOUSE = 'house';
+  const ENUM_PROPERTY_DUPLEX = 'duplex';
+  const ENUM_PROPERTY_OTHER = 'other';
+
+  const ENUM_MONTH_JANUARY = 1;
+  const ENUM_MONTH_FEBRUARY = 2;
+  const ENUM_MONTH_MARCH = 3;
+  const ENUM_MONTH_APRIL = 4;
+  const ENUM_MONTH_MAY = 5;
+  const ENUM_MONTH_JUNE = 6;
+  const ENUM_MONTH_JULY = 7;
+  const ENUM_MONTH_AUGUST = 8;
+  const ENUM_MONTH_SEPTEMBER = 9;
+  const ENUM_MONTH_OCTOBER = 10;
+  const ENUM_MONTH_NOVEMBER = 11;
+  const ENUM_MONTH_DECEMBER = 12;
+
+  public static function getEnumFields()
+  {
+    return [
+      self::ATTR_INCOME_SOURCE => [
+        self::ENUM_INCOME_EMPLOYED => _('Employed'),
+        self::ENUM_INCOME_STUDENT => _('Student'),
+        self::ENUM_INCOME_PENSION => _('Normal Pension'),
+        self::ENUM_INCOME_DISABILITY => _('Disability Pension'),
+        self::ENUM_INCOME_UNEMPLOYED => _('Unemployed'),
+        self::ENUM_INCOME_ALIMONY => _('Alimony'),
+        self::ENUM_INCOME_SELF_EMPLOYED => _('Self Employed'),
+        self::ENUM_INCOME_FARMER => _('Farmer'),
+        self::ENUM_INCOME_OTHER => _('Other')
+      ],
+      self::ATTR_EDUCATION => [
+        self::ENUM_EDUCATION_BASIC => _('Basic'),
+        self::ENUM_EDUCATION_SECONDARY => _('Secondary'),
+        self::ENUM_EDUCATION_VOCATIONAL => _('Vocational'),
+        self::ENUM_EDUCATION_BA => _('Bachelor of Science'),
+        self::ENUM_EDUCATION_MA => _('Master of Arts'),
+        self::ENUM_EDUCATION_MBA => _('Master of Business Administration'),
+        self::ENUM_EDUCATION_MAs => _('Master of Advanced Studies'),
+        self::ENUM_EDUCATION_MD => _('Medical Doctorate'),
+        self::ENUM_EDUCATION_OTHER => _('Other')
+      ],
+      self::ATTR_MARITAL_STATUS => [
+        self::ENUM_MARITAL_SINGLE => _('Single'),
+        self::ENUM_MARITAL_MARRIED => _('Married'),
+        self::ENUM_MARITAL_MARRIED_DIVORCING => _('Married, but divorcing'),
+        self::ENUM_MARITAL_DIVORCED => _('Divorced'),
+        self::ENUM_MARITAL_SEPARATED => _('Separated'),
+        self::ENUM_MARITAL_WIDOW => _('Widow'),
+        self::ENUM_MARITAL_OTHER => _('Other')
+      ],
+      self::ATTR_ACCOUNT_TYPE => [
+        self::ENUM_ACCOUNT_PERSONAL => _('Personal'),
+        self::ENUM_ACCOUNT_JOINT => _('Joint'),
+        self::ENUM_ACCOUNT_COMPANY => _('Company')
+      ],
+      self::ATTR_RESIDENTIAL_TYPE => [
+        self::ENUM_RESIDENCY_OWN => _('I\'m an owner'),
+        self::ENUM_RESIDENCY_RENT => _('I\'m renting'),
+        self::ENUM_RESIDENCY_FAMILY => _('I\'m living with family'),
+        self::ENUM_RESIDENCY_SOCIAL => _('Social housing'),
+        self::ENUM_RESIDENCY_OTHER => _('Other')
+      ],
+      self::ATTR_PROPERTY_TYPE => [
+        self::ENUM_PROPERTY_FLAT => _('Apartment'),
+        self::ENUM_PROPERTY_HOUSE => _('House'),
+        self::ENUM_PROPERTY_DUPLEX => _('Duplex'),
+        self::ENUM_PROPERTY_OTHER => _('Other')
+      ],
+      self::ATTR_MONTH_SINCE => [
+        self::ENUM_MONTH_JANUARY => date('F', mktime(0,0,0,1)),
+        self::ENUM_MONTH_FEBRUARY => date('F', mktime(0,0,0,2)),
+        self::ENUM_MONTH_MARCH => date('F', mktime(0,0,0, 3)),
+        self::ENUM_MONTH_APRIL => date('F', mktime(0,0,0,4)),
+        self::ENUM_MONTH_MAY => date('F', mktime(0,0,0,5)),
+        self::ENUM_MONTH_JUNE => date('F', mktime(0,0,0,6)),
+        self::ENUM_MONTH_JULY => date('F', mktime(0,0,0,7)),
+        self::ENUM_MONTH_AUGUST => date('F', mktime(0,0,0,8)),
+        self::ENUM_MONTH_SEPTEMBER => date('F', mktime(0,0,0,9)),
+        self::ENUM_MONTH_OCTOBER => date('F', mktime(0,0,0,10)),
+        self::ENUM_MONTH_NOVEMBER => date('F', mktime(0,0,0,11)),
+        self::ENUM_MONTH_DECEMBER => date('F', mktime(0,0,0,12))
+      ],
+      self::ATTR_PAYOUT_METHOD => [
+        self::ENUM_PAYOUT_ACCOUNT => _('Account'),
+        self::ENUM_PAYOUT_BLUECASH => _('BlueCash'),
+        self::ENUM_PAYOUT_GIRO => _('Giro')
+      ]
+    ];
+  }
 
   /**
    * @param string $field

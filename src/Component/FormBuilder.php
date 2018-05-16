@@ -417,9 +417,12 @@ class FormBuilder
 
     foreach ($fields as &$field)
     {
-      if ($field['enum'] && array_key_exists($field['name'], $this->getEnums()))
+      $enums = $this->getApplicationForm()->getEnumFields();
+      if ($field['enum'] && isset($enums[$field['name']]))
+      //if ($field['enum'] && array_key_exists($field['name'], $this->getEnums()))
       {
-        $field['enum'] = $this->getEnums()[$field['name']];
+        $field['enum'] = $enums[$field['name']];
+        //$field['enum'] = $this->getEnums()[$field['name']];
       }
     }
 
