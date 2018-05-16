@@ -19,8 +19,4 @@ fi
 
 sleep 8
 
-echo "Setting up cron jobs..."
-cat /var/www/html/conf/broker-crontab | crontab
-cron
-
 exec "$@"
