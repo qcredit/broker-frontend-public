@@ -247,9 +247,8 @@
         ],
         "properties": {
           "accountNumber": {
-            "type": "number",
-            "maxLength": 26,
-            "minLength": 26,
+            "type": "string",
+            "pattern": "^[0-9]{26}$",
             "example": "61 1090 1014 0000 0712 1981 2874",
             "section": "account",
             "order": 1
@@ -375,7 +374,6 @@
             "type": "string",
             "enum": [
               "Account",
-              "Pikasiirto",
               "Giro",
               "BlueCash"
             ]

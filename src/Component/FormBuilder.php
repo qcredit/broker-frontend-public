@@ -51,7 +51,15 @@ class FormBuilder
   /**
    * @var array
    */
+  protected $fieldsInSections = [];
+  /**
+   * @var array
+   */
   protected $requiredFields = [];
+  /**
+   * @var array
+   */
+  protected $enums = [];
   /**
    * @var ApplicationForm
    */
@@ -152,6 +160,37 @@ class FormBuilder
    * @return array
    * @codeCoverageIgnore
    */
+  public function getFieldsInSections()
+  {
+    return $this->fieldsInSections;
+  }
+
+  /**
+   * @param array $fieldsInSections
+   * @return FormBuilder
+   * @codeCoverageIgnore
+   */
+  public function setFieldsInSections(array $fieldsInSections)
+  {
+    $this->fieldsInSections = $fieldsInSections;
+    return $this;
+  }
+
+  /**
+   * @param string $section
+   * @param array $field
+   * @return $this
+   */
+  public function addFieldToSection(string $section, array $field)
+  {
+    $this->fieldsInSections[$section][] = $field;
+    return $this;
+  }
+
+  /**
+   * @return array
+   * @codeCoverageIgnore
+   */
   public function getRequiredFields()
   {
     return $this->requiredFields;
@@ -178,23 +217,47 @@ class FormBuilder
   }
 
   /**
-   * @param string $section
-   * @param array $field
-   * @return $this
-   */
-  public function addFieldToSection(string $section, array $field)
-  {
-    $this->fields[$section][] = $field;
-    return $this;
-  }
-
-  /**
    * @param string $fieldName
    * @return bool
    */
   public function hasField(string $fieldName): bool
   {
     return array_search($fieldName, array_column($this->getFields(), 'name')) !== false;
+  }
+
+  /**
+   * @return array
+   * @codeCoverageIgnore
+   */
+  public function getEnums()
+  {
+    return $this->enums;
+  }
+
+  /**
+   * @param array $enums
+   * @return FormBuilder
+   * @codeCoverageIgnore
+   */
+  public function setEnums(array $enums)
+  {
+    $this->enums = $enums;
+    return $this;
+  }
+
+  /**
+   * @param string $fieldName
+   * @param string $enumValue
+   * @return $this
+   */
+  public function addEnum(string $fieldName, string $enumValue)
+  {
+    if (!isset($this->enums[$fieldName]) || (isset($this->enums[$fieldName]) && !in_array($enumValue, $this->getEnums()[$fieldName])))
+    {
+      $this->enums[$fieldName][] = $enumValue;
+    }
+
+    return $this;
   }
 
   /**
@@ -287,10 +350,13 @@ class FormBuilder
       'order' => 4
     ]);
 
+    $this->propagateEnumValues();
+    $this->divideFieldsToSections();
+
     $this->sortFields();
     $this->sortSections();
 
-    return $this->getFields();
+    return $this->getFieldsInSections();
   }
 
   protected function extractMergedSchemasFields()
@@ -300,14 +366,14 @@ class FormBuilder
     foreach ($mergedSchema['allOf'] as $set)
     {
       $set = json_decode(json_encode($set), true);
-      $this->extractSchemaFields($set);
+      $this->exploreSchema($set);
     }
   }
 
   /**
    * @param array $set
    */
-  protected function extractSchemaFields(array $set)
+  protected function exploreSchema(array $set)
   {
     if (isset($set['required']) && !empty($set['required']))
     {
@@ -316,23 +382,64 @@ class FormBuilder
 
     foreach ($set['properties'] as $fieldName => $field)
     {
+      if (isset($field['enum']))
+      {
+        foreach ($field['enum'] as $value)
+        {
+          $this->addEnum($fieldName, $value);
+        }
+      }
+
       if ($this->hasField($fieldName)) continue;
 
-      $this->addFieldToSection($field['section'] ?? self::SECTION_GENERAL, [
-        'name' => $fieldName,
-        'type' => $this->determineFieldType($field),
-        'required' => $this->isFieldRequired($fieldName),
-        'section' => $field['section'] ?? self::SECTION_GENERAL,
-        'enum' => $field['enum'] ?? false,
-        'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
-        'order' => $field['order'] ?? self::DEFAULT_ORDER
-      ]);
+      $this->extractFieldInfo($fieldName, $field);
+    }
+  }
+
+  protected function extractFieldInfo(string $fieldName, array $fieldData)
+  {
+    $field = $fieldData;
+
+    $this->addField([
+      'name' => $fieldName,
+      'type' => $this->determineFieldType($field),
+      'required' => $this->isFieldRequired($fieldName),
+      'section' => $field['section'] ?? self::SECTION_GENERAL,
+      'enum' => $field['enum'] ?? false,
+      'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
+      'order' => $field['order'] ?? self::DEFAULT_ORDER
+    ]);
+  }
+
+  protected function propagateEnumValues()
+  {
+    $fields = $this->getFields();
+
+    foreach ($fields as &$field)
+    {
+      $enums = $this->getApplicationForm()->getEnumFields();
+      if ($field['enum'] && isset($enums[$field['name']]))
+      //if ($field['enum'] && array_key_exists($field['name'], $this->getEnums()))
+      {
+        $field['enum'] = $enums[$field['name']];
+        //$field['enum'] = $this->getEnums()[$field['name']];
+      }
+    }
+
+    $this->setFields($fields);
+  }
+
+  protected function divideFieldsToSections()
+  {
+    foreach ($this->getFields() as $field)
+    {
+      $this->addFieldToSection($field['section'], $field);
     }
   }
 
   protected function sortFields()
   {
-    $sections = $this->getFields();
+    $sections = $this->getFieldsInSections();
 
     foreach ($sections as $section => &$set)
     {
@@ -341,17 +448,17 @@ class FormBuilder
       });
     }
 
-    $this->setFields($sections);
+    $this->setFieldsInSections($sections);
   }
 
   protected function sortSections()
   {
-    $sections = $this->getFields();
+    $sections = $this->getFieldsInSections();
 
     uksort($sections, function($a, $b) {
       return array_search($a, $this->getSectionOrder()) <=> array_search($b, $this->getSectionOrder());
     });
 
-    $this->setFields($sections);
+    $this->setFieldsInSections($sections);
   }
 }
