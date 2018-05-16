@@ -17,7 +17,7 @@ ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
 
 RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev locales
+    apt-get install -y git zip unzip libicu-dev locales cron
 
 # COPY ./infrastructure/start.sh ./infrastructure/start.sh
 # RUN chmod 755 ./infrastructure/start.sh

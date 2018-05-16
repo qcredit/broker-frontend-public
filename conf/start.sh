@@ -19,4 +19,8 @@ fi
 
 sleep 8
 
+echo "Setting up cron jobs..."
+cat /var/www/html/conf/crontab | crontab
+cron
+
 exec "$@"
