@@ -1,12 +1,42 @@
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:47
-msgid "Leverage agile frameworks"
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:63
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:62
+msgid "Insert your first name"
 msgstr ""
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:51
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:70
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:69
+msgid "Insert your email address"
+msgstr ""
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:78
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:77
 msgid ""
-"Provide a robust synopsis for high level overviews. Iterative approaches to "
-"corporate strategy foster collaborative thinking to further the overall "
-"value proposition."
+"*Bring to the table win-win survival strategies to ensure proactive "
+"domination. At the end of the day, going forward, a new normal that has "
+"evolved from generation X is on the runway heading towards a streamlined "
+"cloud solution. "
+msgstr ""
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:82
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:158
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:81
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:169
+msgid "Apply for a loan"
+msgstr ""
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:26
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:26
+msgid "How much do you want to borrow?"
+msgstr ""
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:44
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:44
+msgid "How fast do you want to pay off (months)?"
+msgstr ""
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:62
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:62
+msgid "Approximate monthly installment "
 msgstr ""
 
 #: src/Model/ApplicationForm.php:63
@@ -137,4 +167,141 @@ msgstr ""
 msgid ""
 "Yes, you can send me information about promotions, competitions, offers and "
 "such."
+msgstr ""
+
+#: src/Model/ApplicationForm.php:101
+msgid "Invalid schema reference given"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:102
+msgid "Field should not have more than {items} items"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:103
+msgid "Should not contain additional properties"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:104
+msgid "Should match some schema in \"anyOf\""
+msgstr ""
+
+#: src/Model/ApplicationForm.php:105
+msgid "Must be equal to constant"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:106
+msgid "Must contain a valid item"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:107
+msgid "Invalid format provided"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:108
+msgid ""
+"Should have property \"{property1}\" when property \"{property2}\" is present"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:109
+msgid "Value must match the given list"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:110
+msgid "Must be less than {number}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:111
+msgid "Must me more than {number}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:112
+msgid "Boolean schema is false"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:113 src/Model/ApplicationForm.php:130
+msgid "Invalid format"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:114 src/Model/ApplicationForm.php:115
+msgid "Should be boolean"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:116
+msgid "Should be at least {maximum}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:117
+msgid "Should be less than {minimum}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:118
+msgid "Should match {schemaName} schema"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:119
+msgid "Should be less than or equal to {maximum}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:120
+msgid "Should not have more than {number} items"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:121
+msgid "Must not exceed {number} characters"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:122
+msgid "Should not have more than {number} properties"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:123
+msgid "Must have a minimum value of {minimum}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:124
+msgid "Should not have less than {number] items"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:125
+msgid "Must be at least {number} characters"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:126
+msgid "Should not have less than {number} properties"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:127
+msgid "Should be a multiple of {number}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:128
+msgid "Should not be valid according to schema in \"not\""
+msgstr ""
+
+#: src/Model/ApplicationForm.php:129
+msgid "Should match exactly one schema in \"oneOf\""
+msgstr ""
+
+#: src/Model/ApplicationForm.php:131
+msgid "Should have a property matching a required pattern"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:132
+msgid "Property name \"{name}\" is invalid"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:133
+msgid "Should have required property {property}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:134
+msgid "Should pass \"switch\" keyword validation, case {case} fails"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:135
+msgid "Must be of type {type}"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:136
+msgid "Must not have duplicate items"
 msgstr ""

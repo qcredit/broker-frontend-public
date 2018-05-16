@@ -762,6 +762,9 @@ section > h1 {
 section h1.small-mar {
   margin-bottom: 2rem; }
 
+.p-head {
+  margin-bottom: 0.25rem; }
+
 .page-body {
   min-height: 200px; }
 
@@ -901,4 +904,9 @@ body {
 
   .thank-you-row {
     padding-top: 6rem;
-    padding-bottom: 6rem; } }
+    padding-bottom: 6rem; }
+
+  .about-how {
+    padding-top: 0.25rem; }
+    .about-how .circle-block {
+      margin-bottom: 4rem; } }

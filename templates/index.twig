@@ -15,21 +15,19 @@
       <div class="landing-form-lower">
         <div class="landing-inputs form-fields">
           <div class="field text firstName">
-            <label for="">Insert your first name</label>
+            <label for="">{% trans "Insert your first name" %}</label>
             <input type="text" name="firstName" id="firstName">
           </div>
           <div class="field text email">
-            <label for="">Insert your email address</label>
+            <label for="">{% trans "Insert your email address" %}</label>
             <input type="email" name="email" id="email">
           </div>
         </div>
         <div class="landing-form-lower-footer">
-          <p class="landing-terms">*Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. </p>
-          <button class="btn broker-btn broker-btn-gold">Apply for a loan</button>
+          <p class="landing-terms">{% trans "*I agree to the processing by QCredit of my personal data for marketing purposes, in the scope of my address, phone number and e-mail address. I have been informed of the right to inspect the data concerning me, the right to request a change and deletion of such data, as well as the right to object to the processing of my personal data. The administrator of personal data is QCredit." %}</p>
+          <button class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</button>
         </div>
       </div>
-      <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
-      <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
     </form>
 </section>
 <section class="row home-partners"></section>
@@ -62,11 +60,11 @@
   <section class="row home-about">
     <h1 class="col-sm-12 text-center">Kilka słów o pożyczkach</h1>
     <div class="col-sm-12 col-lg-6 home-about-half home-about-left">
-      <p><strong>Czy to naprawdę jest bezpłatne?</strong></p>
+      <p class="p-head"><strong>Czy to naprawdę jest bezpłatne?</strong></p>
       <p>Nigdy nie będziesz płacić za usługi QCredit. Jedyne koszty pożyczki wynikają z oferty jaką złoży Tobie pożyczkodawca. Pamiętaj, aby zawsze przeczytać umowę przed jej podpisaniem.</p>
-      <p><strong>Co się stanie jeśli nie zapłacę raty na czas?</strong></p>
+      <p class="p-head"><strong>Co się stanie jeśli nie zapłacę raty na czas?</strong></p>
       <p>Pożyczkodawcy zazwyczaj oferują możliwość przesunięcia daty płatności, jednakże zalecamy kontakt bezpośrednio z pożyczkodawcą. Pamiętaj, że niektórzy pobierają dodatkową opłatę za przesunięcie płatności. Jeśli masz pytania dotyczące dat płatności lub wysokości rat – dzwoń bezpośrednio do swojego pożyczkodawcy.</p>
-      <p><strong>Kiedy mam spłacić pożyczkę?</strong></p>
+      <p class="p-head"><strong>Kiedy mam spłacić pożyczkę?</strong></p>
       <p>Musisz sprawdzić swoją umowę pożyczki, gdyż mogą się one różnić w zależności od pożyczkodawcy.</p>
     </div>
     <div class="col-sm-12 col-lg-6 home-about-half home-about-right image-container about-image-container-1">
@@ -84,17 +82,26 @@
      src="src/images/img_comp_2.jpg" alt="Qcredit image compilation">
     </div>
     <div class="col-sm-12 col-lg-6 home-about-half home-about-left">
-      <p><strong>Ważne informacje dla klienta</strong></p>
+      <p class="p-head"><strong>Ważne informacje dla klienta</strong></p>
       <p>Pożyczki ratalne różnią się od innych pożyczek, jak na przykład od kredytu hipotecznego albo pożyczki na zakup samochodu. Każda z pożyczek zapewni Ci środki finansowe, jednakże tylko pieniądze z pożyczek ratalnych mogą zostać przeznaczone na dowolny, wybrany przez Ciebie, cel. Możesz zapłacić za opiekę medyczną, sfinansować remont mieszkania, naprawić samochód , wyjechać na wczasy lub spełnić dowolną inną swoją potrzebę. Pożyczkę zwracasz w wyznaczonym, ustalonym w umowie, terminie bezpośrednio do pożyczkodawcy.</p>
-      <p><strong>Na co mogę wydać pieniądze z pożyczki?</strong></p>
+      <p class="p-head"><strong>Na co mogę wydać pieniądze z pożyczki?</strong></p>
       <p>Pożyczki mogą pomóc Ci w remoncie mieszkania, pokryciu nieoczekiwanych wydatków, dodatkowych zakupach, lub wyjeździe na wczasy. Środki od pożyczkodawcy możesz przeznaczyć na dowolny wybrany przez siebie cel.  Wystarczy że wypełnisz prosty wniosek online i jeśli będzie on zaakceptowany to otrzymasz szybko pieniądze!</p>
-      <p><strong>Co to jest RRSO?</strong></p>
+      <p class="p-head"><strong>Co to jest RRSO?</strong></p>
       <p>Rzeczywista Roczna Stopa Oprocentowania to procentowy całkowity koszt pożyczki w ujęciu rocznym. QCredit nie jest pożyczkodawcą i nie może przedstawić informacji o RRSO, opłatach, oprocentowaniu oferty jaką możesz otrzymać. RRSO może się różnić w zależności od oferty jaką wybierzesz i w zależności od pożyczkodawcy. Pamiętaj, że informacje o RRSO powinieneś otrzymać od pożyczkodawcy przed podpisaniem umowy.</p>
     </div>
   </section>
   <section class="row justify-content-md-center">
     <h1 class="col-sm-12 text-center small-mar">W QCredit jesteś w dobrych rękach</h1>
     <p class="col-sm-12 col-md-8 text-center">Każdego dnia nasz zespół dostarcza profesjonalne rozwiązania finansowe dla Klientów. Jesteśmy w stałym kontakcie z wieloma pożyczkodawcami, którzy mogą Ci zaoferować nawet do 50 000 PLN z natychmiastową decyzją.</p>
-    <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">Apply for a loan</a></p>
+    <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
   </section>
+{% endblock %}
+{% block endBody %}
+  <script type="text/javascript">
+    require(['./src/scripts/common'], function (common) {
+      require(['app/domReady', 'app/formHelper'], function (domReady, formHelper) {
+
+      });
+    });
+  </script>
 {% endblock %}

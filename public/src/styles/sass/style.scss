@@ -32,6 +32,9 @@ section > h1 {
 section h1.small-mar {
   margin-bottom: 2rem;
 }
+.p-head {
+  margin-bottom: 0.25rem;
+}
 .page-body {
   min-height: 200px;
 }
@@ -125,7 +128,6 @@ body {
   }
 }
 
-
 /* Home page about section */
 .image-container img {
   max-width: 100%;
@@ -198,5 +200,11 @@ body {
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+  .about-how {
+    padding-top: 0.25rem;
+    .circle-block {
+      margin-bottom: 4rem;
+    }
   }
 }
