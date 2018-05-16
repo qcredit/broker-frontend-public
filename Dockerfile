@@ -15,6 +15,9 @@ ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
 ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 #ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
 ADD .                              /var/www/html
+ADD ./infrastructure/php/crontab   /var/www/html/conf/broker-crontab
+
+RUN chmod 755 /var/www/html/conf/broker-crontab
 
 RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
     apt-get install -y git zip unzip libicu-dev locales
