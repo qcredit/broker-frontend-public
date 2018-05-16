@@ -57,11 +57,7 @@ define('app/form', ['jquery', 'app/app', 'ajv', 'ajv.broker'], function($, app, 
       var attrId = parent.find('input').attr('id');
       var formValues = app.getFormData();
       var noerrors = runSchemaLive(attrId, formValues, parent);
-      if(!noerrors){
-        return errors_list.push(noerrors);
-      } else {
-        return errors_list.push(noerrors);
-      }
+      return errors_list.push(noerrors);
     });
     if(errors_list[0] || errors_list[1] || errors_list[2] ) { // IF one of the three is validated
       // Show rest of the form & save data
