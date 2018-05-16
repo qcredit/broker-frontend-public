@@ -81,8 +81,7 @@
     </div>
   </div>
   <!--{% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %} -->
-    <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
-    <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+  </div>
   <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
 {% endblock %}
