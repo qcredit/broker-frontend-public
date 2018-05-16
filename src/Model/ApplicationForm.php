@@ -227,4 +227,46 @@ class ApplicationForm
       self::ATTR_MARKETING_CONSENT => _('Yes, you can send me information about promotions, competitions, offers and such.')
     ];
   }
+
+  public function getAjvErrors()
+  {
+    return [
+      '$ref' => _('Invalid schema reference given'),
+      'additionalItems' => _('Field should not have more than {items} items'),
+      'additionalProperties' => _('Should not contain additional properties'),
+      'anyOf' => _('Should match some schema in "anyOf"'),
+      'const' => _('Must be equal to constant'),
+      'contains' => _('Must contain a valid item'),
+      'custom' => _('Invalid format provided'),
+      'dependencies' => _('Should have property "{property1}" when property "{property2}" is present'),
+      'enum' => _('Value must match the given list'),
+      'exclusiveMaximum' => _('Must be less than {number}'),
+      'exclusiveMinimum' => _('Must me more than {number}'),
+      'false schema' => _('Boolean schema is false'),
+      'format' => _('Invalid format'),
+      'formatExclusiveMaximum' => _('Should be boolean'),
+      'formatExclusiveMinimum' => _('Should be boolean'),
+      'formatMaximum' => _('Should be at least {maximum}'),
+      'formatMinimum' => _('Should be less than {minimum}'),
+      'if' => _('Should match {schemaName} schema'),
+      'maximum' => _('Should be less than or equal to {maximum}'),
+      'maxItems' => _('Should not have more than {number} items'),
+      'maxLength' => _('Must not exceed {number} characters'),
+      'maxProperties' => _('Should not have more than {number} properties'),
+      'minimum' => _('Must have a minimum value of {minimum}'),
+      'minItems' => _('Should not have less than {number] items'),
+      'minLength' => _('Must be at least {number} characters'),
+      'minProperties' => _('Should not have less than {number} properties'),
+      'multipleOf' => _('Should be a multiple of {number}'),
+      'not' => _('Should not be valid according to schema in "not"'),
+      'oneOf' => _('Should match exactly one schema in "oneOf"'),
+      'pattern' => _('Invalid format'),
+      'patternRequired' => _('Should have a property matching a required pattern'),
+      'propertyNames' => _('Property name "{name}" is invalid'),
+      'required' => _('Should have required property {property}'),
+      'switch' => _('Should pass "switch" keyword validation, case {case} fails'),
+      'type' => _('Must be of type {type}'),
+      'uniqueItems' => _('Must not have duplicate items')
+    ];
+  }
 }

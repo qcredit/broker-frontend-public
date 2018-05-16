@@ -30,8 +30,6 @@ generation X is on the runway heading towards a streamlined cloud solution. </p>
           <button class="btn broker-btn broker-btn-gold">Apply for a loan</button>
         </div>
       </div>
-      <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
-      <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
     </form>
 </section>
 <section class="row home-partners"></section>
@@ -78,4 +76,13 @@ strategies to ensure proactive domination.</p>
       <img src="src/images/happy.jpg" alt="Happy credit family">
     </div>
   </section>
+{% endblock %}
+{% block endBody %}
+  <script type="text/javascript">
+    require(['./src/scripts/common'], function (common) {
+      require(['app/domReady', 'app/formHelper'], function (domReady, formHelper) {
+
+      });
+    });
+  </script>
 {% endblock %}
