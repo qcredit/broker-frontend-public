@@ -95,6 +95,13 @@ define('app/formHelper', ['jquery', 'app/app'], function($, app) {
       console.log($('.loan-form .field.error'));
     }
   });
+  $('.loan-form input, .loan-form select').each(function() {
+    if($(this).val()) {
+      $(this).parent().addClass("filled");
+    }  else {
+      $(this).parent().removeClass("filled");
+    }
+  })
 
   return formHelper;
 });

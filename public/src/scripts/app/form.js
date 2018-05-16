@@ -56,14 +56,15 @@ define('app/form', ['jquery', 'app/app', 'ajv', 'ajv.broker'], function($, app, 
       var parent = $(this);
       var attrId = parent.find('input').attr('id');
       var formValues = app.getFormData();
-      var noerrors = runSchemaLive(attrId, formValues, parent);
-      return errors_list.push(noerrors);
+      return errors_list.push(runSchemaLive(attrId, formValues, parent));
     });
     if(errors_list[0] || errors_list[1] || errors_list[2] ) { // IF one of the three is validated
       // Show rest of the form & save data
       $('.step-1 .broker-btn').css('display','none');
       $('.step-2').css('display','block');
-      sendpreData(formValues);
+      if($('#marketingConsent').is(':checked')) {
+        sendpreData(formValues);
+      }
     } else if(!errors_list[0] && !errors_list[1] && !errors_list[2]) {  // IF all are empty
       // show form but don't send data yet
       $('.step-1 .broker-btn').css('display','none');
