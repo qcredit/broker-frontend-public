@@ -95,20 +95,6 @@ define('app/formHelper', ['jquery', 'app/app'], function($, app) {
       console.log($('.loan-form .field.error'));
     }
   });
-  // Input field focused and filled classes
-  $(".field input, .field textarea").focusin(function() {
-    $(this).parent().addClass("focused");
-  });
-  $(".field input, .field textarea").focusout(function() {
-    $(this).parent().removeClass("focused");
-  });
-  $(".field input, .field textarea, .field select").on("input", function() {
-    if($(this).val()){
-      $(this).parent().addClass("filled");
-    } else {
-      $(this).parent().removeClass("filled");
-    }
-  });
 
   return formHelper;
 });
