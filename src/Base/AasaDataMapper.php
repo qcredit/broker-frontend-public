@@ -179,7 +179,14 @@ class AasaDataMapper implements PartnerDataMapperInterface
     else {
       if ($data instanceof AbstractEntity)
       {
-        $item = $data->getAttribute($item);
+        if ($this->hasEnumMapping($item))
+        {
+          $item = $this->getEnumMappings()[$item][$data->getAttribute($item)];
+        }
+        else
+        {
+          $item = $data->getAttribute($item);
+        }
       }
       else
       {
@@ -566,5 +573,74 @@ class AasaDataMapper implements PartnerDataMapperInterface
   public function extractRemoteOfferId(PartnerResponse $partnerResponse)
   {
     return json_decode($partnerResponse->getResponseBody(), true)['update']['id'];
+  }
+
+  public function getEnumMappings()
+  {
+    return [
+      ApplicationForm::ATTR_EDUCATION => [
+        ApplicationForm::ENUM_EDUCATION_MD => 'Other',
+        ApplicationForm::ENUM_EDUCATION_MAs => 'MSc',
+        ApplicationForm::ENUM_EDUCATION_MBA => 'MSc',
+        ApplicationForm::ENUM_EDUCATION_MA => 'MSc',
+        ApplicationForm::ENUM_EDUCATION_BA => 'BA',
+        ApplicationForm::ENUM_EDUCATION_VOCATIONAL => 'Vocational',
+        ApplicationForm::ENUM_EDUCATION_SECONDARY => 'Secondary',
+        ApplicationForm::ENUM_EDUCATION_BASIC => 'Basic',
+        ApplicationForm::ENUM_EDUCATION_OTHER => 'Other'
+      ],
+      ApplicationForm::ATTR_INCOME_SOURCE => [
+        ApplicationForm::ENUM_INCOME_EMPLOYED => 'Employed',
+        ApplicationForm::ENUM_INCOME_STUDENT => 'Student',
+        ApplicationForm::ENUM_INCOME_PENSION => 'NormalPension',
+        ApplicationForm::ENUM_INCOME_DISABILITY => 'DisabilityPension',
+        ApplicationForm::ENUM_INCOME_UNEMPLOYED => 'Unemployed',
+        ApplicationForm::ENUM_INCOME_ALIMONY => 'BenefitOrAlimony',
+        ApplicationForm::ENUM_INCOME_SELF_EMPLOYED => 'SelfEmployed',
+        ApplicationForm::ENUM_INCOME_FARMER => 'Farmer',
+        ApplicationForm::ENUM_INCOME_OTHER => 'Other'
+      ],
+      ApplicationForm::ATTR_MARITAL_STATUS => [
+        ApplicationForm::ENUM_MARITAL_SINGLE => 'Single',
+        ApplicationForm::ENUM_MARITAL_MARRIED => 'Married',
+        ApplicationForm::ENUM_MARITAL_MARRIED_DIVORCING => 'MarriedDivorcing',
+        ApplicationForm::ENUM_MARITAL_DIVORCED => 'Divorced',
+        ApplicationForm::ENUM_MARITAL_SEPARATED => 'Separated',
+        ApplicationForm::ENUM_MARITAL_WIDOW => 'Widow',
+        ApplicationForm::ENUM_MARITAL_OTHER => 'Other'
+      ],
+      ApplicationForm::ATTR_PAYOUT_METHOD => [
+        ApplicationForm::ENUM_PAYOUT_GIRO => 'Giro',
+        ApplicationForm::ENUM_PAYOUT_BLUECASH => 'BlueCash',
+        ApplicationForm::ENUM_PAYOUT_ACCOUNT => 'Account'
+      ],
+      ApplicationForm::ATTR_ACCOUNT_TYPE => [
+        ApplicationForm::ENUM_ACCOUNT_PERSONAL => 'Personal',
+        ApplicationForm::ENUM_ACCOUNT_JOINT => 'Joint',
+        ApplicationForm::ENUM_ACCOUNT_COMPANY => 'Company'
+      ],
+      ApplicationForm::ATTR_RESIDENTIAL_TYPE => [
+        ApplicationForm::ENUM_RESIDENCY_OWN => 'Own',
+        ApplicationForm::ENUM_RESIDENCY_RENT => 'Rented',
+        ApplicationForm::ENUM_RESIDENCY_FAMILY => 'LivingWithFamily',
+        ApplicationForm::ENUM_RESIDENCY_SOCIAL => 'HousingAssociation',
+        ApplicationForm::ENUM_RESIDENCY_OTHER => 'Other'
+      ],
+      ApplicationForm::ATTR_PROPERTY_TYPE => [
+        ApplicationForm::ENUM_PROPERTY_FLAT => 'Apartment',
+        ApplicationForm::ENUM_PROPERTY_HOUSE => 'House',
+        ApplicationForm::ENUM_PROPERTY_DUPLEX => 'Duplex',
+        ApplicationForm::ENUM_PROPERTY_OTHER => 'Other'
+      ]
+    ];
+  }
+
+  /**
+   * @param string $field
+   * @return bool
+   */
+  protected function hasEnumMapping(string $field)
+  {
+    return array_key_exists($field, $this->getEnumMappings());
   }
 }
