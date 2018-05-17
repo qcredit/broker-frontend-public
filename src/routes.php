@@ -18,6 +18,7 @@ $app->group('/', function() {
   $this->get('contact', 'ContactController:indexAction');
   $this->get('terms', 'TermsController:indexAction');
   $this->get('blog', 'BlogController:indexAction');
+  $this->get('blog/tag/{tag}', 'BlogController:tagAction');
   $this->get('blog/{slug}', 'BlogController:viewAction');
   $this->get('test', 'TestController:mailAction');
 

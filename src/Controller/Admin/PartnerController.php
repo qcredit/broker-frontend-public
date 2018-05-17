@@ -8,7 +8,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use App\Base\Repository\PartnerExtraDataLoader;
 use App\Base\Validator\PartnerValidator;
 use Broker\Domain\Interfaces\Factory\PartnerFactoryInterface;

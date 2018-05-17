@@ -8,9 +8,8 @@
 
 namespace App\Controller;
 
-use Aasa\CommonWebSDK\BlogService;
 use Aasa\CommonWebSDK\BlogServiceAWS;
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use Slim\Container;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
@@ -66,6 +65,8 @@ class BlogController extends AbstractController
     $data = [];
     $data['posts'] = $this->getBlogService()->select(0, 20);
 
+    var_dump($data['posts']);
+
     return $this->render($response, 'blog/index.twig', $data);
   }
 
@@ -80,6 +81,7 @@ class BlogController extends AbstractController
   {
     $data = [];
     $data['post'] = $this->getBlogService()->selectByUrl($args['slug']);
+    var_dump($data['post']);
 
     if (!$data['post'])
     {
@@ -87,5 +89,19 @@ class BlogController extends AbstractController
     }
 
     return $this->render($response, 'blog/view.twig', $data);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   */
+  public function tagAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+    $data['posts'] = $this->getBlogService()->selectByTag($args['tag']);
+
+    return $this->render($response, 'blog/tag.twig', $data);
   }
 }
