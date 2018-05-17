@@ -1,0 +1,13 @@
+{% extends 'base.twig' %}
+{% block title %}Blog{% endblock %}
+{% block container %}
+  {% for post in posts %}
+    <article class="post-preview">
+      <div class="post-preview-image" style="background-image: url({{post.image}});"></div>
+      <div class="data"><span class="date">{{ post.date_publish }} </span><span class="tags"></span></div>
+      <h2>{{post.title}}</h2>
+      <p>{{post.lead | raw }}</p>
+      <a href="{{post.slug}}">Read more</a>
+    </article>
+  {% endfor %}
+{% endblock %}
