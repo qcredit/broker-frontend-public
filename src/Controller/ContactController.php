@@ -8,27 +8,90 @@
 
 namespace App\Controller;
 
+use App\Component\AbstractController;
+use App\Model\ContactForm;
+use Slim\Container;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Views\Twig;
 
-class ContactController
+class ContactController extends AbstractController
 {
   /**
-   * @var \Twig
+   * @var Container
    */
-  protected $view;
+  protected $container;
+  /**
+   * @var ContactForm
+   */
+  protected $contactForm;
 
-  public function __construct(Twig $view)
+  /**
+   * @return Container
+   * @codeCoverageIgnore
+   */
+  public function getContainer()
   {
-    $this->view = $view;
+    return $this->container;
   }
 
   /**
-   * @param $request
-   * @param $response
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return ContactForm
+   * @codeCoverageIgnore
    */
-  public function indexAction($request, $response)
+  public function getContactForm()
   {
-    return $this->view->render($response, 'contact.twig');
+    return $this->contactForm;
+  }
+
+  /**
+   * @return Twig
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getView()
+  {
+    return $this->getContainer()->get('view');
+  }
+
+  /**
+   * ContactController constructor.
+   * @param Container $container
+   * @param ContactForm $contactForm
+   */
+  public function __construct(Container $container, ContactForm $contactForm)
+  {
+    $this->container = $container;
+    $this->contactForm = $contactForm;
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param array $args
+   * @return mixed
+   * @throws \Broker\System\Error\InvalidConfigException
+   * @throws \Exception
+   */
+  public function indexAction(Request $request, Response $response, $args = [])
+  {
+    $data = [
+      'sent' => false
+    ];
+    $contactForm = $this->getContactForm();
+
+    if ($request->isPost())
+    {
+      $postData = $request->getParsedBody();
+      unset($postData['csrf_name']);
+      unset($postData['csrf_value']);
+      if ($contactForm->load($postData) && $contactForm->validate() && $contactForm->send())
+      {
+        $data['sent'] = true;
+      }
+    }
+
+    $data['contact'] = $contactForm->getModel();
+
+    return $this->render($response, 'contact.twig', $data);
   }
 }

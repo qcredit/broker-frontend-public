@@ -85,7 +85,7 @@
       },
       "idCardNumber": {
         "type": "string",
-        "minLength": 5,
+        "minLength": 9,
         "example": "ZZC900146",
         "section": "personal",
         "documentNr": "Poland",

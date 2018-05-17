@@ -211,7 +211,7 @@ class ApplicationForm
       self::ATTR_ACCOUNT_NR => _('Account number'),
       self::ATTR_ACCOUNT_TYPE => _('Account type'),
       self::ATTR_ACCOUNT_HOLDER => _('Account holder\'s name'),
-      self::ATTR_DOCUMENT_NR => _('Document number'),
+      self::ATTR_DOCUMENT_NR => _('ID Card number'),
       self::ATTR_PHONE_TYPE => _('Phone type'),
       self::ATTR_PAYOUT_METHOD => _('Payout method'),
       self::ATTR_EDUCATION => _('Education level'),
