@@ -299,6 +299,18 @@ $container['FormBuilder'] = function($c)
   return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
 };
 
+$container['notFoundHandler'] = function($c)
+{
+  return function($request, $response) use ($c)
+  {
+    $c['view']->render($response, '404.twig');
+
+    return $c['response']
+      ->withStatus(404)
+      ->withHeader('Content-Type', 'text/html');
+  };
+};
+
 $brokerSettings = $container->get('settings')['broker'];
 $brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
 
