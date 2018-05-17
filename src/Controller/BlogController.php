@@ -65,8 +65,6 @@ class BlogController extends AbstractController
     $data = [];
     $data['posts'] = $this->getBlogService()->select(0, 20);
 
-    var_dump($data['posts']);
-
     return $this->render($response, 'blog/index.twig', $data);
   }
 
@@ -81,7 +79,6 @@ class BlogController extends AbstractController
   {
     $data = [];
     $data['post'] = $this->getBlogService()->selectByUrl($args['slug']);
-    var_dump($data['post']);
 
     if (!$data['post'])
     {
