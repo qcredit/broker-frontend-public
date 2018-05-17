@@ -287,6 +287,13 @@ $container['LoginController'] = function ($c)
   return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
 
+$container['BlogController'] = function($c)
+{
+  $blog = new \Aasa\CommonWebSDK\BlogServiceAWS();
+  \Aasa\CommonWebSDK\Configuration::getInstance()->init(6, 'pl', 'blog');
+  return new \App\Controller\BlogController($blog, $c);
+};
+
 $container['FormBuilder'] = function($c)
 {
   return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
