@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Controller;
 
-use Aasa\CommonWebSDK\BlogService;
+use Aasa\CommonWebSDK\BlogServiceAWS;
 use App\Controller\BlogController;
 use Broker\System\BaseTest;
 use Slim\Container;
@@ -23,7 +23,7 @@ class BlogControllerTest extends BaseTest
   public function setUp()
   {
     $this->setupMocks();
-    $this->serviceMock = $this->getMockBuilder(BlogService::class)
+    $this->serviceMock = $this->getMockBuilder(BlogServiceAWS::class)
       ->disableOriginalConstructor()
       ->getMock();
     $this->mock = $this->getMockBuilder(BlogController::class)
@@ -35,7 +35,7 @@ class BlogControllerTest extends BaseTest
   public function test__construct()
   {
     $instance = new BlogController($this->serviceMock, $this->containerMock);
-    $this->assertInstanceOf(BlogService::class, $instance->getBlogService());
+    $this->assertInstanceOf(BlogServiceAWS::class, $instance->getBlogService());
     $this->assertInstanceOf(Container::class, $instance->getContainer());
   }
 
