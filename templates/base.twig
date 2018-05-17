@@ -85,7 +85,7 @@
 <script src="/src/scripts/require.js"></script>
 <script type="text/javascript">
   require(['./src/scripts/common'], function (common) {
-    require(['app/app'], function (app) {
+    require(['app/app', 'app/domReady'], function (app) {
       app.setCsrfName('{{ csrf.keys.name }}', '{{ csrf.name }}');
       app.setCsrfValue('{{ csrf.keys.value }}', '{{ csrf.value }}');
       {% if lang is defined %}
