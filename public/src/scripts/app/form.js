@@ -2,6 +2,33 @@ define('app/form', ['jquery', 'app/app', 'ajv', 'ajv.broker'], function($, app, 
   var schema = '';
   var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
 
+  ajv.addKeyword('documentNr', {
+    validate: function documentNr(schema,data)
+    {
+      documentNr.errors = [];
+      if (!brokerAjv.validatePolandDocument(data))
+      {
+        var messages = app.getMessages();
+        var message = 'Invalid format';
+        if (messages.format !== undefined)
+        {
+          message = messages.format;
+        }
+        documentNr.errors.push({
+          "keyword": "documentNr",
+          "dataPath": ".documentNr",
+          "params": {},
+          "message": message
+        });
+
+        return false;
+      }
+
+      return true;
+    },
+    errors: true
+  });
+
   $.ajax({
     'url': '/application/schema',
     'method': 'GET'
