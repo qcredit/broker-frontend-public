@@ -9,6 +9,7 @@
 namespace Tests\Unit\Controller;
 
 use Aasa\CommonWebSDK\BlogServiceAWS;
+use Aasa\CommonWebSDK\models\Blog;
 use App\Controller\BlogController;
 use Broker\System\BaseTest;
 use Slim\Container;
@@ -71,5 +72,23 @@ class BlogControllerTest extends BaseTest
 
     $result = $this->mock->viewAction($this->requestMock, $this->responseMock, ['slug' => $slug]);
     $this->assertSame($post, $result['post']);
+  }
+
+  public function testTagAction()
+  {
+    $posts = [new Blog()];
+    $tag = 'some-tag';
+    $this->serviceMock->method('selectByTag')
+      ->with($this->equalTo($tag))
+      ->willReturn($posts);
+
+    $this->mock->method('getBlogService')
+      ->willReturn($this->serviceMock);
+    $this->mock->method('render')
+      ->with($this->equalTo($this->responseMock), 'blog/tag.twig', $this->equalTo(['posts' => $posts]))
+      ->willReturnArgument(2);
+
+    $result = $this->mock->tagAction($this->requestMock, $this->responseMock, ['tag' => $tag]);
+    $this->assertInstanceOf(Blog::class, $result['posts'][0]);
   }
 }
