@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Base;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use Broker\System\BaseTest;
 use Slim\Container;
 use Slim\Flash\Messages;

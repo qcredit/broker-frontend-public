@@ -8,9 +8,8 @@
 
 namespace App\Controller;
 
-use Aasa\CommonWebSDK\BlogService;
 use Aasa\CommonWebSDK\BlogServiceAWS;
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use Slim\Container;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;

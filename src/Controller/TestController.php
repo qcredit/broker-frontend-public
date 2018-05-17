@@ -8,7 +8,7 @@
 
 namespace App\Controller;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
