@@ -108,14 +108,14 @@ class FormBuilderTest extends BaseTest
     ];
     $mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMergedPartnerSchemas', 'extractSchemaFields'])
+      ->setMethods(['getMergedPartnerSchemas', 'exploreSchema'])
       ->getMock();
 
     $mock->expects($this->once())
       ->method('getMergedPartnerSchemas')
       ->willReturn($mergedSchemas);
     $mock->expects($this->exactly(count($mergedSchemas['allOf'])))
-      ->method('extractSchemaFields');
+      ->method('exploreSchema');
 
     $this->invokeMethod($mock, 'extractMergedSchemasFields', []);
   }
@@ -140,11 +140,11 @@ class FormBuilderTest extends BaseTest
 
     $mock->setApplicationForm(new ApplicationForm());
 
-    $this->invokeMethod($mock, 'extractSchemaFields', [$schema]);
+    $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();
 
-    $this->assertArraySubset(['general' => [0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general']]], $result);
-    $this->assertArraySubset(['personal' => [0 => ['name' => 'firstName', 'type' => 'text', 'section' => 'personal']]], $result);
+    $this->assertArraySubset([0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general']], $result);
+    $this->assertArraySubset([1 => ['name' => 'firstName', 'type' => 'text', 'section' => 'personal']], $result);
   }
 
   public function testExtractSchemaFieldsWithRequiredFields()
@@ -170,10 +170,10 @@ class FormBuilderTest extends BaseTest
 
     $mock->setApplicationForm(new ApplicationForm());
 
-    $this->invokeMethod($mock, 'extractSchemaFields', [$schema]);
+    $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();
 
-    $this->assertArraySubset(['general' => [0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general', 'required' => true]]], $result);
+    $this->assertArraySubset([0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general', 'required' => true]], $result);
   }
 
   public function testHasField()
@@ -220,13 +220,13 @@ class FormBuilderTest extends BaseTest
       'meat' => []
     ];
 
-    $this->mock->setFields($sections);
+    $this->mock->setFieldsInSections($sections);
     $this->mock->method('getSectionOrder')
       ->willReturn($order);
 
     $this->invokeMethod($this->mock, 'sortSections', []);
 
-    $this->assertSame($order, array_keys($this->mock->getFields()));
+    $this->assertSame($order, array_keys($this->mock->getFieldsInSections()));
   }
 
   public function testSortFields()
@@ -251,8 +251,8 @@ class FormBuilderTest extends BaseTest
       ]
     ];
 
-    $this->mock->setFields($fields);
+    $this->mock->setFieldsInSections($fields);
     $this->invokeMethod($this->mock, 'sortFields', []);
-    $this->assertSame(['email', 'lname','fname'], array_column($this->mock->getFields()['section1'], 'name'));
+    $this->assertSame(['email', 'lname','fname'], array_column($this->mock->getFieldsInSections()['section1'], 'name'));
   }
 }

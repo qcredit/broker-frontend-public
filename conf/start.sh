@@ -20,7 +20,7 @@ fi
 sleep 8
 
 echo "Setting up cron jobs..."
-cat /app/infrastructure/php/crontab | crontab
+cat /var/www/html/conf/crontab | crontab
 cron
 
 exec "$@"

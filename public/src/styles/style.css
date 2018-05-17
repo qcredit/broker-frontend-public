@@ -70,7 +70,8 @@
   .home-hero .home-hero-left h2 {
     text-align: center;
     margin-top: 1.25rem;
-    margin-bottom: 1.25rem; }
+    margin-bottom: 1.25rem;
+    font-size: 1.5rem; }
   .home-hero .home-hero-left button, .home-hero .home-hero-left p {
     display: none; }
   .home-hero .home-hero-right form {
@@ -150,7 +151,8 @@
       .home-hero .home-hero-left h2 {
         text-align: left;
         margin-top: 0;
-        margin-bottom: .5rem; }
+        margin-bottom: .5rem;
+        font-size: 1.75rem; }
       .home-hero .home-hero-left button, .home-hero .home-hero-left p {
         display: block; }
     .home-hero .home-hero-right {
@@ -540,6 +542,9 @@ textarea {
   .field select {
     padding-right: 0;
     background-image: none; } }
+.show-large {
+  display: none; }
+
 .offers-listing-wrap {
   display: flex;
   flex-direction: column;
@@ -549,6 +554,7 @@ textarea {
   margin: 2rem 0; }
 
 .loan-offer-container {
+  position: relative;
   display: flex;
   flex-direction: column;
   margin: .875rem 0;
@@ -557,10 +563,11 @@ textarea {
 .loan-offer-head {
   display: flex;
   align-items: center;
-  padding: 1rem 1rem;
+  position: relative;
+  padding: .375rem;
   border-bottom: 1px solid #d7d7d7; }
   .loan-offer-head .loan-offerer-logo {
-    max-width: 100px; }
+    max-width: 75px; }
   .loan-offer-head span {
     display: block;
     line-height: 1; }
@@ -570,6 +577,18 @@ textarea {
     font-size: 0.875rem;
     color: #a1a1a1; }
 
+.text-focus {
+  position: absolute;
+  top: 6px;
+  right: 7px; }
+  .text-focus .name {
+    font-size: .875rem;
+    color: #a1a1a1; }
+  .text-focus .value {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #00aeef; }
+
 .loan-offer-body {
   display: flex;
   flex-wrap: wrap;
@@ -577,15 +596,13 @@ textarea {
   justify-content: center;
   margin: 1rem 0; }
   .loan-offer-body span {
-    margin: 0 1rem;
-    font-size: .875rem; }
+    margin: .125rem 1rem;
+    font-size: 1rem; }
 
 .loan-offer-footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #e6e9ee;
-  padding: 1.5rem 0; }
+  padding: 0; }
+  .loan-offer-footer .loan-offer-cta {
+    width: 100%; }
 
 .personal-offer-container.featured {
   position: relative;
@@ -617,19 +634,14 @@ textarea {
   justify-content: center; }
 .affiliate-offer-container .loan-offer-body span {
   flex: 0 0 100%;
-  font-size: 1rem;
   text-align: center; }
 
-@media only screen and (min-width: 360px) {
-  .personal-offer-container .loan-offer-body span {
-    font-size: 1rem;
-    flex: 0 0 118px; } }
 @media only screen and (min-width: 768px) {
   .offer-list-head {
     margin: 3rem 0; }
 
   .personal-offer-container .loan-offer-body span {
-    flex: 0 0 140px; }
+    flex: 0 0 146px; }
 
   .affiliate-offer-container {
     flex-direction: row; }
@@ -649,6 +661,12 @@ textarea {
       padding: 0 .5rem; }
       .affiliate-offer-container .loan-offer-footer .broker-btn {
         padding: 1rem; } }
+@media only screen and (min-width: 769px) {
+  .show-mobile {
+    display: none; }
+
+  .show-large {
+    display: block; } }
 @media only screen and (min-width: 1024px) {
   .offer-list-head {
     margin: 4rem 0; }
@@ -672,18 +690,35 @@ textarea {
         display: none; }
 
   .loan-offer-body {
-    justify-content: flex-start; }
+    position: relative;
+    justify-content: center; }
 
   .loan-offer-footer {
-    flex: 0 0 200px; }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    flex: 0 0 200px;
+    padding: .5rem;
+    background: #ececec; }
+    .loan-offer-footer .text-focus {
+      position: static;
+      margin-bottom: .375rem; }
+      .loan-offer-footer .text-focus span {
+        flex: none;
+        margin: 0;
+        font-size: 1rem; }
     .loan-offer-footer .broker-btn-gold {
+      width: auto;
       padding: 1rem; }
 
   .affiliate-offer-container .loan-offer-head {
     flex-direction: column;
     flex: 0 0 230px; }
   .affiliate-offer-container .loan-offer-body span {
-    font-size: 1rem; } }
+    font-size: .875rem; }
+  .affiliate-offer-container .loan-offer-footer {
+    justify-content: center; } }
 @media only screen and (min-width: 1200px) {
   .loan-offer-head {
     flex-direction: row;
@@ -708,7 +743,8 @@ textarea {
     max-width: 400px; }
 
   .affiliate-offer-container .loan-offer-body {
-    flex: 0 0 328px; } }
+    flex: 0 0 328px;
+    max-width: 295px; } }
 /* Typography */
 * {
   -webkit-font-smoothing: antialiased;
@@ -721,7 +757,14 @@ p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif; }
 
 section > h1 {
-  margin: 4.125rem 0 4.5rem; }
+  margin: 4.125rem 0 3.5rem;
+  font-size: 2rem; }
+
+section h1.small-mar {
+  margin-bottom: 2rem; }
+
+.p-head {
+  margin-bottom: 0.25rem; }
 
 .page-body {
   min-height: 200px; }
@@ -814,6 +857,18 @@ body {
     margin-bottom: 1.5rem;
     line-height: 1.6; }
 
+.about-image-container-1 {
+  margin-top: 2rem; }
+
+.about-image-container-2 {
+  margin-bottom: 2rem; }
+
+.quote-text {
+  margin: 3rem 0 0 0;
+  font-size: 21px;
+  font-style: italic;
+  text-align: center; }
+
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6; }
@@ -830,6 +885,17 @@ body {
   .page-body {
     min-height: 400px; }
 
+  .home-about-half {
+    margin: 1.5rem 0; }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+
+  .quote-text {
+    font-size: 24px; }
+
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem; } }
@@ -839,4 +905,9 @@ body {
 
   .thank-you-row {
     padding-top: 6rem;
-    padding-bottom: 6rem; } }
+    padding-bottom: 6rem; }
+
+  .about-how {
+    padding-top: 0.25rem; }
+    .about-how .circle-block {
+      margin-bottom: 4rem; } }

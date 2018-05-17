@@ -132,6 +132,7 @@ function localize_en(errors) {
         if (n != 1) {
           out += 's';
         }
+        out = i18n.gettext('Should not be shorter than %1 characters', n);
         break;
       case 'minProperties':
         out = '';

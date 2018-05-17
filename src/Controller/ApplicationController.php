@@ -11,6 +11,7 @@ namespace App\Controller;
 use App\Base\Components\AbstractController;
 use App\Base\Interfaces\MessageTemplateRepositoryInterface;
 use App\Component\FormBuilder;
+use App\Model\ApplicationForm;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
@@ -442,7 +443,12 @@ class ApplicationController extends AbstractController
   public function schemaAction($request, Response $response, $args)
   {
     $helper = new SchemaHelper();
+    $form = new ApplicationForm();
+    $errors = $form->getAjvErrors();
 
-    return $response->withJson($helper->mergePartnersSchemas($this->getPartnersDataMappers()));
+    return $response->withJson([
+      'schema' => $helper->mergePartnersSchemas($this->getPartnersDataMappers()),
+      'messages' => $errors
+    ]);
   }
 }

@@ -8,8 +8,10 @@
 
 namespace App\Base\Components;
 
+use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\System\Helper;
+use Broker\System\Log;
 
 class SchemaHelper
 {
@@ -285,6 +287,7 @@ class SchemaHelper
   /**
    * @param array $partnersDataMappers
    * @return array
+   * @throws \Exception
    */
   public function mergePartnersSchemas(array $partnersDataMappers)
   {
@@ -304,6 +307,8 @@ class SchemaHelper
         $combined['definitions'] = Helper::mergeArraysRecursively($combined['definitions'], $schema['definitions']);
         unset($schema['definitions']);
       }
+
+      $schema = $this->substituteEnumFieldValues($schema);
 
       $combined['allOf'][] = json_decode(json_encode($schema));
     }
@@ -335,6 +340,31 @@ class SchemaHelper
     });
 
     $schema['required'] = array_values($schema['required']);
+
+    return $schema;
+  }
+
+  /**
+   * @param $schema
+   * @return mixed
+   * @throws \Exception
+   */
+  protected function substituteEnumFieldValues($schema)
+  {
+    foreach ($schema['properties'] as $key => &$property)
+    {
+      if (!isset($property['enum'])) continue;
+
+      $formEnums = ApplicationForm::getEnumFields();
+      if (isset($formEnums[$key]))
+      {
+        $property['enum'] = array_keys($formEnums[$key]);
+      }
+      else
+      {
+        Log::warning(sprintf('Cannot get ENUM values for key %s', $key));
+      }
+    }
 
     return $schema;
   }
