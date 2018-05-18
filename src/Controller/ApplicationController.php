@@ -8,18 +8,16 @@
 
 namespace App\Controller;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use App\Base\Interfaces\MessageTemplateRepositoryInterface;
 use App\Component\FormBuilder;
 use App\Model\ApplicationForm;
-use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
 use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
-use Broker\System\Helper;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;

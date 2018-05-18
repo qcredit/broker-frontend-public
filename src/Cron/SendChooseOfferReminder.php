@@ -193,6 +193,7 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendNeededReminders(Application $app)
   {
+    Log::debug('Preparing to send application reminders...', ['appId' => $app->getId()]);
     $this->sendEmailReminder($app);
     if ($app->getDataElement('sms_reminder_sent') === null)
     {
@@ -208,7 +209,7 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendEmailReminder(Application $app)
   {
-    Log::info(sprintf('Sending e-mail reminder for app #%s', $app->getId()));
+    Log::info(sprintf('Sending e-mail reminder for application'), ['appId' => $app->getId()]);
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_EMAIL)
       ->setTitle(_('Check out these offers for you loan application!'))
@@ -232,7 +233,7 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendSmsReminder(Application $app)
   {
-    Log::info(sprintf('Sending sms reminder for app #%s', $app->getId()));
+    Log::info('Sending sms reminder for app...', ['appId' => $app->getId()]);
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_SMS)
       ->setRecipient($app->getPhone())
@@ -283,7 +284,7 @@ class SendChooseOfferReminder implements BaseJob
       $app->setDataElement('email_reminder_sent', new \DateTime());
     }
 
-    Log::info('Updating application after sending reminders...');
+    Log::info('Updating application after sending reminders...', ['appId' => $app->getId()]);
 
     return $this->getApplicationRepository()->save($app);
   }

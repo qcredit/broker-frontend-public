@@ -8,7 +8,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use App\Base\Components\AuthHandler;
 use Slim\Container;
 use Slim\Http\Request;

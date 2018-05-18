@@ -15,6 +15,15 @@ use Broker\System\BaseTest;
 
 class SchemaHelperTest extends BaseTest
 {
+  protected $mock;
+
+  public function setUp()
+  {
+    $this->mock = $this->getMockBuilder(SchemaHelper::class)
+      ->disableOriginalConstructor()
+      ->getMock();
+  }
+
   public function testFlattenSchemaWithEmptySchema()
   {
     $schema = [
@@ -308,7 +317,7 @@ class SchemaHelperTest extends BaseTest
     ];
 
     $mock = $this->getMockBuilder(SchemaHelper::class)
-      ->setMethods(['flattenSchema', 'mapPartnerSchemaToForm'])
+      ->setMethods(['flattenSchema', 'mapPartnerSchemaToForm', 'substituteEnumFieldValues'])
       ->getMock();
 
     $mock->expects($this->once())

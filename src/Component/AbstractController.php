@@ -6,7 +6,7 @@
  * Time: 10:38
  */
 
-namespace App\Base\Components;
+namespace App\Component;
 
 use Slim\Http\Request;
 use Slim\Http\Response;
