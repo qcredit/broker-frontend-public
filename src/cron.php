@@ -16,7 +16,6 @@ $jobby->add('SendChooseOfferReminder', [
   'closure' => function() {
     require(__DIR__ . '/../vendor/autoload.php');
     $settings = require(__DIR__ . '/settings.php');
-    var_dump(getenv('ENV_TYPE'));
     $app = new \Slim\App($settings);
     require(__DIR__ . '/dependencies.php');
     $job = new App\Cron\SendChooseOfferReminder(
