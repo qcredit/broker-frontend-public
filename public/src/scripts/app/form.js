@@ -40,7 +40,6 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, A
   });
 
   $('button[type="submit"]').click(function(e) {
-    console.log('here');
     var valid = ajv.validate(schema, app.getFormData());
 
     if (!valid) {
