@@ -35,6 +35,7 @@ RUN    apt-get update \
     && if [ -d /tmp/pear ]; then /bin/rm -rv /tmp/pear; fi \
     && mkdir -p /var/www/html/cache \
     && chown www-data /var/www/html/cache \
+    && chown -R www-data /var/www/html/public \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
     && if cd /var/www/html/conf; then \
          for file in apache_000-default.conf apache_apache2.conf apache_php.ini apache_security.conf start.sh; do \

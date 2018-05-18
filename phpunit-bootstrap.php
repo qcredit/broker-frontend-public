@@ -5,4 +5,4 @@
  * Date: 11.04.18
  * Time: 14:21
  */
-putenv("ENV_TYPE=testserver");
+putenv("ENV_TYPE=unittest");

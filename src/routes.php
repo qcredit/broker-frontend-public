@@ -15,7 +15,7 @@ $app->group('/', function() {
   $this->get('', 'HomeController:indexAction');
   $this->get('language', 'HomeController:languageAction');
   $this->get('about', 'AboutController:indexAction');
-  $this->get('contact', 'ContactController:indexAction');
+  $this->map(['GET', 'POST'], 'contact', 'ContactController:indexAction');
   $this->get('terms', 'TermsController:indexAction');
   $this->get('blog', 'BlogController:indexAction');
   $this->get('blog/tag/{tag}', 'BlogController:tagAction');
