@@ -634,6 +634,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
         ApplicationForm::ENUM_PROPERTY_OTHER => 'Other'
       ],
       ApplicationForm::ATTR_LOAN_PURPOSE => [
+        null => '',
         ApplicationForm::ENUM_PURPOSE_BILLS => 'Bills',
         ApplicationForm::ENUM_PURPOSE_VACATION => 'Vacation',
         ApplicationForm::ENUM_PURPOSE_MORTGAGE => 'RentOrMortgage',
