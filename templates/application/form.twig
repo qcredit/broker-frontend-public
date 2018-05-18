@@ -63,7 +63,9 @@
                   <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                     <option></option>
                     {% for optionValue,optionName in field.enum %}
-                    <option value="{{ optionValue }}" {% if application.getAttribute(field.name) == optionValue %}selected="true"{% endif %}>{{ optionName }}</option>
+                      {% if optionValue != '' %}
+                        <option value="{{ optionValue }}" {% if application.getAttribute(field.name) == optionValue %}selected="true"{% endif %}>{{ optionName }}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                   {% else %}

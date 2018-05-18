@@ -205,23 +205,30 @@
       </article>
     </div>
   </section>
-  <script>
-    var app_hash = '{{ application.applicationHash }}';
-    setInterval(function(){
-      console.log(app_hash);
-      $.ajax({
-        method: "GET",
-        url: "/application/status",
-      })
-        .done(function( data ) {
-          console.log( "Success " + data.status );
-          if(data.status === 'done') {
-            $('.bouncing-loader').hide();
-          }
+{% endblock %}
+{% block endBody %}
+<script type="text/javascript">
+  var app_hash = '{{ application.applicationHash }}';
+
+  require(['/src/scripts/common.js'], function (common) {
+    require(['broker', 'domReady'], function (app) {
+      setInterval(function(){
+        console.log(app_hash);
+        $.ajax({
+          method: "GET",
+          url: "/application/status",
         })
-        .fail(function(){
-          console.log('fail');
-        });
-    },60000);
-  </script>
+          .done(function( data ) {
+            console.log( "Success " + data.status );
+            if(data.status === 'done') {
+              $('.bouncing-loader').hide();
+            }
+          })
+          .fail(function(){
+            console.log('fail');
+          });
+      },6000);
+    });
+  });
+</script>
 {% endblock %}

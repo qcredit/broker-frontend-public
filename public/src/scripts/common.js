@@ -5,7 +5,9 @@ requirejs.config({
     'jquery.bootstrap': '//stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min',
     'rangeSlider': 'rangeslider.min',
     'ajv': '//cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min',
-    'ajv.broker': 'app/ajv.broker'
+    'ajv.broker': 'app/ajv.broker',
+    'broker': './app/app',
+    'domReady': './app/domReady'
   },
   'shim': {
     'jquery.bootstrap': ['jquery']

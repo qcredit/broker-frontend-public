@@ -176,6 +176,28 @@
         "pattern": "(?<!\\w)[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)",
         "section": "general",
         "order": 1
+      },
+      "loanPurposeType": {
+        "type": "string",
+        "enum": [
+          "",
+          "Bills",
+          "Vacation",
+          "RentOrMortgage",
+          "Car",
+          "Entertainment",
+          "Groceries",
+          "Renovation",
+          "Electronics",
+          "Furniture",
+          "School",
+          "TaxPayment",
+          "Investment",
+          "InvoicePayment",
+          "Rent",
+          "Other"
+        ],
+        "section": "additional"
       }
     },
     "definitions": {
