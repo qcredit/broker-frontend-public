@@ -1,4 +1,4 @@
-define('app/form', ['jquery', 'app/app', 'ajv', 'ajv.broker'], function($, app, Ajv, brokerAjv) {
+define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, Ajv, brokerAjv) {
   var schema = '';
   var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
 
