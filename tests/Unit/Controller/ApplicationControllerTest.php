@@ -65,7 +65,7 @@ class ApplicationControllerTest extends BaseTest
       ->getMock();
     $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication'])
+      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy'])
       ->getMock();
 
     $twigMock = $this->getMockBuilder(Twig::class)
@@ -90,7 +90,12 @@ class ApplicationControllerTest extends BaseTest
 
     $mock->expects($this->once())
       ->method('findEntity')
-      ->willReturn(new Application());
+      ->willReturn((new Application())->setId(2));
+
+    $this->offerRepoMock->method('getBy')
+      ->willReturn([]);
+    $mock->method('getOfferRepository')
+      ->willReturn($this->offerRepoMock);
 
     $this->mock->method('render')->willReturnArgument(2);
 

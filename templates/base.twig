@@ -90,8 +90,8 @@
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
 <script src="/src/scripts/require.js"></script>
 <script type="text/javascript">
-  require(['./src/scripts/common'], function (common) {
-    require(['app/app', 'app/domReady'], function (app) {
+  require(['/src/scripts/common.js'], function (common) {
+    require(['broker', 'domReady'], function (app) {
       app.setCsrfName('{{ csrf.keys.name }}', '{{ csrf.name }}');
       app.setCsrfValue('{{ csrf.keys.value }}', '{{ csrf.value }}');
       {% if lang is defined %}

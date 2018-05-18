@@ -1,4 +1,4 @@
-define('ajv.broker', ['ajv', 'app/app'], function (Ajv, app) {
+define('ajv.broker', ['ajv', 'broker'], function (Ajv, app) {
   var ajv = {};
 
   ajv.searchError = function(attribute, errors){

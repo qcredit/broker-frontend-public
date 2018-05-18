@@ -1,4 +1,4 @@
-define('app/formHelper', ['jquery', 'app/app'], function($, app) {
+define(['jquery', 'broker'], function($, app) {
   var formHelper = {};
 
   formHelper.populateOptions = function(slider, unit)
