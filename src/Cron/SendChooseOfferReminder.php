@@ -175,7 +175,6 @@ class SendChooseOfferReminder implements BaseJob
 
     if (empty($apps))
     {
-      var_dump($apps);
       Log::info('No applications found for offer reminders!');
     }
 

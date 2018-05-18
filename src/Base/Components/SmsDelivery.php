@@ -150,6 +150,7 @@ class SmsDelivery implements MessageDeliveryInterface
     $codes = [
       101 => 'Access restricted, wrong credentials. Check the username and password values!',
       102 => 'Parameters are wrong or missing. Check that all the required parameters are present.',
+      103 => 'Invalid IP address. The IP address you made the request from, is not in the whitelist.',
       209 => 'Server failure, try again after a few seconds or try the api3.messente.com backup server.'
     ];
 

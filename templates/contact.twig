@@ -38,23 +38,31 @@
     </div>
   </div>
   <div class="col-sm-12 col-md-6">
+    {% if not sent %}
     <form action="" class="contact-form" method="post">
       <div class="field text name">
         <label for="">Insert your name*</label>
-          <input type="text" name="name" id="name"/>
+          <input type="text" name="name" id="name" value="{{ contact.name }}"/>
+          {% if contact.errors.name %}<p class="rules">{{ contact.errors.name }}</p>{% endif %}
       </div>
       <div class="field text emailaddress">
         <label for="">Insert your email*</label>
-          <input type="text" name="email" id="emailaddress"/>
+          <input type="text" name="email" id="emailaddress" value="{{ contact.email }}"/>
+          {% if contact.errors.email %}<p class="rules">{{ contact.errors.email }}</p>{% endif %}
       </div>
-      <div class="field textarea email">
+      <div class="field textarea message">
         <label for="">Insert your message*</label>
-        <textarea name="message" id="message"></textarea>
+        <textarea name="message" id="message">{{ contact.message }}</textarea>
+        {% if contact.errors.message %}<p class="rules">{{ contact.errors.message }}</p>{% endif %}
       </div>
       <div class="field submit">
         <button class="btn broker-btn broker-btn-gold">Send</button>
       </div>
+      {% if contact.errors.general %}<p class="rules">{{ contact.errors.general }}</p>{% endif %}
     </form>
+    {% else %}
+    <p>Thank you, your message has been sent! We will get in touch with you soon.</p>
+    {% endif %}
   </div>
 </div>
 {% endblock %}

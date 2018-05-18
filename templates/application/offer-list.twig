@@ -212,7 +212,14 @@
 
   require(['/src/scripts/common.js'], function (common) {
     require(['broker', 'domReady'], function (app) {
-      setInterval(function(){
+      var intervalID;
+
+      function stopInterval()
+      {
+        clearInterval(intervalID);
+      }
+
+      intervalID = setInterval(function(){
         console.log(app_hash);
         $.ajax({
           method: "GET",
@@ -222,12 +229,13 @@
             console.log( "Success " + data.status );
             if(data.status === 'done') {
               $('.bouncing-loader').hide();
+              stopInterval(intervalID);
             }
           })
           .fail(function(){
             console.log('fail');
           });
-      },6000);
+      },60000);
     });
   });
 </script>
