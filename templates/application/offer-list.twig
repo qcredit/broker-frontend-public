@@ -10,9 +10,9 @@
   </div>
   <section class="row justify-content-md-center">
     <h4 class="col-sm-12 col-md-9 offers-list-heading">{% trans 'Personal offers' %}:</h4>
-    {% if application.offers %}
+    {% if offers %}
     <div class="col-sm-12 col-md-9 offers-listing-wrap">
-      {% for offer in application.offers %}
+      {% for offer in offers %}
       <article class="loan-offer-container personal-offer-container {% if offer.partner.featured %}featured{% endif %}">
         <div class="loan-offer-head">
           <div class="loan-offerer-logo-container">
