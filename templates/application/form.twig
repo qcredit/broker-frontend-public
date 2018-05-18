@@ -27,7 +27,7 @@
     </div>
     {% if not application.errors %}
     <div class="form-block form-block-submit">
-      <div class="broker-btn broker-btn-gold">Proceed</div>
+      <div class="broker-btn broker-btn-gold">{% trans 'Proceed' %}</div>
     </div>
     {% endif %}
   </div>
@@ -63,7 +63,9 @@
                   <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                     <option></option>
                     {% for optionValue,optionName in field.enum %}
-                    <option value="{{ optionValue }}" {% if application.getAttribute(field.name) == optionValue %}selected="true"{% endif %}>{{ optionName }}</option>
+                      {% if optionValue != '' %}
+                        <option value="{{ optionValue }}" {% if application.getAttribute(field.name) == optionValue %}selected="true"{% endif %}>{{ optionName }}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                   {% else %}
@@ -89,7 +91,7 @@
 {% block endBody %}
   <script type="text/javascript">
     require(['./src/scripts/common'], function (common) {
-      require(['app/domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+      require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
 
       });
     });

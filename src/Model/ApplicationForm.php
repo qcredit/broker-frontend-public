@@ -103,6 +103,22 @@ class ApplicationForm
   const ENUM_MONTH_NOVEMBER = 11;
   const ENUM_MONTH_DECEMBER = 12;
 
+  const ENUM_PURPOSE_BILLS = 'bills';
+  const ENUM_PURPOSE_VACATION = 'vacation';
+  const ENUM_PURPOSE_MORTGAGE = 'rentOrMortgage';
+  const ENUM_PURPOSE_CAR = 'car';
+  const ENUM_PURPOSE_ENTERTAINMENT = 'entertainment';
+  const ENUM_PURPOSE_GROCERIES = 'groceries';
+  const ENUM_PURPOSE_RENOVATION = 'renovation';
+  const ENUM_PURPOSE_ELECTRONICS = 'electronics';
+  const ENUM_PURPOSE_FURNITURE = 'furniture';
+  const ENUM_PURPOSE_SCHOOL = 'school';
+  const ENUM_PURPOSE_TAX = 'taxPayment';
+  const ENUM_PURPOSE_INVESTMENT = 'investment';
+  const ENUM_PURPOSE_INVOICE = 'invoicePayment';
+  const ENUM_PURPOSE_RENT = 'rent';
+  const ENUM_PURPOSE_OTHER = 'other';
+
   public static function getEnumFields()
   {
     return [
@@ -173,6 +189,24 @@ class ApplicationForm
         self::ENUM_PAYOUT_ACCOUNT => _('Account'),
         self::ENUM_PAYOUT_BLUECASH => _('BlueCash'),
         self::ENUM_PAYOUT_GIRO => _('Giro')
+      ],
+      self::ATTR_LOAN_PURPOSE => [
+        "" => "",
+        self::ENUM_PURPOSE_BILLS => _('Bills'),
+        self::ENUM_PURPOSE_VACATION => _('Vacation'),
+        self::ENUM_PURPOSE_MORTGAGE => _('Rent or Mortgage'),
+        self::ENUM_PURPOSE_CAR => _('Car'),
+        self::ENUM_PURPOSE_ENTERTAINMENT => _('Entertainment'),
+        self::ENUM_PURPOSE_GROCERIES => _('Groceries'),
+        self::ENUM_PURPOSE_RENOVATION => _('Renovation'),
+        self::ENUM_PURPOSE_ELECTRONICS => _('Electronics'),
+        self::ENUM_PURPOSE_FURNITURE => _('Furniture'),
+        self::ENUM_PURPOSE_SCHOOL => _('School'),
+        self::ENUM_PURPOSE_TAX => _('Tax Payment'),
+        self::ENUM_PURPOSE_INVESTMENT => _('Investment'),
+        self::ENUM_PURPOSE_INVOICE => _('Invoice Payment'),
+        self::ENUM_PURPOSE_RENT => _('Rent'),
+        self::ENUM_PURPOSE_OTHER => _('Other')
       ]
     ];
   }

@@ -173,9 +173,31 @@
         "type": "string",
         "minLength": 9,
         "example": "+372987654321",
-        "pattern": "(?<!\\w)[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)",
+        "pattern": "^(\\+48)?(\\d{9})\\b",
         "section": "general",
         "order": 1
+      },
+      "loanPurposeType": {
+        "type": "string",
+        "enum": [
+          "",
+          "Bills",
+          "Vacation",
+          "RentOrMortgage",
+          "Car",
+          "Entertainment",
+          "Groceries",
+          "Renovation",
+          "Electronics",
+          "Furniture",
+          "School",
+          "TaxPayment",
+          "Investment",
+          "InvoicePayment",
+          "Rent",
+          "Other"
+        ],
+        "section": "additional"
       }
     },
     "definitions": {

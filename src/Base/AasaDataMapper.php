@@ -16,6 +16,7 @@ use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
 use Broker\System\Error\InvalidConfigException;
+use Slim\App;
 
 class AasaDataMapper implements PartnerDataMapperInterface
 {
@@ -631,6 +632,23 @@ class AasaDataMapper implements PartnerDataMapperInterface
         ApplicationForm::ENUM_PROPERTY_HOUSE => 'House',
         ApplicationForm::ENUM_PROPERTY_DUPLEX => 'Duplex',
         ApplicationForm::ENUM_PROPERTY_OTHER => 'Other'
+      ],
+      ApplicationForm::ATTR_LOAN_PURPOSE => [
+        ApplicationForm::ENUM_PURPOSE_BILLS => 'Bills',
+        ApplicationForm::ENUM_PURPOSE_VACATION => 'Vacation',
+        ApplicationForm::ENUM_PURPOSE_MORTGAGE => 'RentOrMortgage',
+        ApplicationForm::ENUM_PURPOSE_CAR => 'Car',
+        ApplicationForm::ENUM_PURPOSE_ENTERTAINMENT => 'Entertainment',
+        ApplicationForm::ENUM_PURPOSE_GROCERIES => 'Groceries',
+        ApplicationForm::ENUM_PURPOSE_RENOVATION => 'Renovation',
+        ApplicationForm::ENUM_PURPOSE_ELECTRONICS => 'Electronics',
+        ApplicationForm::ENUM_PURPOSE_FURNITURE => 'Furniture',
+        ApplicationForm::ENUM_PURPOSE_SCHOOL => 'School',
+        ApplicationForm::ENUM_PURPOSE_TAX => 'TaxPayment',
+        ApplicationForm::ENUM_PURPOSE_INVESTMENT => 'Investment',
+        ApplicationForm::ENUM_PURPOSE_INVOICE => 'InvoicePayment',
+        ApplicationForm::ENUM_PURPOSE_RENT => 'Rent',
+        ApplicationForm::ENUM_PURPOSE_OTHER => 'Other'
       ]
     ];
   }

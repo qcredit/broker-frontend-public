@@ -1,4 +1,4 @@
-define('app/domReady', ['jquery', 'rangeSlider', 'app/formHelper'], function($, rangeSlider, formHelper) {
+define(['jquery', 'rangeSlider', 'app/formHelper'], function($, rangeSlider, formHelper) {
 
   $(function() {
     formHelper.initialize();

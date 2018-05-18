@@ -48,4 +48,4 @@ Broker\Domain\Entity\Application:
     offers:
       targetEntity: Offer
       mappedBy: application
-      fetch: EAGER
+      fetch: LAZY

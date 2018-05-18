@@ -308,9 +308,11 @@ class ApplicationController extends AbstractController
   public function offersAction(Request $request, Response $response, $args)
   {
     $application = $this->findEntity($args['hash'], $request, $response);
+    $offers = $this->getOfferRepository()->getBy(['applicationId' => $application->getId(), 'rejectedDate' => null]);
 
     $data = [
-      'application' => $application
+      'application' => $application,
+      'offers' => $offers
     ];
 
     return $this->render($response, 'application/offer-list.twig', $data);
