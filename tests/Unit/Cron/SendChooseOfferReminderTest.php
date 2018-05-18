@@ -297,7 +297,7 @@ class SendChooseOfferReminderTest extends BaseTest
     $message = new Message();
     $confArray = [
       'broker' => [
-        'environment' => 'testserver'
+        'environment' => 'unittest'
       ]
     ];
 
