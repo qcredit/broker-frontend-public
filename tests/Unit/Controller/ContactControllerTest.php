@@ -30,7 +30,7 @@ class ContactControllerTest extends BaseTest
       ->getMock();
     $this->mock = $this->getMockBuilder(ContactController::class)
       ->disableOriginalConstructor()
-      ->setMethods(['render', 'getContactForm'])
+      ->setMethods(['render', 'getContactForm', 'getParsedBody'])
       ->getMock();
   }
 
@@ -79,7 +79,7 @@ class ContactControllerTest extends BaseTest
       ->willReturnArgument(2);
     $this->requestMock->method('isPost')
       ->willReturn(true);
-    $this->requestMock->method('getParsedBody')
+    $this->mock->method('getParsedBody')
       ->willReturn($data);
 
     $result = $this->mock->indexAction($this->requestMock, $this->responseMock);
@@ -109,7 +109,7 @@ class ContactControllerTest extends BaseTest
       ->willReturnArgument(2);
     $this->requestMock->method('isPost')
       ->willReturn(true);
-    $this->requestMock->method('getParsedBody')
+    $this->mock->method('getParsedBody')
       ->willReturn($data);
 
     $result = $this->mock->indexAction($this->requestMock, $this->responseMock);
@@ -139,7 +139,7 @@ class ContactControllerTest extends BaseTest
       ->willReturnArgument(2);
     $this->requestMock->method('isPost')
       ->willReturn(true);
-    $this->requestMock->method('getParsedBody')
+    $this->mock->method('getParsedBody')
       ->willReturn($data);
 
     $result = $this->mock->indexAction($this->requestMock, $this->responseMock);
@@ -169,7 +169,7 @@ class ContactControllerTest extends BaseTest
       ->willReturnArgument(2);
     $this->requestMock->method('isPost')
       ->willReturn(true);
-    $this->requestMock->method('getParsedBody')
+    $this->mock->method('getParsedBody')
       ->willReturn($data);
 
     $result = $this->mock->indexAction($this->requestMock, $this->responseMock);
