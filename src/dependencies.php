@@ -253,12 +253,16 @@ $container['ApplicationController'] = function ($c)
     $c->get('MessageTemplateRepository')
   );
 
+  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+    $newApplicationService,
+    $prepareService
+  );
+
   return new \App\Controller\ApplicationController(
-    $prepareService,
+    $sendApplicationService,
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
-    $newApplicationService,
     $c
   );
 };
@@ -267,7 +271,6 @@ $container['AdminOfferController'] = function($c)
 {
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
     new PartnerDataMapperRepository(),
-    new PartnerDeliveryGateway(),
     new PartnerRequestFactory(),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService')

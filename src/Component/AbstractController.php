@@ -151,6 +151,9 @@ abstract class AbstractController
   protected function getParsedBody()
   {
     $body = $this->getRequest()->getParsedBody();
+
+    if ($body === null) return [];
+
     unset($body['csrf_name']);
     unset($body['csrf_value']);
 
