@@ -15,7 +15,9 @@
     padding: .38rem .5rem;
   }
   .navbar-brand {
-    padding-bottom: 0;
+    max-width: 130px;
+    padding-top: 7px;
+    padding-bottom: 5px;
   }
 }
 .navbar-light {
