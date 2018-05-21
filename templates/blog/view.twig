@@ -7,9 +7,9 @@
     Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
     <meta property="og:url" content="https://www-test.qcredit.pl/{{post.slug}}" />
     <meta property="og:type" content="article " />
-    <meta property="og:title" content="{{ post.title }}" />
-    <meta property="og:description" content="{{ post.lead | raw }}" />
-    <meta property="og:image" content="https://www-test.qcredit.pl{{ post.image }}" />
+    <meta property="og:title" content="{{ post.meta_information.title }}" />
+    <meta property="og:description" content="{{ post.meta_information.description }}" />
+    <meta property="og:image" content="{{ post.image }}" />
 {% endblock %}
 {% block container %}
   <!-- Load Facebook SDK for JavaScript -->
@@ -18,7 +18,7 @@
     var js, fjs = d.getElementsByTagName(s)[0];
     if (d.getElementById(id)) return;
     js = d.createElement(s); js.id = id;
-    js.src = "https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.8";
+    js.src = "https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.0";
     fjs.parentNode.insertBefore(js, fjs);
   }(document, 'script', 'facebook-jssdk'));</script>
 
