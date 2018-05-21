@@ -7,10 +7,10 @@
         <li><strong>Identifier:</strong> {{ partner.identifier }}</li>
         <li><strong>Status:</strong> {% if partner.status %}Enabled{% else %}Disabled{% endif %}</li>
         <li><strong>Commission:</strong> {{ partner.commission }}</li>
-        <li><strong>UseAPI:</strong> {{ partner.useApi }}</li>
+        <li><strong>UseAPI:</strong> {{ partner.apiEnabled }}</li>
         <li><strong>APILiveUrl:</strong> {{ partner.apiLiveUrl }}</li>
         <li><strong>APITestUrl:</strong>{{ partner.apiTestUrl }}</li>
-        <li><strong>Logo:</strong> <img src="{{ partner.logo }}"/></li>
+        <li><strong>Logo:</strong> <img src="{{ partner.logoUrl }}"/></li>
     </ol>
     <a href="/admin/partners/update/{{ partner.id }}" class="btn broker-btn broker-btn-blue mb-3">Edit</a>
 {% endblock %}

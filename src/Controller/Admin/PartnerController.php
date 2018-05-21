@@ -139,7 +139,7 @@ class PartnerController extends AbstractController
   {
     $data = ['user' => $request->getAttribute('user')];
 
-    $partners = $this->getPartnerDataLoader()->bulkLoadExtraConfiguration($this->getPartnerRepository()->getAll());
+    $partners = $this->getPartnerRepository()->getAll();
 
     $data['partners'] = $partners;
 
@@ -187,7 +187,7 @@ class PartnerController extends AbstractController
   {
     $data = ['user' => $request->getAttribute('user')];
 
-    $data['partner'] = $this->getPartnerDataLoader()->loadExtraConfiguration($this->findEntity($args['id'], $request, $response));
+    $data['partner'] = $this->findEntity($args['id'], $request, $response);
 
     return $this->render($response, 'admin/partner.twig', $data);
   }

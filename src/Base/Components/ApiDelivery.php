@@ -149,8 +149,8 @@ class ApiDelivery implements MessageDeliveryInterface
   protected function setClientOptions()
   {
     $request = $this->getMessage()->getRelatedEntity();
-    $username = $request->getPartner()->getAttribute('remoteUsername');
-    $password = $request->getPartner()->getAttribute('remotePassword');
+    $username = $request->getPartner()->getRemoteUsername();
+    $password = $request->getPartner()->getRemotePassword();
 
     $headers = [
       'Accept: application/json',
