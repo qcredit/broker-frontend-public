@@ -27,6 +27,7 @@ p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif;
 }
 section > h1 {
+  flex: 0 0 100%;
   margin: 4.125rem 0 3.5rem;
   font-size: 2rem;
 }
