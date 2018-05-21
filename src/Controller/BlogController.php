@@ -21,10 +21,6 @@ class BlogController extends AbstractController
    * @var BlogServiceAWS
    */
   private $blogService;
-  /**
-   * @var Container
-   */
-  private $container;
 
   /**
    * @return BlogServiceAWS
@@ -35,15 +31,6 @@ class BlogController extends AbstractController
   }
 
   /**
-   * @return Container
-   * @codeCoverageIgnore
-   */
-  public function getContainer()
-  {
-    return $this->container;
-  }
-
-  /**
    * BlogController constructor.
    * @param BlogServiceAWS $blogService
    * @param Container $container
@@ -51,7 +38,8 @@ class BlogController extends AbstractController
   public function __construct(BlogServiceAWS $blogService, Container $container)
   {
     $this->blogService = $blogService;
-    $this->container = $container;
+
+    parent::__construct($container);
   }
 
   /**
@@ -59,6 +47,7 @@ class BlogController extends AbstractController
    * @param Response $response
    * @param array $args
    * @return mixed
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function indexAction(Request $request, Response $response, $args = [])
   {
@@ -74,6 +63,7 @@ class BlogController extends AbstractController
    * @param $args
    * @return mixed
    * @throws NotFoundException
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function viewAction(Request $request, Response $response, $args)
   {
@@ -93,6 +83,7 @@ class BlogController extends AbstractController
    * @param Response $response
    * @param $args
    * @return mixed
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function tagAction(Request $request, Response $response, $args)
   {

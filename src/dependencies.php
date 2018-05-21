@@ -245,11 +245,12 @@ $container['ApplicationController'] = function ($c)
     $schemaValidator
   );
 
-  $prepareService = new PreparePartnerRequestsService(
+  $prepareService = new \Broker\Domain\Service\SendPartnerRequestsService(
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
-    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c)),
+    $c->get('MessageTemplateRepository')
   );
 
   return new \App\Controller\ApplicationController(

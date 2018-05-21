@@ -18,22 +18,9 @@ use Slim\Views\Twig;
 class ContactController extends AbstractController
 {
   /**
-   * @var Container
-   */
-  protected $container;
-  /**
    * @var ContactForm
    */
   protected $contactForm;
-
-  /**
-   * @return Container
-   * @codeCoverageIgnore
-   */
-  public function getContainer()
-  {
-    return $this->container;
-  }
 
   /**
    * @return ContactForm
@@ -60,7 +47,8 @@ class ContactController extends AbstractController
    */
   public function __construct(Container $container, ContactForm $contactForm)
   {
-    $this->container = $container;
+    parent::__construct($container);
+
     $this->contactForm = $contactForm;
   }
 
@@ -71,6 +59,7 @@ class ContactController extends AbstractController
    * @return mixed
    * @throws \Broker\System\Error\InvalidConfigException
    * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function indexAction(Request $request, Response $response, $args = [])
   {
@@ -81,9 +70,8 @@ class ContactController extends AbstractController
 
     if ($request->isPost())
     {
-      $postData = $request->getParsedBody();
-      unset($postData['csrf_name']);
-      unset($postData['csrf_value']);
+      $postData = $this->getParsedBody();
+
       if ($contactForm->load($postData) && $contactForm->validate() && $contactForm->send())
       {
         $data['sent'] = true;
