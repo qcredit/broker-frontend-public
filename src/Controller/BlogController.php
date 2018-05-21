@@ -34,6 +34,7 @@ class BlogController extends AbstractController
    * BlogController constructor.
    * @param BlogServiceAWS $blogService
    * @param Container $container
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function __construct(BlogServiceAWS $blogService, Container $container)
   {
@@ -89,6 +90,7 @@ class BlogController extends AbstractController
   {
     $data = [];
     $data['posts'] = $this->getBlogService()->selectByTag($args['tag']);
+    $data['tag'] = $args['tag'];
 
     return $this->render($response, 'blog/tag.twig', $data);
   }
