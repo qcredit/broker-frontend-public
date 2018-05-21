@@ -7,7 +7,7 @@
     <p>Chciałbyś mieć dodatkowe 100 PLN lub nawet 50 000 PLN w kieszeni? QCredit pomoże Ci zdobyć te środki. I to bez wychodzenia z domu. Ponad 30 autoryzowanych pożyczkodawców w QCredit czeka na Ciebie ze swoja ofertą.</p>
   </div>
   <div class="col-sm-12 col-md-7 home-hero-half home-hero-right">
-    <form class="landing-form" method="post" action="/application">
+    <form class="landing-form d-none" method="post" action="/application">
       <div class="landing-form-upper">
         <!-- Landing form for laptop/desktop devices -->
         {% include '$sliders.twig' %}
@@ -93,7 +93,7 @@
   <section class="row justify-content-md-center">
     <h1 class="col-sm-12 text-center small-mar">W QCredit jesteś w dobrych rękach</h1>
     <p class="col-sm-12 col-md-8 text-center">Każdego dnia nasz zespół dostarcza profesjonalne rozwiązania finansowe dla Klientów. Jesteśmy w stałym kontakcie z wieloma pożyczkodawcami, którzy mogą Ci zaoferować nawet do 50 000 PLN z natychmiastową decyzją.</p>
-    <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
+    <p class="col-sm-12 col-md-8 text-center d-none"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
   </section>
 {% endblock %}
 {% block endBody %}
