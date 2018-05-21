@@ -3,8 +3,25 @@
 {% block post_meta %}
     <meta name="description" content="{{ post.meta_information.description }}"/>
     <meta name="keywords" content="{{ post.meta_information.keywords }}">
+    <!-- You can use Open Graph tags to customize link previews.
+    Learn more: https://developers.facebook.com/docs/sharing/webmasters -->
+    <meta property="og:url"           content="www-test.qcredit.pl/blog/{{post.slug}}" />
+    <meta property="og:type"          content="website" />
+    <meta property="og:title"         content="{{ post.meta_information.title }}" />
+    <meta property="og:description"   content="{{ post.meta_information.description }}" />
+    <meta property="og:image"         content="{{ post.image }}" />
 {% endblock %}
 {% block container %}
+  <!-- Load Facebook SDK for JavaScript -->
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v2.8";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
+
     <article class="row justify-content-md-center post-full">
       <div class="col-sm-12 col-md-10 date text-center">{{ post.date_formatted }} </div>
       <h1 class="col-sm-12 col-md-10 post-full-title text-center">{{ post.title }}</h1>
@@ -13,5 +30,18 @@
       <div class="col-sm-12 col-md-10 col-lg-7 post-preview-lead font-weight-bold">{{post.lead | raw }}</div>
       <div class="col-sm-12 col-md-10 post-full-image" style="background-image: url({{post.image}});"></div>
       <div class="col-sm-12 col-md-10 col-lg-7 post-full-content">{{ post.content | raw }}</div>
+      <!-- Your share button code -->
+      <div class="col-sm-12 col-md-10 col-lg-7">
+        <div class="fb-share-button"
+          data-href="www-test.qcredit.pl/blog/{{post.slug}}"
+          data-layout="button_count" style="transform: translateY(-4px); -webkit-transform: translateY(-4px); -ms-transform: translateY(-4px);">
+        </div>
+        <div class="fb-like"
+          data-href="www-test.qcredit.pl/blog/{{post.slug}}"
+          data-layout="standard"
+          data-action="like"
+          data-show-faces="true">
+        </div>
+      </div>
     </article>
 {% endblock %}
