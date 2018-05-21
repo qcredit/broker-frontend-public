@@ -8,7 +8,7 @@
 
 namespace App\Cron;
 
-use App\Base\Interfaces\MessageTemplateRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
