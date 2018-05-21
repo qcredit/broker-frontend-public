@@ -2,7 +2,7 @@
 {% block title %}Blog{% endblock %}
 {% block container %}
   <section class="blog-articles">
-    <h1 class="">Blog posts for: </h1>
+    <h1 class="">Blog posts for: {{ tag }}</h1>
     {% for post in posts %}
       <article class="post-preview">
         <a class="post-preview-link-hide" href="/{{post.slug}}"><div class="post-preview-image" style="background-image: url({{post.image}});"></div></a>
