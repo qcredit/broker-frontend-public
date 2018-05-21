@@ -31,7 +31,14 @@ h4 {
 @import "../../sass/header";
 @import "tables";
 
-
+.navbar {
+  padding: 1rem;
+}
+.navbar-brand {
+  transform: translateY(-3px);
+  -webkit-transform: translateY(-3px);
+  -ms-transform: translateY(-3px);
+}
 /* BASIC STYLES */
 .broker-btn {
   padding: .675rem 3rem;
@@ -193,9 +200,6 @@ h4 {
 }
 
 @media only screen and (min-width: 768px) {
-  .stat-boxes {
-
-  }
   .stat-box {
     flex: 0 0 20%;
     padding-top: 22%;
