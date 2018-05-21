@@ -36,6 +36,9 @@
 }
 .landing-form-lower {
   padding: 1rem 2rem 2rem;
+  .field.email .rules {
+    display: none;
+  }
 }
 .landing-form-lower-footer {
   display: flex;
