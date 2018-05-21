@@ -245,19 +245,24 @@ $container['ApplicationController'] = function ($c)
     $schemaValidator
   );
 
-  $prepareService = new PreparePartnerRequestsService(
+  $prepareService = new \Broker\Domain\Service\SendPartnerRequestsService(
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
-    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c)),
+    $c->get('MessageTemplateRepository')
+  );
+
+  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+    $newApplicationService,
+    $prepareService
   );
 
   return new \App\Controller\ApplicationController(
-    $prepareService,
+    $sendApplicationService,
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
-    $newApplicationService,
     $c
   );
 };
@@ -266,7 +271,6 @@ $container['AdminOfferController'] = function($c)
 {
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
     new PartnerDataMapperRepository(),
-    new PartnerDeliveryGateway(),
     new PartnerRequestFactory(),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService')
