@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Cron;
 
-use App\Base\Interfaces\MessageTemplateRepositoryInterface;
+use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Base\Persistence\Doctrine\ApplicationRepository;
 use App\Base\Repository\MessageTemplateRepository;
 use App\Cron\SendChooseOfferReminder;
