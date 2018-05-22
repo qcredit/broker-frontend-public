@@ -85,9 +85,163 @@ class PartnerValidator extends AbstractEntityValidator
    */
   public function validateFeatured()
   {
-    if (!V::boolVal())
+    if (!V::boolVal()->validate($this->getEntity()->getFeatured()))
     {
       $this->getEntity()->setErrors([PartnerForm::ATTR_FEATURED => 'Invalid value!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateEmail()
+  {
+    if (!V::email()->validate($this->getEntity()->getEmail()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_EMAIL => 'Invalid e-mail!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateWebsite()
+  {
+    if (!V::url()->validate($this->getEntity()->getWebsite()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_WEBSITE => 'Invalid website!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateApiEnabled()
+  {
+    if (!V::boolVal()->validate($this->getEntity()->getApiEnabled()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_API_ENABLED => 'Invalid value!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateApiLiveUrl()
+  {
+    if (!V::url()->validate($this->getEntity()->getApiLiveUrl()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_API_LIVE_URL => 'Invalid API live URL!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateApiTestUrl()
+  {
+    if (!V::url()->validate($this->getEntity()->getApiTestUrl()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_API_TEST_URL => 'Invalid API test URL!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateRemoteUsername()
+  {
+    if (!V::stringType()->validate($this->getEntity()->getRemoteUsername()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_REMOTE_USERNAME => 'Invalid remote username!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateRemotePassword()
+  {
+    if (!V::stringType()->validate($this->getEntity()->getRemotePassword()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_REMOTE_PASSWORD => 'Invalid remote password!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateLocalUsername()
+  {
+    if (!V::stringType()->validate($this->getEntity()->getLocalUsername()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_LOCAL_USERNAME => 'Invalid local username!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateLocalPassword()
+  {
+    if (!V::stringType()->validate($this->getEntity()->getLocalPassword()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_LOCAL_PASSWORD => 'Invalid local password!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateAuthorizationType()
+  {
+    if (!in_array($this->getEntity()->getAuthorizationType(), PartnerForm::AUTHORIZATION_LIST))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_AUTHORIZATION_TYPE => 'Invalid authorization type!']);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateLogoUrl()
+  {
+    if (!V::stringType()->validate($this->getEntity()->getLogoUrl()))
+    {
+      $this->getEntity()->setErrors([PartnerForm::ATTR_LOGO_URL => 'Invalid logo URL!']);
       return false;
     }
 
