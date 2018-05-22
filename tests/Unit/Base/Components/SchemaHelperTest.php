@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Base\Components;
 
-use App\Base\Components\SchemaHelper;
+use App\Component\SchemaHelper;
 use App\Base\Repository\PartnerDataMapperRepository;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\System\BaseTest;

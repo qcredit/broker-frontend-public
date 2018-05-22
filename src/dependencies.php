@@ -285,9 +285,9 @@ $container['AdminOfferController'] = function($c)
 
 $container['LoginController'] = function ($c)
 {
-  $authService = new \App\Base\Components\GoogleAuthenticator();
+  $authService = new \App\Component\GoogleAuthenticator();
   $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
-  $authHandler = new \App\Base\Components\AuthHandler($authService, $userRepository, $c);
+  $authHandler = new \App\Component\AuthHandler($authService, $userRepository, $c);
   return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
 
@@ -300,7 +300,7 @@ $container['BlogController'] = function($c)
 
 $container['FormBuilder'] = function($c)
 {
-  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
+  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Component\SchemaHelper());
 };
 
 $container['notFoundHandler'] = function($c)
