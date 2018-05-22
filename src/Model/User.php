@@ -8,7 +8,7 @@
 
 namespace App\Model;
 
-use App\Base\Interfaces\UserIdentityInterface;
+use App\Interfaces\UserIdentityInterface;
 use Broker\Domain\Entity\AbstractEntity;
 use Broker\Domain\Entity\FluidDataTrait;
 

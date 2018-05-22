@@ -172,18 +172,18 @@ class ApplicationForm
         self::ENUM_PROPERTY_OTHER => _('Other')
       ],
       self::ATTR_MONTH_SINCE => [
-        self::ENUM_MONTH_JANUARY => date('F', mktime(0,0,0,1)),
-        self::ENUM_MONTH_FEBRUARY => date('F', mktime(0,0,0,2)),
-        self::ENUM_MONTH_MARCH => date('F', mktime(0,0,0, 3)),
-        self::ENUM_MONTH_APRIL => date('F', mktime(0,0,0,4)),
-        self::ENUM_MONTH_MAY => date('F', mktime(0,0,0,5)),
-        self::ENUM_MONTH_JUNE => date('F', mktime(0,0,0,6)),
-        self::ENUM_MONTH_JULY => date('F', mktime(0,0,0,7)),
-        self::ENUM_MONTH_AUGUST => date('F', mktime(0,0,0,8)),
-        self::ENUM_MONTH_SEPTEMBER => date('F', mktime(0,0,0,9)),
-        self::ENUM_MONTH_OCTOBER => date('F', mktime(0,0,0,10)),
-        self::ENUM_MONTH_NOVEMBER => date('F', mktime(0,0,0,11)),
-        self::ENUM_MONTH_DECEMBER => date('F', mktime(0,0,0,12))
+        self::ENUM_MONTH_JANUARY => strftime('%B', mktime(0,0,0,1)),
+        self::ENUM_MONTH_FEBRUARY => strftime('%B', mktime(0,0,0,2)),
+        self::ENUM_MONTH_MARCH => strftime('%B', mktime(0,0,0, 3)),
+        self::ENUM_MONTH_APRIL => strftime('%B', mktime(0,0,0,4)),
+        self::ENUM_MONTH_MAY => strftime('%B', mktime(0,0,0,5)),
+        self::ENUM_MONTH_JUNE => strftime('%B', mktime(0,0,0,6)),
+        self::ENUM_MONTH_JULY => strftime('%B', mktime(0,0,0,7)),
+        self::ENUM_MONTH_AUGUST => strftime('%B', mktime(0,0,0,8)),
+        self::ENUM_MONTH_SEPTEMBER => strftime('%B', mktime(0,0,0,9)),
+        self::ENUM_MONTH_OCTOBER => strftime('%B', mktime(0,0,0,10)),
+        self::ENUM_MONTH_NOVEMBER => strftime('%B', mktime(0,0,0,11)),
+        self::ENUM_MONTH_DECEMBER => strftime('%B', mktime(0,0,0,12))
       ],
       self::ATTR_PAYOUT_METHOD => [
         self::ENUM_PAYOUT_ACCOUNT => _('Account'),
@@ -262,6 +262,9 @@ class ApplicationForm
     ];
   }
 
+  /**
+   * @return array
+   */
   public function getAjvErrors()
   {
     return [
