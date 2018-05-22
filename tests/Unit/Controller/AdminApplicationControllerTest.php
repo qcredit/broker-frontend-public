@@ -37,7 +37,7 @@ class AdminApplicationControllerTest extends BaseTest
 
     $this->repositoryMock = $this->getMockBuilder(ApplicationRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy'])
+      ->setMethods(['getAll', 'getOneBy', 'getCount', 'getBy'])
       ->getMock();
 
     $this->requestMock = $this->createMock(Request::class);
@@ -54,10 +54,12 @@ class AdminApplicationControllerTest extends BaseTest
   {
     $mock = $this->mock;
 
-    $this->repositoryMock->method('getAll')
+    $this->repositoryMock->method('getBy')
       ->willReturn($this->apps);
+    $this->repositoryMock->method('getCount')
+      ->willReturn(100);
 
-    $mock->expects($this->once())
+    $mock->expects($this->atLeastOnce())
       ->method('getAppRepository')
       ->willReturn($this->repositoryMock);
 

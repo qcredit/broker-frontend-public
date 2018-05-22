@@ -11,6 +11,7 @@ namespace App\Controller\Admin;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
+use App\Component\Pagination;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -110,7 +111,10 @@ class AdminApplicationController extends AbstractController
   {
     $data = ['user' => $request->getAttribute('user')];
 
-    $data['applications'] = $this->getAppRepository()->getAll();
+    $count = $this->getAppRepository()->getCount();
+    $pagination = new Pagination($request, $count, 20);
+    $data['applications'] = $this->getAppRepository()->getBy([], null, $pagination->getLimit(), $pagination->getOffset());
+    $data['pagination'] = $pagination;
 
     return $this->render($response, 'admin/applications.twig', $data);
   }
