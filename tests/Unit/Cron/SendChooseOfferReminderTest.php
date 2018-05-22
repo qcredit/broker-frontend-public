@@ -141,12 +141,6 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function testSendEmailReminder()
   {
-    $this->factoryMock->expects($this->once())
-      ->method('create')
-      ->willReturn(new Message());
-    $this->mock->expects($this->once())
-      ->method('getMessageFactory')
-      ->willReturn($this->factoryMock);
     $this->mock->expects($this->once())
       ->method('updateApplication')
       ->willReturn(true);
@@ -154,7 +148,9 @@ class SendChooseOfferReminderTest extends BaseTest
       ->method('sendReminder')
       ->willReturn(true);
 
-    $this->mock->expects($this->once())
+    $this->templateRepositoryMock->method('getOfferReminderMessage')
+      ->willReturn((new Message())->setType(Message::MESSAGE_TYPE_EMAIL));
+    $this->mock->expects($this->atLeastOnce())
       ->method('getMessageTemplateRepository')
       ->willReturn($this->templateRepositoryMock);
 
@@ -166,12 +162,6 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function testSendEmailReminderFails()
   {
-    $this->factoryMock->expects($this->once())
-      ->method('create')
-      ->willReturn(new Message());
-    $this->mock->expects($this->once())
-      ->method('getMessageFactory')
-      ->willReturn($this->factoryMock);
     $this->mock->expects($this->never())
       ->method('updateApplication')
       ->willReturn(true);
@@ -179,6 +169,8 @@ class SendChooseOfferReminderTest extends BaseTest
       ->method('sendReminder')
       ->willReturn(false);
 
+    $this->templateRepositoryMock->method('getOfferReminderMessage')
+      ->willReturn((new Message())->setType(Message::MESSAGE_TYPE_EMAIL));
     $this->mock->expects($this->once())
       ->method('getMessageTemplateRepository')
       ->willReturn($this->templateRepositoryMock);

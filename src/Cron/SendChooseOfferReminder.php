@@ -210,11 +210,7 @@ class SendChooseOfferReminder implements BaseJob
   protected function sendEmailReminder(Application $app)
   {
     Log::info(sprintf('Sending e-mail reminder for application'), ['appId' => $app->getId()]);
-    $message = $this->getMessageFactory()->create();
-    $message->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setTitle(_('Check out these offers for you loan application!'))
-      ->setRecipient($app->getEmail())
-      ->setBody($this->getMessageTemplateRepository()->getTemplateByPath('mail/offer-reminder.twig', ['application' => $app]));
+    $message = $this->getMessageTemplateRepository()->getOfferReminderMessage($app);
 
     if ($this->sendReminder($message))
     {

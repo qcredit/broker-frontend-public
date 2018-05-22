@@ -8,11 +8,13 @@
 
 namespace App\Base\Repository;
 
+use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Entity\Offer;
 use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
+use Slim\App;
 use Slim\Container;
 use Slim\Views\Twig;
 
@@ -115,6 +117,27 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
         'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
       ]))
       ->setRecipient($application->getEmail());
+
+    return $message;
+  }
+
+  /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getOfferReminderMessage(Application $application)
+  {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setTitle(_('Check out these offers for you loan application!'))
+      ->setRecipient($app->getEmail())
+      ->setBody($this->generateEmailContent('mail/offer-reminder.twig', [
+        'application' => $app,
+        'title' => $message->getTitle(),
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+      ]));
 
     return $message;
   }
