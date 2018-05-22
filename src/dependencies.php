@@ -245,7 +245,7 @@ $container['ApplicationController'] = function ($c)
     $schemaValidator
   );
 
-  $prepareService = new \Broker\Domain\Service\SendPartnerRequestsService(
+  $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
@@ -253,13 +253,14 @@ $container['ApplicationController'] = function ($c)
     $c->get('MessageTemplateRepository')
   );
 
-  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+/*  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
     $newApplicationService,
     $prepareService
-  );
+  );*/
 
   return new \App\Controller\ApplicationController(
-    $sendApplicationService,
+    $prepareService,
+    $newApplicationService,
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),

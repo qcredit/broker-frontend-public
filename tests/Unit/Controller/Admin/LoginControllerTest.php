@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Controller\Admin;
 
-use App\Base\Components\AuthHandler;
+use App\Component\AuthHandler;
 use App\Controller\Admin\LoginController;
 use Broker\System\BaseTest;
 use Slim\Http\Request;

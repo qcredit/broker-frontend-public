@@ -262,6 +262,9 @@ class ApplicationForm
     ];
   }
 
+  /**
+   * @return array
+   */
   public function getAjvErrors()
   {
     return [

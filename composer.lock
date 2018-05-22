@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "f347c37c19abde9e29b1fb57ac9980e3f4feba18"
+                "reference": "12299b475cb2475fb4e7353c5149c173caa24214"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/f347c37c19abde9e29b1fb57ac9980e3f4feba18",
-                "reference": "f347c37c19abde9e29b1fb57ac9980e3f4feba18",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/12299b475cb2475fb4e7353c5149c173caa24214",
+                "reference": "12299b475cb2475fb4e7353c5149c173caa24214",
                 "shasum": ""
             },
             "require-dev": {
@@ -67,7 +67,7 @@
                 "source": "https://github.com/aasa-global/broker/tree/master",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-05-21T13:42:36+00:00"
+            "time": "2018-05-22T08:00:55+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
