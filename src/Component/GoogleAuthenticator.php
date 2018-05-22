@@ -6,9 +6,9 @@
  * Time: 11:56
  */
 
-namespace App\Base\Components;
+namespace App\Component;
 
-use App\Base\Interfaces\AuthenticationServiceInterface;
+use App\Interfaces\AuthenticationServiceInterface;
 use Firebase\JWT\JWT;
 
 class GoogleAuthenticator implements AuthenticationServiceInterface

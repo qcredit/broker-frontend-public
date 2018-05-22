@@ -6,7 +6,7 @@
  * Time: 09:47
  */
 
-namespace App\Base\Interfaces;
+namespace App\Interfaces;
 
 interface AuthenticationServiceInterface
 {

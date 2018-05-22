@@ -6,10 +6,10 @@
  * Time: 17:11
  */
 
-namespace App\Base\Components;
+namespace App\Component;
 
-use App\Base\Interfaces\AuthenticationServiceInterface;
-use App\Base\Interfaces\UserIdentityInterface;
+use App\Interfaces\AuthenticationServiceInterface;
+use App\Interfaces\UserIdentityInterface;
 use App\Base\Interfaces\UserRepositoryInterface;
 use Slim\Container;
 

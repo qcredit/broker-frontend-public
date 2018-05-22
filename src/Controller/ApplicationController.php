@@ -16,19 +16,21 @@ use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
 use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PrepareAndSendApplicationServiceInterface;
+use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
+use Broker\Domain\Service\PreparePartnerRequestsService;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
 use Symfony\Component\Serializer\Serializer;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use App\Base\Components\SchemaHelper;
+use App\Component\SchemaHelper;
 
 class ApplicationController extends AbstractController
 {
   /**
-   * @var SendPartnerRequestsServiceInterface
+   * @var PreparePartnerRequestsServiceInterface
    */
   protected $prepareService;
   /**
@@ -47,14 +49,11 @@ class ApplicationController extends AbstractController
    * @var NewApplicationServiceInterface
    */
   protected $newApplicationService;
-  /**
-   * @var PrepareAndSendApplicationServiceInterface
-   */
-  protected $sendApplicationService;
 
   /**
    * ApplicationController constructor.
-   * @param PrepareAndSendApplicationServiceInterface $sendApplicationService
+   * @param PreparePartnerRequestsServiceInterface $preparePartnerRequestsService
+   * @param NewApplicationServiceInterface $newApplicationService
    * @param ApplicationRepositoryInterface $appRepository
    * @param OfferRepositoryInterface $offerRepository
    * @param ChooseOfferServiceInterface $chooseOfferService
@@ -62,23 +61,25 @@ class ApplicationController extends AbstractController
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function __construct(
-    PrepareAndSendApplicationServiceInterface $sendApplicationService,
+    PreparePartnerRequestsServiceInterface $preparePartnerRequestsService,
+    NewApplicationServiceInterface $newApplicationService,
     ApplicationRepositoryInterface $appRepository,
     OfferRepositoryInterface $offerRepository,
     ChooseOfferServiceInterface $chooseOfferService,
     $container
   )
   {
+    $this->prepareService = $preparePartnerRequestsService;
     $this->appRepository = $appRepository;
     $this->offerRepository = $offerRepository;
     $this->chooseOfferService = $chooseOfferService;
-    $this->sendApplicationService = $sendApplicationService;
+    $this->newApplicationService = $newApplicationService;
 
     parent::__construct($container);
   }
 
   /**
-   * @return SendPartnerRequestsServiceInterface
+   * @return PreparePartnerRequestsServiceInterface
    */
   public function getPrepareService()
   {
@@ -86,10 +87,10 @@ class ApplicationController extends AbstractController
   }
 
   /**
-   * @param SendPartnerRequestsServiceInterface $prepareService
+   * @param PreparePartnerRequestsServiceInterface $prepareService
    * @return $this
    */
-  public function setPrepareService(SendPartnerRequestsServiceInterface $prepareService)
+  public function setPrepareService(PreparePartnerRequestsServiceInterface $prepareService)
   {
     $this->prepareService = $prepareService;
     return $this;
@@ -230,35 +231,8 @@ class ApplicationController extends AbstractController
     $data = [];
     $data['fields'] = $this->getFormBuilder()->getFormFields();
 
-    $service = $this->sendApplicationService;
-    $service->setPostData($this->getParsedBody());
-
-    if ($request->isPost() && $this->isAjax($request))
-    {
-      $service->setIsValidationEnabled(true)->setIsPartialValidation(true)
-        ->setValidationAttributes([ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_PHONE])
-        ->run();
-
-      return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
-    }
-
-    if ($request->isPost())
-    {
-      if (!$this->isFromFrontpage())
-      {
-        $service->setIsValidationEnabled(true);
-      }
-
-      if ($service->run())
-      {
-        return $response->withRedirect(sprintf('application/%s', $service->getApplication()->getApplicationHash()));
-      }
-    }
-
-    $data['application'] = $service->getApplication();
-
-
-/*    $newAppService = $this->getNewApplicationService();
+    $postData = $this->getParsedBody();
+    $newAppService = $this->getNewApplicationService();
 
     $newAppService->setValidationEnabled(false);
     $newAppService->run();
@@ -293,7 +267,7 @@ class ApplicationController extends AbstractController
       $data['application'] = $newAppService->getApplication();
     }
 
-    $data['application'] = $newAppService->getApplication();*/
+    $data['application'] = $newAppService->getApplication();
 
     return $this->render($response, 'application/form.twig', $data);
   }
