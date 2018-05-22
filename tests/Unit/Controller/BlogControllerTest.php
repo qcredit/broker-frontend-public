@@ -10,6 +10,7 @@ namespace Tests\Unit\Controller;
 
 use Aasa\CommonWebSDK\BlogServiceAWS;
 use Aasa\CommonWebSDK\models\Blog;
+use App\Component\Pagination;
 use App\Controller\BlogController;
 use Broker\System\BaseTest;
 use Slim\Container;
@@ -45,11 +46,13 @@ class BlogControllerTest extends BaseTest
     $posts = ['firstpost'];
     $this->serviceMock->method('select')
       ->willReturn($posts);
+    $this->serviceMock->method('getCount')
+      ->willReturn(100);
     $this->mock->method('getBlogService')
       ->willReturn($this->serviceMock);
 
     $this->mock->method('render')
-      ->with($this->equalTo($this->responseMock), 'blog/index.twig', $this->equalTo(['posts' => $posts]))
+      ->with($this->equalTo($this->responseMock), 'blog/index.twig', $this->anything())
       ->willReturnArgument(2);
 
     $result = $this->mock->indexAction($this->requestMock, $this->responseMock, []);

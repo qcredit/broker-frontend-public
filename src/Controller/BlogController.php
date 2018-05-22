@@ -54,7 +54,7 @@ class BlogController extends AbstractController
   public function indexAction(Request $request, Response $response, $args = [])
   {
     $data = [];
-    $pagination = new Pagination($request, $this->getBlogService()->getCount(), 16);
+    $pagination = new Pagination($request, $this->getBlogService()->getCount(), 10);
     $data['pagination'] = $pagination;
     $data['posts'] = $this->getBlogService()->select($pagination->getOffset(), ($pagination->getLimit() + $pagination->getOffset()));
 
