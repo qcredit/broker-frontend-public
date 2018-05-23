@@ -41,17 +41,17 @@
     {% if not sent %}
     <form action="" class="contact-form" method="post">
       <div class="field text name">
-        <label for="">Insert your name*</label>
+        <label for="">Wstaw swoje imię*</label>
           <input type="text" name="name" id="name" value="{{ contact.name }}"/>
           {% if contact.errors.name %}<p class="rules">{{ contact.errors.name }}</p>{% endif %}
       </div>
       <div class="field text emailaddress">
-        <label for="">Insert your email*</label>
+        <label for="">Wstaw swój adres e-mail*</label>
           <input type="text" name="email" id="emailaddress" value="{{ contact.email }}"/>
           {% if contact.errors.email %}<p class="rules">{{ contact.errors.email }}</p>{% endif %}
       </div>
       <div class="field textarea message">
-        <label for="">Insert your message*</label>
+        <label for="">Wstaw wiadomość*</label>
         <textarea name="message" id="message">{{ contact.message }}</textarea>
         {% if contact.errors.message %}<p class="rules">{{ contact.errors.message }}</p>{% endif %}
       </div>
