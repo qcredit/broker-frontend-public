@@ -13,6 +13,8 @@ use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
 use Broker\System\Log;
+use Monolog\Logger;
+use Slim\Container;
 
 class ApiDelivery implements MessageDeliveryInterface
 {
@@ -32,6 +34,10 @@ class ApiDelivery implements MessageDeliveryInterface
    * @var bool
    */
   protected $ok;
+  /**
+   * @var Container
+   */
+  protected $container;
 
   /**
    * @return HttpClient
@@ -88,17 +94,37 @@ class ApiDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * ApiDelivery constructor.
+   * @return Container
+   * @codeCoverageIgnore
    */
-  public function __construct()
+  public function getContainer()
   {
+    return $this->container;
+  }
+
+  /**
+   * @return Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getLogger()
+  {
+    return $this->getContainer()->get('logger');
+  }
+
+  /**
+   * ApiDelivery constructor.
+   * @param Container $container
+   */
+  public function __construct(Container $container)
+  {
+    $this->container = $container;
     $this->setClient(new HttpClient());
     $this->setResponse(new PartnerResponse());
   }
 
   /**
    * @param Message $message
-   * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function send(Message $message)
   {
@@ -117,21 +143,21 @@ class ApiDelivery implements MessageDeliveryInterface
       else if ($code == 400)
       {
         $this->setOk(false);
-        Log::error(sprintf('%s API request returned with code 400!', $this->getResponse()->getPartner()->getIdentifier()), json_decode($result, true));
+        $this->getLogger()->error(sprintf('%s API request returned with code 400!', $this->getResponse()->getPartner()->getIdentifier()), json_decode($result, true));
       }
       else if ($this->getClient()->hasError())
       {
         $this->setOk(false);
-        Log::critical(sprintf('%s API request got error!', $this->getResponse()->getPartner()->getIdentifier()), [$this->getClient()->getError()]);
+        $this->getLogger()->critical(sprintf('%s API request got error!', $this->getResponse()->getPartner()->getIdentifier()), [$this->getClient()->getError()]);
       }
       else {
         $this->setOk(false);
-        Log::critical(sprintf('%s API request returned unhandled response (code %s)!', $this->getResponse()->getPartner()->getIdentifier(), $code), [$result] ?? []);
+        $this->getLogger()->critical(sprintf('%s API request returned unhandled response (code %s)!', $this->getResponse()->getPartner()->getIdentifier(), $code), [$result] ?? []);
       }
     }
     catch (\Exception $ex)
     {
-      Log::critical('API request failed with exception!', [$ex->getMessage()]);
+      $this->getLogger()->critical('API request failed with exception!', [$ex->getMessage()]);
       $this->setOk(false);
     }
 
