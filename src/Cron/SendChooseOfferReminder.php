@@ -28,10 +28,6 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected $applicationRepository;
   /**
-   * @var MessageFactoryInterface
-   */
-  protected $messageFactory;
-  /**
    * @var MessageTemplateRepositoryInterface
    */
   protected $messageTemplateRepository;
@@ -45,21 +41,18 @@ class SendChooseOfferReminder implements BaseJob
    * @param Container $container
    * @param MessageDeliveryServiceInterface $messageDeliveryService
    * @param ApplicationRepositoryInterface $applicationRepository
-   * @param MessageFactoryInterface $messageFactory
    * @param MessageTemplateRepositoryInterface $messageTemplateRepository
    */
   public function __construct(
     Container $container,
     MessageDeliveryServiceInterface $messageDeliveryService,
     ApplicationRepositoryInterface $applicationRepository,
-    MessageFactoryInterface $messageFactory,
     MessageTemplateRepositoryInterface $messageTemplateRepository
   )
   {
     $this->container = $container;
     $this->messageDeliveryService = $messageDeliveryService;
     $this->applicationRepository = $applicationRepository;
-    $this->messageFactory = $messageFactory;
     $this->messageTemplateRepository = $messageTemplateRepository;
   }
 
@@ -104,26 +97,6 @@ class SendChooseOfferReminder implements BaseJob
   }
 
   /**
-   * @return MessageFactoryInterface
-   * @codeCoverageIgnore
-   */
-  public function getMessageFactory()
-  {
-    return $this->messageFactory;
-  }
-
-  /**
-   * @param MessageFactoryInterface $messageFactory
-   * @return SendChooseOfferReminder
-   * @codeCoverageIgnore
-   */
-  public function setMessageFactory(MessageFactoryInterface $messageFactory)
-  {
-    $this->messageFactory = $messageFactory;
-    return $this;
-  }
-
-  /**
    * @return MessageTemplateRepositoryInterface
    * @codeCoverageIgnore
    */
@@ -164,18 +137,27 @@ class SendChooseOfferReminder implements BaseJob
   }
 
   /**
+   * @return mixed
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getLogger()
+  {
+    return $this->getContainer()->get('BrokerInstance')->getLogger();
+  }
+
+  /**
    * @return bool
    * @throws \Exception
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function run(): bool
   {
-    Log::debug('Running SendChooseOfferReminder...');
+    $this->getLogger()->debug(sprintf('Running %s...', get_class($this)));
     $apps = $this->getApplicationRepository()->getAppsNeedingReminder();
 
     if (empty($apps))
     {
-      Log::info('No applications found for offer reminders!');
+      $this->getLogger()->info('No applications found for offer reminders!');
     }
 
     foreach ($apps as $app)
@@ -193,7 +175,8 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendNeededReminders(Application $app)
   {
-    Log::debug('Preparing to send application reminders...', ['appId' => $app->getId()]);
+    $this->getLogger()->debug('Preparing to send application reminders...', ['appId' => $app->getId()]);
+
     $this->sendEmailReminder($app);
     if ($app->getDataElement('sms_reminder_sent') === null)
     {
@@ -209,7 +192,8 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendEmailReminder(Application $app)
   {
-    Log::info(sprintf('Sending e-mail reminder for application'), ['appId' => $app->getId()]);
+    $this->getLogger()->info('Sending e-mail reminder for application', ['appId' => $app->getId()]);
+
     $message = $this->getMessageTemplateRepository()->getOfferReminderMessage($app);
 
     if ($this->sendReminder($message))
@@ -229,11 +213,9 @@ class SendChooseOfferReminder implements BaseJob
    */
   protected function sendSmsReminder(Application $app)
   {
-    Log::info('Sending sms reminder for app...', ['appId' => $app->getId()]);
-    $message = $this->getMessageFactory()->create();
-    $message->setType(Message::MESSAGE_TYPE_SMS)
-      ->setRecipient($app->getPhone())
-      ->setBody($this->getMessageTemplateRepository()->getTemplateByPath('sms/offer-reminder.twig', ['application' => $app]));
+    $this->getLogger()->info('Sending sms reminder for app...', ['appId' => $app->getId()]);
+
+    $message = $this->getMessageTemplateRepository()->getOfferReminderSmsMessage($app);
 
     if ($this->sendReminder($message))
     {
@@ -267,7 +249,7 @@ class SendChooseOfferReminder implements BaseJob
    * @param Application $app
    * @param string $messageType
    * @return mixed
-   * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function updateApplication(Application $app, string $messageType)
   {
@@ -280,7 +262,7 @@ class SendChooseOfferReminder implements BaseJob
       $app->setDataElement('email_reminder_sent', new \DateTime());
     }
 
-    Log::info('Updating application after sending reminders...', ['appId' => $app->getId()]);
+    $this->getLogger()->info('Updating application after sending reminders...', ['appId' => $app->getId()]);
 
     return $this->getApplicationRepository()->save($app);
   }
