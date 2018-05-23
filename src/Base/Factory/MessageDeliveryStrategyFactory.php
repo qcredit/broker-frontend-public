@@ -68,7 +68,7 @@ class MessageDeliveryStrategyFactory implements MessageDeliveryStrategyFactoryIn
         return new SmsDelivery($this->getContainer());
         break;
       case Message::MESSAGE_TYPE_API:
-        return new ApiDelivery();
+        return new ApiDelivery($this->getContainer());
         break;
       default:
         throw new InvalidConfigException('Unknown message type!');

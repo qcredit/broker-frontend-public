@@ -12,6 +12,7 @@ use App\Base\Validator\UserValidator;
 use App\Model\UserForm;
 use Broker\System\BaseTest;
 use App\Model\User;
+use Broker\System\BrokerInstance;
 use Respect\Validation\Validator as V;
 
 class UserValidatorTest extends BaseTest
@@ -28,7 +29,7 @@ class UserValidatorTest extends BaseTest
       null,
     ];
     $this->user = new User();
-    $this->instance = new UserValidator();
+    $this->instance = new UserValidator($this->createMock(BrokerInstance::class));
     $this->instance->setEntity($this->user);
   }
 

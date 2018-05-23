@@ -13,7 +13,9 @@ use App\Model\Contact;
 use App\Model\ContactForm;
 use Broker\Domain\Factory\MessageFactory;
 use Broker\Domain\Service\MessageDeliveryService;
+use Broker\System\BrokerInstance;
 use PHPUnit\Framework\TestCase;
+use Slim\Container;
 
 class ContactFormTest extends TestCase
 {
@@ -21,9 +23,11 @@ class ContactFormTest extends TestCase
   private $deliveryServiceMock;
   private $mock;
   private $modelMock;
+  private $containerMock;
 
   public function setUp()
   {
+    $this->containerMock = $this->createMock(Container::class);
     $this->factoryMock = $this->createMock(MessageFactory::class);
     $this->deliveryServiceMock = $this->createMock(MessageDeliveryService::class);
     $this->mock = $this->getMockBuilder(ContactForm::class)
@@ -35,7 +39,7 @@ class ContactFormTest extends TestCase
 
   public function test__construct()
   {
-    $instance = new ContactForm($this->factoryMock, $this->deliveryServiceMock);
+    $instance = new ContactForm($this->createMock(BrokerInstance::class), $this->factoryMock, $this->deliveryServiceMock);
 
     $this->assertInstanceOf(MessageFactory::class, $instance->getMessageFactory());
     $this->assertInstanceOf(MessageDeliveryService::class, $instance->getMessageDeliveryService());

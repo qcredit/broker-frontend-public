@@ -22,7 +22,6 @@ return [
           'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
           'logger' => [
             'name' => 'BROKER',
-            'loggerClass' => 'App\Base\Logger',
 /*            'path' => __DIR__ . '/../logs/broker.log',*/
           ]
         ],
