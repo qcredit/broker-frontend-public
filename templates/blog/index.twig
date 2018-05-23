@@ -13,5 +13,12 @@
         <a class="post-preview-link" href="{{post.slug}}">Read more &#187;</a>
       </article>
     {% endfor %}
+    <div class="page-pagination">
+      <div class="page-pagination-inner">
+        <a class="page-pagination-control page-pagination-control-prev {% if not pagination.previousPageUrl %}page-pagination-control-disabled{% endif %}" href="{{ pagination.previousPageUrl }}"><</a>
+        <div class="page-pagination-numbers">{{ pagination.currentPage }} / {{ pagination.totalPages }}</div>
+        <a class="page-pagination-control page-pagination-control-next {% if not pagination.nextPageUrl %}page-pagination-control-disabled{% endif %}" href="{{ pagination.nextPageUrl }}">></a>
+      </div>
+    </div>
   </section>
 {% endblock %}
