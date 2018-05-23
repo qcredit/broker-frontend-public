@@ -6,7 +6,7 @@
  * Time: 15:55
  */
 
-namespace App\Base\Components;
+namespace App\Component;
 
 use Slim\Csrf\Guard;
 

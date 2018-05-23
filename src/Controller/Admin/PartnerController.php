@@ -29,10 +29,6 @@ class PartnerController extends AbstractController
    */
   protected $partnerFactory;
   /**
-   * @var Container
-   */
-  protected $container;
-  /**
    * @var AbstractEntityValidator
    */
   protected $validator;
@@ -47,14 +43,16 @@ class PartnerController extends AbstractController
    * @param PartnerFactoryInterface $partnerFactory
    * @param PartnerExtraDataLoader $partnerDataLoader
    * @param Container $container
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function __construct(PartnerRepositoryInterface $partnerRepository, PartnerFactoryInterface $partnerFactory, PartnerExtraDataLoader $partnerDataLoader, Container $container)
   {
     $this->partnerRepository = $partnerRepository;
     $this->partnerFactory = $partnerFactory;
-    $this->container = $container;
     $this->partnerDataLoader = $partnerDataLoader;
-    $this->validator = new PartnerValidator();
+    $this->validator = new PartnerValidator($container->get('BrokerInstance'));
+
+    parent::__construct($container);
   }
 
   /**
