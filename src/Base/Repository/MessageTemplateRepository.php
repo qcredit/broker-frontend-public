@@ -143,6 +143,21 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
   }
 
   /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getOfferReminderSmsMessage(Application $application)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_SMS)
+      ->setRecipient($application->getPhone())
+      ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', ['application' => $application]));
+
+    return $message;
+  }
+
+  /**
    * @param Offer $offer
    * @return Message
    * @throws \Interop\Container\Exception\ContainerException
