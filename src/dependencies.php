@@ -158,7 +158,7 @@ $container['AboutController'] = function($c)
 };
 $container['ContactController'] = function($c)
 {
-  $contactForm = new \App\Model\ContactForm(new \Broker\Domain\Factory\MessageFactory(), $c->get('MessageDeliveryService'));
+  $contactForm = new \App\Model\ContactForm($c->get('BrokerInstance'), new \Broker\Domain\Factory\MessageFactory(), $c->get('MessageDeliveryService'));
   return new \App\Controller\ContactController($c, $contactForm);
 };
 $container['TermsController'] = function($c)
@@ -190,6 +190,7 @@ $container['PartnerExtraDataLoader'] = function($c)
 $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
+    $c->get('BrokerInstance'),
     $c->get('PartnerDataMapperRepository'),
     $c->get('MessageDeliveryService')
   );
@@ -198,6 +199,7 @@ $container['PartnerRequestsService'] = function($c)
 $container['PartnerResponseService'] = function($c)
 {
   return new PartnerResponseService(
+    $c->get('BrokerInstance'),
     new OfferFactory(),
     $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
     $c->get('PartnerDataMapperRepository')
@@ -206,24 +208,29 @@ $container['PartnerResponseService'] = function($c)
 
 $container['MessageDeliveryService'] = function ($c)
 {
-  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+  return new \Broker\Domain\Service\MessageDeliveryService(
+    $c->get('BrokerInstance'),
+    new \App\Base\Factory\MessageDeliveryStrategyFactory($c)
+  );
 };
 
 $container['ChooseOfferService'] = function($c)
 {
   return new \Broker\Domain\Service\ChooseOfferService(
+    $c->get('BrokerInstance'),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
-    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+    $c->get('MessageDeliveryService')
   );
 };
 
 $container['PartnerUpdateService'] = function($c)
 {
   return new \Broker\Domain\Service\PartnerUpdateService(
+    $c->get('BrokerInstance'),
     $c->get('OfferRepository'),
     $c->get('PartnerDataMapperRepository'),
     new \App\Base\Validator\SchemaValidator()
@@ -238,6 +245,7 @@ $container['ApplicationController'] = function ($c)
   $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
+    $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
     $factory->createGateway($c->get('db'), 'Partner'),
@@ -246,10 +254,11 @@ $container['ApplicationController'] = function ($c)
   );
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
+    $c->get('BrokerInstance'),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
-    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c)),
+    $c->get('MessageDeliveryService'),
     $c->get('MessageTemplateRepository')
   );
 
@@ -271,6 +280,7 @@ $container['ApplicationController'] = function ($c)
 $container['AdminOfferController'] = function($c)
 {
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
+    $c->get('BrokerInstance'),
     new PartnerDataMapperRepository(),
     new PartnerRequestFactory(),
     $c->get('PartnerRequestsService'),
@@ -316,7 +326,10 @@ $container['notFoundHandler'] = function($c)
   };
 };
 
-$brokerSettings = $container->get('settings')['broker'];
-$brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
+$container['BrokerInstance'] = function($c)
+{
+  $brokerSettings = $c->get('settings')['broker'];
+  $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
 
-Config::getInstance()->setConfig($brokerSettings);
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']));
+};

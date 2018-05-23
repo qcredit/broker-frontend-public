@@ -47,7 +47,7 @@ class UserControllerTest extends BaseTest
     $this->mock->method('render')
       ->willReturnArgument(2);
     $this->mock->method('getValidator')
-      ->willReturn(new UserValidator());
+      ->willReturn($this->createMock(UserValidator::class));
 
     $this->requestMock = $this->createMock(Request::class);
     $this->responseMock = $this->createMock(Response::class);
@@ -102,10 +102,13 @@ class UserControllerTest extends BaseTest
   public function testNewActionWithInvalidPost()
   {
     $mock = $this->mock;
+    $userMock = $this->createMock(User::class);
+    $userMock->method('validate')
+      ->willReturn(true);
 
     $factoryMock = $this->factoryMock;
     $factoryMock->method('create')
-      ->willReturn(new User());
+      ->willReturn($userMock);
 
     $mock->expects($this->once())
       ->method('getUserFactory')
@@ -119,7 +122,6 @@ class UserControllerTest extends BaseTest
     $result = $mock->newAction($this->requestMock, $this->responseMock, []);
     $this->assertArrayHasKey('user', $result);
     $this->assertInstanceOf(User::class, $result['user']);
-    $this->assertSame('aaa', $result['user']->getEmail());
   }
 
   public function testNewActionWithValidPost()

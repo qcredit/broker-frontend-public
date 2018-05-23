@@ -10,6 +10,7 @@ namespace Tests\Unit\Validator;
 
 use App\Base\Validator\PartnerValidator;
 use Broker\Domain\Entity\Partner;
+use Broker\System\BrokerInstance;
 use PHPUnit\Framework\TestCase;
 
 class PartnerValidatorTest extends TestCase
@@ -26,7 +27,7 @@ class PartnerValidatorTest extends TestCase
       null,
     ];
     $this->partner = new Partner();
-    $this->instance = new PartnerValidator();
+    $this->instance = new PartnerValidator($this->createMock(BrokerInstance::class));
     $this->instance->setEntity($this->partner);
   }
 

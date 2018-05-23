@@ -12,6 +12,8 @@ use App\Base\Validator\ContactValidator;
 use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
 use Broker\Domain\Interfaces\Service\MessageDeliveryServiceInterface;
 use Broker\Domain\Entity\Message;
+use Broker\System\BrokerInstance;
+use Slim\Container;
 
 class ContactForm
 {
@@ -30,6 +32,11 @@ class ContactForm
    * @var MessageDeliveryServiceInterface
    */
   private $messageDeliveryService;
+  /**
+   * @var Container
+   */
+  private $container;
+
   /**
    * @return Contact
    * @codeCoverageIgnore
@@ -58,14 +65,28 @@ class ContactForm
   }
 
   /**
+   * @return Container
+   * @codeCoverageIgnore
+   */
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
+  /**
    * ContactForm constructor.
+   * @param BrokerInstance $instance
    * @param MessageFactoryInterface $messageFactory
    * @param MessageDeliveryServiceInterface $messageDeliveryService
+   * @throws \Interop\Container\Exception\ContainerException
    */
-  public function __construct(MessageFactoryInterface $messageFactory, MessageDeliveryServiceInterface $messageDeliveryService)
+  public function __construct(
+    BrokerInstance $instance,
+    MessageFactoryInterface $messageFactory,
+    MessageDeliveryServiceInterface $messageDeliveryService)
   {
     $this->model = new Contact();
-    $this->model->setValidator(new ContactValidator());
+    $this->model->setValidator(new ContactValidator($instance));
     $this->messageFactory = $messageFactory;
     $this->messageDeliveryService = $messageDeliveryService;
   }

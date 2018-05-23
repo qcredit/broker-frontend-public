@@ -8,10 +8,9 @@
 
 namespace App\Base;
 
-use Broker\Domain\Interfaces\LoggerInterface;
+use Broker\Domain\Interfaces\System\LoggerInterface;
 use Monolog\Logger as Monolog;
 use Monolog\Handler\StreamHandler;
-use Monolog\Processor\UidProcessor;
 
 class Logger implements LoggerInterface
 {
@@ -20,10 +19,12 @@ class Logger implements LoggerInterface
   /**
    * Logger constructor.
    * @param array $config
+   * @throws \Exception
    */
   public function __construct(array $config)
   {
     $this->logger = new Monolog($config['name']);
+    $this->setConfig($config);
   }
 
   /**
