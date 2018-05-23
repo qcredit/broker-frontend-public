@@ -77,7 +77,7 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
       $(this).parent().removeClass("filled");
     }
   });
-  $('.contact-form .field input, .contact-form .field textarea').each(function(){
+  $('.contact-form .field input, .contact-form .field textarea, .landing-form .field input').each(function(){
     if($(this).val()){
       $(this).parent().addClass("filled");
     } else {
