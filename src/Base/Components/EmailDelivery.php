@@ -142,7 +142,7 @@ class EmailDelivery implements MessageDeliveryInterface
     }
     catch (\Exception $ex)
     {
-      $this->getContainer()->get('logger')->error('Could not deliver e-mail!', [$this->getClient()->ErrorInfo]);
+      $this->getLogger()->error('Could not deliver e-mail!', [$this->getClient()->ErrorInfo]);
       $this->setOk(false);
     }
   }
