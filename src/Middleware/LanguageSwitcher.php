@@ -114,6 +114,31 @@ class LanguageSwitcher
   }
 
   /**
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function hasDefaultLanguage()
+  {
+    $settings = $this->getContainer()->get('settings');
+    return (!empty($settings) && isset($settings['defaultLanguage']));
+  }
+
+  /**
+   * @return mixed|null
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getDefaultLanguage()
+  {
+    $settings = $this->getContainer()->get('settings');
+    if ($this->hasDefaultLanguage())
+    {
+      return $settings['defaultLanguage'];
+    }
+
+    return null;
+  }
+
+  /**
    * LanguageSwitcher constructor.
    * @param App $application
    */
@@ -136,6 +161,10 @@ class LanguageSwitcher
     {
       $this->setLanguageByCookie();
     }
+    elseif ($this->hasDefaultLanguage())
+    {
+      $this->setLanguageByDefault();
+    }
     else {
       $this->setLanguageByBrowser();
     }
@@ -157,7 +186,7 @@ class LanguageSwitcher
     $this->putenv(sprintf('LC_ALL=%s.UTF-8', $language));
     if ($this->setSystemLocale(LC_ALL, sprintf('%s.utf8', $language)) === false)
     {
-      //$this->getContainer()->get('logger')->debug(sprintf('Unable to set PHP locale (%s)!', $language));
+      $this->getContainer()->get('logger')->debug(sprintf('Unable to set PHP locale (%s)!', $language));
       return false;
     }
 
@@ -200,6 +229,15 @@ class LanguageSwitcher
     if (!$preferredLanguage) return false;
 
     return $this->setLanguage($preferredLanguage);
+  }
+
+  /**
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function setLanguageByDefault()
+  {
+    return $this->setLanguage($this->getDefaultLanguage());
   }
 
   /**
