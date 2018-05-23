@@ -158,7 +158,7 @@ $container['AboutController'] = function($c)
 };
 $container['ContactController'] = function($c)
 {
-  $contactForm = new \App\Model\ContactForm(new \Broker\Domain\Factory\MessageFactory(), $c->get('MessageDeliveryService'));
+  $contactForm = new \App\Model\ContactForm($c->get('BrokerInstance'), new \Broker\Domain\Factory\MessageFactory(), $c->get('MessageDeliveryService'));
   return new \App\Controller\ContactController($c, $contactForm);
 };
 $container['TermsController'] = function($c)
