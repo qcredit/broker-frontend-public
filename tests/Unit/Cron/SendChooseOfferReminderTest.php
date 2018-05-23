@@ -257,7 +257,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function testSendReminder()
   {
-    $message = new Message();
+    $message = (new Message())->setType(Message::MESSAGE_TYPE_SMS);
     $confArray = [
       'broker' => [
         'environment' => 'SPACE'
@@ -290,7 +290,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function testSendReminderInTest()
   {
-    $message = new Message();
+    $message = (new Message())->setType(Message::MESSAGE_TYPE_SMS);
     $confArray = [
       'broker' => [
         'environment' => 'unittest'
@@ -299,8 +299,10 @@ class SendChooseOfferReminderTest extends BaseTest
 
     $mock = $this->getMockBuilder(SendChooseOfferReminder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getContainer', 'getMessageDeliveryService'])
+      ->setMethods(['getContainer', 'getMessageDeliveryService', 'getLogger'])
       ->getMock();
+    $mock->method('getLogger')
+      ->willReturn($this->loggerMock);
 
     $containerMock = $this->getMockBuilder(Container::class)
       ->disableOriginalConstructor()
@@ -318,7 +320,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function testSendReminderServiceFailing()
   {
-    $message = new Message();
+    $message = (new Message())->setType(Message::MESSAGE_TYPE_SMS);
     $confArray = [
       'broker' => [
         'environment' => 'SPACE'
