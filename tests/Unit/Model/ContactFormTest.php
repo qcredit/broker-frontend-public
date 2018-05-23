@@ -40,7 +40,7 @@ class ContactFormTest extends TestCase
 
   public function test__construct()
   {
-    $instance = new ContactForm($this->createMock(BrokerInstance::class), $this->templateRepoMock, $this->deliveryServiceMock);
+    $instance = new ContactForm($this->containerMock, $this->createMock(BrokerInstance::class), $this->templateRepoMock, $this->deliveryServiceMock);
 
     $this->assertInstanceOf(MessageTemplateRepository::class, $instance->getMessageTemplateRepository());
     $this->assertInstanceOf(MessageDeliveryService::class, $instance->getMessageDeliveryService());
