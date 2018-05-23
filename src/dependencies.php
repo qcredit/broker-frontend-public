@@ -63,7 +63,7 @@ $container['view'] = function($container) {
   $view->addExtension(new Twig_Extensions_Extension_I18n());
   $view->addExtension(new Twig_Extensions_Extension_Intl());
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-  $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+  $view->addExtension(new \App\Component\CsrfExtension($container->get('csrf')));
 
   return $view;
 };
@@ -96,9 +96,6 @@ $container['PartnerResponseFactory'] = function($c)
 
 $container['UserRepository'] = function($container) {
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
-/*  return new UserRepository(
-    $container->get('db')
-  );*/
 };
 
 $container['PartnerRepository'] = function($container)
