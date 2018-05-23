@@ -44,6 +44,7 @@ class ContactController extends AbstractController
    * ContactController constructor.
    * @param Container $container
    * @param ContactForm $contactForm
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function __construct(Container $container, ContactForm $contactForm)
   {

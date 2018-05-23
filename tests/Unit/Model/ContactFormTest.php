@@ -8,6 +8,7 @@
 
 namespace Tests\Unit\Model;
 
+use App\Base\Repository\MessageTemplateRepository;
 use Broker\Domain\Entity\Message;
 use App\Model\Contact;
 use App\Model\ContactForm;
@@ -19,7 +20,7 @@ use Slim\Container;
 
 class ContactFormTest extends TestCase
 {
-  private $factoryMock;
+  private $templateRepoMock;
   private $deliveryServiceMock;
   private $mock;
   private $modelMock;
@@ -28,20 +29,20 @@ class ContactFormTest extends TestCase
   public function setUp()
   {
     $this->containerMock = $this->createMock(Container::class);
-    $this->factoryMock = $this->createMock(MessageFactory::class);
+    $this->templateRepoMock = $this->createMock(MessageTemplateRepository::class);
     $this->deliveryServiceMock = $this->createMock(MessageDeliveryService::class);
     $this->mock = $this->getMockBuilder(ContactForm::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getModel', 'getMessageDeliveryService', 'getMessageFactory'])
+      ->setMethods(['getModel', 'getMessageDeliveryService', 'getMessageTemplateRepository', 'getFormRecipient'])
       ->getMock();
     $this->modelMock = $this->createMock(Contact::class, ['load', 'validate']);
   }
 
   public function test__construct()
   {
-    $instance = new ContactForm($this->createMock(BrokerInstance::class), $this->factoryMock, $this->deliveryServiceMock);
+    $instance = new ContactForm($this->createMock(BrokerInstance::class), $this->templateRepoMock, $this->deliveryServiceMock);
 
-    $this->assertInstanceOf(MessageFactory::class, $instance->getMessageFactory());
+    $this->assertInstanceOf(MessageTemplateRepository::class, $instance->getMessageTemplateRepository());
     $this->assertInstanceOf(MessageDeliveryService::class, $instance->getMessageDeliveryService());
   }
 
@@ -80,10 +81,10 @@ class ContactFormTest extends TestCase
 
   public function testSendFails()
   {
-    $this->factoryMock->method('create')
+    $this->templateRepoMock->method('getContactFormMessage')
       ->willReturn(new Message());
-    $this->mock->method('getMessageFactory')
-      ->willReturn($this->factoryMock);
+    $this->mock->method('getMessageTemplateRepository')
+      ->willReturn($this->templateRepoMock);
 
     $this->deliveryServiceMock->method('setMessage')
       ->willReturnSelf();
@@ -93,16 +94,18 @@ class ContactFormTest extends TestCase
       ->willReturn($this->deliveryServiceMock);
     $this->mock->method('getModel')
       ->willReturn((new Contact)->setMessage('bööö'));
+    $this->mock->method('getFormRecipient')
+      ->willReturn('some@email.ee');
 
     $this->assertFalse($this->mock->send());
   }
 
   public function testSend()
   {
-    $this->factoryMock->method('create')
+    $this->templateRepoMock->method('getContactFormMessage')
       ->willReturn(new Message());
-    $this->mock->method('getMessageFactory')
-      ->willReturn($this->factoryMock);
+    $this->mock->method('getMessageTemplateRepository')
+      ->willReturn($this->templateRepoMock);
 
     $this->deliveryServiceMock->method('setMessage')
       ->willReturnSelf();
@@ -112,6 +115,8 @@ class ContactFormTest extends TestCase
       ->willReturn($this->deliveryServiceMock);
     $this->mock->method('getModel')
       ->willReturn((new Contact)->setMessage('bööö'));
+    $this->mock->method('getFormRecipient')
+      ->willReturn('some@email.ee');
 
     $this->assertTrue($this->mock->send());
   }
