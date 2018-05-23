@@ -6,10 +6,10 @@
  * Time: 09:52
  */
 
-namespace Tests\Unit\Base\Components;
+namespace Tests\Unit\Component;
 
-use App\Base\Components\AuthHandler;
-use App\Base\Interfaces\AuthenticationServiceInterface;
+use App\Component\AuthHandler;
+use App\Interfaces\AuthenticationServiceInterface;
 use App\Base\Persistence\Doctrine\UserRepository;
 use Broker\System\BaseTest;
 use App\Model\User;

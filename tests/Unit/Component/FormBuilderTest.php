@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Component;
 
-use App\Base\Components\SchemaHelper;
+use App\Component\SchemaHelper;
 use App\Base\Persistence\Doctrine\PartnerRepository;
 use App\Base\Repository\PartnerDataMapperRepository;
 use App\Component\FormBuilder;

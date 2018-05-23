@@ -8,7 +8,7 @@
 
 namespace Tests\Unit\Base\Components;
 
-use App\Base\Components\GoogleAuthenticator;
+use App\Component\GoogleAuthenticator;
 use PHPUnit\Framework\TestCase;
 
 class GoogleAuthenticatorTest extends TestCase

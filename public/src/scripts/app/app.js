@@ -77,12 +77,32 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
       $(this).parent().removeClass("filled");
     }
   });
-  $('.contact-form .field input, .contact-form .field textarea').each(function(){
+  $('.contact-form .field input, .contact-form .field textarea, .landing-form .field input').each(function(){
     if($(this).val()){
       $(this).parent().addClass("filled");
     } else {
       $(this).parent().removeClass("filled");
     }
   });
+  $('.landing-form #email').on('input change', function() {
+    var val = $(this).val();
+    if(val){
+      var validated = validateEmail(val);
+      if(!validated){
+        $('.landing-form .btn').prop('disabled', true);
+        $('.landing-form .field.email .rules').css('display', 'block');
+      } else {
+        $('.landing-form .btn').prop('disabled', false);
+        $('.landing-form .field.email .rules').css('display', 'none');
+      }
+    } else {
+      $('.landing-form .btn').prop('disabled', false);
+      $('.landing-form .field.email .rules').css('display', 'none');
+    }
+  });
+  function validateEmail(email) {
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+  }
   return app;
 });

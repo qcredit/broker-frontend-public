@@ -77,6 +77,15 @@ class SmsDelivery implements MessageDeliveryInterface
   }
 
   /**
+   * @return Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getLogger()
+  {
+    return $this->getContainer()->get('logger');
+  }
+
+  /**
    * SmsDelivery constructor.
    * @param Container $container
    */
@@ -125,7 +134,7 @@ class SmsDelivery implements MessageDeliveryInterface
 
   /**
    * @param $result
-   * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function handleResult($result)
   {
@@ -133,8 +142,7 @@ class SmsDelivery implements MessageDeliveryInterface
 
     if ($resp != 'OK')
     {
-      Log::warning($this->resolveErrorCode($code), [$result]);
-      Log::debug('The unsuccessful call to API was using this URL', [$this->getClient()->getBaseUrl()]);
+      $this->getLogger()->warning($this->resolveErrorCode($code), [$result]);
       $this->setOk(false);
     }
 

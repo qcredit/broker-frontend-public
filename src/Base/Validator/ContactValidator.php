@@ -10,7 +10,9 @@ namespace App\Base\Validator;
 
 use App\Model\ContactForm;
 use Broker\Domain\Service\Validator\AbstractEntityValidator;
+use Broker\System\BrokerInstance;
 use Respect\Validation\Validator as V;
+use Slim\Container;
 
 class ContactValidator extends AbstractEntityValidator
 {
@@ -22,6 +24,15 @@ class ContactValidator extends AbstractEntityValidator
     ContactForm::ATTR_EMAIL,
     ContactForm::ATTR_MESSAGE
   ];
+
+  /**
+   * ContactValidator constructor.
+   * @param BrokerInstance $instance
+   */
+  public function __construct(BrokerInstance $instance)
+  {
+    parent::__construct($instance);
+  }
 
   /**
    * @return bool

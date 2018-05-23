@@ -8,7 +8,7 @@
 
 namespace App\Middleware;
 
-use App\Base\Components\AuthHandler;
+use App\Component\AuthHandler;
 use Slim\App;
 use Slim\Container;
 use Slim\Http\Request;

@@ -5,12 +5,19 @@
         <li><strong>ID:</strong> {{ partner.id }}</li>
         <li><strong>Name:</strong> {{ partner.name }}</li>
         <li><strong>Identifier:</strong> {{ partner.identifier }}</li>
-        <li><strong>Status:</strong> {% if partner.status %}Enabled{% else %}Disabled{% endif %}</li>
+        <li><strong>Email:</strong> {{ partner.email }}</li>
+        <li><strong>Website:</strong> {{ partner.website }}</li>
+        <li><strong>Logo:</strong> {{ partner.logoUrl }}</li>
         <li><strong>Commission:</strong> {{ partner.commission }}</li>
-        <li><strong>UseAPI:</strong> {{ partner.useApi }}</li>
-        <li><strong>APILiveUrl:</strong> {{ partner.apiLiveUrl }}</li>
+        <li><strong>Status:</strong> {% if partner.status %}Enabled{% else %}Disabled{% endif %}</li>
+        <li><strong>UseAPI:</strong> {% if partner.apiEnabled %}Enabled{% else %}Disabled{% endif %}</li>
         <li><strong>APITestUrl:</strong>{{ partner.apiTestUrl }}</li>
-        <li><strong>Logo:</strong> <img src="{{ partner.logo }}"/></li>
+        <li><strong>Remote username:</strong> {{ partner.remoteUsername }}</li>
+        <li><strong>Remote password:</strong> {{ partner.remotePassword }}</li>
+        <li><strong>Local username:</strong> {{ partner.localUsername }}</li>
+        <li><strong>Local password:</strong> {{ partner.localPassword }}</li>
+        <li><strong>APILiveUrl:</strong> {{ partner.apiLiveUrl }}</li>
+        <li><strong>Authorization type:</strong> {% if partner.authorizationType is same as('basic') %}Basic{% else %}{% endif %}</li>
     </ol>
     <a href="/admin/partners/update/{{ partner.id }}" class="btn broker-btn broker-btn-blue mb-3">Edit</a>
 {% endblock %}

@@ -22,7 +22,6 @@ $jobby->add('SendChooseOfferReminder', [
       $container,
       $container->get('MessageDeliveryService'),
       $container->get('ApplicationRepository'),
-      new \Broker\Domain\Factory\MessageFactory(),
       $container->get('MessageTemplateRepository')
     );
     return $job->run();

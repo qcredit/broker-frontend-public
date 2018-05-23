@@ -25,5 +25,6 @@ trait ControllerTestTrait
     $this->containerMock = $this->getMockBuilder(Container::class)
       ->disableOriginalConstructor()
       ->getMock();
+
   }
 }
