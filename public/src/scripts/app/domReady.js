@@ -1,5 +1,4 @@
 define(['jquery', 'rangeSlider', 'app/formHelper'], function($, rangeSlider, formHelper) {
-
   $(function() {
     formHelper.initialize();
     /* URL check to add active class to correct navlink */
