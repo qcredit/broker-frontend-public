@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use Aasa\CommonWebSDK\BlogServiceAWS;
 use App\Component\AbstractController;
+use App\Component\Pagination;
 use Slim\Container;
 use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
@@ -53,7 +54,9 @@ class BlogController extends AbstractController
   public function indexAction(Request $request, Response $response, $args = [])
   {
     $data = [];
-    $data['posts'] = $this->getBlogService()->select(0, 20);
+    $pagination = new Pagination($request, $this->getBlogService()->getCount(), 10);
+    $data['pagination'] = $pagination;
+    $data['posts'] = $this->getBlogService()->select($pagination->getOffset(), ($pagination->getLimit() + $pagination->getOffset()));
 
     return $this->render($response, 'blog/index.twig', $data);
   }

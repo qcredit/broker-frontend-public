@@ -8,7 +8,7 @@
 
 namespace App\Component;
 
-use App\Base\Components\SchemaHelper;
+use App\Component\SchemaHelper;
 use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\PartnerRepositoryInterface;

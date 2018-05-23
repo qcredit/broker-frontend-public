@@ -6,7 +6,7 @@
  * Time: 14:55
  */
 
-namespace App\Base\Components;
+namespace App\Component;
 
 use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;

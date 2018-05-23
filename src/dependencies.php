@@ -245,7 +245,7 @@ $container['ApplicationController'] = function ($c)
     $schemaValidator
   );
 
-  $prepareService = new \Broker\Domain\Service\SendPartnerRequestsService(
+  $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
@@ -253,13 +253,14 @@ $container['ApplicationController'] = function ($c)
     $c->get('MessageTemplateRepository')
   );
 
-  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+/*  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
     $newApplicationService,
     $prepareService
-  );
+  );*/
 
   return new \App\Controller\ApplicationController(
-    $sendApplicationService,
+    $prepareService,
+    $newApplicationService,
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
@@ -285,9 +286,9 @@ $container['AdminOfferController'] = function($c)
 
 $container['LoginController'] = function ($c)
 {
-  $authService = new \App\Base\Components\GoogleAuthenticator();
+  $authService = new \App\Component\GoogleAuthenticator();
   $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
-  $authHandler = new \App\Base\Components\AuthHandler($authService, $userRepository, $c);
+  $authHandler = new \App\Component\AuthHandler($authService, $userRepository, $c);
   return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
 
@@ -300,7 +301,7 @@ $container['BlogController'] = function($c)
 
 $container['FormBuilder'] = function($c)
 {
-  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
+  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Component\SchemaHelper());
 };
 
 $container['notFoundHandler'] = function($c)

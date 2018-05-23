@@ -9,7 +9,7 @@
 namespace App\Controller\Admin;
 
 use App\Component\AbstractController;
-use App\Base\Components\AuthHandler;
+use App\Component\AuthHandler;
 use Slim\Container;
 use Slim\Http\Request;
 use Slim\Http\Response;
