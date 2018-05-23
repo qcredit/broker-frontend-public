@@ -14,6 +14,7 @@ $error: #CE0000;
 @import "form";
 @import "loan-offers";
 @import "blog";
+@import "pagination";
 
 /* Typography */
 * {
@@ -82,7 +83,7 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
 }
 
 body {
-  padding-top: 85px;
+  padding-top: 65px;
 }
 
 /* Home page How it works section */

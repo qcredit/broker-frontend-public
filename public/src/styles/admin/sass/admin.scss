@@ -4,6 +4,7 @@ $blue: #0097d5;
 $accept: #07b846;
 $hold: #ffc328;
 $error: #e00404;
+$bluegray: #e6e9ee;
 
 /* TYPOGRAPHY */
 * {
@@ -29,9 +30,12 @@ h4 {
 }
 /* IMPORTS */
 @import "../../sass/header";
+@import "../../sass/pagination";
 @import "tables";
 
-
+.navbar {
+  padding: 1rem;
+}
 /* BASIC STYLES */
 .broker-btn {
   padding: .675rem 3rem;
@@ -192,13 +196,47 @@ h4 {
   }
 }
 
-@media only screen and (min-width: 768px) {
-  .stat-boxes {
-
+.page-pagination {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+  font-weight: bold;
+}
+.page-pagination-inner {
+  border: 1px solid $bluegray;
+  display: flex;
+  justify-content: center;
+}
+.page-pagination-numbers {
+  padding: .85rem 1rem;
+}
+.page-pagination-control {
+  padding: .5rem 1rem;
+  font-size: 1.5rem;
+  &:hover {
+    text-decoration: none;
   }
+}
+.page-pagination-control-prev {
+  border-right: 1px solid $bluegray;
+}
+.page-pagination-control-next {
+  border-left: 1px solid $bluegray;
+}
+.page-pagination-control-disabled {
+  color: $bluegray;
+  pointer-events: none;
+  cursor: default;
+}
+
+@media only screen and (min-width: 768px) {
   .stat-box {
     flex: 0 0 20%;
     padding-top: 22%;
+  }
+  .page-pagination {
+    margin-top: 4rem;
   }
 }
 
