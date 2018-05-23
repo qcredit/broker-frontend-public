@@ -5,19 +5,50 @@
         <div class="row">
             <div class="col-sm-6 mx-auto">
                 <div class="form-group">
-                    <input type="text" name="name" placeholder="Name" class="form-control" value="{{ partner.name }}"/>
+                  <label for="name">Name: </label>
+                    <input type="text" name="name" id="name" placeholder="Name" class="form-control" value="{{ partner.name }}"/>
                     {% if partner.errors.name %}
                         <small class="form-text text-danger">{{ partner.errors.name }}</small>
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    <input type="text" name="identifier" placeholder="Identifier" class="form-control" value="{{ partner.identifier }}"/>
+                  <label for="identifier">Identifier: </label>
+                    <input type="text" id="identifier" name="identifier" placeholder="Identifier" class="form-control" value="{{ partner.identifier }}"/>
                     {% if partner.errors.identifier %}
                         <small class="form-text text-danger">{{ partner.errors.identifier }}</small>
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    <select name="status">
+                  <label for="email">Email: </label>
+                    <input type="email" id="email" name="email" placeholder="Email" class="form-control" value="{{ partner.email }}"/>
+                    {% if partner.errors.email %}
+                        <small class="form-text text-danger">{{ partner.errors.email }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="website">Website: </label>
+                    <input type="text" name="website" id="website" placeholder="website" class="form-control" value="{{ partner.website }}"/>
+                    {% if partner.errors.website %}
+                        <small class="form-text text-danger">{{ partner.errors.website }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="logoUrl">Logo url: </label>
+                    <input type="text" name="logoUrl" id="logoUrl" placeholder="logoUrl" class="form-control" value="{{ partner.logoUrl }}"/>
+                    {% if partner.errors.logoUrl %}
+                        <small class="form-text text-danger">{{ partner.errors.logoUrl }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="commission">Commission: </label>
+                    <input type="integer" id="commission" name="commission" placeholder="Commission" class="form-control" value="{{ partner.commission }}"/>
+                    {% if partner.errors.commission %}
+                        <small class="form-text text-danger">{{ partner.errors.commission }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="status">Status: </label>
+                    <select name="status" id="status">
                         <option value="0" {% if not partner.status %} selected {% endif %}>Disabled</option>
                         <option value="1" {% if partner.status %} selected {% endif %}>Enabled</option>
                     </select>
@@ -26,9 +57,58 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
-                    <input type="integer" name="commission" placeholder="Commission" class="form-control" value="{{ partner.commission }}"/>
-                    {% if partner.errors.commission %}
-                        <small class="form-text text-danger">{{ partner.errors.commission }}</small>
+                  <label for="apiEnabled">apiEnabled: </label>
+                    <select id="apiEnabled" name="apiEnabled">
+                        <option value="0" {% if not partner.apiEnabled %} selected {% endif %}>Disabled</option>
+                        <option value="1" {% if partner.apiEnabled %} selected {% endif %}>Enabled</option>
+                    </select>
+                    {% if partner.errors.apiEnabled %}
+                        <small class="form-text text-danger">{{ partner.errors.apiEnabled }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="apiTestUrl">apiTestUrl: </label>
+                    <input type="text" name="apiTestUrl" id="apiTestUrl" placeholder="apiTestUrl" class="form-control" value="{{ partner.apiTestUrl }}"/>
+                    {% if partner.errors.apiTestUrl %}
+                        <small class="form-text text-danger">{{ partner.errors.apiTestUrl }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="remoteUsername">Remote Username: </label>
+                    <input type="text" name="remoteUsername" id="remoteUsername" placeholder="remoteUsername" class="form-control" value="{{ partner.remoteUsername }}"/>
+                    {% if partner.errors.remoteUsername %}
+                        <small class="form-text text-danger">{{ partner.errors.remoteUsername }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="remotePassword">Remote Password: </label>
+                    <input type="text" name="remotePassword" id="remotePassword" placeholder="remotePassword" class="form-control" value="{{ partner.remotePassword }}"/>
+                    {% if partner.errors.remotePassword %}
+                        <small class="form-text text-danger">{{ partner.errors.remotePassword }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="localUsername">Local Username: </label>
+                    <input type="text" name="localUsername" id="localUsername" placeholder="localUsername" class="form-control" value="{{ partner.localUsername }}"/>
+                    {% if partner.errors.localUsername %}
+                        <small class="form-text text-danger">{{ partner.errors.localUsername }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="localPassword">Local Password: </label>
+                    <input type="text" name="localPassword" id="localPassword" placeholder="localPassword" class="form-control" value="{{ partner.localPassword }}"/>
+                    {% if partner.errors.localPassword %}
+                        <small class="form-text text-danger">{{ partner.errors.localPassword }}</small>
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                  <label for="authorizationType ">Authorization Type: </label>
+                    <select id="authorizationType " name="authorizationType ">
+                        <option value=""> </option>
+                        <option value="basic" {% if partner.authorizationType is same as('basic') %} selected {% endif %} >Basic</option>
+                    </select>
+                    {% if partner.errors.authorizationType  %}
+                        <small class="form-text text-danger">{{ partner.errors.authorizationType  }}</small>
                     {% endif %}
                 </div>
             </div>
