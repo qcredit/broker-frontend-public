@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-05-16 14:51+0300\n"
+"PO-Revision-Date: 2018-05-23 12:08+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -13,113 +13,140 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.0.7\n"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:48
-msgid "Leverage agile frameworks"
-msgstr "Wykorzystaj zwinne frameworki"
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:63
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:62
+msgid "Insert your first name"
+msgstr "Imię"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:52
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:70
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:69
+msgid "Insert your email address"
+msgstr "Adres email"
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:78
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:77
 msgid ""
-"Provide a robust synopsis for high level overviews. Iterative approaches to "
-"corporate strategy foster collaborative thinking to further the overall "
-"value proposition."
+"*Bring to the table win-win survival strategies to ensure proactive "
+"domination. At the end of the day, going forward, a new normal that has "
+"evolved from generation X is on the runway heading towards a streamlined "
+"cloud solution. "
 msgstr ""
-"Zapewnij solidne streszczenie dla przeglądów wysokiego poziomu. Iteracyjne "
-"podejście do strategii korporacyjnej sprzyja myśleniu opartemu na współpracy "
-"w celu zwiększenia ogólnej wartości oferty."
 
-#: src/Model/ApplicationForm.php:110
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:82
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:158
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:81
+#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:169
+msgid "Apply for a loan"
+msgstr "Aplikuj o pożyczkę"
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:26
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:26
+msgid "How much do you want to borrow?"
+msgstr "Ile chcesz pożyczyć?"
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:44
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:44
+msgid "How fast do you want to pay off (months)?"
+msgstr "W ile miesięcy chcesz spłacić pożyczkę?"
+
+#: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:62
+#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:62
+msgid "Approximate monthly installment "
+msgstr "Szacunkowa rata miesięczna"
+
+#: src/Model/ApplicationForm.php:63 src/Model/ApplicationForm.php:110
 msgid "Employed"
 msgstr "Employeeed"
 
 #: src/Model/ApplicationForm.php:111
 msgid "Student"
-msgstr ""
+msgstr "Student"
 
 #: src/Model/ApplicationForm.php:112
 msgid "Normal Pension"
-msgstr ""
+msgstr "Emerytura"
 
 #: src/Model/ApplicationForm.php:113
 msgid "Disability Pension"
-msgstr ""
+msgstr "Renta"
 
 #: src/Model/ApplicationForm.php:114
 msgid "Unemployed"
-msgstr ""
+msgstr "Bezrobotny"
 
 #: src/Model/ApplicationForm.php:115
 msgid "Alimony"
-msgstr ""
+msgstr "Zasiłek lub alimenty"
 
 #: src/Model/ApplicationForm.php:116
 msgid "Self Employed"
-msgstr ""
+msgstr "Własna działalność gospodarcza"
 
 #: src/Model/ApplicationForm.php:117
 msgid "Farmer"
-msgstr ""
+msgstr "Gospodarstwo Rolne"
 
 #: src/Model/ApplicationForm.php:118 src/Model/ApplicationForm.php:129
 #: src/Model/ApplicationForm.php:138 src/Model/ApplicationForm.php:150
 #: src/Model/ApplicationForm.php:156
 msgid "Other"
-msgstr ""
+msgstr "Inne"
 
 #: src/Model/ApplicationForm.php:121
 msgid "Basic"
-msgstr ""
+msgstr "Podstawowe"
 
 #: src/Model/ApplicationForm.php:122
 msgid "Secondary"
-msgstr ""
+msgstr "Średnie"
 
 #: src/Model/ApplicationForm.php:123
 msgid "Vocational"
-msgstr ""
+msgstr "Zawodowe"
 
 #: src/Model/ApplicationForm.php:124
 msgid "Bachelor of Science"
-msgstr ""
+msgstr "Licencjat"
 
 #: src/Model/ApplicationForm.php:125
 msgid "Master of Arts"
-msgstr ""
+msgstr "MA"
 
 #: src/Model/ApplicationForm.php:126
 msgid "Master of Business Administration"
-msgstr ""
+msgstr "MBA"
 
 #: src/Model/ApplicationForm.php:127
 msgid "Master of Advanced Studies"
-msgstr ""
+msgstr "Magisterium"
 
 #: src/Model/ApplicationForm.php:128
 msgid "Medical Doctorate"
-msgstr ""
+msgstr "MD"
 
 #: src/Model/ApplicationForm.php:132
 msgid "Single"
-msgstr ""
+msgstr "Panna / kawaler"
 
 #: src/Model/ApplicationForm.php:133
 msgid "Married"
-msgstr ""
+msgstr "Zamężna / żonaty"
 
 #: src/Model/ApplicationForm.php:134
 msgid "Married, but divorcing"
-msgstr ""
+msgstr "Zamężna / żonaty z rodzielnością"
 
 #: src/Model/ApplicationForm.php:135
 msgid "Divorced"
-msgstr ""
+msgstr "Rozwiedziona / rozwiedziony"
 
 #: src/Model/ApplicationForm.php:136
 msgid "Separated"
-msgstr ""
+msgstr "W separacji"
 
 #: src/Model/ApplicationForm.php:137
 msgid "Widow"
-msgstr ""
+msgstr "Wdowa / wdowiec"
 
 #: src/Model/ApplicationForm.php:141
 msgid "Personal"
@@ -135,55 +162,55 @@ msgstr ""
 
 #: src/Model/ApplicationForm.php:146
 msgid "I'm an owner"
-msgstr ""
+msgstr "Własnościowe"
 
 #: src/Model/ApplicationForm.php:147
 msgid "I'm renting"
-msgstr ""
+msgstr "Wynajmowane"
 
 #: src/Model/ApplicationForm.php:148
 msgid "I'm living with family"
-msgstr ""
+msgstr "Mieszkam u rodziców"
 
 #: src/Model/ApplicationForm.php:149
 msgid "Social housing"
-msgstr ""
+msgstr "Komunalne"
 
 #: src/Model/ApplicationForm.php:153
 msgid "Apartment"
-msgstr ""
+msgstr "Mieszkanie"
 
 #: src/Model/ApplicationForm.php:154
 msgid "House"
-msgstr ""
+msgstr "Dom"
 
 #: src/Model/ApplicationForm.php:155
 msgid "Duplex"
-msgstr ""
+msgstr "Bliźniak"
 
 #: src/Model/ApplicationForm.php:173
 msgid "Account"
-msgstr ""
+msgstr "Przelew na konto (bezpłatnie)"
 
 #: src/Model/ApplicationForm.php:174
 msgid "BlueCash"
-msgstr ""
+msgstr "Przelew ekspresowy w ciągu 3 godzin (koszt 3zł)"
 
 #: src/Model/ApplicationForm.php:175
 msgid "Giro"
-msgstr ""
+msgstr "Wypłata czekiem GIRO na poczcie (13 zł)"
 
 #: src/Model/ApplicationForm.php:196
 msgid "Income type"
-msgstr "Rodzaj dochodu"
+msgstr "Wybierz źródło dochodu"
 
-#: src/Model/ApplicationForm.php:197
+#: src/Model/ApplicationForm.php:64 src/Model/ApplicationForm.php:197
 msgid "Your monthly net income"
 msgstr "Twój miesięczny dochód netto"
 
-#: src/Model/ApplicationForm.php:198
+#: src/Model/ApplicationForm.php:65 src/Model/ApplicationForm.php:198
 msgid "Employer name"
-msgstr "Nazwa pracodawcy"
+msgstr "Podaj nazwę firmy"
 
 #: src/Model/ApplicationForm.php:199
 msgid "Your position"
@@ -191,95 +218,95 @@ msgstr "Twoje stanowisko"
 
 #: src/Model/ApplicationForm.php:200
 msgid "Organization's field of activity"
-msgstr ""
+msgstr "Wybierz branżę"
 
 #: src/Model/ApplicationForm.php:201
 msgid "Year started at the organization"
-msgstr ""
+msgstr "Podaj rok rozpoczęcia pracy"
 
 #: src/Model/ApplicationForm.php:202
 msgid "Month started at the organization"
-msgstr ""
+msgstr "Podaj miesiąc rozpoczęcia pracy"
 
 #: src/Model/ApplicationForm.php:203
 msgid "Education provider"
-msgstr ""
+msgstr "Nazwa uczelni / szkoły"
 
 #: src/Model/ApplicationForm.php:204
 msgid "Purpose of loan"
-msgstr ""
+msgstr "Wybierz cel pożyczki"
 
 #: src/Model/ApplicationForm.php:205
 msgid "Personal identification number"
-msgstr "Osobisty numer identyfikacyjny"
+msgstr "Wpisz numer PESEL"
 
 #: src/Model/ApplicationForm.php:206
 msgid "Street"
-msgstr ""
+msgstr "Ulica"
 
 #: src/Model/ApplicationForm.php:207
 msgid "ZIP"
-msgstr ""
+msgstr "Kod pocztowy"
 
 #: src/Model/ApplicationForm.php:208
 msgid "House number"
-msgstr ""
+msgstr "Numer domu"
 
 #: src/Model/ApplicationForm.php:209
 msgid "Apartment number"
-msgstr ""
+msgstr "Numer mieszkania"
 
 #: src/Model/ApplicationForm.php:210
 msgid "City"
-msgstr ""
+msgstr "Miasto"
 
 #: src/Model/ApplicationForm.php:211
 msgid "Account number"
-msgstr ""
+msgstr "Podaj numer rachunku bankowego"
 
 #: src/Model/ApplicationForm.php:212
 msgid "Account type"
-msgstr ""
+msgstr "Wybierz rodzaj konta"
 
 #: src/Model/ApplicationForm.php:213
 msgid "Account holder's name"
-msgstr ""
+msgstr "Nazwisko właściciela konta"
 
 #: src/Model/ApplicationForm.php:214
 msgid "Document number"
-msgstr ""
+msgstr "Podaj serię i numer dowodu osobistego"
 
 #: src/Model/ApplicationForm.php:215
 msgid "Phone type"
-msgstr ""
+msgstr "Wybierz rodzaj telefonu"
 
 #: src/Model/ApplicationForm.php:216
 msgid "Payout method"
-msgstr ""
+msgstr "Wybierz metodę wypłaty"
 
 #: src/Model/ApplicationForm.php:217
 msgid "Education level"
-msgstr ""
+msgstr "Wybierz poziom wykształcenia"
 
 #: src/Model/ApplicationForm.php:218
 msgid "Marital status"
-msgstr ""
+msgstr "Wybierz stan cywilny"
 
 #: src/Model/ApplicationForm.php:219
 msgid "Type of residency"
-msgstr ""
+msgstr "Wybierz forma własności mieszkania"
 
 #: src/Model/ApplicationForm.php:220
 msgid "Type of property"
-msgstr ""
+msgstr "Wybierz rodzaj nieruchomości"
 
 #: src/Model/ApplicationForm.php:221
 msgid "Loan amount"
-msgstr ""
+msgstr "Wysokość pożyczki"
 
 #: src/Model/ApplicationForm.php:222
 msgid "Loan term"
-msgstr ""
+msgstr "Okres spłaty"
 
 #: src/Model/ApplicationForm.php:223
 msgid "First name"
@@ -287,21 +314,23 @@ msgstr "Imię"
 
 #: src/Model/ApplicationForm.php:224
 msgid "Last name"
-msgstr ""
+msgstr "Nazwisko"
 
 #: src/Model/ApplicationForm.php:225
 msgid "Email"
-msgstr "E-mail"
+msgstr "Adres email"
 
 #: src/Model/ApplicationForm.php:226
 msgid "Phone"
-msgstr "Telefon"
+msgstr "Numer telefonu kontaktowego"
 
 #: src/Model/ApplicationForm.php:227
 msgid ""
 "Yes, you can send me information about promotions, competitions, offers and "
 "such."
 msgstr ""
+"Tak, możesz przesłać mi informacje o promocjach, konkursach, ofertach i tym "
+"podobnych."
 
 #: src/Model/ApplicationForm.php:234
 msgid "Invalid schema reference given"
@@ -451,3 +480,15 @@ msgstr ""
 #: src/Base/Repository/MessageTemplateRepository.php:130
 msgid "Thank you for choosing us!"
 msgstr ""
+
+#~ msgid "Leverage agile frameworks"
+#~ msgstr "Wykorzystaj zwinne frameworki"
+
+#~ msgid ""
+#~ "Provide a robust synopsis for high level overviews. Iterative approaches "
+#~ "to corporate strategy foster collaborative thinking to further the "
+#~ "overall value proposition."
+#~ msgstr ""
+#~ "Zapewnij solidne streszczenie dla przeglądów wysokiego poziomu. "
+#~ "Iteracyjne podejście do strategii korporacyjnej sprzyja myśleniu opartemu "
+#~ "na współpracy w celu zwiększenia ogólnej wartości oferty."
