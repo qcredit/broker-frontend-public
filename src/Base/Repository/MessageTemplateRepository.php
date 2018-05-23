@@ -132,9 +132,9 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_EMAIL)
       ->setTitle(_('Check out these offers for you loan application!'))
-      ->setRecipient($app->getEmail())
+      ->setRecipient($application->getEmail())
       ->setBody($this->generateEmailContent('mail/offer-reminder.twig', [
-        'application' => $app,
+        'application' => $application,
         'title' => $message->getTitle(),
         'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
       ]));
