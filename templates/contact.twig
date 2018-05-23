@@ -56,7 +56,7 @@
         {% if contact.errors.message %}<p class="rules">{{ contact.errors.message }}</p>{% endif %}
       </div>
       <div class="field submit">
-        <button class="btn broker-btn broker-btn-gold">Send</button>
+        <button class="btn broker-btn broker-btn-gold" disabled>Send</button>
       </div>
       {% if contact.errors.general %}<p class="rules">{{ contact.errors.general }}</p>{% endif %}
     </form>

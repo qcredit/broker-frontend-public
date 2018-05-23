@@ -10,6 +10,7 @@ namespace App\Model;
 
 use App\Base\Validator\ContactValidator;
 use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
+use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use Broker\Domain\Interfaces\Service\MessageDeliveryServiceInterface;
 use Broker\Domain\Entity\Message;
 use Broker\System\BrokerInstance;
@@ -25,9 +26,9 @@ class ContactForm
    */
   private $model;
   /**
-   * @var MessageFactoryInterface
+   * @var MessageTemplateRepositoryInterface
    */
-  private $messageFactory;
+  private $messageTemplateRepository;
   /**
    * @var MessageDeliveryServiceInterface
    */
@@ -47,12 +48,12 @@ class ContactForm
   }
 
   /**
-   * @return MessageFactoryInterface
+   * @return MessageTemplateRepositoryInterface
    * @codeCoverageIgnore
    */
-  public function getMessageFactory()
+  public function getMessageTemplateRepository()
   {
-    return $this->messageFactory;
+    return $this->messageTemplateRepository;
   }
 
   /**
@@ -74,20 +75,41 @@ class ContactForm
   }
 
   /**
-   * ContactForm constructor.
-   * @param BrokerInstance $instance
-   * @param MessageFactoryInterface $messageFactory
-   * @param MessageDeliveryServiceInterface $messageDeliveryService
+   * @return array
    * @throws \Interop\Container\Exception\ContainerException
    */
+  public function getSettings()
+  {
+    return $this->getContainer()->get('settings');
+  }
+
+  /**
+   * @return mixed|null
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getFormRecipient()
+  {
+    $settings = $this->getSettings();
+    return $settings['mainEmail'] ?? '';
+  }
+
+  /**
+   * ContactForm constructor.
+   * @param Container $container
+   * @param BrokerInstance $instance
+   * @param MessageTemplateRepositoryInterface $messageTemplateRepository
+   * @param MessageDeliveryServiceInterface $messageDeliveryService
+   */
   public function __construct(
+    Container $container,
     BrokerInstance $instance,
-    MessageFactoryInterface $messageFactory,
+    MessageTemplateRepositoryInterface $messageTemplateRepository,
     MessageDeliveryServiceInterface $messageDeliveryService)
   {
+    $this->container = $container;
     $this->model = new Contact();
     $this->model->setValidator(new ContactValidator($instance));
-    $this->messageFactory = $messageFactory;
+    $this->messageTemplateRepository = $messageTemplateRepository;
     $this->messageDeliveryService = $messageDeliveryService;
   }
 
@@ -112,15 +134,18 @@ class ContactForm
   }
 
   /**
-   * @return mixed
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function send()
   {
-    $message = $this->getMessageFactory()->create();
-    $message->setType(Message::MESSAGE_TYPE_EMAIL)
-      ->setRecipient('qcredit.test@gmail.com')
-      ->setBody($this->getModel()->getMessage())
-      ->setTitle(_('Message from website'));
+    $data = [
+      'name' => $this->getModel()->getName(),
+      'email' => $this->getModel()->getEmail(),
+      'message' => $this->getModel()->getMessage()
+    ];
+
+    $message = $this->getMessageTemplateRepository()->getContactFormMessage($data, $this->getFormRecipient());
 
     if (!$this->getMessageDeliveryService()->setMessage($message)->run())
     {
