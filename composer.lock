@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "3a082836bb82f7771c2bab3622c10d13ffb5ff6d"
+                "reference": "df4c7a5efd9dd67ccc6f23eacb119884591a3e1f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/3a082836bb82f7771c2bab3622c10d13ffb5ff6d",
-                "reference": "3a082836bb82f7771c2bab3622c10d13ffb5ff6d",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/df4c7a5efd9dd67ccc6f23eacb119884591a3e1f",
+                "reference": "df4c7a5efd9dd67ccc6f23eacb119884591a3e1f",
                 "shasum": ""
             },
             "require-dev": {
@@ -65,10 +65,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/master",
+                "source": "https://github.com/aasa-global/broker/tree/dev-delivery-options",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-05-24T09:11:22+00:00"
+            "time": "2018-05-24T12:35:05+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
