@@ -4,11 +4,11 @@ services:
   apache:
     image: 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest$GitCommitAppendix
     environment:
-      ENV_TYPE: "testserver"
+      ENV_TYPE: "production"
     volumes:
-      - /srv/local/broker-frontend-public/test:/var/log/apache2
+      - /srv/local/broker-frontend-public/production:/var/log/apache2
     ports:
-      - 11112:80
+      - 11012:80
     # networks:
       # - test
     stop_grace_period: 60s
@@ -29,12 +29,12 @@ services:
         window: 60s
       resources:
         limits:
-          memory: 256M
+          memory: 384M
       placement:
         constraints:
           - 'node.labels.COUNTRY_poland == TRUE'
           - 'node.labels.SITE_PUBLIC == TRUE'
-          - 'node.labels.ENV_TEST == TRUE'
+          - 'node.labels.ENV_PROD == TRUE'
 
   redis:
     image: redis
@@ -58,7 +58,7 @@ services:
         constraints:
           - 'node.labels.COUNTRY_poland == TRUE'
           - 'node.labels.SITE_PUBLIC == TRUE'
-          - 'node.labels.ENV_TEST == TRUE'
+          - 'node.labels.ENV_PROD == TRUE'
 
 # networks:
   # default:
