@@ -1,6 +1,8 @@
 <?php
 return [
     'settings' => [
+        'mainEmail' => 'qcredit.test@gmail.com',
+        'defaultLanguage' => 'pl_PL',
         'displayErrorDetails' => true, // set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
@@ -70,8 +72,10 @@ return [
           'password' => 'URXpY7xGDL',
           'secure' => 'tls',
           'port' => 587,
-          'sender' => 'qcredit.test@gmail.com',
-          'senderName' => 'qCredit'
+          'sender' => 'info@qcredit.pl',
+          'senderName' => 'qCredit',
+          'apiKey' => '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',
+          'apiUrl' => 'https://api.sendgrid.com/v3/mail/send'
         ],
         'messente' => [
           'apiUrl' => 'http://api2.messente.com/send_sms/',

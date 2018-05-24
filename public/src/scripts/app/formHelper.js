@@ -44,6 +44,7 @@ define(['jquery', 'broker'], function($, app) {
   function addCsrf()
   {
     $('form').append(app.getCsrfFields());
+    $('form .broker-btn:disabled').prop('disabled', false);
   }
 
   function populateOptions()

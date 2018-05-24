@@ -26,7 +26,7 @@
         </div>
         <div class="landing-form-lower-footer">
           <p class="landing-terms">{% trans "*I agree to the processing by QCredit of my personal data for marketing purposes, in the scope of my address, phone number and e-mail address. I have been informed of the right to inspect the data concerning me, the right to request a change and deletion of such data, as well as the right to object to the processing of my personal data. The administrator of personal data is QCredit." %}</p>
-          <button class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</button>
+          <button class="btn broker-btn broker-btn-gold" disabled>{% trans "Apply for a loan" %}</button>
         </div>
       </div>
     </form>
@@ -96,13 +96,4 @@
     <p class="col-sm-12 col-md-8 text-center">Każdego dnia nasz zespół dostarcza profesjonalne rozwiązania finansowe dla Klientów. Jesteśmy w stałym kontakcie z wieloma pożyczkodawcami, którzy mogą Ci zaoferować nawet do 50 000 PLN z natychmiastową decyzją.</p>
     <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
   </section>
-{% endblock %}
-{% block endBody %}
-  <script type="text/javascript">
-    require(['./src/scripts/common'], function (common) {
-      require(['app/domReady', 'app/formHelper'], function (domReady, formHelper) {
-
-      });
-    });
-  </script>
 {% endblock %}
