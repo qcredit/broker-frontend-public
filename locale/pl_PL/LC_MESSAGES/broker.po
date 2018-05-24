@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-05-24 14:09+0300\n"
+"PO-Revision-Date: 2018-05-24 14:22+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -60,7 +60,7 @@ msgstr "Wysłać"
 #: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:159
 msgid ""
 "Thank you, your message has been sent! We will get in touch with you soon."
-msgstr ""
+msgstr "Dziękujemy, wiadomość została wysłana! Wkrótce się odezwiamy"
 
 #: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:97
 #: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:94
@@ -69,17 +69,19 @@ msgstr "Czytaj więcej"
 
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:36
 msgid "Application offers list"
-msgstr ""
+msgstr "Lista ofert dla aplikacji"
 
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:48
 msgid ""
 "Thank you! Your application has been submitted and the loan offers will "
 "appear live within 15 minutes below:"
 msgstr ""
+"Dziękujemy! Twój wniosek został złożony, a oferty pożyczki pojawią się na "
+"żywo w ciągu 15 minut poniżej:"
 
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:56
 msgid "Personal offers"
-msgstr ""
+msgstr "Oferty dla osób prywatnych"
 
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:93
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:127
@@ -152,11 +154,11 @@ msgstr "Szacunkowa rata miesięczna "
 
 #: tmp/cache/fa/fa3426f4bd79099d580e0cdad2e2908ed1ebbfc1b2532dcd6cd12712adaf9e6a.php:47
 msgid "404 - Not found"
-msgstr ""
+msgstr "404 - brak podanej strony"
 
 #: tmp/cache/fa/fa3426f4bd79099d580e0cdad2e2908ed1ebbfc1b2532dcd6cd12712adaf9e6a.php:51
 msgid "The page you were requesting was not found!"
-msgstr ""
+msgstr "Żądana strona nie została znaleziona!"
 
 #: src/Model/ApplicationForm.php:126
 msgid "Employed"
@@ -254,15 +256,15 @@ msgstr "Wdowa / wdowiec"
 
 #: src/Model/ApplicationForm.php:157
 msgid "Personal"
-msgstr ""
+msgstr "Osobiste"
 
 #: src/Model/ApplicationForm.php:158
 msgid "Joint"
-msgstr ""
+msgstr "Wspólne"
 
 #: src/Model/ApplicationForm.php:159
 msgid "Company"
-msgstr ""
+msgstr "Firmowe"
 
 #: src/Model/ApplicationForm.php:162
 msgid "I'm an owner"
@@ -346,19 +348,19 @@ msgstr "Szkoła"
 
 #: src/Model/ApplicationForm.php:205
 msgid "Tax Payment"
-msgstr ""
+msgstr "Płatność podatku"
 
 #: src/Model/ApplicationForm.php:206
 msgid "Investment"
-msgstr ""
+msgstr "Inwestycja"
 
 #: src/Model/ApplicationForm.php:207
 msgid "Invoice Payment"
-msgstr ""
+msgstr "Harmonogram spłat"
 
 #: src/Model/ApplicationForm.php:208
 msgid "Rent"
-msgstr ""
+msgstr "Wynajem"
 
 #: src/Model/ApplicationForm.php:230
 msgid "Income type"
@@ -635,19 +637,19 @@ msgstr ""
 
 #: src/Model/ContactForm.php:127
 msgid "We were unable to send your message. Please try again later."
-msgstr ""
+msgstr "Nie udało się wysłać Twojej wiadomości. Spróbuj ponownie później."
 
 #: src/Base/Repository/MessageTemplateRepository.php:112
 msgid "Offers for your application"
-msgstr ""
+msgstr "Oferty dla Ciebie"
 
 #: src/Base/Repository/MessageTemplateRepository.php:134
 msgid "Check out these offers for you loan application!"
-msgstr ""
+msgstr "Sprawdź te oferty i złóż wniosek o pożyczkę!"
 
 #: src/Base/Repository/MessageTemplateRepository.php:168
 msgid "Thank you for choosing us!"
-msgstr ""
+msgstr "Dziękujemy za wybranie naszej oferty !"
 
 #: src/Base/Validator/ContactValidator.php:45
 msgid "Invalid name!"
@@ -663,7 +665,7 @@ msgstr "Niepoprawny format!"
 
 #: src/Base/Validator/ContactValidator.php:80
 msgid "Message has to contain at least 10 characters"
-msgstr ""
+msgstr "Wiadomość musi zawierać conajmniej 10 znaków"
 
 #: src/Base/Validator/SchemaValidator.php:121
 msgid "Please provide a number"
