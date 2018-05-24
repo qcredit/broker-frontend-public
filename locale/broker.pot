@@ -26,6 +26,27 @@ msgstr ""
 msgid "Apply for a loan"
 msgstr ""
 
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:88
+msgid "Insert your name"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:106
+msgid "Insert your email"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:124
+msgid "Insert your message"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:143
+msgid "Send"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:159
+msgid ""
+"Thank you, your message has been sent! We will get in touch with you soon."
+msgstr ""
+
 #: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:97
 #: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:94
 msgid "Read more"
