@@ -72,8 +72,10 @@ return [
           'password' => 'URXpY7xGDL',
           'secure' => 'tls',
           'port' => 587,
-          'sender' => 'qcredit.test@gmail.com',
-          'senderName' => 'qCredit'
+          'sender' => 'info@qcredit.pl',
+          'senderName' => 'qCredit',
+          'apiKey' => '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',
+          'apiUrl' => 'https://api.sendgrid.com/v3/mail/send'
         ],
         'messente' => [
           'apiUrl' => 'http://api2.messente.com/send_sms/',
