@@ -170,6 +170,9 @@
 }
 
 /* CONTACT PAGE FORM */
+.contact-form .field.textarea label {
+  background: #fff;
+}
 .contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label {
   top: -0.55rem;
 }
