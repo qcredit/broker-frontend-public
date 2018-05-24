@@ -55,9 +55,9 @@
         <textarea name="message" id="message">{{ contact.message }}</textarea>
         {% if contact.errors.message %}<p class="rules">{{ contact.errors.message }}</p>{% endif %}
       </div>
-      <div class="g-recaptcha" data-sitekey="6LcXOVcUAAAAANnuR_uQeQXfojsIPmkR1NcCBkDx"></div>
-      <div class="field submit">
-        <button class="btn broker-btn broker-btn-gold" disabled>Send</button>
+      <div class="field submit contact-submit">
+        <div class="g-recaptcha" data-sitekey="6LcXOVcUAAAAANnuR_uQeQXfojsIPmkR1NcCBkDx"></div>
+        <button class="btn broker-btn broker-btn-gold">Send</button>
       </div>
       {% if contact.errors.general %}<p class="rules">{{ contact.errors.general }}</p>{% endif %}
     </form>
