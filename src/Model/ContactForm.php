@@ -21,6 +21,8 @@ class ContactForm
   const ATTR_NAME = 'name';
   const ATTR_EMAIL = 'email';
   const ATTR_MESSAGE = 'message';
+  const ATTR_RECAPTCHA = 'g-recaptcha-response';
+
   /**
    * @var Contact
    */
