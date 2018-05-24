@@ -19,8 +19,11 @@ fi
 
 sleep 8
 
-echo "Setting up cron jobs..."
-echo "* * * * * ENV_TYPE="${ENV_TYPE}" /usr/local/bin/php /var/www/html/src/cron.php >> /proc/1/fd/1 2>/proc/1/fd/2" | crontab
+echo "### $(Time) Setting up cron jobs ... ###"
+echo "* * * * * ENV_TYPE=\"${ENV_TYPE}\" /usr/local/bin/php /var/www/html/src/cron.php >> /var/log/apache2/broker-cron.log 2>&1" | crontab -
+
+echo "### $(Time) Starting cron as daemon ... ###"
 cron
 
+echo "### $(Time) Starting $@ ... ###"
 exec "$@"
