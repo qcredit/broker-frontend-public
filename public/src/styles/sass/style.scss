@@ -41,6 +41,10 @@ section h1.small-mar {
 .page-body {
   min-height: 200px;
 }
+.img404 {
+  max-width: 90%;
+  padding: 3rem 0 1rem;
+}
 /* UTILITIES */
 .broker-btn {
   padding: 1rem 3rem;
@@ -130,6 +134,13 @@ body {
     margin-bottom: 1rem;
   }
 }
+.contact-submit {
+  flex-direction: column;
+  justify-content: center;
+  .g-recaptcha {
+    margin: 0 auto 1rem;
+  }
+}
 
 /* Home page about section */
 .image-container img {
@@ -176,6 +187,17 @@ body {
   }
 }
 
+@media only screen and (max-width: 350px) {
+  .contact-submit {
+    .g-recaptcha {
+      transform:scale(0.87);
+      -webkit-transform:scale(0.87);
+      transform-origin:0 0;
+      -webkit-transform-origin:0 0;
+    }
+  }
+}
+
 @media only screen and (min-width: 768px) {
   .page-body {
     min-height: 400px;
@@ -208,6 +230,14 @@ body {
     padding-top: 0.25rem;
     .circle-block {
       margin-bottom: 4rem;
+    }
+  }
+  .contact-submit {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between!important;
+    .g-recaptcha {
+      margin: 0;
     }
   }
 }
