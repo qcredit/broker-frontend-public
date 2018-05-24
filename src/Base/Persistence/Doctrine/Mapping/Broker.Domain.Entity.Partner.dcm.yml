@@ -23,3 +23,45 @@ Broker\Domain\Entity\Partner:
     featured:
       type: boolean
       nullable: false
+    email:
+      type: string
+      nullable: true
+    apiEnabled:
+      column: api_enabled
+      type: boolean
+      nullable: false
+    apiLiveUrl:
+      column: api_live_url
+      type: string
+      nullable: true
+    apiTestUrl:
+      column: api_test_url
+      type: string
+      nullable: true
+    remoteUsername:
+      column: remote_username
+      type: string
+      nullable: true
+    remotePassword:
+      column: remote_password
+      type: string
+      nullable: true
+    localUsername:
+      column: local_username
+      type: string
+      nullable: true
+    localPassword:
+      column: local_password
+      type: string
+      nullable: true
+    authorizationType:
+      column: authorization_type
+      type: string
+      nullable: true
+    logoUrl:
+      column: logo_url
+      type: string
+      nullable: true
+    website:
+      type: string
+      nullable: true

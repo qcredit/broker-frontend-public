@@ -37,7 +37,7 @@ class LanguageSwitcherTest extends BaseTest
 
     $this->mock = $this->getMockBuilder(LanguageSwitcher::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getBrowserLanguages', 'isLanguageSetByCookie', 'setLanguageByCookie', 'setLanguageByBrowser'])
+      ->setMethods(['getBrowserLanguages', 'isLanguageSetByCookie', 'setLanguageByCookie', 'setLanguageByBrowser', 'hasDefaultLanguage', 'setLanguageByDefault'])
       ->getMock();
 
     $this->altMock = $this->getMockBuilder(LanguageSwitcher::class)
@@ -97,6 +97,22 @@ class LanguageSwitcherTest extends BaseTest
     $this->mock->__invoke($this->requestMock, $this->responseMock, $fn);
   }
 
+  public function test__invokeAndSetByDefault()
+  {
+    $this->mock->method('hasDefaultLanguage')
+      ->willReturn(true);
+
+    $this->mock->expects($this->never())
+      ->method('setLanguageByBrowser');
+
+    $this->mock->expects($this->once())
+      ->method('setLanguageByDefault');
+
+    $fn = function ($request, $response) { return 'tere'; };
+
+    $this->mock->__invoke($this->requestMock, $this->responseMock, $fn);
+  }
+
   public function test__invokeAndSetByBrowser()
   {
     $this->mock->method('isLanguageSetByCookie')
@@ -106,6 +122,8 @@ class LanguageSwitcherTest extends BaseTest
       ->method('setLanguageByCookie');
     $this->mock->expects($this->once())
       ->method('setLanguageByBrowser');
+    $this->mock->expects($this->never())
+      ->method('setLanguageByDefault');
 
     $fn = function ($request, $response) { return 'tere'; };
 

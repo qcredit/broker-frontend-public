@@ -1,0 +1,24 @@
+{% extends 'base.twig' %}
+{% block title %}Blog{% endblock %}
+{% block container %}
+  <section class="blog-articles">
+    <h1 class="text-center">Blog</h1>
+    {% for post in posts %}
+      <article class="post-preview">
+        <a class="post-preview-link-hide" href="{{post.slug}}"><div class="post-preview-image" style="background-image: url({{post.image}});"></div></a>
+        <div class="data text-uppercase"><span class="date">{{ post.date_publish | date("d.m.Y") }} </span>{% for tag in post.tags %}<span class="tags"><a href="blog/tag/{{ tag.name }}">{{ tag.name }}</a>{% endfor %}</span></div>
+        <a class="post-preview-link-hide" href="{{post.slug}}"><h5 class="post-preview-title">{{ post.title }}</h5></a>
+        <div class="post-preview-lead"><a class="post-preview-link-hide" href="{{post.slug}}">{{ post.lead|striptags|length > 170 ? post.lead|raw|slice(0,170)|raw : post.lead|raw }}
+{{ post.lead|striptags|length > 170 ? '...' : ''}}</a></div>
+        <a class="post-preview-link" href="{{post.slug}}">Read more &#187;</a>
+      </article>
+    {% endfor %}
+    <div class="page-pagination">
+      <div class="page-pagination-inner">
+        <a class="page-pagination-control page-pagination-control-prev {% if not pagination.previousPageUrl %}page-pagination-control-disabled{% endif %}" href="{{ pagination.previousPageUrl }}"><</a>
+        <div class="page-pagination-numbers">{{ pagination.currentPage }} / {{ pagination.totalPages }}</div>
+        <a class="page-pagination-control page-pagination-control-next {% if not pagination.nextPageUrl %}page-pagination-control-disabled{% endif %}" href="{{ pagination.nextPageUrl }}">></a>
+      </div>
+    </div>
+  </section>
+{% endblock %}

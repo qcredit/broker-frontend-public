@@ -1,0 +1,122 @@
+.blog-articles {
+  display: flex;
+  flex-wrap: wrap;
+}
+.post-preview {
+  flex: 0 0 100%;
+  margin: 1.5rem 0;
+  .tags a {
+    color: #999;
+    &:visited {
+      color: #999;
+    }
+  }
+  &:first-of-type {
+    margin-top: 0;
+  }
+}
+.data {
+  margin: .25rem 0;
+  font-size: 0.75rem;
+  color: #999;
+  .date {
+    padding-right: .5rem;
+  }
+  .tags {
+    padding: 0 3px;
+  }
+}
+.post-preview-image, .post-full-image {
+  height: 200px;
+  background-color: #d9d9d9;
+  background-position: center;
+  background-size: cover;
+}
+.post-preview-link {
+  font-weight: bold;
+  &:visited {
+    color: #007bff;
+  }
+}
+.post-preview-link-hide {
+  color: #333;
+  &:visited {
+    color: #333;
+  }
+  &:hover {
+    color: #333;
+    text-decoration: none;
+  }
+}
+.post-full {
+  margin-top: 4rem;
+  .post-full-title {
+    margin-bottom: 1rem;
+    font-size: 1.75rem;
+  }
+  .date {
+    font-size: 0.85rem;
+    text-align: center;
+    text-transform: capitalize;
+    color: #999;
+  }
+  .tags {
+    a {
+      display: inline-block;
+      margin: 4px;
+      padding: 6px 20px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 0.75rem;
+      color: #444;
+      background: #e4e4e4;
+      transition: all .2s ease-in-out;
+    }
+    a:hover {
+      background: #d9d9d9;
+      text-decoration: none;
+    }
+  }
+  .post-full-image {
+    margin: 2rem 0;
+  }
+  .post-content-separator span{
+    display: inline-block;
+    height: 4px;
+    width: 40px;
+    margin: 2.5rem 0;
+    background: #333;
+  }
+}
+
+
+@media only screen and (min-width: 768px) {
+  .post-full {
+    margin-top: 5rem;
+    .post-full-title {
+      font-size: 2rem;
+    }
+  }
+  .post-preview {
+    flex: 0 1 45%;
+    margin: 1rem;
+    &:first-of-type {
+      margin-top: 1rem;
+    }
+  }
+  .post-full-image {
+    height: 400px;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .post-preview {
+    flex: 0 1 30%;
+  }
+  .post-full-image {
+    height: 500px;
+  }
+  .post-full .post-full-title {
+      font-size: 2.5rem;
+  }
+}

@@ -77,6 +77,15 @@ class SmsDelivery implements MessageDeliveryInterface
   }
 
   /**
+   * @return Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getLogger()
+  {
+    return $this->getContainer()->get('logger');
+  }
+
+  /**
    * SmsDelivery constructor.
    * @param Container $container
    */
@@ -125,7 +134,7 @@ class SmsDelivery implements MessageDeliveryInterface
 
   /**
    * @param $result
-   * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function handleResult($result)
   {
@@ -133,8 +142,7 @@ class SmsDelivery implements MessageDeliveryInterface
 
     if ($resp != 'OK')
     {
-      Log::warning($this->resolveErrorCode($code), [$result]);
-      Log::debug('The unsuccessful call to API was using this URL', [$this->getClient()->getBaseUrl()]);
+      $this->getLogger()->warning($this->resolveErrorCode($code), [$result]);
       $this->setOk(false);
     }
 
@@ -150,6 +158,7 @@ class SmsDelivery implements MessageDeliveryInterface
     $codes = [
       101 => 'Access restricted, wrong credentials. Check the username and password values!',
       102 => 'Parameters are wrong or missing. Check that all the required parameters are present.',
+      103 => 'Invalid IP address. The IP address you made the request from, is not in the whitelist.',
       209 => 'Server failure, try again after a few seconds or try the api3.messente.com backup server.'
     ];
 

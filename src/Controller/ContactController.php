@@ -8,27 +8,79 @@
 
 namespace App\Controller;
 
+use App\Component\AbstractController;
+use App\Model\ContactForm;
+use Slim\Container;
+use Slim\Http\Request;
+use Slim\Http\Response;
 use Slim\Views\Twig;
 
-class ContactController
+class ContactController extends AbstractController
 {
   /**
-   * @var \Twig
+   * @var ContactForm
    */
-  protected $view;
+  protected $contactForm;
 
-  public function __construct(Twig $view)
+  /**
+   * @return ContactForm
+   * @codeCoverageIgnore
+   */
+  public function getContactForm()
   {
-    $this->view = $view;
+    return $this->contactForm;
   }
 
   /**
-   * @param $request
-   * @param $response
-   * @return \Psr\Http\Message\ResponseInterface
+   * @return Twig
+   * @throws \Interop\Container\Exception\ContainerException
    */
-  public function indexAction($request, $response)
+  public function getView()
   {
-    return $this->view->render($response, 'contact.twig');
+    return $this->getContainer()->get('view');
+  }
+
+  /**
+   * ContactController constructor.
+   * @param Container $container
+   * @param ContactForm $contactForm
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function __construct(Container $container, ContactForm $contactForm)
+  {
+    parent::__construct($container);
+
+    $this->contactForm = $contactForm;
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param array $args
+   * @return mixed
+   * @throws \Broker\System\Error\InvalidConfigException
+   * @throws \Exception
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function indexAction(Request $request, Response $response, $args = [])
+  {
+    $data = [
+      'sent' => false
+    ];
+    $contactForm = $this->getContactForm();
+
+    if ($request->isPost())
+    {
+      $postData = $this->getParsedBody();
+
+      if ($contactForm->load($postData) && $contactForm->validate() && $contactForm->send())
+      {
+        $data['sent'] = true;
+      }
+    }
+
+    $data['contact'] = $contactForm->getModel();
+
+    return $this->render($response, 'contact.twig', $data);
   }
 }

@@ -94,9 +94,9 @@ abstract class AbstractRepository implements RepositoryInterface
 
   /**
    * @param $id
-   * @return array
+   * @return object
    */
-  public function getById($id): array
+  public function getById($id): object
   {
     $result = $this->entityManager->getRepository($this->entityClass)
       ->find($this->entityClass, intval($id));
@@ -112,6 +112,15 @@ abstract class AbstractRepository implements RepositoryInterface
     $results = $this->entityManager->getRepository($this->entityClass)->findAll();
 
     return $results;
+  }
+
+  /**
+   * @param array $conditions
+   * @return int
+   */
+  public function getCount(array $conditions = []): int
+  {
+    return $this->entityManager->getRepository($this->entityClass)->count($conditions);
   }
 
   /**

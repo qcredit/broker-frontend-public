@@ -8,11 +8,13 @@
 
 namespace App\Base\Repository;
 
-use App\Base\Interfaces\MessageTemplateRepositoryInterface;
+use App\Model\ApplicationForm;
+use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Entity\Offer;
 use Broker\Domain\Interfaces\Factory\MessageFactoryInterface;
+use Slim\App;
 use Slim\Container;
 use Slim\Views\Twig;
 
@@ -120,6 +122,42 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
   }
 
   /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getOfferReminderMessage(Application $application)
+  {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setTitle(_('Check out these offers for you loan application!'))
+      ->setRecipient($application->getEmail())
+      ->setBody($this->generateEmailContent('mail/offer-reminder.twig', [
+        'application' => $application,
+        'title' => $message->getTitle(),
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+      ]));
+
+    return $message;
+  }
+
+  /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getOfferReminderSmsMessage(Application $application)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_SMS)
+      ->setRecipient($application->getPhone())
+      ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', ['application' => $application]));
+
+    return $message;
+  }
+
+  /**
    * @param Offer $offer
    * @return Message
    * @throws \Interop\Container\Exception\ContainerException
@@ -134,6 +172,23 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
         'offer' => $offer,
         'title' => $message->getTitle()
       ]));
+
+    return $message;
+  }
+
+  /**
+   * @param $data
+   * @param $sendTo
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getContactFormMessage($data, $sendTo)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setRecipient($sendTo)
+      ->setBody($this->generateEmailContent('mail/contact-form.twig', $data))
+      ->setTitle(_('Message from website'));
 
     return $message;
   }

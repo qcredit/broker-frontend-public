@@ -22,7 +22,7 @@ class ApplicationRepositoryTest extends TestCase
     $entityRepositoryMock->method('findBy')
       ->willReturn([]);
     $entityRepositoryMock->method('find')
-      ->willReturn([]);
+      ->willReturn(new stdClass());
     $entityRepositoryMock->method('findAll')
       ->willReturn([]);
     $this->entityManagerMock = $this->createMock(EntityManager::class);
@@ -41,7 +41,7 @@ class ApplicationRepositoryTest extends TestCase
   {
     $instance = new ApplicationRepository($this->entityManagerMock);
 
-    $this->assertTrue(is_array($instance->getById(10)));
+    $this->assertTrue(is_object($instance->getById(10)));
   }
 
   public function testGetAll()

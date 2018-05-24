@@ -85,6 +85,7 @@
       },
       "idCardNumber": {
         "type": "string",
+        "minLength": 9,
         "example": "ZZC900146",
         "section": "personal",
         "documentNr": "Poland",
@@ -162,6 +163,7 @@
       },
       "emailAddress": {
         "type": "string",
+        "minLength": 4,
         "example": "test.test@aasaglobal.com",
         "pattern": "\\S+@\\S+\\.\\S+",
         "section": "general",
@@ -169,10 +171,33 @@
       },
       "mobilePhoneNumber": {
         "type": "string",
+        "minLength": 9,
         "example": "+372987654321",
-        "pattern": "(?<!\\w)[ -]?\\d{3}[ -]?\\d{3}[ -]?\\d{3}(?!\\w)",
+        "pattern": "^@?(\\+48)?(\\d{9})\\b",
         "section": "general",
         "order": 1
+      },
+      "loanPurposeType": {
+        "type": "string",
+        "enum": [
+          "",
+          "Bills",
+          "Vacation",
+          "RentOrMortgage",
+          "Car",
+          "Entertainment",
+          "Groceries",
+          "Renovation",
+          "Electronics",
+          "Furniture",
+          "School",
+          "TaxPayment",
+          "Investment",
+          "InvoicePayment",
+          "Rent",
+          "Other"
+        ],
+        "section": "additional"
       }
     },
     "definitions": {
@@ -209,6 +234,7 @@
           },
           "postalCode": {
             "type": "string",
+            "minLength": 6,
             "example": "62-262",
             "pattern": "^[0-9]{2}-[0-9]{3}$",
             "section": "housing",
@@ -247,9 +273,9 @@
         ],
         "properties": {
           "accountNumber": {
-            "type": "number",
-            "maxLength": 26,
+            "type": "string",
             "minLength": 26,
+            "pattern": "^[0-9]{26}$",
             "example": "61 1090 1014 0000 0712 1981 2874",
             "section": "account",
             "order": 1
@@ -375,7 +401,6 @@
             "type": "string",
             "enum": [
               "Account",
-              "Pikasiirto",
               "Giro",
               "BlueCash"
             ]

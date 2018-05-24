@@ -12,6 +12,7 @@ use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
 use Broker\System\Error\InvalidConfigException;
 use Broker\System\Log;
+use Monolog\Logger;
 use PHPMailer\PHPMailer\PHPMailer;
 use Slim\Container;
 
@@ -33,37 +34,6 @@ class EmailDelivery implements MessageDeliveryInterface
    * @var Container
    */
   protected $container;
-
-  /**
-   * EmailDelivery constructor.
-   * @param Container $container
-   */
-  public function __construct(Container $container)
-  {
-    $this->container = $container;
-    $this->client = new PHPMailer(true);
-  }
-
-  /**
-   * @param Message $message
-   * @throws \Interop\Container\Exception\ContainerException
-   */
-  public function send(Message $message)
-  {
-    try {
-      $this->setMessage($message);
-      $this->setupClient();
-      $this->setupMessage();
-
-      $this->getClient()->send();
-      $this->setOk(true);
-    }
-    catch (\Exception $ex)
-    {
-      $this->getContainer()->get('logger')->error('Could not deliver e-mail!', [$this->getClient()->ErrorInfo]);
-      $this->setOk(false);
-    }
-  }
 
   /**
    * @param Message $message
@@ -138,6 +108,46 @@ class EmailDelivery implements MessageDeliveryInterface
   }
 
   /**
+   * @return Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getLogger()
+  {
+    return $this->getContainer()->get('logger');
+  }
+
+  /**
+   * EmailDelivery constructor.
+   * @param Container $container
+   */
+  public function __construct(Container $container)
+  {
+    $this->container = $container;
+    $this->client = new PHPMailer(true);
+  }
+
+  /**
+   * @param Message $message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function send(Message $message)
+  {
+    try {
+      $this->setMessage($message);
+      $this->setupClient();
+      $this->setupMessage();
+
+      $this->getClient()->send();
+      $this->setOk(true);
+    }
+    catch (\Exception $ex)
+    {
+      $this->getLogger()->error('Could not deliver e-mail!', [$this->getClient()->ErrorInfo]);
+      $this->setOk(false);
+    }
+  }
+
+  /**
    * @throws InvalidConfigException
    * @throws \Exception
    * @throws \Interop\Container\Exception\ContainerException
@@ -187,7 +197,7 @@ class EmailDelivery implements MessageDeliveryInterface
 
     if (!isset($settings['mailer']))
     {
-      Log::warning('Email client is not configured!');
+      $this->getLogger()->warning('Email client is not configured!');
       throw new InvalidConfigException('Email client is not configured!');
     }
 

@@ -17,10 +17,7 @@ ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
 
 RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev locales
-
-# COPY ./infrastructure/start.sh ./infrastructure/start.sh
-# RUN chmod 755 ./infrastructure/start.sh
+    apt-get install -y git zip unzip libicu-dev locales cron
 
 # COPY ./infrastructure/start.sh ./infrastructure/start.sh
 # RUN chmod 755 ./infrastructure/start.sh
@@ -38,6 +35,7 @@ RUN    apt-get update \
     && if [ -d /tmp/pear ]; then /bin/rm -rv /tmp/pear; fi \
     && mkdir -p /var/www/html/cache \
     && chown www-data /var/www/html/cache \
+    && chown -R www-data /var/www/html/public \
     && chmod +x /usr/local/bin/docker-php-entrypoint \
     && if cd /var/www/html/conf; then \
          for file in apache_000-default.conf apache_apache2.conf apache_php.ini apache_security.conf start.sh; do \

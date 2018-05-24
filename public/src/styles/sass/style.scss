@@ -13,6 +13,8 @@ $error: #CE0000;
 @import "rangeslider";
 @import "form";
 @import "loan-offers";
+@import "blog";
+@import "pagination";
 
 /* Typography */
 * {
@@ -26,7 +28,15 @@ p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif;
 }
 section > h1 {
-  margin: 4.125rem 0 4.5rem;
+  flex: 0 0 100%;
+  margin: 4.125rem 0 3.5rem;
+  font-size: 2rem;
+}
+section h1.small-mar {
+  margin-bottom: 2rem;
+}
+.p-head {
+  margin-bottom: 0.25rem;
 }
 .page-body {
   min-height: 200px;
@@ -73,7 +83,7 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
 }
 
 body {
-  padding-top: 85px;
+  padding-top: 65px;
 }
 
 /* Home page How it works section */
@@ -121,7 +131,6 @@ body {
   }
 }
 
-
 /* Home page about section */
 .image-container img {
   max-width: 100%;
@@ -137,7 +146,18 @@ body {
     }
   }
 }
-
+.about-image-container-1 {
+  margin-top: 2rem;
+}
+.about-image-container-2 {
+  margin-bottom: 2rem;
+}
+.quote-text {
+  margin: 3rem 0 0 0;
+  font-size: 21px;
+  font-style: italic;
+  text-align: center;
+}
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6;
@@ -160,6 +180,17 @@ body {
   .page-body {
     min-height: 400px;
   }
+  .home-about-half {
+    margin: 1.5rem 0;
+  }
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .quote-text {
+    font-size: 24px;
+  }
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem;
@@ -172,5 +203,11 @@ body {
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem;
+  }
+  .about-how {
+    padding-top: 0.25rem;
+    .circle-block {
+      margin-bottom: 4rem;
+    }
   }
 }

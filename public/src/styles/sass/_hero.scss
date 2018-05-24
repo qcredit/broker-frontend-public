@@ -1,6 +1,5 @@
 /* Home page hero sectio */
 .home-hero {
-  padding-top: 1.25rem;
   padding-bottom: 1.25rem;
   background-color: $mainlight;
   .home-hero-left {
@@ -8,6 +7,7 @@
       text-align: center;
       margin-top: 1.25rem;
       margin-bottom: 1.25rem;
+      font-size: 1.5rem;
     }
     button, p {
       display: none;
@@ -36,6 +36,9 @@
 }
 .landing-form-lower {
   padding: 1rem 2rem 2rem;
+  .field.email .rules {
+    display: none;
+  }
 }
 .landing-form-lower-footer {
   display: flex;
@@ -115,6 +118,7 @@
         text-align: left;
         margin-top: 0;
         margin-bottom: .5rem;
+        font-size: 1.75rem;
       }
       button, p {
         display: block;
@@ -153,6 +157,12 @@
       margin-top: 0;
       margin-left: -40px;
     }
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  .home-hero {
+    padding-top: 1.25rem;
   }
 }
 

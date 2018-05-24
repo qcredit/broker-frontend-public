@@ -8,7 +8,7 @@
 
 namespace App\Controller\Admin;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use App\Base\Interfaces\UserFactoryInterface;
 use App\Base\Interfaces\UserRepositoryInterface;
 use Broker\Domain\Service\Validator\AbstractEntityValidator;

@@ -1,6 +1,8 @@
 <?php
 return [
     'settings' => [
+        'mainEmail' => 'qcredit.test@gmail.com',
+        'defaultLanguage' => 'pl_PL',
         'displayErrorDetails' => true, // set to false in production
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
@@ -22,7 +24,6 @@ return [
           'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
           'logger' => [
             'name' => 'BROKER',
-            'loggerClass' => 'App\Base\Logger',
 /*            'path' => __DIR__ . '/../logs/broker.log',*/
           ]
         ],

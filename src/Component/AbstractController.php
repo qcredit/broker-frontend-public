@@ -6,8 +6,10 @@
  * Time: 10:38
  */
 
-namespace App\Base\Components;
+namespace App\Component;
 
+use Slim\Container;
+use Slim\Flash\Messages;
 use Slim\Http\Request;
 use Slim\Http\Response;
 
@@ -21,6 +23,10 @@ abstract class AbstractController
    * @var Response
    */
   protected $response;
+  /**
+   * @var Container
+   */
+  protected $container;
 
   /**
    * @return Request
@@ -63,10 +69,43 @@ abstract class AbstractController
   }
 
   /**
+   * @return Container
+   * @codeCoverageIgnore
+   */
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
+  /**
+   * @param Container $container
+   * @return AbstractController
+   * @codeCoverageIgnore
+   */
+  public function setContainer(Container $container)
+  {
+    $this->container = $container;
+    return $this;
+  }
+
+  /**
+   * AbstractController constructor.
+   * @param Container $container
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function __construct(Container $container)
+  {
+    $this->container = $container;
+    $this->request = $container->get('request');
+    $this->response = $container->get('response');
+  }
+
+  /**
    * @param Response $response
    * @param $viewFile
    * @param array $data
    * @return mixed
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function render(Response $response, $viewFile, $data = [])
   {
@@ -78,9 +117,10 @@ abstract class AbstractController
   }
 
   /**
-   * @param $data
+   * @param array $data
+   * @throws \Interop\Container\Exception\ContainerException
    */
-  public function prepareFlashes(&$data)
+  public function prepareFlashes(array &$data)
   {
     $flash = $this->getFlash();
 
@@ -95,9 +135,9 @@ abstract class AbstractController
   }
 
   /**
-   * @param $data
+   * @param array $data
    */
-  protected function getAdditionalData(&$data)
+  protected function getAdditionalData(array &$data)
   {
     if ($this->getResponse()->hasHeader('X-Locale'))
     {
@@ -106,7 +146,23 @@ abstract class AbstractController
   }
 
   /**
-   * @return mixed
+   * @return array|null|object
+   */
+  protected function getParsedBody()
+  {
+    $body = $this->getRequest()->getParsedBody();
+
+    if ($body === null) return [];
+
+    unset($body['csrf_name']);
+    unset($body['csrf_value']);
+
+    return $body;
+  }
+
+  /**
+   * @return Messages
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function getFlash()
   {

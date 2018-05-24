@@ -8,7 +8,7 @@
 
 namespace App\Controller;
 
-use App\Base\Components\AbstractController;
+use App\Component\AbstractController;
 use App\Middleware\LanguageSwitcher;
 use Slim\Container;
 use Slim\Http\Cookies;

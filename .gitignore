@@ -5,3 +5,6 @@
 /logs/*
 !/logs/README.md
 /tmp
+/tmp/*
+/public/cache/*
+/public/sparrow-images/*

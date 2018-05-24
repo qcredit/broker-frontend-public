@@ -63,7 +63,7 @@ $container['view'] = function($container) {
   $view->addExtension(new Twig_Extensions_Extension_I18n());
   $view->addExtension(new Twig_Extensions_Extension_Intl());
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
-  $view->addExtension(new \App\Base\Components\CsrfExtension($container->get('csrf')));
+  $view->addExtension(new \App\Component\CsrfExtension($container->get('csrf')));
 
   return $view;
 };
@@ -96,9 +96,6 @@ $container['PartnerResponseFactory'] = function($c)
 
 $container['UserRepository'] = function($container) {
   return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
-/*  return new UserRepository(
-    $container->get('db')
-  );*/
 };
 
 $container['PartnerRepository'] = function($container)
@@ -158,8 +155,8 @@ $container['AboutController'] = function($c)
 };
 $container['ContactController'] = function($c)
 {
-  $view = $c->get('view');
-  return new \App\Controller\ContactController($view);
+  $contactForm = new \App\Model\ContactForm($c, $c->get('BrokerInstance'), new \App\Base\Repository\MessageTemplateRepository($c, new \Broker\Domain\Factory\MessageFactory()), $c->get('MessageDeliveryService'));
+  return new \App\Controller\ContactController($c, $contactForm);
 };
 $container['TermsController'] = function($c)
 {
@@ -190,6 +187,7 @@ $container['PartnerExtraDataLoader'] = function($c)
 $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
+    $c->get('BrokerInstance'),
     $c->get('PartnerDataMapperRepository'),
     $c->get('MessageDeliveryService')
   );
@@ -198,6 +196,7 @@ $container['PartnerRequestsService'] = function($c)
 $container['PartnerResponseService'] = function($c)
 {
   return new PartnerResponseService(
+    $c->get('BrokerInstance'),
     new OfferFactory(),
     $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
     $c->get('PartnerDataMapperRepository')
@@ -206,24 +205,29 @@ $container['PartnerResponseService'] = function($c)
 
 $container['MessageDeliveryService'] = function ($c)
 {
-  return new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c));
+  return new \Broker\Domain\Service\MessageDeliveryService(
+    $c->get('BrokerInstance'),
+    new \App\Base\Factory\MessageDeliveryStrategyFactory($c)
+  );
 };
 
 $container['ChooseOfferService'] = function($c)
 {
   return new \Broker\Domain\Service\ChooseOfferService(
+    $c->get('BrokerInstance'),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
-    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+    $c->get('MessageDeliveryService')
   );
 };
 
 $container['PartnerUpdateService'] = function($c)
 {
   return new \Broker\Domain\Service\PartnerUpdateService(
+    $c->get('BrokerInstance'),
     $c->get('OfferRepository'),
     $c->get('PartnerDataMapperRepository'),
     new \App\Base\Validator\SchemaValidator()
@@ -238,6 +242,7 @@ $container['ApplicationController'] = function ($c)
   $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
+    $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
     $factory->createGateway($c->get('db'), 'Partner'),
@@ -245,19 +250,26 @@ $container['ApplicationController'] = function ($c)
     $schemaValidator
   );
 
-  $prepareService = new PreparePartnerRequestsService(
+  $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
+    $c->get('BrokerInstance'),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
-    new \Broker\Domain\Service\MessageDeliveryService(new \App\Base\Factory\MessageDeliveryStrategyFactory($c))
+    $c->get('MessageDeliveryService'),
+    $c->get('MessageTemplateRepository')
   );
+
+/*  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+    $newApplicationService,
+    $prepareService
+  );*/
 
   return new \App\Controller\ApplicationController(
     $prepareService,
+    $newApplicationService,
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
-    $newApplicationService,
     $c
   );
 };
@@ -265,8 +277,8 @@ $container['ApplicationController'] = function ($c)
 $container['AdminOfferController'] = function($c)
 {
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
+    $c->get('BrokerInstance'),
     new PartnerDataMapperRepository(),
-    new PartnerDeliveryGateway(),
     new PartnerRequestFactory(),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService')
@@ -281,18 +293,40 @@ $container['AdminOfferController'] = function($c)
 
 $container['LoginController'] = function ($c)
 {
-  $authService = new \App\Base\Components\GoogleAuthenticator();
+  $authService = new \App\Component\GoogleAuthenticator();
   $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
-  $authHandler = new \App\Base\Components\AuthHandler($authService, $userRepository, $c);
+  $authHandler = new \App\Component\AuthHandler($authService, $userRepository, $c);
   return new \App\Controller\Admin\LoginController($c, $authHandler);
+};
+
+$container['BlogController'] = function($c)
+{
+  $blog = new \Aasa\CommonWebSDK\BlogServiceAWS();
+  \Aasa\CommonWebSDK\Configuration::getInstance()->init(6, 'pl', 'blog');
+  return new \App\Controller\BlogController($blog, $c);
 };
 
 $container['FormBuilder'] = function($c)
 {
-  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Base\Components\SchemaHelper());
+  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Component\SchemaHelper());
 };
 
-$brokerSettings = $container->get('settings')['broker'];
-$brokerSettings['logger'] = array_merge($container->get('settings')['logger'], $brokerSettings['logger']);
+$container['notFoundHandler'] = function($c)
+{
+  return function($request, $response) use ($c)
+  {
+    $c['view']->render($response, '404.twig');
 
-Config::getInstance()->setConfig($brokerSettings);
+    return $c['response']
+      ->withStatus(404)
+      ->withHeader('Content-Type', 'text/html');
+  };
+};
+
+$container['BrokerInstance'] = function($c)
+{
+  $brokerSettings = $c->get('settings')['broker'];
+  $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
+
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']));
+};

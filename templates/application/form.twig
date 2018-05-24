@@ -27,7 +27,7 @@
     </div>
     {% if not application.errors %}
     <div class="form-block form-block-submit">
-      <div class="broker-btn broker-btn-gold">Proceed</div>
+      <div class="broker-btn broker-btn-gold">{% trans 'Proceed' %}</div>
     </div>
     {% endif %}
   </div>
@@ -62,8 +62,10 @@
                 {% if field.type is same as('select') %}
                   <select id="{{ field.name }}" name="{{ field.name }}" value="{{application.getAttribute(field.name)}}">
                     <option></option>
-                    {% for option in field.enum %}
-                    <option value="{{ option }}" {% if application.getAttribute(field.name) == option %}selected="true"{% endif %}>{{ option }}</option>
+                    {% for optionValue,optionName in field.enum %}
+                      {% if optionValue != '' %}
+                        <option value="{{ optionValue }}" {% if application.getAttribute(field.name) == optionValue %}selected="true"{% endif %}>{{ optionName }}</option>
+                      {% endif %}
                     {% endfor %}
                   </select>
                   {% else %}
@@ -81,17 +83,24 @@
     </div>
   </div>
   <!--{% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %} -->
-    <input type="hidden" name="{{csrf.keys.name}}" value="{{csrf.name}}">
-    <input type="hidden" name="{{csrf.keys.value}}" value="{{csrf.value}}">
+  </div>
   <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
 {% endblock %}
 
 {% block endBody %}
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
-  <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>
   <script type="text/javascript">
-    var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
+    require(['./src/scripts/common'], function (common) {
+      require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+
+      });
+    });
+  </script>
+{#  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
+  <script type="text/javascript" src="/src/scripts/gettext.min.js"></script>
+  <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>#}
+  <script type="text/javascript">
+/*    var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
     ajv.addKeyword('documentNr', {
       validate: function documentNr(schema,data)
       {
@@ -209,6 +218,6 @@
         .done(function( data ) {
           $('input#applicationHash').val(data.applicationHash);
         });
-    }
+    }*/
   </script>
 {% endblock %}

@@ -15,9 +15,12 @@ use Broker\System\BaseTest;
 use Monolog\Logger;
 use PHPUnit\Framework\TestCase;
 use Slim\Container;
+use Tests\Helpers\LoggerMockTrait;
 
 class SmsDeliveryTest extends BaseTest
 {
+  use LoggerMockTrait;
+
   protected $mock;
   protected $clientMock;
   protected $containerMock;
@@ -133,8 +136,10 @@ class SmsDeliveryTest extends BaseTest
     $resultMock = 'ERROR fuckyeahhh!!!';
     $mock = $this->getMockBuilder(SmsDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['resolveErrorCode', 'getClient'])
+      ->setMethods(['resolveErrorCode', 'getClient', 'getLogger'])
       ->getMock();
+    $mock->method('getLogger')
+      ->willReturn($this->loggerMock);
 
     $mock->expects($this->once())
       ->method('resolveErrorCode')
