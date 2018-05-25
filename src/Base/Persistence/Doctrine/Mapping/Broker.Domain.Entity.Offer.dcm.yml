@@ -93,4 +93,4 @@ Broker\Domain\Entity\Offer:
         onDelete: RESTRICT
         onUpdate: CASCADE
   lifecycleCallbacks:
-    preUpdate: [preStorageUpdate]
+    preUpdate: [beforeUpdate]

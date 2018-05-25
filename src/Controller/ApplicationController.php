@@ -178,7 +178,10 @@ class ApplicationController extends AbstractController
     $result = [];
     foreach ($this->getPartners() as $partner)
     {
-      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+      if ($partner->hasDataMapper())
+      {
+        $result[] = $partner->getDataMapper();
+      }
     }
 
     return $result;
@@ -191,15 +194,6 @@ class ApplicationController extends AbstractController
   protected function getPartners()
   {
     return $this->getContainer()->get('PartnerRepository')->getActivePartners();
-  }
-
-  /**
-   * @return mixed
-   * @throws \Interop\Container\Exception\ContainerException
-   */
-  protected function getPartnerDataMapperRepository()
-  {
-    return $this->getContainer()->get('PartnerDataMapperRepository');
   }
 
   /**
