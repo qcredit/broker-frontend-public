@@ -47,7 +47,7 @@
       </div>
       <div class="field text emailaddress">
         <label for="">{% trans 'Insert your email' %}*</label>
-          <input type="text" name="email" id="emailaddress" value="{{ contact.email }}"/>
+          <input type="email" name="email" id="emailaddress" value="{{ contact.email }}"/>
           {% if contact.errors.email %}<p class="rules">{{ contact.errors.email }}</p>{% endif %}
       </div>
       <div class="field textarea message">
