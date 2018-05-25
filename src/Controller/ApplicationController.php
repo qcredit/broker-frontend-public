@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Base\NewAppListener;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Model\ApplicationForm;

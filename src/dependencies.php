@@ -328,5 +328,5 @@ $container['BrokerInstance'] = function($c)
   $brokerSettings = $c->get('settings')['broker'];
   $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
 
-  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']));
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), new \Broker\System\Event\EventManager());
 };
