@@ -188,7 +188,6 @@ $container['PartnerRequestsService'] = function($c)
 {
   return new PartnerRequestsService(
     $c->get('BrokerInstance'),
-    $c->get('PartnerDataMapperRepository'),
     $c->get('MessageDeliveryService')
   );
 };
@@ -198,8 +197,7 @@ $container['PartnerResponseService'] = function($c)
   return new PartnerResponseService(
     $c->get('BrokerInstance'),
     new OfferFactory(),
-    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer')
   );
 };
 
@@ -218,7 +216,6 @@ $container['ChooseOfferService'] = function($c)
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
-    new PartnerDataMapperRepository(),
     new \App\Base\Validator\SchemaValidator(),
     $c->get('MessageDeliveryService')
   );
@@ -229,7 +226,6 @@ $container['PartnerUpdateService'] = function($c)
   return new \Broker\Domain\Service\PartnerUpdateService(
     $c->get('BrokerInstance'),
     $c->get('OfferRepository'),
-    $c->get('PartnerDataMapperRepository'),
     new \App\Base\Validator\SchemaValidator()
   );
 };
@@ -246,7 +242,6 @@ $container['ApplicationController'] = function ($c)
     new ApplicationFactory(),
     $appRepository,
     $factory->createGateway($c->get('db'), 'Partner'),
-    $c->get('PartnerDataMapperRepository'),
     $schemaValidator
   );
 
@@ -278,7 +273,6 @@ $container['AdminOfferController'] = function($c)
 {
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
     $c->get('BrokerInstance'),
-    new PartnerDataMapperRepository(),
     new PartnerRequestFactory(),
     $c->get('PartnerRequestsService'),
     $c->get('PartnerResponseService')
@@ -308,7 +302,7 @@ $container['BlogController'] = function($c)
 
 $container['FormBuilder'] = function($c)
 {
-  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Component\SchemaHelper());
+  return new \App\Component\FormBuilder($c->get('PartnerRepository'), new \App\Component\SchemaHelper());
 };
 
 $container['notFoundHandler'] = function($c)
@@ -328,5 +322,5 @@ $container['BrokerInstance'] = function($c)
   $brokerSettings = $c->get('settings')['broker'];
   $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
 
-  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']));
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), new \Broker\System\Event\EventManager());
 };
