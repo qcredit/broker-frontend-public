@@ -1,468 +1,653 @@
 #: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:63
-#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:62
 msgid "Insert your first name"
 msgstr ""
 
 #: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:70
-#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:69
 msgid "Insert your email address"
 msgstr ""
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:78
-#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:77
-msgid ""
-"*Bring to the table win-win survival strategies to ensure proactive "
-"domination. At the end of the day, going forward, a new normal that has "
-"evolved from generation X is on the runway heading towards a streamlined "
-"cloud solution. "
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:75
+msgid "Wrong email format"
 msgstr ""
 
 #: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:82
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:158
-#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:81
-#: tmp/cache/9e/9eb404bdb4b1439b4028121b13ad1459d53fe946f8e43b7145ee28b78468dec4.php:169
+msgid ""
+"*I agree to the processing by QCredit of my personal data for marketing "
+"purposes, in the scope of my address, phone number and e-mail address. I "
+"have been informed of the right to inspect the data concerning me, the right "
+"to request a change and deletion of such data, as well as the right to "
+"object to the processing of my personal data. The administrator of personal "
+"data is QCredit."
+msgstr ""
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:86
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:162
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:192
 msgid "Apply for a loan"
 msgstr ""
 
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:88
+msgid "Insert your name"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:106
+msgid "Insert your email"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:124
+msgid "Insert your message"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:143
+msgid "Send"
+msgstr ""
+
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:159
+msgid ""
+"Thank you, your message has been sent! We will get in touch with you soon."
+msgstr ""
+
+#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:97
+#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:94
+msgid "Read more"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:36
+msgid "Application offers list"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:48
+msgid ""
+"Thank you! Your application has been submitted and the loan offers will "
+"appear live within 15 minutes below:"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:56
+msgid "Personal offers"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:93
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:127
+msgid "Monthly"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:101
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:178
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:209
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:237
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:265
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:293
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:321
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:349
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:377
+msgid "Amount"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:107
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:182
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:213
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:241
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:269
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:297
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:325
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:353
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:381
+msgid "Duration"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:113
+msgid "Interest"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:119
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:186
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:217
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:245
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:273
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:301
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:329
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:357
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:385
+msgid "APR"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:135
+msgid "SIGN CONTRACT"
+msgstr ""
+
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:162
+msgid "Other offers"
+msgstr ""
+
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:154
+msgid "Proceed"
+msgstr ""
+
 #: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:26
-#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:26
 msgid "How much do you want to borrow?"
 msgstr ""
 
 #: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:44
-#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:44
 msgid "How fast do you want to pay off (months)?"
 msgstr ""
 
 #: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:62
-#: tmp/cache/ec/ece30aa5546542af972260982c667e794b9aa756f990dabea6c3614bd8bb7e6c.php:62
 msgid "Approximate monthly installment "
 msgstr ""
 
-#: src/Model/ApplicationForm.php:63
-#: src/Model/ApplicationForm.php:110
-msgid "Employed"
+#: tmp/cache/fa/fa3426f4bd79099d580e0cdad2e2908ed1ebbfc1b2532dcd6cd12712adaf9e6a.php:47
+msgid "404 - Not found"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:111
-msgid "Student"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:112
-msgid "Normal Pension"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:113
-msgid "Disability Pension"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:114
-msgid "Unemployed"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:115
-msgid "Alimony"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:116
-msgid "Self Employed"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:117
-msgid "Farmer"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:118 src/Model/ApplicationForm.php:129
-#: src/Model/ApplicationForm.php:138 src/Model/ApplicationForm.php:150
-#: src/Model/ApplicationForm.php:156
-msgid "Other"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:121
-msgid "Basic"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:122
-msgid "Secondary"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:123
-msgid "Vocational"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:124
-msgid "Bachelor of Science"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:125
-msgid "Master of Arts"
+#: tmp/cache/fa/fa3426f4bd79099d580e0cdad2e2908ed1ebbfc1b2532dcd6cd12712adaf9e6a.php:51
+msgid "The page you were requesting was not found!"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:126
-msgid "Master of Business Administration"
+msgid "Employed"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:127
-msgid "Master of Advanced Studies"
+msgid "Student"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:128
-msgid "Medical Doctorate"
+msgid "Normal Pension"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:129
+msgid "Disability Pension"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:130
+msgid "Unemployed"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:131
+msgid "Alimony"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:132
-msgid "Single"
+msgid "Self Employed"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:133
-msgid "Married"
+msgid "Farmer"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:134
-msgid "Married, but divorcing"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:135
-msgid "Divorced"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:136
-msgid "Separated"
+#: src/Model/ApplicationForm.php:134 src/Model/ApplicationForm.php:145
+#: src/Model/ApplicationForm.php:154 src/Model/ApplicationForm.php:166
+#: src/Model/ApplicationForm.php:172 src/Model/ApplicationForm.php:209
+msgid "Other"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:137
-msgid "Widow"
+msgid "Basic"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:138
+msgid "Secondary"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:139
+msgid "Vocational"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:140
+msgid "Bachelor of Science"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:141
-msgid "Personal"
+msgid "Master of Arts"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:142
-msgid "Joint"
+msgid "Master of Business Administration"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:143
-msgid "Company"
+msgid "Master of Advanced Studies"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:146
-msgid "I'm an owner"
-msgstr ""
-
-#: src/Model/ApplicationForm.php:147
-msgid "I'm renting"
+#: src/Model/ApplicationForm.php:144
+msgid "Medical Doctorate"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:148
-msgid "I'm living with family"
+msgid "Single"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:149
-msgid "Social housing"
+msgid "Married"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:150
+msgid "Married, but divorcing"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:151
+msgid "Divorced"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:152
+msgid "Separated"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:153
+msgid "Widow"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:157
+msgid "Personal"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:158
+msgid "Joint"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:159
+msgid "Company"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:162
+msgid "I'm an owner"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:163
+msgid "I'm renting"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:164
+msgid "I'm living with family"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:165
+msgid "Social housing"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:169
 msgid "Apartment"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:154
+#: src/Model/ApplicationForm.php:170
 msgid "House"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:155
+#: src/Model/ApplicationForm.php:171
 msgid "Duplex"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:173
+#: src/Model/ApplicationForm.php:189
 msgid "Account"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:174
+#: src/Model/ApplicationForm.php:190
 msgid "BlueCash"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:175
+#: src/Model/ApplicationForm.php:191
 msgid "Giro"
 msgstr ""
 
+#: src/Model/ApplicationForm.php:195
+msgid "Bills"
+msgstr ""
+
 #: src/Model/ApplicationForm.php:196
-msgid "Income type"
+msgid "Vacation"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:64
 #: src/Model/ApplicationForm.php:197
-msgid "Your monthly net income"
+msgid "Rent or Mortgage"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:65
 #: src/Model/ApplicationForm.php:198
-msgid "Employer name"
+msgid "Car"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:199
-msgid "Your position"
+msgid "Entertainment"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:200
-msgid "Organization's field of activity"
+msgid "Groceries"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:201
-msgid "Year started at the organization"
+msgid "Renovation"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:202
-msgid "Month started at the organization"
+msgid "Electronics"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:203
-msgid "Education provider"
+msgid "Furniture"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:204
-msgid "Purpose of loan"
+msgid "School"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:205
-msgid "Personal identification number"
+msgid "Tax Payment"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:206
-msgid "Street"
+msgid "Investment"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:207
-msgid "ZIP"
+msgid "Invoice Payment"
 msgstr ""
 
 #: src/Model/ApplicationForm.php:208
+msgid "Rent"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:230
+msgid "Income type"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:231
+msgid "Your monthly net income"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:232
+msgid "Employer name"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:233
+msgid "Your position"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:234
+msgid "Organization's field of activity"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:235
+msgid "Year started at the organization"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:236
+msgid "Month started at the organization"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:237
+msgid "Education provider"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:238
+msgid "Purpose of loan"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:239
+msgid "Personal identification number"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:240
+msgid "Street"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:241
+msgid "ZIP"
+msgstr ""
+
+#: src/Model/ApplicationForm.php:242
 msgid "House number"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:209
+#: src/Model/ApplicationForm.php:243
 msgid "Apartment number"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:210
+#: src/Model/ApplicationForm.php:244
 msgid "City"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:211
+#: src/Model/ApplicationForm.php:245
 msgid "Account number"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:212
+#: src/Model/ApplicationForm.php:246
 msgid "Account type"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:213
+#: src/Model/ApplicationForm.php:247
 msgid "Account holder's name"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:214
-msgid "Document number"
+#: src/Model/ApplicationForm.php:248
+msgid "ID Card number"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:215
+#: src/Model/ApplicationForm.php:249
 msgid "Phone type"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:216
+#: src/Model/ApplicationForm.php:250
 msgid "Payout method"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:217
+#: src/Model/ApplicationForm.php:251
 msgid "Education level"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:218
+#: src/Model/ApplicationForm.php:252
 msgid "Marital status"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:219
+#: src/Model/ApplicationForm.php:253
 msgid "Type of residency"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:220
+#: src/Model/ApplicationForm.php:254
 msgid "Type of property"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:221
+#: src/Model/ApplicationForm.php:255
 msgid "Loan amount"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:222
+#: src/Model/ApplicationForm.php:256
 msgid "Loan term"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:223
+#: src/Model/ApplicationForm.php:257
 msgid "First name"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:224
+#: src/Model/ApplicationForm.php:258
 msgid "Last name"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:225
+#: src/Model/ApplicationForm.php:259
 msgid "Email"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:226
+#: src/Model/ApplicationForm.php:260
 msgid "Phone"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:227
+#: src/Model/ApplicationForm.php:261
 msgid ""
 "Yes, you can send me information about promotions, competitions, offers and "
 "such."
 msgstr ""
 
-#: src/Model/ApplicationForm.php:234
+#: src/Model/ApplicationForm.php:271
 msgid "Invalid schema reference given"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:235
+#: src/Model/ApplicationForm.php:272
 msgid "Field should not have more than {items} items"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:236
+#: src/Model/ApplicationForm.php:273
 msgid "Should not contain additional properties"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:237
+#: src/Model/ApplicationForm.php:274
 msgid "Should match some schema in \"anyOf\""
 msgstr ""
 
-#: src/Model/ApplicationForm.php:238
+#: src/Model/ApplicationForm.php:275
 msgid "Must be equal to constant"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:239
+#: src/Model/ApplicationForm.php:276
 msgid "Must contain a valid item"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:240
+#: src/Model/ApplicationForm.php:277
 msgid "Invalid format provided"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:241
+#: src/Model/ApplicationForm.php:278
 msgid ""
 "Should have property \"{property1}\" when property \"{property2}\" is present"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:242
+#: src/Model/ApplicationForm.php:279
 msgid "Value must match the given list"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:243
+#: src/Model/ApplicationForm.php:280
 msgid "Must be less than {number}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:244
+#: src/Model/ApplicationForm.php:281
 msgid "Must me more than {number}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:245
+#: src/Model/ApplicationForm.php:282
 msgid "Boolean schema is false"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:246 src/Model/ApplicationForm.php:263
+#: src/Model/ApplicationForm.php:283 src/Model/ApplicationForm.php:300
 msgid "Invalid format"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:247 src/Model/ApplicationForm.php:248
+#: src/Model/ApplicationForm.php:284 src/Model/ApplicationForm.php:285
 msgid "Should be boolean"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:249
+#: src/Model/ApplicationForm.php:286
 msgid "Should be at least {maximum}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:250
+#: src/Model/ApplicationForm.php:287
 msgid "Should be less than {minimum}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:251
+#: src/Model/ApplicationForm.php:288
 msgid "Should match {schemaName} schema"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:252
+#: src/Model/ApplicationForm.php:289
 msgid "Should be less than or equal to {maximum}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:253
+#: src/Model/ApplicationForm.php:290
 msgid "Should not have more than {number} items"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:254
+#: src/Model/ApplicationForm.php:291
 msgid "Must not exceed {number} characters"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:255
+#: src/Model/ApplicationForm.php:292
 msgid "Should not have more than {number} properties"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:256
+#: src/Model/ApplicationForm.php:293
 msgid "Must have a minimum value of {minimum}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:257
+#: src/Model/ApplicationForm.php:294
 msgid "Should not have less than {number] items"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:258
+#: src/Model/ApplicationForm.php:295
 msgid "Must be at least {number} characters"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:259
+#: src/Model/ApplicationForm.php:296
 msgid "Should not have less than {number} properties"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:260
+#: src/Model/ApplicationForm.php:297
 msgid "Should be a multiple of {number}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:261
+#: src/Model/ApplicationForm.php:298
 msgid "Should not be valid according to schema in \"not\""
 msgstr ""
 
-#: src/Model/ApplicationForm.php:262
+#: src/Model/ApplicationForm.php:299
 msgid "Should match exactly one schema in \"oneOf\""
 msgstr ""
 
-#: src/Model/ApplicationForm.php:264
+#: src/Model/ApplicationForm.php:301
 msgid "Should have a property matching a required pattern"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:265
+#: src/Model/ApplicationForm.php:302
 msgid "Property name \"{name}\" is invalid"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:266
+#: src/Model/ApplicationForm.php:303
 msgid "Should have required property {property}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:267
+#: src/Model/ApplicationForm.php:304
 msgid "Should pass \"switch\" keyword validation, case {case} fails"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:268
+#: src/Model/ApplicationForm.php:305
 msgid "Must be of type {type}"
 msgstr ""
 
-#: src/Model/ApplicationForm.php:269
+#: src/Model/ApplicationForm.php:306
 msgid "Must not have duplicate items"
 msgstr ""
 
-#: src/Cron/SendChooseOfferReminder.php:214
-msgid "Check out these offers for you loan application!"
+#: src/Model/ContactForm.php:123
+msgid "Message from website"
 msgstr ""
 
-#: src/Base/Repository/MessageTemplateRepository.php:110
+#: src/Model/ContactForm.php:127
+msgid "We were unable to send your message. Please try again later."
+msgstr ""
+
+#: src/Base/Repository/MessageTemplateRepository.php:112
 msgid "Offers for your application"
 msgstr ""
 
-#: src/Base/Repository/MessageTemplateRepository.php:130
+#: src/Base/Repository/MessageTemplateRepository.php:134
+msgid "Check out these offers for you loan application!"
+msgstr ""
+
+#: src/Base/Repository/MessageTemplateRepository.php:168
 msgid "Thank you for choosing us!"
+msgstr ""
+
+#: src/Base/Validator/ContactValidator.php:45
+msgid "Invalid name!"
+msgstr ""
+
+#: src/Base/Validator/ContactValidator.php:60
+msgid "Invalid email!"
+msgstr ""
+
+#: src/Base/Validator/ContactValidator.php:75
+msgid "Invalid message!"
+msgstr ""
+
+#: src/Base/Validator/ContactValidator.php:80
+msgid "Message has to contain at least 10 characters"
+msgstr ""
+
+#: src/Base/Validator/SchemaValidator.php:121
+msgid "Please provide a number"
 msgstr ""

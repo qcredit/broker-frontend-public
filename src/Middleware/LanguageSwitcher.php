@@ -114,6 +114,31 @@ class LanguageSwitcher
   }
 
   /**
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function hasDefaultLanguage()
+  {
+    $settings = $this->getContainer()->get('settings');
+    return (!empty($settings) && isset($settings['defaultLanguage']));
+  }
+
+  /**
+   * @return mixed|null
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getDefaultLanguage()
+  {
+    $settings = $this->getContainer()->get('settings');
+    if ($this->hasDefaultLanguage())
+    {
+      return $settings['defaultLanguage'];
+    }
+
+    return null;
+  }
+
+  /**
    * LanguageSwitcher constructor.
    * @param App $application
    */
@@ -135,6 +160,10 @@ class LanguageSwitcher
     if ($this->isLanguageSetByCookie())
     {
       $this->setLanguageByCookie();
+    }
+    elseif ($this->hasDefaultLanguage())
+    {
+      $this->setLanguageByDefault();
     }
     else {
       $this->setLanguageByBrowser();
@@ -200,6 +229,15 @@ class LanguageSwitcher
     if (!$preferredLanguage) return false;
 
     return $this->setLanguage($preferredLanguage);
+  }
+
+  /**
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function setLanguageByDefault()
+  {
+    return $this->setLanguage($this->getDefaultLanguage());
   }
 
   /**

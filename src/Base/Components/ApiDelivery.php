@@ -136,23 +136,13 @@ class ApiDelivery implements MessageDeliveryInterface
       $code = $this->getClient()->getStatusCode();
       $this->getResponse()->setResponseBody($result);
 
-      if ($code == 200)
+      if (preg_match('^(?:2)\d{2}$', $code))
       {
         $this->setOk(true);
       }
-      else if ($code == 400)
-      {
-        $this->setOk(false);
-        $this->getLogger()->error(sprintf('%s API request returned with code 400!', $this->getResponse()->getPartner()->getIdentifier()), json_decode($result, true));
-      }
-      else if ($this->getClient()->hasError())
-      {
-        $this->setOk(false);
-        $this->getLogger()->critical(sprintf('%s API request got error!', $this->getResponse()->getPartner()->getIdentifier()), [$this->getClient()->getError()]);
-      }
       else {
         $this->setOk(false);
-        $this->getLogger()->critical(sprintf('%s API request returned unhandled response (code %s)!', $this->getResponse()->getPartner()->getIdentifier(), $code), [$result] ?? []);
+        $this->getLogger()->error(sprintf('API request returned non-successful return code (code %s)!', $code), [$this->getClient()->getError(), json_decode($result, true)]);
       }
     }
     catch (\Exception $ex)

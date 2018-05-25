@@ -10,7 +10,7 @@
         <a class="post-preview-link-hide" href="{{post.slug}}"><h5 class="post-preview-title">{{ post.title }}</h5></a>
         <div class="post-preview-lead"><a class="post-preview-link-hide" href="{{post.slug}}">{{ post.lead|striptags|length > 170 ? post.lead|raw|slice(0,170)|raw : post.lead|raw }}
 {{ post.lead|striptags|length > 170 ? '...' : ''}}</a></div>
-        <a class="post-preview-link" href="{{post.slug}}">Czytaj więcej &#187;</a>
+        <a class="post-preview-link" href="{{post.slug}}">{% trans "Read more" %} &#187;</a>
       </article>
     {% endfor %}
     <div class="page-pagination">

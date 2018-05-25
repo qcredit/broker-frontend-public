@@ -177,6 +177,23 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
   }
 
   /**
+   * @param $data
+   * @param $sendTo
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getContactFormMessage($data, $sendTo)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setRecipient($sendTo)
+      ->setBody($this->generateEmailContent('mail/contact-form.twig', $data))
+      ->setTitle(_('Message from website'));
+
+    return $message;
+  }
+
+  /**
    * @param string $template
    * @param array $params
    * @return string

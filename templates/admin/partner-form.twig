@@ -101,16 +101,6 @@
                         <small class="form-text text-danger">{{ partner.errors.localPassword }}</small>
                     {% endif %}
                 </div>
-                <div class="form-group">
-                  <label for="authorizationType ">Authorization Type: </label>
-                    <select id="authorizationType " name="authorizationType ">
-                        <option value=""> </option>
-                        <option value="basic" {% if partner.authorizationType is same as('basic') %} selected {% endif %} >Basic</option>
-                    </select>
-                    {% if partner.errors.authorizationType  %}
-                        <small class="form-text text-danger">{{ partner.errors.authorizationType  }}</small>
-                    {% endif %}
-                </div>
             </div>
         </div>
         <div class="row">
