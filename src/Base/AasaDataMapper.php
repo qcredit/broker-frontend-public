@@ -15,6 +15,10 @@ use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
+use Broker\Domain\Interfaces\System\Delivery\DeliveryHeadersInterface;
+use Broker\Domain\Interfaces\System\Delivery\DeliveryOptionsInterface;
+use Broker\System\Delivery\DeliveryHeaders;
+use Broker\System\Delivery\DeliveryOptions;
 use Broker\System\Error\InvalidConfigException;
 use Slim\App;
 
@@ -661,5 +665,49 @@ class AasaDataMapper implements PartnerDataMapperInterface
   protected function hasEnumMapping(string $field)
   {
     return array_key_exists($field, $this->getEnumMappings());
+  }
+
+  /**
+   * @param PartnerRequest $request
+   * @return DeliveryHeadersInterface
+   */
+  public function getDeliveryHeaders(PartnerRequest $request): DeliveryHeadersInterface
+  {
+    $headers = new DeliveryHeaders();
+    $headers->addHeader('Accept', 'application/json')
+      ->addHeader('Content-Type', 'application/json')
+      ->addHeader('Authorization', sprintf('Basic %s', base64_encode(sprintf('%s:%s', $request->getPartner()->getRemoteUsername(), $request->getPartner()->getRemotePassword()))));
+
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
+    {
+      $headers->addHeader('X-Auth-Token', $request->getOffer()->getAttribute('token'));
+    }
+
+    return $headers;
+  }
+
+  /**
+   * @param PartnerRequest $request
+   * @return DeliveryOptionsInterface
+   */
+  public function getDeliveryOptions(PartnerRequest $request): DeliveryOptionsInterface
+  {
+    $options = new DeliveryOptions();
+
+    $options->addOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl())
+      ->addOption(CURLOPT_RETURNTRANSFER, true)
+      ->addOption(CURLOPT_CONNECTTIMEOUT, 30)
+      ->addOption(CURLOPT_SSL_VERIFYPEER, false);
+
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_INITIAL)
+    {
+      $options->addOption(CURLOPT_POSTFIELDS, $request->getRequestPayload());
+    }
+    else if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
+    {
+      $options->addOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+    }
+
+    return $options;
   }
 }

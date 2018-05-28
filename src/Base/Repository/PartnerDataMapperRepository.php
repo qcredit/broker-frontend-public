@@ -10,6 +10,7 @@ namespace App\Base\Repository;
 
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
+use Broker\System\Error\InvalidConfigException;
 
 class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterface
 {
@@ -27,7 +28,7 @@ class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterfac
         $class = 'App\Base\AasaDataMapper';
         break;
       default:
-        throw new \Broker\System\Error\InvalidConfigException(sprintf('No data mapper for "%s"!', $identifier));
+        throw new InvalidConfigException(sprintf('No data mapper for "%s"!', $identifier));
         break;
     }
 

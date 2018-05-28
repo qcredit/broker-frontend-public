@@ -9,28 +9,35 @@
 namespace Tests\Unit\Base\Components;
 
 use App\Base\Components\ApiDelivery;
+use App\Base\Components\HttpClient;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
 use Broker\System\BaseTest;
-use Broker\Domain\Entity\Partner;
-use Broker\Domain\Entity\Offer;
+use Broker\System\Delivery\DeliveryOptions;
+use Broker\System\Delivery\DeliveryHeaders;
+use Slim\Container;
+use Tests\Helpers\LoggerMockTrait;
 
 class ApiDeliveryTest extends BaseTest
 {
+  use LoggerMockTrait;
+
   protected $mock;
   protected $messageMock;
   protected $requestMock;
   protected $responseMock;
+  protected $containerMock;
+  protected $clientMock;
 
   public function setUp()
   {
+    $this->containerMock = $this->createMock(Container::class);
     $this->mock = $this->getMockBuilder(ApiDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMessage', 'setClientOption', 'setClientHeaders'])
+      ->setMethods(['getMessage', 'setClientOption', 'getClient'])
       ->getMock();
 
-    $this->messageMock = (new Message())->setRelatedEntity((new PartnerRequest())->setPartner(new Partner()));
     $this->requestMock = $this->getMockBuilder(PartnerRequest::class)
       ->setMethods(['getRequestPayload', 'getType', 'getPartner', 'getOffer'])
       ->getMock();
@@ -38,14 +45,20 @@ class ApiDeliveryTest extends BaseTest
       ->setMethods(['setOk'])
       ->getMock();
 
-    $this->markTestSkipped('Refactored ApiDelivery, REVISIT!');
+    $this->messageMock = $this->getMockBuilder(Message::class)
+      ->getMock();
+    $this->messageMock->method('getRelatedEntity')
+      ->willReturn($this->requestMock);
+
+    $this->clientMock = $this->createMock(HttpClient::class);
   }
 
   public function test__construct()
   {
-    $instance = new ApiDelivery();
+    $instance = new ApiDelivery($this->containerMock);
 
-    $this->assertInternalType('resource', $instance->getClient());
+    $this->assertInstanceOf(HttpClient::class, $instance->getClient());
+    $this->assertInstanceOf(Container::class, $instance->getContainer());
     $this->assertNotNull($instance->getResponse());
   }
 
@@ -59,6 +72,8 @@ class ApiDeliveryTest extends BaseTest
       ->method('setClientOptions')
       ->willReturnSelf();
     $mock->expects($this->once())
+      ->method('setClientHeaders');
+    $mock->expects($this->once())
       ->method('getResponse')
       ->willReturn($this->responseMock);
     $mock->expects($this->once())
@@ -70,121 +85,99 @@ class ApiDeliveryTest extends BaseTest
 
   public function testSetClientOptions()
   {
-    $this->requestMock->method('getType')
-      ->willReturn(PartnerRequest::REQUEST_TYPE_INITIAL);
-    $this->requestMock->method('getRequestPayload')
-      ->willReturn([]);
-    $this->requestMock->expects($this->once())
-      ->method('getPartner')
-      ->willReturn((new Partner())->setApiTestUrl('google.ee'));
-    $this->messageMock->setRelatedEntity($this->requestMock);
-    $this->mock->expects($this->atLeastOnce())
-      ->method('getMessage')
+    $options = ['one','two','three'];
+    $this->messageMock->method('hasDeliveryOptions')
+      ->willReturn(true);
+    $this->messageMock->method('getDeliveryOptions')
+      ->willReturn((new DeliveryOptions())->setOptions($options));
+    $this->mock->method('getMessage')
       ->willReturn($this->messageMock);
 
-    $this->mock->expects($this->at(1))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_URL), $this->equalTo('google.ee'));
-    $this->mock->expects($this->at(2))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_POSTFIELDS), $this->equalTo([]));
-    $this->mock->expects($this->once())
-      ->method('setClientHeaders');
+    $this->mock->expects($this->exactly(count($options)))
+      ->method('getClient')
+      ->willReturn($this->clientMock);
 
     $this->invokeMethod($this->mock, 'setClientOptions', []);
   }
 
-  public function testSetClientOptionsOnUpdate()
+  public function testSetClientHeaders()
   {
-    $this->requestMock->method('getType')
-      ->willReturn(PartnerRequest::REQUEST_TYPE_UPDATE);
-    $this->requestMock->method('getRequestPayload')
-      ->willReturn([]);
-    $this->requestMock->expects($this->once())
-      ->method('getPartner')
-      ->willReturn((new Partner())->setApiTestUrl('google.ee'));
-    $this->requestMock->method('getOffer')
-      ->willReturn((new Offer())->setRemoteId('porno'));
-    $this->messageMock->setRelatedEntity($this->requestMock);
-    $this->mock->expects($this->once())
-      ->method('getMessage')
+    $headers = ['one','two','three','four'];
+    $this->messageMock->method('hasDeliveryHeaders')
+      ->willReturn(true);
+    $this->messageMock->method('getDeliveryHeaders')
+      ->willReturn((new DeliveryHeaders())->setHeaders($headers));
+    $this->mock->method('getMessage')
       ->willReturn($this->messageMock);
 
-    $this->mock->expects($this->at(1))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_URL), $this->equalTo('google.ee/porno'));
     $this->mock->expects($this->once())
-      ->method('setClientHeaders');
+      ->method('getClient')
+      ->willReturn($this->clientMock);
 
-    $this->invokeMethod($this->mock, 'setClientOptions', []);
-  }
-
-  public function testSetClientOptionsOnChoose()
-  {
-    $this->requestMock->method('getType')
-      ->willReturn(PartnerRequest::REQUEST_TYPE_CHOOSE);
-    $this->requestMock->method('getRequestPayload')
-      ->willReturn([]);
-    $this->requestMock->expects($this->once())
-      ->method('getPartner')
-      ->willReturn((new Partner())->setApiTestUrl('google.ee'));
-    $this->requestMock->method('getOffer')
-      ->willReturn((new Offer())->setRemoteId('porno'));
-    $this->messageMock->setRelatedEntity($this->requestMock);
-    $this->mock->expects($this->once())
-      ->method('getMessage')
-      ->willReturn($this->messageMock);
-
-    $this->mock->expects($this->at(1))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_URL), $this->equalTo('google.ee/porno'));
-    $this->mock->expects($this->at(2))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_POSTFIELDS), $this->equalTo([]));
-    $this->mock->expects($this->at(3))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_CUSTOMREQUEST), $this->equalTo('PATCH'));
-    $this->mock->expects($this->once())
-      ->method('setClientHeaders');
-    $this->mock->setResponse($this->responseMock);
-
-    $this->mock->expects($this->at(4))
-      ->method('setClientOption')
-      ->with($this->equalTo(CURLOPT_RETURNTRANSFER), $this->equalTo(true));
-
-    $this->invokeMethod($this->mock, 'setClientOptions', []);
+    $this->invokeMethod($this->mock, 'setClientHeaders', []);
   }
 
   public function testSend()
   {
     $mock = $this->getMockBuilder(ApiDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setup', 'makeCall'])
+      ->setMethods(['setup', 'getClient', 'getLogger', 'getResponse'])
       ->getMock();
 
-    $mock->expects($this->once())
-      ->method('setup');
-    $mock->expects($this->once())
-      ->method('makeCall');
+    $this->clientMock->method('getStatusCode')
+      ->willReturn(500);
+    $this->clientMock->method('send')
+      ->willReturn('');
+    $mock->method('getClient')
+      ->willReturn($this->clientMock);
+    $mock->method('getResponse')
+      ->willReturn($this->responseMock);
+    $mock->method('getLogger')
+      ->willReturn($this->loggerMock);
 
     $mock->send($this->messageMock);
+    $this->assertFalse($mock->isOk());
   }
 
-  public function testMakeCallWithException()
+  public function testSendWithSuccessCall()
   {
     $mock = $this->getMockBuilder(ApiDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getClient', 'getResponse'])
+      ->setMethods(['setup', 'getClient', 'getLogger', 'getResponse'])
       ->getMock();
 
+    $this->clientMock->method('getStatusCode')
+      ->willReturn(210);
+    $this->clientMock->method('send')
+      ->willReturn('');
     $mock->method('getClient')
-      ->willThrowException(new \Exception('oh wtf'));
-    $this->responseMock->expects($this->once())
-      ->method('setOk')
-      ->with($this->equalTo(false));
+      ->willReturn($this->clientMock);
+    $mock->method('getResponse')
+      ->willReturn($this->responseMock);
+    $mock->method('getLogger')
+      ->willReturn($this->loggerMock);
+
+    $mock->send($this->messageMock);
+    $this->assertTrue($mock->isOk());
+  }
+
+  public function testSendWithExceptionThrown()
+  {
+    $mock = $this->getMockBuilder(ApiDelivery::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['setup', 'getClient', 'getLogger', 'getResponse'])
+      ->getMock();
+
+    $this->clientMock->method('send')
+      ->willThrowException(new \Exception());
+    $mock->method('getClient')
+      ->willReturn($this->clientMock);
+    $mock->method('getLogger')
+      ->willReturn($this->loggerMock);
     $mock->method('getResponse')
       ->willReturn($this->responseMock);
 
-    $this->invokeMethod($mock, 'makeCall', []);
+    $mock->send($this->messageMock);
+    $this->assertFalse($mock->isOk());
   }
 }
