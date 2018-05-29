@@ -1,6 +1,8 @@
 Broker\Domain\Entity\Partner:
   type: entity
   table: partner
+  entityListeners:
+    App\Base\Persistence\Doctrine\EntityListener\PartnerListener:
   id:
     id:
       type: integer

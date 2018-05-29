@@ -136,13 +136,13 @@ class ApiDelivery implements MessageDeliveryInterface
       $code = $this->getClient()->getStatusCode();
       $this->getResponse()->setResponseBody($result);
 
-      if (preg_match('^(?:2)\d{2}$', $code))
+      if (preg_match('/^(?:2)\d{2}$/', $code))
       {
         $this->setOk(true);
       }
       else {
         $this->setOk(false);
-        $this->getLogger()->error(sprintf('API request returned non-successful return code (code %s)!', $code), [$this->getClient()->getError(), json_decode($result, true)]);
+        $this->getLogger()->error(sprintf('API request returned non-successful return code (code %s)!', $code), [$this->getClient()->getError(), $result]);
       }
     }
     catch (\Exception $ex)
@@ -157,6 +157,7 @@ class ApiDelivery implements MessageDeliveryInterface
   protected function setup()
   {
     $this->setClientOptions();
+    $this->setClientHeaders();
     $request = $this->getMessage()->getRelatedEntity();
     $this->getResponse()->setPartner($request->getPartner())
       ->setType($request->getType());
@@ -164,45 +165,27 @@ class ApiDelivery implements MessageDeliveryInterface
 
   protected function setClientOptions()
   {
-    $request = $this->getMessage()->getRelatedEntity();
-    $username = $request->getPartner()->getRemoteUsername();
-    $password = $request->getPartner()->getRemotePassword();
-
-    $headers = [
-      'Accept: application/json',
-      'Content-Type: application/json',
-      sprintf('Authorization: Basic %s', base64_encode(sprintf('%s:%s', $username, $password)))
-    ];
-
-    $options = [];
-
-    if ($request->getType() === PartnerRequest::REQUEST_TYPE_INITIAL)
+    if ($this->getMessage()->hasDeliveryOptions())
     {
-      $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl();
-      $options[CURLOPT_POSTFIELDS] = $request->getRequestPayload();
+      foreach ($this->getMessage()->getDeliveryOptions()->getOptions() as $name => $value)
+      {
+        $this->getClient()->setClientOption($name, $value);
+      }
     }
-    else if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
+  }
+
+  protected function setClientHeaders()
+  {
+    if ($this->getMessage()->hasDeliveryHeaders())
     {
-      $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId();
-      $headers[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
+      $headers = [];
+      foreach ($this->getMessage()->getDeliveryHeaders()->getHeaders() as $name => $value)
+      {
+        $headers[] = sprintf('%s: %s', $name, $value);
+      }
+
+      $this->getClient()->setClientHeaders($headers);
     }
-    else if ($request->getType() === PartnerRequest::REQUEST_TYPE_CHOOSE)
-    {
-      $headers[] = sprintf('X-Auth-Token: %s', $request->getOffer()->getDataElement('token'));
-      $options[CURLOPT_URL] = $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId();
-      $options[CURLOPT_POSTFIELDS] = $request->getRequestPayload();
-      $options[CURLOPT_CUSTOMREQUEST] = 'PATCH';
-
-      //@todo Move this line away from herrre!!!!11!1!11!!1
-      $this->getResponse()->setOffer($request->getOffer());
-    }
-
-    $options[CURLOPT_RETURNTRANSFER] = true;
-    $options[CURLOPT_SSL_VERIFYPEER] = false;
-    $options[CURLOPT_CONNECTTIMEOUT] = 30;
-
-    $this->getClient()->setClientOptions($options);
-    $this->getClient()->setClientHeaders($headers);
   }
 
   /**

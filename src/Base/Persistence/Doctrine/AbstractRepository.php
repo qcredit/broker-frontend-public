@@ -125,16 +125,20 @@ abstract class AbstractRepository implements RepositoryInterface
 
   /**
    * @param $entity
-   * @return $this
-   * @throws \Doctrine\ORM\ORMException
-   * @throws \Doctrine\ORM\OptimisticLockException
+   * @return bool
    */
-  public function save($entity)
+  public function save($entity): bool
   {
-    $this->entityManager->persist($entity);
-    $this->entityManager->flush();
+    try {
+      $this->entityManager->persist($entity);
+      $this->entityManager->flush();
 
-    return $this;
+      return true;
+    }
+    catch (\Exception $ex)
+    {
+      return false;
+    }
   }
 
   /**

@@ -3,7 +3,7 @@ return [
     'settings' => [
         'mainEmail' => 'qcredit.test@gmail.com',
         'defaultLanguage' => 'pl_PL',
-        'displayErrorDetails' => true, // set to false in production
+        'displayErrorDetails' => getenv('ENV_TYPE') == 'production' ? false : true,
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
         // Renderer settings
@@ -15,7 +15,7 @@ return [
         'logger' => [
             'name' => 'WEBSITE',
             'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
-            'level' => \Monolog\Logger::DEBUG,
+            'level' => getenv('ENV_TYPE') == 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
             ]

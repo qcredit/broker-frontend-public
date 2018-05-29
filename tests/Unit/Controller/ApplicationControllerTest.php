@@ -138,12 +138,6 @@ class ApplicationControllerTest extends BaseTest
       ->setMethods(['getPartnerDataMapperRepository', 'getPartners'])
       ->getMock();
 
-    $dataMapperMock = $this->createMock(PartnerDataMapperRepository::class, ['getDataMapperByPartnerId']);
-    $dataMapperMock->method('getDataMapperByPartnerId')
-      ->with($this->equalTo('AASA'));
-    $mock->expects($this->once())
-      ->method('getPartnerDataMapperRepository')
-      ->willReturn($dataMapperMock);
     $mock->expects($this->once())
       ->method('getPartners')
       ->willReturn([(new Partner())->setIdentifier('AASA')]);

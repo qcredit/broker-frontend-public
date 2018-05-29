@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Base\NewAppListener;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Model\ApplicationForm;
@@ -15,6 +16,7 @@ use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
 use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
 use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
+use Broker\Domain\Interfaces\Service\PostApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PrepareAndSendApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
@@ -30,10 +32,6 @@ use App\Component\SchemaHelper;
 class ApplicationController extends AbstractController
 {
   /**
-   * @var PreparePartnerRequestsServiceInterface
-   */
-  protected $prepareService;
-  /**
    * @var ApplicationRepositoryInterface
    */
   protected $appRepository;
@@ -46,54 +44,33 @@ class ApplicationController extends AbstractController
    */
   protected $chooseOfferService;
   /**
-   * @var NewApplicationServiceInterface
+   * @var PostApplicationServiceInterface
    */
-  protected $newApplicationService;
+  protected $postApplicationService;
 
   /**
    * ApplicationController constructor.
-   * @param PreparePartnerRequestsServiceInterface $preparePartnerRequestsService
-   * @param NewApplicationServiceInterface $newApplicationService
    * @param ApplicationRepositoryInterface $appRepository
    * @param OfferRepositoryInterface $offerRepository
    * @param ChooseOfferServiceInterface $chooseOfferService
+   * @param PostApplicationServiceInterface $postApplicationService
    * @param $container
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function __construct(
-    PreparePartnerRequestsServiceInterface $preparePartnerRequestsService,
-    NewApplicationServiceInterface $newApplicationService,
     ApplicationRepositoryInterface $appRepository,
     OfferRepositoryInterface $offerRepository,
     ChooseOfferServiceInterface $chooseOfferService,
+    PostApplicationServiceInterface $postApplicationService,
     $container
   )
   {
-    $this->prepareService = $preparePartnerRequestsService;
     $this->appRepository = $appRepository;
     $this->offerRepository = $offerRepository;
     $this->chooseOfferService = $chooseOfferService;
-    $this->newApplicationService = $newApplicationService;
+    $this->postApplicationService = $postApplicationService;
 
     parent::__construct($container);
-  }
-
-  /**
-   * @return PreparePartnerRequestsServiceInterface
-   */
-  public function getPrepareService()
-  {
-    return $this->prepareService;
-  }
-
-  /**
-   * @param PreparePartnerRequestsServiceInterface $prepareService
-   * @return $this
-   */
-  public function setPrepareService(PreparePartnerRequestsServiceInterface $prepareService)
-  {
-    $this->prepareService = $prepareService;
-    return $this;
   }
 
   /**
@@ -151,21 +128,11 @@ class ApplicationController extends AbstractController
   }
 
   /**
-   * @return NewApplicationServiceInterface
+   * @return PostApplicationServiceInterface
    */
-  public function getNewApplicationService()
+  public function getPostApplicationService()
   {
-    return $this->newApplicationService;
-  }
-
-  /**
-   * @param NewApplicationServiceInterface $newApplicationService
-   * @return ApplicationController
-   */
-  public function setNewApplicationService(NewApplicationServiceInterface $newApplicationService)
-  {
-    $this->newApplicationService = $newApplicationService;
-    return $this;
+    return $this->postApplicationService;
   }
 
   /**
@@ -177,7 +144,10 @@ class ApplicationController extends AbstractController
     $result = [];
     foreach ($this->getPartners() as $partner)
     {
-      $result[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+      if ($partner->hasDataMapper())
+      {
+        $result[] = $partner->getDataMapper();
+      }
     }
 
     return $result;
@@ -190,15 +160,6 @@ class ApplicationController extends AbstractController
   protected function getPartners()
   {
     return $this->getContainer()->get('PartnerRepository')->getActivePartners();
-  }
-
-  /**
-   * @return mixed
-   * @throws \Interop\Container\Exception\ContainerException
-   */
-  protected function getPartnerDataMapperRepository()
-  {
-    return $this->getContainer()->get('PartnerDataMapperRepository');
   }
 
   /**
@@ -232,42 +193,37 @@ class ApplicationController extends AbstractController
     $data['fields'] = $this->getFormBuilder()->getFormFields();
 
     $postData = $this->getParsedBody();
-    $newAppService = $this->getNewApplicationService();
 
-    $newAppService->setValidationEnabled(false);
-    $newAppService->run();
-
-    if ($request->isPost() && $this->isAjax($request))
-    {
-      $newAppService->setPostData($postData)->run();
-      $newAppService->saveApp();
-      return $response->withJson(['applicationHash' => $newAppService->getApplication()->getApplicationHash()]);
-    }
+    $service = $this->getPostApplicationService()->setValidationEnabled(false);
 
     if ($request->isPost())
     {
-      $newAppService->setPostData($postData);
-      if (!$this->isFromFrontpage())
-      {
-        $newAppService->setValidationEnabled(true);
-      }
-
-      if ($newAppService->run())
-      {
-        $this->getPrepareService()->setApplication($newAppService->getApplication())
-          ->setData($newAppService->getPreparedData());
-
-        if ($this->getPrepareService()->run())
-        {
-          $newAppService->saveApp();
-          return $response->withRedirect(sprintf('application/%s', $newAppService->getApplication()->getApplicationHash()));
-        }
-      }
-
-      $data['application'] = $newAppService->getApplication();
+      $service->setSaveAppOnValidation(true);
+      $service->setPostData($postData);
     }
 
-    $data['application'] = $newAppService->getApplication();
+    if ($request->isPost() && !$this->isAjax($request))
+    {
+      if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
+      if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
+    }
+
+    $service->run();
+
+    if ($request->isPost() && $this->isAjax($request))
+    {
+      return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
+    }
+
+    if ($request->isPost() && !$this->isAjax($request))
+    {
+      if ($this->getPostApplicationService()->isSuccess())
+      {
+        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
+      }
+    }
+
+    $data['application'] = $service->getApplication();
 
     return $this->render($response, 'application/form.twig', $data);
   }
