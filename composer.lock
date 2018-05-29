@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "3257f1676a992c08a181a1e3f1f432e4",
+    "content-hash": "7a8aafedc9a884d02bd650ad17a23db0",
     "packages": [
         {
             "name": "aasa-global/CommonWebSDK",
@@ -45,12 +45,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "145462dac49931bb3222e667ff0e81e64705bab2"
+                "reference": "60cc5d78d71c4360bfe8d2073144332eb4025511"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/145462dac49931bb3222e667ff0e81e64705bab2",
-                "reference": "145462dac49931bb3222e667ff0e81e64705bab2",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/60cc5d78d71c4360bfe8d2073144332eb4025511",
+                "reference": "60cc5d78d71c4360bfe8d2073144332eb4025511",
                 "shasum": ""
             },
             "require-dev": {
@@ -68,7 +68,7 @@
                 "source": "https://github.com/aasa-global/broker/tree/master",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-05-25T11:21:07+00:00"
+            "time": "2018-05-28T12:26:23+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
@@ -1523,6 +1523,74 @@
                 "schema"
             ],
             "time": "2018-02-14T22:26:30+00:00"
+        },
+        {
+            "name": "malkusch/lock",
+            "version": "v1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-lock/lock.git",
+                "reference": "741eb270587f67cbe2f6d9a4163e536ab811c394"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-lock/lock/zipball/741eb270587f67cbe2f6d9a4163e536ab811c394",
+                "reference": "741eb270587f67cbe2f6d9a4163e536ab811c394",
+                "shasum": ""
+            },
+            "require": {
+                "paragonie/random_compat": "^1|^2",
+                "php": ">=5.6",
+                "psr/log": "^1"
+            },
+            "require-dev": {
+                "ext-memcached": "*",
+                "ext-pdo_mysql": "*",
+                "ext-pdo_sqlite": "*",
+                "ext-redis": "^2.2.4|^3.0|^4.0",
+                "kriswallsmith/spork": "^0.3",
+                "mikey179/vfsstream": "^1.5.0",
+                "php-mock/php-mock-phpunit": "^1",
+                "phpunit/phpunit": "^5",
+                "predis/predis": "~1.0",
+                "zetacomponents/system-information": "~1.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "malkusch\\lock\\": "classes/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "Markus Malkusch",
+                    "email": "markus@malkusch.de",
+                    "homepage": "http://markus.malkusch.de",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Willem Stuursma-Ruwen",
+                    "email": "willem@stuursma.name",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Mutex library for exclusive code execution.",
+            "homepage": "https://github.com/malkusch/lock",
+            "keywords": [
+                "cas",
+                "flock",
+                "lock",
+                "memcache",
+                "mutex",
+                "redis",
+                "redlock",
+                "semaphore"
+            ],
+            "time": "2018-04-15T09:36:06+00:00"
         },
         {
             "name": "monolog/monolog",

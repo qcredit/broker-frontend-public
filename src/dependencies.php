@@ -3,12 +3,11 @@ use Broker\System\Config;
 use App\Base\Repository\PartnerDataMapperRepository;
 use Broker\Domain\Service\NewApplicationService;
 use Broker\Domain\Factory\ApplicationFactory;
-use Broker\Domain\Service\PartnerRequestsService;
 use Broker\Domain\Service\PartnerResponseService;
 use Broker\Domain\Factory\OfferFactory;
-use Broker\Domain\Service\PreparePartnerRequestsService;
 use Broker\Domain\Factory\PartnerRequestFactory;
 use Syslogic\DoctrineJsonFunctions\Query\AST\Functions\Mysql as DqlFunctions;
+use Broker\Domain\Service\SendPartnerRequestsService;
 
 $container = $app->getContainer();
 
@@ -184,9 +183,9 @@ $container['PartnerExtraDataLoader'] = function($c)
   return new \App\Base\Repository\PartnerExtraDataLoader($c->get('PartnerDataMapperRepository'));
 };
 
-$container['PartnerRequestsService'] = function($c)
+$container['SendPartnerRequestsService'] = function($c)
 {
-  return new PartnerRequestsService(
+  return new SendPartnerRequestsService(
     $c->get('BrokerInstance'),
     $c->get('MessageDeliveryService')
   );
@@ -213,7 +212,7 @@ $container['ChooseOfferService'] = function($c)
 {
   return new \Broker\Domain\Service\ChooseOfferService(
     $c->get('BrokerInstance'),
-    $c->get('PartnerRequestsService'),
+    $c->get('SendPartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     new \App\Base\Validator\SchemaValidator(),
@@ -230,7 +229,7 @@ $container['PartnerUpdateService'] = function($c)
   );
 };
 
-$container['ApplicationController'] = function ($c)
+$container['PostApplicationService'] = function($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
@@ -247,24 +246,37 @@ $container['ApplicationController'] = function ($c)
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
     $c->get('BrokerInstance'),
-    $c->get('PartnerRequestsService'),
+    $c->get('SendPartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     $c->get('MessageDeliveryService'),
     $c->get('MessageTemplateRepository')
   );
 
-/*  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+  $createRequestsService = new \Broker\Domain\Service\CreatePartnerRequestsService($c->get('BrokerInstance'), new PartnerRequestFactory());
+
+  return new \Broker\Domain\Service\PostApplicationService(
+    $c->get('BrokerInstance'),
     $newApplicationService,
-    $prepareService
-  );*/
+    $createRequestsService,
+    $c->get('SendPartnerRequestsService'),
+    $c->get('PartnerResponseService'),
+    $c->get('MessageTemplateRepository'),
+    $c->get('MessageDeliveryService')
+    );
+};
+
+$container['ApplicationController'] = function ($c)
+{
+  $factory = $c->get('RepositoryFactory');
+  $appRepository = $factory->createGateway($c->get('db'), 'Application');
+  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
 
   return new \App\Controller\ApplicationController(
-    $prepareService,
-    $newApplicationService,
     $appRepository,
     $offerRepository,
     $c->get('ChooseOfferService'),
+    $c->get('PostApplicationService'),
     $c
   );
 };
@@ -274,7 +286,7 @@ $container['AdminOfferController'] = function($c)
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
     $c->get('BrokerInstance'),
     new PartnerRequestFactory(),
-    $c->get('PartnerRequestsService'),
+    $c->get('SendPartnerRequestsService'),
     $c->get('PartnerResponseService')
   );
 
