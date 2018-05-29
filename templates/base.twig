@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id" content="876809952895-5hg5tv7pj9d0f2bt3chijj2j68ttmi5m.apps.googleusercontent.com">
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ base_url }}/{% if route == 'index' %}{% else %}{{ route }}{% endif %}" />
+    <meta property="og:url" content="{{ currentUrl }}" />
     <meta property="og:image" content="https://www.qcredit.pl/src/images/qcredit_logo.png" />
     <meta property="og:locale" content="pl_PL" />
     {% if block('post_meta') is defined %}
       {{ block('post_meta') }}
     {% endif %}
-    <link rel="canonical" href="{{ base_url }}/{% if route == 'index' %}{% else %}{{ route }}{% endif %}" />
+    <link rel="canonical" href="{{ currentUrl }}" />
     <link rel="shortcut icon" type="image/png" href="src/images/favicon.png"/>
   <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
