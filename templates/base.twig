@@ -5,12 +5,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id" content="876809952895-5hg5tv7pj9d0f2bt3chijj2j68ttmi5m.apps.googleusercontent.com">
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="{{ currentUrl }}" />
-    <meta property="og:image" content="https://www.qcredit.pl/src/images/qcredit_logo.png" />
     <meta property="og:locale" content="pl_PL" />
     {% if block('post_meta') is defined %}
       {{ block('post_meta') }}
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="{{ currentUrl }}" />
+      <meta property="og:image" content="https://www.qcredit.pl/src/images/qcredit_logo.png" />
+    {% elseif block('post_meta_blog') is defined %}
+      {{ block('post_meta_blog') }}
     {% endif %}
     <link rel="canonical" href="{{ currentUrl }}" />
     <link rel="shortcut icon" type="image/png" href="src/images/favicon.png"/>
@@ -19,7 +21,7 @@
     <link rel="stylesheet" href="/src/styles/style.css">
     <title>{{ block('title') }}</title>
 </head>
-<body>{{ currentUrl }}
+<body>
   <header class="page-header">
       <nav class="navbar fixed-top navbar-expand-md navbar-light">
       <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/qcredit_logo.png" alt="logo"></a>
