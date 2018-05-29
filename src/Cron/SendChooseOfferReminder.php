@@ -165,6 +165,8 @@ class SendChooseOfferReminder implements BaseJob
       $this->sendNeededReminders($app);
     }
 
+    sleep(30);
+
     return true;
   }
 

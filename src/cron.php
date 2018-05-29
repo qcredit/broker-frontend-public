@@ -33,9 +33,6 @@ $mutex->check(function() use ($jobby) {
     },
     'schedule' => '*/2 * * * *',
   ]);
-
-  sleep(2);
-
 });
 
 $jobby->run();
