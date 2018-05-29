@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-05-24 14:22+0300\n"
+"PO-Revision-Date: 2018-05-29 10:10+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -13,19 +13,19 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.0.7\n"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:63
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:62
 msgid "Insert your first name"
 msgstr "Imię"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:70
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:69
 msgid "Insert your email address"
 msgstr "Adres email"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:75
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:74
 msgid "Wrong email format"
 msgstr "Niepoprawny format"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:82
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:81
 msgid ""
 "*I agree to the processing by QCredit of my personal data for marketing "
 "purposes, in the scope of my address, phone number and e-mail address. I "
@@ -35,29 +35,29 @@ msgid ""
 "data is QCredit."
 msgstr ""
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:86
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:162
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:85
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:161
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:192
 msgid "Apply for a loan"
 msgstr "Aplikuj o pożyczkę"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:88
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:90
 msgid "Insert your name"
 msgstr "Imię"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:106
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:108
 msgid "Insert your email"
 msgstr "Adres email"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:124
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:126
 msgid "Insert your message"
 msgstr "Wiadomość"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:143
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:145
 msgid "Send"
 msgstr "Wysłać"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:159
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:161
 msgid ""
 "Thank you, your message has been sent! We will get in touch with you soon."
 msgstr "Dziękujemy, wiadomość została wysłana! Wkrótce się odezwiamy"
@@ -631,11 +631,7 @@ msgstr ""
 msgid "Must not have duplicate items"
 msgstr ""
 
-#: src/Model/ContactForm.php:123
-msgid "Message from website"
-msgstr ""
-
-#: src/Model/ContactForm.php:127
+#: src/Model/ContactForm.php:155
 msgid "We were unable to send your message. Please try again later."
 msgstr "Nie udało się wysłać Twojej wiadomości. Spróbuj ponownie później."
 
@@ -651,21 +647,29 @@ msgstr "Sprawdź te oferty i złóż wniosek o pożyczkę!"
 msgid "Thank you for choosing us!"
 msgstr "Dziękujemy za wybranie naszej oferty !"
 
-#: src/Base/Validator/ContactValidator.php:45
+#: src/Base/Repository/MessageTemplateRepository.php:191
+msgid "Message from website"
+msgstr ""
+
+#: src/Base/Validator/ContactValidator.php:47
 msgid "Invalid name!"
 msgstr "Niepoprawny format!"
 
-#: src/Base/Validator/ContactValidator.php:60
+#: src/Base/Validator/ContactValidator.php:62
 msgid "Invalid email!"
 msgstr "Niepoprawny format!"
 
-#: src/Base/Validator/ContactValidator.php:75
+#: src/Base/Validator/ContactValidator.php:77
 msgid "Invalid message!"
 msgstr "Niepoprawny format!"
 
-#: src/Base/Validator/ContactValidator.php:80
+#: src/Base/Validator/ContactValidator.php:82
 msgid "Message has to contain at least 10 characters"
 msgstr "Wiadomość musi zawierać conajmniej 10 znaków"
+
+#: src/Base/Validator/ContactValidator.php:98
+msgid "Please verify you are a human!"
+msgstr ""
 
 #: src/Base/Validator/SchemaValidator.php:121
 msgid "Please provide a number"
