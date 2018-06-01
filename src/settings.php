@@ -1,7 +1,7 @@
 <?php
 return [
     'settings' => [
-        'mainEmail' => 'qcredit.test@gmail.com',
+        'mainEmail' => 'info@qcredit.pl',
         'defaultLanguage' => 'pl_PL',
         'displayErrorDetails' => getenv('ENV_TYPE') == 'production' ? false : true,
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
