@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-05-24 14:22+0300\n"
+"PO-Revision-Date: 2018-06-01 10:22+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -13,19 +13,19 @@ msgstr ""
 "|| n%100>=20) ? 1 : 2);\n"
 "X-Generator: Poedit 2.0.7\n"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:63
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:73
 msgid "Insert your first name"
 msgstr "Imię"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:70
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:80
 msgid "Insert your email address"
 msgstr "Adres email"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:75
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:85
 msgid "Wrong email format"
 msgstr "Niepoprawny format"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:82
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:92
 msgid ""
 "*I agree to the processing by QCredit of my personal data for marketing "
 "purposes, in the scope of my address, phone number and e-mail address. I "
@@ -35,43 +35,50 @@ msgid ""
 "data is QCredit."
 msgstr ""
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:86
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:162
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:192
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:96
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:172
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:201
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:232
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:263
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:294
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:325
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:356
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:387
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:418
 msgid "Apply for a loan"
 msgstr "Aplikuj o pożyczkę"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:88
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:101
 msgid "Insert your name"
 msgstr "Imię"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:106
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:119
 msgid "Insert your email"
 msgstr "Adres email"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:124
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:137
 msgid "Insert your message"
 msgstr "Wiadomość"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:143
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:156
 msgid "Send"
 msgstr "Wysłać"
 
-#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:159
+#: tmp/cache/78/787510e5c2d5b8706626c693b03396899b58555f4c8d1caee26b6ec8b34e481f.php:172
 msgid ""
 "Thank you, your message has been sent! We will get in touch with you soon."
 msgstr "Dziękujemy, wiadomość została wysłana! Wkrótce się odezwiamy"
 
-#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:97
-#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:94
+#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:108
+#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:105
 msgid "Read more"
 msgstr "Czytaj więcej"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:36
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:37
 msgid "Application offers list"
 msgstr "Lista ofert dla aplikacji"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:48
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:57
 msgid ""
 "Thank you! Your application has been submitted and the loan offers will "
 "appear live within 15 minutes below:"
@@ -79,66 +86,70 @@ msgstr ""
 "Dziękujemy! Twój wniosek został złożony, a oferty pożyczki pojawią się na "
 "żywo w ciągu 15 minut poniżej:"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:56
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:65
 msgid "Personal offers"
 msgstr "Oferty dla osób prywatnych"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:93
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:127
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:102
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:136
 msgid "Monthly"
 msgstr "Miesięczna spłata"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:101
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:178
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:209
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:237
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:265
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:293
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:321
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:349
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:377
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:110
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:187
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:218
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:249
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:280
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:311
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:342
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:373
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:404
 msgid "Amount"
 msgstr "Kwota"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:107
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:182
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:213
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:241
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:269
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:297
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:325
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:353
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:381
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:116
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:191
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:222
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:253
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:284
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:315
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:346
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:377
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:408
 msgid "Duration"
 msgstr "Okres spłaty"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:113
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:122
 msgid "Interest"
 msgstr "Oprocentowanie"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:119
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:186
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:217
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:245
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:273
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:301
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:329
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:357
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:385
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:128
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:195
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:226
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:257
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:288
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:319
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:350
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:381
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:412
 msgid "APR"
 msgstr "RRSO"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:135
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:144
 msgid "SIGN CONTRACT"
 msgstr "Podpisz umowę"
 
-#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:162
+#: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:171
 msgid "Other offers"
 msgstr "Inne oferty"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:154
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:163
 msgid "Proceed"
 msgstr "Kontynuować"
+
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:358
+msgid "Confirm"
+msgstr "Potwierdzam"
 
 #: tmp/cache/cb/cb367f3e4ceae6fa932bad56e08daa7a58095afb731d975754ed3ebb35f41e74.php:26
 msgid "How much do you want to borrow?"
@@ -631,11 +642,7 @@ msgstr ""
 msgid "Must not have duplicate items"
 msgstr ""
 
-#: src/Model/ContactForm.php:123
-msgid "Message from website"
-msgstr ""
-
-#: src/Model/ContactForm.php:127
+#: src/Model/ContactForm.php:154
 msgid "We were unable to send your message. Please try again later."
 msgstr "Nie udało się wysłać Twojej wiadomości. Spróbuj ponownie później."
 
@@ -651,21 +658,29 @@ msgstr "Sprawdź te oferty i złóż wniosek o pożyczkę!"
 msgid "Thank you for choosing us!"
 msgstr "Dziękujemy za wybranie naszej oferty !"
 
-#: src/Base/Validator/ContactValidator.php:45
+#: src/Base/Repository/MessageTemplateRepository.php:191
+msgid "Message from website"
+msgstr ""
+
+#: src/Base/Validator/ContactValidator.php:47
 msgid "Invalid name!"
 msgstr "Niepoprawny format!"
 
-#: src/Base/Validator/ContactValidator.php:60
+#: src/Base/Validator/ContactValidator.php:62
 msgid "Invalid email!"
 msgstr "Niepoprawny format!"
 
-#: src/Base/Validator/ContactValidator.php:75
+#: src/Base/Validator/ContactValidator.php:77
 msgid "Invalid message!"
 msgstr "Niepoprawny format!"
 
-#: src/Base/Validator/ContactValidator.php:80
+#: src/Base/Validator/ContactValidator.php:82
 msgid "Message has to contain at least 10 characters"
 msgstr "Wiadomość musi zawierać conajmniej 10 znaków"
+
+#: src/Base/Validator/ContactValidator.php:98
+msgid "Please verify you are a human!"
+msgstr ""
 
 #: src/Base/Validator/SchemaValidator.php:121
 msgid "Please provide a number"

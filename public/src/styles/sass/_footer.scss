@@ -27,6 +27,10 @@
     font-size: 0.8125rem;
   }
 }
+// Hide google rating on page
+.footer-section-grating {
+  display: none;
+}
 
 @media only screen and (min-width: 768px) {
   .lower-footer {
