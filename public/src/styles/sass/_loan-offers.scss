@@ -33,8 +33,22 @@
     margin-left: 1rem;
   }
   .loan-offerer-website {
-    font-size: 0.875rem;
+    display: none;
+    font-size: 0.75rem;
     color: #a1a1a1;
+  }
+}
+.affiliate-offer-container {
+  .loan-offer-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .loan-offer-head{
+    min-height: 60px;
+    .loan-offerer-website {
+     display: block;
+    }
   }
 }
 .text-focus {
@@ -109,6 +123,11 @@
   }
 }
 
+@media only screen and (min-width: 360px) {
+  .loan-offerer-website {
+    display: block;
+  }
+}
 @media only screen and (min-width: 768px) {
   .offer-list-head {
     margin: 3rem 0;
@@ -116,32 +135,7 @@
   .personal-offer-container .loan-offer-body span {
     flex: 0 0 146px;
   }
-  .affiliate-offer-container {
-    flex-direction: row;
-    .loan-offer-head {
-      flex: 0 0 160px;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      border-bottom-width: 0px;
-      padding: 0 .5rem;
-      .loan-offerer-name {
-        display: none;
-      }
-    }
-    .loan-offer-body {
-      span {
-        font-size: .875rem;
-        text-align: left;
-      }
-    }
-    .loan-offer-footer {
-      padding: 0 .5rem;
-      .broker-btn {
-        padding: 1rem;
-      }
-    }
-  }
+
 }
 
 @media only screen and (min-width: 769px) {
@@ -165,8 +159,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    padding-top: 0;
-    padding-bottom: 0;
+    padding: 0 1rem;
     border-bottom: 0;
     .loan-offerer-logo-container {
       margin-bottom: .1875rem;
@@ -193,6 +186,7 @@
     .text-focus {
       position: static;
       margin-bottom: .375rem;
+      text-align: center;
       span{
         flex: none;
         margin: 0;
@@ -207,7 +201,8 @@
   .affiliate-offer-container {
     .loan-offer-head {
       flex-direction: column;
-      flex: 0 0 230px;
+      flex: 0 0 140px;
+      padding: 0 0 0 2rem;
     }
     .loan-offer-body span {
       font-size: .875rem;
@@ -236,9 +231,15 @@
     margin-left: 2rem;
     justify-content: center;
   }
-  .affiliate-offer-container .loan-offer-head {
-    flex-direction: row;
-    flex: 0 0 270px;
+  .affiliate-offer-container {
+    .loan-offer-head {
+      flex-direction: row;
+      flex: 0 0 250px;
+      padding-right: 0;
+    }
+    .loan-offer-body {
+      margin-left: 0;
+    }
   }
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
