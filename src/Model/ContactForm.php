@@ -101,6 +101,7 @@ class ContactForm
    * @param BrokerInstance $instance
    * @param MessageTemplateRepositoryInterface $messageTemplateRepository
    * @param MessageDeliveryServiceInterface $messageDeliveryService
+   * @throws \Interop\Container\Exception\ContainerException
    */
   public function __construct(
     Container $container,
