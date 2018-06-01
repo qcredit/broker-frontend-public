@@ -64,7 +64,15 @@ $container['view'] = function($container) {
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Component\CsrfExtension($container->get('csrf')));
 
-  $view->getEnvironment()->addGlobal('currentUrl', $container->get('request')->getUri());
+  if (!preg_match('/\/application\/+\S.*$/', $container->get('request')->getUri()->getPath()))
+  {
+    $view->getEnvironment()->addGlobal('currentUrl', $container->get('request')->getUri());
+  }
+  else
+  {
+    $view->getEnvironment()->addGlobal('currentUrl', '/application');
+
+  }
 
   return $view;
 };
