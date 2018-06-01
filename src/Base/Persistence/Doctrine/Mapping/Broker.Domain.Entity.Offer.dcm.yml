@@ -30,7 +30,9 @@ Broker\Domain\Entity\Offer:
       nullable: true
     monthlyFee:
       column: monthly_fee
-      type: integer
+      type: decimal
+      precision: 8
+      scale: 2
       nullable: true
     rejectedDate:
       column: rejected_date
