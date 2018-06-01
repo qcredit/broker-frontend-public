@@ -84,7 +84,7 @@
       {% endif %}
     {% endfor %}
     <div class="form-block form-block-submit">
-      <button type="submit" class="broker-btn broker-btn-gold broker-btn-send">Submit form</button>
+      <button type="submit" class="broker-btn broker-btn-gold broker-btn-send">{% trans 'Confirm' %}</button>
     </div>
   </div>
   <!--{% if application.errors.payoutMethod %}<p class="rules">{{ application.errors.payoutMethod }}</p>{% endif %} -->
@@ -97,132 +97,7 @@
   <script type="text/javascript">
     require(['./src/scripts/common'], function (common) {
       require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
-
       });
     });
-  </script>
-{#  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min.js"></script>
-  <script type="text/javascript" src="/src/scripts/gettext.min.js"></script>
-  <script type="text/javascript" src="/src/scripts/ajv.broker.js"></script>#}
-  <script type="text/javascript">
-/*    var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
-    ajv.addKeyword('documentNr', {
-      validate: function documentNr(schema,data)
-      {
-        documentNr.errors = [];
-        if (!validatePolandDocument(data))
-        {
-          documentNr.errors.push({
-            "keyword": "documentNr",
-            "dataPath": ".documentNr",
-            "params": {},
-            "message": "Invalid format provided."
-          });
-
-          return false;
-        }
-
-        return true;
-      },
-      errors: true
-    });
-
-    var schema = '';
-    fetch('/application/schema')
-      .then(function(response) {
-        return response.json();
-      }).then(function (json) { schema = json; });
-
-    $('button[type="submit"]').click(function(e) {
-      var valid = ajv.validate(schema, getFormData());
-
-      if (!valid) {
-        e.preventDefault();
-        localize_en(ajv.errors);
-        console.log(ajv.errors);
-        console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
-        var error_list = ajv.errors;
-        for(var i = 0; i < error_list.length; i++) {
-          var err_target = $('.field'+error_list[i].dataPath);
-          var err_msg = error_list[i].message;
-          if(err_msg){
-            if(!err_target.find('.rules').length){
-              err_target.addClass('error');
-              err_target.append('<p class="rules">'+err_msg+'</p>');
-            } else {
-              err_target.find('.rules').text(err_msg);
-            }
-          }
-        }
-      }
-    });
-
-    $('input').on('change', function(e) {
-      var attrId = $(this)[0].id;
-      var formValues = getFormData();
-      var parent = $(this).parent();
-      runSchemaLive(attrId, formValues, parent);
-    });
-    $('select').on('change', function(e) {
-      var attrId = $(this)[0].id;
-      var formValues = getFormData();
-      var parent = $(this).parent();
-      runSchemaLive(attrId, formValues, parent);
-    });
-
-    $('.step-1 .broker-btn').on('click', function() {
-      var formValues = getFormData();
-      var errors_list = []
-      $('.step-1').find('div.field').each(function(){
-        var parent = $(this);
-        var attrId = parent.find('input').attr('id');
-        var noerrors = runSchemaLive(attrId, formValues, parent);
-        return errors_list.push(noerrors);
-      });
-      if(errors_list[0] || errors_list[1] || errors_list[2] ) { // IF one of the three is validated
-        // Show rest of the form & save data
-        $('.step-1 .broker-btn').css('display','none');
-        $('.step-2').css('display','block');
-        sendpreData(formValues);
-      } else if(!errors_list[0] && !errors_list[1] && !errors_list[2]) {  // IF all are empty
-        // show form but don't send data yet
-        $('.step-1 .broker-btn').css('display','none');
-        $('.step-2').css('display','block');
-      }
-      console.log("error status: " + errors_list)
-    });
-
-    function runSchemaLive(attrId,formValues,parent) {
-      ajv.validate(schema, formValues);
-      localize_en(ajv.errors);
-      var err_obj = searchError(attrId, ajv.errors);
-      if(err_obj) {
-        parent.addClass('error');
-        if(!parent.find('.rules').length){
-          parent.append('<p class="rules">'+err_obj.message+'</p>');
-          console.log(err_obj);
-        } else {
-          parent.find('.rules').text(err_obj.message);
-        }
-        return false;
-      } else {
-        parent.removeClass('error');
-        parent.find('p.rules').text('');
-        return true;
-      }
-    }
-
-    function sendpreData(values) {
-      values['{{ csrf.keys.name }}'] = '{{ csrf.name }}';
-      values['{{ csrf.keys.value }}'] = '{{ csrf.value }}';
-      $.ajax({
-        method: "POST",
-        url: "/application",
-        data: values
-      })
-        .done(function( data ) {
-          $('input#applicationHash').val(data.applicationHash);
-        });
-    }*/
   </script>
 {% endblock %}
