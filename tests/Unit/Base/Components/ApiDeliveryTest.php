@@ -83,6 +83,24 @@ class ApiDeliveryTest extends BaseTest
     $this->invokeMethod($mock, 'setup', []);
   }
 
+  public function testSetClientOptionsWithNoOptions()
+  {
+    $messageMock = $this->getMockBuilder(Message::class)
+      ->setMethods(['getDeliveryMethod', 'hasDeliveryOptions'])
+      ->getMock();
+
+    $messageMock->method('hasDeliveryOptions')
+      ->willReturn(false);
+
+    $messageMock->expects($this->never())
+      ->method('getDeliveryMethod');
+
+    $this->mock->method('getMessage')
+      ->willReturn($messageMock);
+
+    $this->invokeMethod($this->mock, 'setClientOptions', []);
+  }
+
   public function testSetClientOptions()
   {
     $options = ['one','two','three'];
@@ -154,6 +172,8 @@ class ApiDeliveryTest extends BaseTest
       ->willReturn($this->clientMock);
     $mock->method('getResponse')
       ->willReturn($this->responseMock);
+    $this->loggerMock->expects($this->never())
+      ->method('critical');
     $mock->method('getLogger')
       ->willReturn($this->loggerMock);
 
@@ -172,6 +192,8 @@ class ApiDeliveryTest extends BaseTest
       ->willThrowException(new \Exception());
     $mock->method('getClient')
       ->willReturn($this->clientMock);
+    $this->loggerMock->expects($this->once())
+      ->method('critical');
     $mock->method('getLogger')
       ->willReturn($this->loggerMock);
     $mock->method('getResponse')
