@@ -12,16 +12,18 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/common-web-sdk.git",
-                "reference": "11ebf33d639bf16b49e2872b0bc8321248896b63"
+                "reference": "5672a5e4b55547a45b5b2238525d27accbcb9bd6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/common-web-sdk/zipball/11ebf33d639bf16b49e2872b0bc8321248896b63",
-                "reference": "11ebf33d639bf16b49e2872b0bc8321248896b63",
+                "url": "https://api.github.com/repos/aasa-global/common-web-sdk/zipball/5672a5e4b55547a45b5b2238525d27accbcb9bd6",
+                "reference": "5672a5e4b55547a45b5b2238525d27accbcb9bd6",
                 "shasum": ""
             },
             "require": {
-                "aws/aws-sdk-php": "2.*"
+                "aws/aws-sdk-php": "2.*",
+                "php": "^7.0",
+                "psr/simple-cache": "~1.0"
             },
             "require-dev": {
                 "phpunit/phpunit": "5.0.*"
@@ -34,10 +36,10 @@
             },
             "description": "Common web SDK",
             "support": {
-                "source": "https://github.com/aasa-global/common-web-sdk/tree/master",
+                "source": "https://github.com/aasa-global/common-web-sdk/tree/FRONT-981",
                 "issues": "https://github.com/aasa-global/common-web-sdk/issues"
             },
-            "time": "2018-05-24T08:26:03+00:00"
+            "time": "2018-05-24T11:34:32+00:00"
         },
         {
             "name": "aasa/broker",
@@ -991,16 +993,16 @@
         },
         {
             "name": "google/apiclient-services",
-            "version": "v0.60",
+            "version": "v0.61",
             "source": {
                 "type": "git",
                 "url": "https://github.com/google/google-api-php-client-services.git",
-                "reference": "80404044884da8ed7e6fcbd4fa96e2ad7db46e94"
+                "reference": "f7221039fda179b3f5096a6272b38706f2a6fcd0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/80404044884da8ed7e6fcbd4fa96e2ad7db46e94",
-                "reference": "80404044884da8ed7e6fcbd4fa96e2ad7db46e94",
+                "url": "https://api.github.com/repos/google/google-api-php-client-services/zipball/f7221039fda179b3f5096a6272b38706f2a6fcd0",
+                "reference": "f7221039fda179b3f5096a6272b38706f2a6fcd0",
                 "shasum": ""
             },
             "require": {
@@ -1024,7 +1026,7 @@
             "keywords": [
                 "google"
             ],
-            "time": "2018-05-19T00:23:51+00:00"
+            "time": "2018-05-26T00:23:39+00:00"
         },
         {
             "name": "google/auth",
@@ -2260,6 +2262,54 @@
             "time": "2016-10-10T12:19:37+00:00"
         },
         {
+            "name": "psr/simple-cache",
+            "version": "1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/php-fig/simple-cache.git",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/php-fig/simple-cache/zipball/408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "reference": "408d5eafb83c57f6365a3ca330ff23aa4a5fa39b",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Psr\\SimpleCache\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "PHP-FIG",
+                    "homepage": "http://www.php-fig.org/"
+                }
+            ],
+            "description": "Common interfaces for simple caching",
+            "keywords": [
+                "cache",
+                "caching",
+                "psr",
+                "psr-16",
+                "simple-cache"
+            ],
+            "time": "2017-10-23T01:57:42+00:00"
+        },
+        {
             "name": "respect/validation",
             "version": "1.1.16",
             "source": {
@@ -2719,7 +2769,7 @@
         },
         {
             "name": "symfony/config",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/config.git",
@@ -2782,7 +2832,7 @@
         },
         {
             "name": "symfony/console",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
@@ -2850,7 +2900,7 @@
         },
         {
             "name": "symfony/event-dispatcher",
-            "version": "v2.8.40",
+            "version": "v2.8.41",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/event-dispatcher.git",
@@ -2910,7 +2960,7 @@
         },
         {
             "name": "symfony/filesystem",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/filesystem.git",
@@ -2960,7 +3010,7 @@
         },
         {
             "name": "symfony/inflector",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/inflector.git",
@@ -3240,7 +3290,7 @@
         },
         {
             "name": "symfony/process",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
@@ -3289,7 +3339,7 @@
         },
         {
             "name": "symfony/property-access",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/property-access.git",
@@ -3356,7 +3406,7 @@
         },
         {
             "name": "symfony/serializer",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/serializer.git",
@@ -3435,7 +3485,7 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v4.0.10",
+            "version": "v4.0.11",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
@@ -4035,16 +4085,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "6.0.4",
+            "version": "6.0.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "52187754b0eed0b8159f62a6fa30073327e8c2ca"
+                "reference": "4cab20a326d14de7575a8e235c70d879b569a57a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/52187754b0eed0b8159f62a6fa30073327e8c2ca",
-                "reference": "52187754b0eed0b8159f62a6fa30073327e8c2ca",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/4cab20a326d14de7575a8e235c70d879b569a57a",
+                "reference": "4cab20a326d14de7575a8e235c70d879b569a57a",
                 "shasum": ""
             },
             "require": {
@@ -4094,7 +4144,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-04-29T14:59:09+00:00"
+            "time": "2018-05-28T11:49:20+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
