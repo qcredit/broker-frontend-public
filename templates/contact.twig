@@ -1,9 +1,15 @@
 {% extends 'base.twig' %}
-{% block title %}Contact{% endblock %}
+{% block title %}Kontakt{% endblock %}
+{% block post_meta %}
+<meta property="og:title" content="Qcredit title | QCredit" />
+<meta property="og:description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
+<meta name="description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
+{% endblock %}
+
 {% block container %}
 <div class="row justify-content-lg-center">
   <section class="col-sm-12 text-center">
-    <h1>Contact</h1>
+    <h1>Kontakt</h1>
   </section>
   <div class="col-sm-12 col-md-6 col-lg-4 contact-page-blocks">
     <div class="row">
@@ -17,9 +23,9 @@
           <p class="circle-block-description"><a href="mailto:broker@broker.pl">broker@broker.pl</a></p>
         </div>
       </div>
-      <div class="col-sm-12 col-lg-9 circle-block">
+      <div class="col-sm-12 col-lg-9 circle-block d-none">
         <a href="tel:0564783131">
-          <div class="circle-block-icon"><img src="src/images/ic_phone.svg" alt="Phone"></div>
+          <div class="circle-block-icon"><img src="src/images/ic_phone.svg" alt="Telefon"></div>
         </a>
         <div class="circle-block-text">
           <span class="circle-block-step text-uppercase">&nbsp;</span>
@@ -28,11 +34,13 @@
         </div>
       </div>
       <div class="col-sm-12 col-lg-9 circle-block">
-        <div class="circle-block-icon"><img src="src/images/ic_location.svg" alt="Location"></div>
+        <a href="https://www.google.ee/maps/place/Hrubieszowska+6A,+Warszawa,+Poland/data=!4m2!3m1!1s0x471ecc9cf3b7358b:0xa6384456f72ff3a5?sa=X&ved=0ahUKEwiC4dTA16DbAhUJCywKHWGYCvYQ8gEIJTAA" target="_blank">
+          <div class="circle-block-icon"><img src="src/images/ic_location.svg" alt="Adres"></div>
+        </a>
         <div class="circle-block-text">
           <span class="circle-block-step text-uppercase">&nbsp;</span>
           <p class="circle-block-heading"><strong>Adres</strong></p>
-          <p class="circle-block-description">Lorem ipsum 28-2, Tallinn, 15554 Estonia</p>
+          <p class="circle-block-description">Warszawa (01-209) Ul. Hrubieszowska 6A</p>
         </div>
       </div>
     </div>
@@ -41,32 +49,32 @@
     {% if not sent %}
     <form action="" class="contact-form" method="post">
       <div class="field text name">
-        <label for="">Insert your name*</label>
+        <label for="">{% trans 'Insert your name' %}*</label>
           <input type="text" name="name" id="name" value="{{ contact.name }}"/>
           {% if contact.errors.name %}<p class="rules">{{ contact.errors.name }}</p>{% endif %}
       </div>
       <div class="field text emailaddress">
-        <label for="">Insert your email*</label>
-          <input type="text" name="email" id="emailaddress" value="{{ contact.email }}"/>
+        <label for="">{% trans 'Insert your email' %}*</label>
+          <input type="email" name="email" id="emailaddress" value="{{ contact.email }}"/>
           {% if contact.errors.email %}<p class="rules">{{ contact.errors.email }}</p>{% endif %}
       </div>
       <div class="field textarea message">
-        <label for="">Insert your message*</label>
+        <label for="">{% trans 'Insert your message' %}*</label>
         <textarea name="message" id="message">{{ contact.message }}</textarea>
         {% if contact.errors.message %}<p class="rules">{{ contact.errors.message }}</p>{% endif %}
       </div>
       <div class="field submit contact-submit">
         <div class="g-recaptcha" data-sitekey="6LcXOVcUAAAAANnuR_uQeQXfojsIPmkR1NcCBkDx"></div>
-        <button class="btn broker-btn broker-btn-gold" disabled>Send</button>
+        <button class="btn broker-btn broker-btn-gold" disabled>{% trans 'Send' %}</button>
       </div>
       {% if contact.errors.general %}<p class="rules">{{ contact.errors.general }}</p>{% endif %}
     </form>
     {% else %}
-    <p>Thank you, your message has been sent! We will get in touch with you soon.</p>
+    <p>{% trans 'Thank you, your message has been sent! We will get in touch with you soon.' %}</p>
     {% endif %}
   </div>
 </div>
 {% endblock %}
 {% block endBody %}
-  <script src='https://www.google.com/recaptcha/api.js'></script>
+  <script src='https://www.google.com/recaptcha/api.js?hl=pl'></script>
 {% endblock %}

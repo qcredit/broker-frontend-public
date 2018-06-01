@@ -1,6 +1,7 @@
 /* Home page hero sectio */
 .home-hero {
-  padding-bottom: 1.25rem;
+  //padding-bottom: 1.25rem;
+  padding-bottom: 0;
   background-color: $mainlight;
   .home-hero-left {
     h2{
@@ -70,7 +71,7 @@
 @media only screen and (min-width: 501px) {
   .landing-form {
     .field {
-      flex: 0 0 175px;
+      flex: 1 0 175px;
     }
   }
 }
@@ -101,9 +102,9 @@
 @media only screen and (min-width: 768px) {
   .home-hero {
     position: relative;
-    min-height: 400px;
+    min-height: 600px;
     align-items: center;
-    background: url(../images/hero-bg2.jpg) no-repeat;
+    background: url(../images/hero-bg2-reversed.jpg) no-repeat;
     background-position: 50% 10%;
     background-size: cover;
     .landing-form {
