@@ -14,7 +14,7 @@ $jobby = new Jobby\Jobby([
 $mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder');
 
 $mutex->synchronized(function() use ($jobby) {
-  echo 'MUTEX lock granted...';
+  echo date('Y-m-d H:i:s') . ' MUTEX lock granted...';
   $jobby->add('SendChooseOfferReminder', [
     'closure' => function() {
       require(__DIR__ . '/../vendor/autoload.php');
@@ -31,9 +31,6 @@ $mutex->synchronized(function() use ($jobby) {
     },
     'schedule' => '*/2 * * * *',
   ]);
-
-  sleep(3);
-
 });
 
 $jobby->run();
