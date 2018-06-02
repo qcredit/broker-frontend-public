@@ -14,7 +14,7 @@ $jobby = new Jobby\Jobby([
 $mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder', 10);
 
 $mutex->check(function() {
-  return false;
+  return true;
 })->then(function() use ($jobby) {
   $jobby->add('SendChooseOfferReminder', [
     'closure' => function() {
