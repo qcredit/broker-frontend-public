@@ -11,9 +11,11 @@ $jobby = new Jobby\Jobby([
   'output' => '/var/log/apache2/broker-cron.log'
 ]);
 
-$mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder');
+$mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder', 10);
 
-$mutex->synchronized(function() use ($jobby) {
+$mutex->check(function() {
+  return true;
+})->then(function() use ($jobby) {
   echo date('Y-m-d H:i:s') . ' MUTEX lock granted...';
   $jobby->add('SendChooseOfferReminder', [
     'closure' => function() {
@@ -31,6 +33,10 @@ $mutex->synchronized(function() use ($jobby) {
     },
     'schedule' => '*/2 * * * *',
   ]);
+
+  echo date('Y-m-d H:i:s') . ' MUTEX job done, setting timeout...';
+  sleep(5);
+  echo date('Y-m-d H:i:s') . ' MUTEX timeout passed...';
 });
 
 $jobby->run();
