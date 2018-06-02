@@ -14,9 +14,8 @@ $jobby = new Jobby\Jobby([
 $mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder', 10);
 
 $mutex->check(function() {
-  return true;
+  return false;
 })->then(function() use ($jobby) {
-  echo date('Y-m-d H:i:s') . ' MUTEX lock granted...';
   $jobby->add('SendChooseOfferReminder', [
     'closure' => function() {
       require(__DIR__ . '/../vendor/autoload.php');
@@ -34,9 +33,7 @@ $mutex->check(function() {
     'schedule' => '*/2 * * * *',
   ]);
 
-  echo date('Y-m-d H:i:s') . ' MUTEX job done, setting timeout...';
   sleep(5);
-  echo date('Y-m-d H:i:s') . ' MUTEX timeout passed...';
 });
 
 $jobby->run();
