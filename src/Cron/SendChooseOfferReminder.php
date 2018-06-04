@@ -235,10 +235,10 @@ class SendChooseOfferReminder implements BaseJob
   {
     if (($message->getType() === Message::MESSAGE_TYPE_SMS)
       && ($this->getContainer()->get('settings')['broker']['environment'] !== 'production')
-      && (strpos($message->getRecipient(), '@') == false)
+      && (strpos($message->getRecipient(), '@') === false)
     )
     {
-      $this->getLogger()->debug('Skipping sending reminder for current environment...');
+      $this->getLogger()->debug('Skipping sending reminder for current environment...', ['recipient' => $message->getRecipient()]);
       return true;
     }
 
