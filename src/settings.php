@@ -78,7 +78,7 @@ return [
           'apiUrl' => 'https://api.sendgrid.com/v3/mail/send'
         ],
         'messente' => [
-          'apiUrl' => 'http://api2.messente.com/send_sms/',
+          'apiUrl' => 'https://api2.messente.com/send_sms/',
           'senderName' => 'qCredit',
           'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
           'username' => '301cda77166de101a7751b1f1a6322df',
