@@ -11,12 +11,11 @@ $jobby = new Jobby\Jobby([
   'output' => '/var/log/apache2/broker-cron.log'
 ]);
 
-$mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder');
+$mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder', 10);
 
-$mutex->check(function() use ($jobby) {
+$mutex->check(function() {
   return true;
 })->then(function() use ($jobby) {
-
   $jobby->add('SendChooseOfferReminder', [
     'closure' => function() {
       require(__DIR__ . '/../vendor/autoload.php');
@@ -34,8 +33,7 @@ $mutex->check(function() use ($jobby) {
     'schedule' => '*/2 * * * *',
   ]);
 
-  sleep(3);
-
+  sleep(5);
 });
 
 $jobby->run();
