@@ -71,8 +71,9 @@ $container['view'] = function($container) {
   else
   {
     $view->getEnvironment()->addGlobal('currentUrl', '/application');
-
   }
+
+  $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
 
   return $view;
 };
