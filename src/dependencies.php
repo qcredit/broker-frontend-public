@@ -74,6 +74,8 @@ $container['view'] = function($container) {
 
   }
 
+  $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
+
   return $view;
 };
 
