@@ -244,7 +244,7 @@ class SendChooseOfferReminder implements BaseJob
 
     if (strpos($message->getRecipient(), '@') !== false)
     {
-      $recipient = substr($message->getRecipient(), strpos($message, '@') + 1);
+      $recipient = substr($message->getRecipient(), strpos($message->getRecipient(), '@') + 1);
       $message->setRecipient($recipient);
     }
 
