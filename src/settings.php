@@ -81,8 +81,8 @@ return [
           'apiUrl' => 'http://api2.messente.com/send_sms/',
           'senderName' => 'qCredit',
           'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
-          'username' => 'f7303187a44e84450d202debecb507ea',
-          'password' => '849556537bdce14bb797b42d32641a36'
+          'username' => '301cda77166de101a7751b1f1a6322df',
+          'password' => '0197a62dce2ce9db1ab09437197b09b7'
         ]
     ],
 ];
