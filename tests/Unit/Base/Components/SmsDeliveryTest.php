@@ -119,8 +119,10 @@ class SmsDeliveryTest extends BaseTest
     $resultMock = 'OK fuckyeahhh!!!';
     $mock = $this->getMockBuilder(SmsDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['resolveErrorCode', 'getClient'])
+      ->setMethods(['resolveErrorCode', 'getClient', 'getLogger'])
       ->getMock();
+    $mock->method('getLogger')
+      ->willReturn($this->loggerMock);
 
     $mock->expects($this->never())
       ->method('resolveErrorCode')
