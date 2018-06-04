@@ -127,7 +127,7 @@ class ApiController
   public function updateAction(Request $request, Response $response, $args)
   {
     $data = $request->getParsedBody() ?? [];
-    $this->getLogger()->debug('Incoming Aasa update request...');
+    $this->getLogger()->debug('Incoming Aasa update request...', $data);
 
     $partnerResponse = $this->preparePartnerResponse($data, $request->getAttribute('partner'));
 

@@ -170,6 +170,13 @@
 }
 
 /* CONTACT PAGE FORM */
+.contact-form .field.emailaddress, .contact-form .field.textarea {
+  margin-bottom: 1.5rem;
+}
+.contact-form .field.textarea label {
+  width: 96%;
+  background: #fff;
+}
 .contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label {
   top: -0.55rem;
 }

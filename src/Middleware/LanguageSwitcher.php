@@ -186,7 +186,7 @@ class LanguageSwitcher
     $this->putenv(sprintf('LC_ALL=%s.UTF-8', $language));
     if ($this->setSystemLocale(LC_ALL, sprintf('%s.utf8', $language)) === false)
     {
-      $this->getContainer()->get('logger')->debug(sprintf('Unable to set PHP locale (%s)!', $language));
+      //$this->getContainer()->get('logger')->debug(sprintf('Unable to set PHP locale (%s)!', $language));
       return false;
     }
 

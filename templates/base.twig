@@ -5,16 +5,23 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-signin-client_id" content="876809952895-5hg5tv7pj9d0f2bt3chijj2j68ttmi5m.apps.googleusercontent.com">
+    <meta property="og:locale" content="pl_PL" />
     {% if block('post_meta') is defined %}
       {{ block('post_meta') }}
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="{{ currentUrl }}" />
+      <meta property="og:image" content="https://www.qcredit.pl/src/images/qcredit_logo.png" />
+    {% elseif block('post_meta_blog') is defined %}
+      {{ block('post_meta_blog') }}
     {% endif %}
+    <link rel="canonical" href="{{ currentUrl }}" />
     <link rel="shortcut icon" type="image/png" href="src/images/favicon.png"/>
   <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/src/styles/style.css">
     <title>{{ block('title') }}</title>
 </head>
-<body>{{ currentUrl }}
+<body>
   <header class="page-header">
       <nav class="navbar fixed-top navbar-expand-md navbar-light">
       <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/qcredit_logo.png" alt="logo"></a>
@@ -23,7 +30,7 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
+          <li class="nav-item d-none">
             <a class="nav-link nav-link-outline text-uppercase" href="/application">Weź pożyczkę</a>
           </li>
           <li class="nav-item">
@@ -62,8 +69,8 @@
                   <li><a href="/">Strona domowa</a></li>
                   <li><a href="/about">O nas</a></li>
                   <li><a href="/contact">Kontakt</a></li>
-                  <li><a href="/terms">Zasady i Warunki</a></li>
-                  <li><a href="/application">Weź pożyczkę</a></li>
+                  <li class="d-none"><a href="/terms">Zasady i Warunki</a></li>
+                  <li class="d-none"><a href="/application">Weź pożyczkę</a></li>
                 </ul>
               </nav>
             </div>
@@ -71,16 +78,21 @@
               <p class="footer-heading font-weight-bold text-uppercase">Kontakt</p>
               <p class="footer-contacts">
                 <span><strong>Email:</strong> <a href="mailto:info@qcredit.pl">info@qcredit.pl</a></span>
-                <span><strong>Adres:</strong> Lorem ipsum 28, 115 50,
-                Tallinn, Estonia</span>
-                <span><strong>Telefon:</strong> <a href="tel:+4834311254">+4834311254</a></span>
+                <span><strong>Adres:</strong> Warszawa (01-209) Ul. Hrubieszowska 6A</span>
               </p>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-3 footer-section footer-section-grating">
+              <p class="footer-heading font-weight-bold text-uppercase">Rating</p>
+              <span class="rating-desc" itemscope="" itemtype="http://schema.org/Product">
+                 <span itemprop="name">QCredit</span>
+                 <span itemprop="aggregateRating" itemscope="" itemtype="http://schema.org/AggregateRating"> Rated <span itemprop="ratingValue">4.5</span> / 5 based on <span itemprop="reviewCount">57</span> reviews.</span>
+              </span>
             </div>
           </section>
         </div>
       </div>
       <section class="row lower-footer text-center">
-        <p>Copyright © 2018 Brokers - Lorem ipsum 28, 115 50, Tallinn, Estonia</p>
+        <p>Copyright © 2018 Qcredit - Warszawa (01-209) Ul. Hrubieszowska 6A</p>
       </section>
     </div>
   </footer>
