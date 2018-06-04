@@ -234,15 +234,15 @@ class SendChooseOfferReminder implements BaseJob
   protected function sendReminder(Message $message)
   {
     if (($message->getType() === Message::MESSAGE_TYPE_SMS)
-      && $this->getContainer()->get('settings')['broker']['environment'] !== 'production'
-      && strpos($message->getRecipient(), '@') == false
+      && ($this->getContainer()->get('settings')['broker']['environment'] !== 'production')
+      && (strpos($message->getRecipient(), '@') == false)
     )
     {
       $this->getLogger()->debug('Skipping sending reminder for current environment...');
       return true;
     }
 
-    if (strpos($message->getRecipient(), '@') !== false)
+    if (($message->getType() === Message::MESSAGE_TYPE_SMS) && (strpos($message->getRecipient(), '@') !== false))
     {
       $recipient = substr($message->getRecipient(), strpos($message->getRecipient(), '@') + 1);
       $message->setRecipient($recipient);
