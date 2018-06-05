@@ -173,7 +173,7 @@
         "type": "string",
         "minLength": 9,
         "example": "+372987654321",
-        "pattern": "^@?(\\+48)?(\\d{9})\\b",
+        "pattern": "^@?((\\+48)?(\\d{9})|(\\+372)\\d{7,8})\\b",
         "section": "general",
         "order": 1
       },
