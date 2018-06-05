@@ -74,6 +74,8 @@ $container['view'] = function($container) {
 
   }
 
+  $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
+
   return $view;
 };
 
@@ -149,7 +151,7 @@ $container['AdminApplicationController'] = function($c)
 $container['UserController'] = function($c) {
   $userFactory = new \App\Base\Factory\UserFactory();
   $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
-  $validator = new \App\Base\Validator\UserValidator();
+  $validator = new \App\Base\Validator\UserValidator($c->get('BrokerInstance'));
   return new \App\Controller\Admin\UserController($userRepository, $userFactory, $validator, $c);
 };
 

@@ -138,6 +138,7 @@ class SmsDelivery implements MessageDeliveryInterface
    */
   protected function handleResult($result)
   {
+    $this->getLogger()->debug('API response from SMS provider:', [$result]);
     list($resp, $code) = explode(' ', $result);
 
     if ($resp != 'OK')
