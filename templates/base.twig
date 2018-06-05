@@ -27,7 +27,14 @@
 </head>
 <body>
   <header class="page-header">
-      <nav class="navbar fixed-top navbar-expand-md navbar-light">
+    <nav class="navbar fixed-top navbar-expand-md navbar-light">
+      {% if environment != 'production' %}
+        <div class="position-absolute" style="left: 50%; transform: translateX(-50%); top: 0.5rem">
+          <div class="col text-center text-danger">
+            <h4>TEST-SERVER!</h4>
+          </div>
+        </div>
+      {% endif %}
       <a class="navbar-brand" href="/"><img class="navbar-brand" src="/src/images/qcredit_logo.png" alt="logo"></a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
