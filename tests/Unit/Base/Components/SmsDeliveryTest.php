@@ -22,6 +22,7 @@ class SmsDeliveryTest extends BaseTest
   use LoggerMockTrait;
 
   protected $mock;
+  protected $altMock;
   protected $clientMock;
   protected $containerMock;
   protected $settings;
@@ -34,6 +35,10 @@ class SmsDeliveryTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['getContainer'])
       ->getMock();
+    $this->altMock = $this->getMockBuilder(SmsDelivery::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['getSmsSettings', 'getSettings', 'getMessage'])
+      ->getMock();
     $this->clientMock = $this->getMockBuilder(HttpClient::class)
       ->setMethods(['isOk', 'setBaseUrl'])
       ->getMock();
@@ -43,7 +48,11 @@ class SmsDeliveryTest extends BaseTest
         'apiUrl' => 'www.ee',
         'username' => 'chicken',
         'password' => 'umbrella',
-        'senderName' => 'QueenOfEngland'
+        'senderName' => 'QueenOfEngland',
+        'whitelist' => [
+          '123123',
+          '555555'
+        ]
       ]
     ];
   }
@@ -59,7 +68,7 @@ class SmsDeliveryTest extends BaseTest
   {
     $mock = $this->getMockBuilder(SmsDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setup', 'setMessage', 'getClient', 'handleResult'])
+      ->setMethods(['setup', 'setMessage', 'getClient', 'handleResult', 'isNumberWhitelisted'])
       ->getMock();
 
     $mock->expects($this->once())
@@ -67,6 +76,9 @@ class SmsDeliveryTest extends BaseTest
       ->willReturn(true);
     $mock->expects($this->once())
       ->method('setMessage')
+      ->willReturn(true);
+    $mock->expects($this->once())
+      ->method('isNumberWhitelisted')
       ->willReturn(true);
 
     $this->clientMock->method('isOk')
@@ -88,7 +100,7 @@ class SmsDeliveryTest extends BaseTest
       ->method('getContainer')
       ->willReturn($this->containerMock);
 
-    $result = $this->invokeMethod($this->mock, 'getSettings', []);
+    $result = $this->invokeMethod($this->mock, 'getSmsSettings', []);
     $this->assertArrayHasKey('apiUrl', $result);
   }
 
@@ -96,11 +108,11 @@ class SmsDeliveryTest extends BaseTest
   {
     $mock = $this->getMockBuilder(SmsDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getSettings', 'getMessage', 'getClient'])
+      ->setMethods(['getSmsSettings', 'getMessage', 'getClient'])
       ->getMock();
 
     $mock->expects($this->once())
-      ->method('getSettings')
+      ->method('getSmsSettings')
       ->willReturn($this->settings);
     $mock->expects($this->exactly(2))
       ->method('getMessage')
@@ -165,5 +177,84 @@ class SmsDeliveryTest extends BaseTest
   public function testResolveUnknownErrorCode()
   {
     $this->assertSame('Unknown error!', $this->invokeMethod($this->mock, 'resolveErrorCode', [1337]));
+  }
+
+  public function testIsNumberWhitelistedWithUnsetWhitelistOnTestserver()
+  {
+    $settings = $this->settings;
+    unset($settings['whitelist']);
+
+    $this->altMock->method('getSmsSettings')
+      ->willReturn($settings);
+    $this->altMock->method('getSettings')
+      ->willReturn(['broker' => [
+        'environment' => 'testserver'
+      ]]);
+
+    $this->assertFalse($this->invokeMethod($this->altMock, 'isNumberWhiteListed'));
+  }
+
+  public function testIsNumberWhitelistedWithEmptyWhitelistOnTestServer()
+  {
+    $settings = $this->settings;
+    $settings['whitelist'] = [];
+
+    $this->altMock->method('getSmsSettings')
+      ->willReturn($settings);
+    $this->altMock->method('getSettings')
+      ->willReturn(['broker' => [
+        'environment' => 'testserver'
+      ]]);
+
+    $this->assertFalse($this->invokeMethod($this->altMock, 'isNumberWhiteListed'));
+  }
+
+  public function testIsNumberWhitelistedOnTestserverWithSuccess()
+  {
+    $settings = $this->settings;
+    $settings['whitelist'] = ['123123'];
+
+    $this->altMock->method('getSmsSettings')
+      ->willReturn($settings);
+    $this->altMock->method('getSettings')
+      ->willReturn(['broker' => [
+        'environment' => 'testserver'
+      ]]);
+    $this->altMock->method('getMessage')
+      ->willReturn((new Message())->setRecipient('123123'));
+
+    $this->assertTrue($this->invokeMethod($this->altMock, 'isNumberWhiteListed'));
+  }
+
+  public function testIsNumberWhitelistedOnTestserverWithoutSuccess()
+  {
+    $settings = $this->settings;
+    $settings['whitelist'] = ['123123'];
+
+    $this->altMock->method('getSmsSettings')
+      ->willReturn($settings);
+    $this->altMock->method('getSettings')
+      ->willReturn(['broker' => [
+        'environment' => 'testserver'
+      ]]);
+    $this->altMock->method('getMessage')
+      ->willReturn((new Message())->setRecipient('123'));
+
+    $this->assertFalse($this->invokeMethod($this->altMock, 'isNumberWhiteListed'));
+  }
+
+  public function testIsNumberWhitelistedOnProduction()
+  {
+    $settings = $this->settings;
+    $settings['whitelist'] = ['123123'];
+
+    $this->altMock->method('getSmsSettings')
+      ->willReturn($settings);
+    $this->altMock->method('getSettings')
+      ->willReturn(['broker' => [
+        'environment' => 'production'
+      ]]);
+
+    $this->assertTrue($this->invokeMethod($this->altMock, 'isNumberWhiteListed'));
   }
 }

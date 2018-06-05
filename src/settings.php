@@ -81,6 +81,9 @@ return [
           'apiUrl' => 'https://api2.messente.com/send_sms/',
           'senderName' => 'QCredit',
           'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
+          'whitelist' => [
+            '+3725171081'
+          ],
           'username' => '301cda77166de101a7751b1f1a6322df',
           'password' => '0197a62dce2ce9db1ab09437197b09b7'
         ]

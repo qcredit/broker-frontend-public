@@ -71,7 +71,6 @@ $container['view'] = function($container) {
   else
   {
     $view->getEnvironment()->addGlobal('currentUrl', '/application');
-
   }
 
   $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
@@ -329,6 +328,14 @@ $container['FormBuilder'] = function($c)
   return new \App\Component\FormBuilder($c->get('PartnerRepository'), new \App\Component\SchemaHelper());
 };
 
+$container['EventManager'] = function($c)
+{
+  $eventManager = new \Broker\System\Event\EventManager();
+  $eventManager->addListener(\Broker\Domain\Interfaces\Service\NewApplicationServiceInterface::EVENT_BEFORE_RUN, new \App\Base\Event\BeforeNewApplicationServiceListener());
+
+  return $eventManager;
+};
+
 $container['notFoundHandler'] = function($c)
 {
   return function($request, $response) use ($c)
@@ -346,5 +353,5 @@ $container['BrokerInstance'] = function($c)
   $brokerSettings = $c->get('settings')['broker'];
   $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
 
-  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), new \Broker\System\Event\EventManager());
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), $c->get('EventManager'));
 };

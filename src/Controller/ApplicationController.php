@@ -8,6 +8,7 @@
 
 namespace App\Controller;
 
+use App\Base\Event\PostDataListener;
 use App\Base\NewAppListener;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
@@ -20,6 +21,7 @@ use Broker\Domain\Interfaces\Service\PostApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PrepareAndSendApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
+use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
 use Broker\Domain\Service\PreparePartnerRequestsService;
 use Slim\Http\Request;
 use Slim\Http\Response;
