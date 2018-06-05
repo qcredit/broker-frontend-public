@@ -8,3 +8,5 @@
 /tmp/*
 /public/cache/*
 /public/sparrow-images/*
+.sass-cache
+config.rb
