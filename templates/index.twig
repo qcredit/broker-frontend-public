@@ -1,10 +1,5 @@
 {% extends 'base.twig' %}
 {% block title %}qCredit{% endblock %}
-{% block post_meta %}
-<meta property="og:title" content="Qcredit title | QCredit" />
-<meta property="og:description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
-<meta name="description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
-{% endblock %}
 
 {% block hero %}
 <section class="row home-hero">
@@ -13,7 +8,7 @@
     <p>Chciałbyś mieć dodatkowe 100 PLN lub nawet 50 000 PLN w kieszeni? QCredit pomoże Ci zdobyć te środki. I to bez wychodzenia z domu. Ponad 30 autoryzowanych pożyczkodawców w QCredit czeka na Ciebie ze swoja ofertą.</p>
   </div>
   <div class="col-sm-12 col-md-7 home-hero-half home-hero-right">
-    <form class="landing-form {% if environment == 'production' %}d-none{% endif %}" method="post" action="/application" novalidate>
+    <form class="landing-form {% if environment == 'production' %}d-none{% endif %} " method="post" action="/application" novalidate>
       <div class="landing-form-upper">
         <!-- Landing form for laptop/desktop devices -->
         {% include '$sliders.twig' %}

@@ -82,7 +82,10 @@ return [
           'senderName' => 'QCredit',
           'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
           'username' => '301cda77166de101a7751b1f1a6322df',
-          'password' => '0197a62dce2ce9db1ab09437197b09b7'
+          'password' => '0197a62dce2ce9db1ab09437197b09b7',
+          'whitelist' => [
+            '+3725171081'
+          ]
         ]
     ],
 ];
