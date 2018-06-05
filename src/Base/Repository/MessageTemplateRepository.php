@@ -149,10 +149,14 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
    */
   public function getOfferReminderSmsMessage(Application $application)
   {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_SMS)
       ->setRecipient($application->getPhone())
-      ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', ['application' => $application]));
+      ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', [
+        'application' => $application,
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+      ]));
 
     return $message;
   }

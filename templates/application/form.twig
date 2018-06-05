@@ -42,15 +42,15 @@
       <div class="form-block form-block-{{ sectionId }}">
         <p>
           {% if sectionId is same as('personal') %}
-            Personal information
+            {% trans 'Personal information' %}
           {% elseif sectionId is same as('housing') %}
-            Housing information
+            {% trans 'Housing information' %}
           {% elseif sectionId is same as('income') %}
-            Income information
+            {% trans 'Income information' %}
           {% elseif sectionId is same as('account') %}
-            Account information
+            {% trans 'Account information' %}
           {% elseif sectionId is same as('additional') %}
-            Additional information
+            {% trans 'Additional information' %}
           {% endif %}
         </p>
         {% for field in section %}

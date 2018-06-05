@@ -87,7 +87,11 @@
   position: relative;
   order: 0;
   border: 3px solid $gold;
-  &:before {
+  .badge {
+    font-size: 1.25rem;
+    padding-top: 7px;
+  }
+  .badge,&:before {
     content: "Top offer";
     position: absolute;
     top: -30px;

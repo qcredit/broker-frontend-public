@@ -1,1 +1,2 @@
-Hey {{ application.firstName }}, you haven't made up your mind!
+{% set name = application.firstName %}
+{% trans %}Hey {{ name }}, you haven't chosen the offer! {{ link }}{% endtrans %}
