@@ -206,8 +206,7 @@ class ApplicationController extends AbstractController
 
     if ($request->isPost() && !$this->isAjax($request))
     {
-      if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
-      if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
+      $service->setValidationEnabled(true);
     }
 
     $service->run();

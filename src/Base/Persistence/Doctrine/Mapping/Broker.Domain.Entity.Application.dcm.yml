@@ -1,6 +1,8 @@
 Broker\Domain\Entity\Application:
   type: entity
   table: application
+  entityListeners:
+    App\Base\Persistence\Doctrine\EntityListener\ApplicationListener:
   id:
     id:
       type: integer
