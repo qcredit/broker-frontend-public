@@ -240,7 +240,7 @@ class ApplicationController extends AbstractController
   public function offersAction(Request $request, Response $response, $args)
   {
     $application = $this->findEntity($args['hash'], $request, $response);
-    $offers = $this->getOfferRepository()->getBy(['applicationId' => $application->getId(), 'rejectedDate' => null]);
+    $offers = $this->getOfferRepository()->getAcceptedOffersByApplication($application);
 
     $data = [
       'application' => $application,

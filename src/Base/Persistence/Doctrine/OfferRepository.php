@@ -33,4 +33,20 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
   {
     return $this->getOneBy(['remoteId' => $remoteId]);
   }
+
+  /**
+   * @param Application $application
+   * @return array
+   */
+  public function getAcceptedOffersByApplication(Application $application): array
+  {
+    $query = $this->getQueryBuilder()->select('e')
+      ->from($this->entityClass, 'e')
+      ->where('e.acceptedDate IS NOT NULL')
+      ->andWhere('e.rejectedDate IS NULL')
+      ->andWhere('e.applicationId = :appId')
+      ->setParameter('appId', $application->getId());
+
+    return $query->getQuery()->execute();
+  }
 }
