@@ -4,7 +4,7 @@
   <meta name="robots" content="noindex,nofollow"/>
 {% endblock %}
 {% block container %}
-  <div class="row justify-content-md-center">
+  <div class="row justify-content-md-center {% if not offers %}d-none{% endif %}">
     <div class="col-sm-12 col-md-9">
       <div class="offer-list-head">
         <p>{% trans 'Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:' %}</p>
@@ -42,7 +42,7 @@
     </div>
     {% endif %}
   </section>
-  <div class="row justify-content-sm-center">
+  <div class="row justify-content-sm-center {% if not offers %}d-none{% endif %}">
     <div class="col-sm-9">
       <div class="bouncing-loader">
         <div class="bouncing-loader__round"></div>
@@ -51,7 +51,7 @@
       </div>
     </div>
   </div>
-  <section class="row justify-content-md-center">
+  <section class="row justify-content-md-center {% if offers %}d-none{% endif %}">
     <h4 class="col-sm-12 col-md-9 offers-list-heading">{% trans 'Other offers' %}:</h4>
     <div class="col-sm-12 col-md-9 offers-listing-wrap">
       <article class="loan-offer-container affiliate-offer-container">
@@ -232,13 +232,14 @@
             console.log( "Success " + data.status );
             if(data.status === 'done') {
               $('.bouncing-loader').hide();
+              $('.offer-list-head p').hide();
               stopInterval(intervalID);
             }
           })
           .fail(function(){
             console.log('fail');
           });
-      },60000);
+      },15000);
     });
   });
 </script>
