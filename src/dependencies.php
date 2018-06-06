@@ -246,13 +246,13 @@ $container['PostApplicationService'] = function($c)
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
   $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
   $schemaValidator = new \App\Base\Validator\SchemaValidator();
+  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
 
   $newApplicationService = new NewApplicationService(
     $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
-    $factory->createGateway($c->get('db'), 'Partner'),
-    $schemaValidator
+    $applicationValidator
   );
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
@@ -264,7 +264,7 @@ $container['PostApplicationService'] = function($c)
     $c->get('MessageTemplateRepository')
   );
 
-  $createRequestsService = new \Broker\Domain\Service\CreatePartnerRequestsService($c->get('BrokerInstance'), new PartnerRequestFactory());
+  $createRequestsService = new \Broker\Domain\Service\CreatePartnerRequestsService($c->get('BrokerInstance'), new PartnerRequestFactory(), $c->get('PartnerRepository'));
 
   return new \Broker\Domain\Service\PostApplicationService(
     $c->get('BrokerInstance'),
