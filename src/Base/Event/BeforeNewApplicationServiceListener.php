@@ -22,7 +22,7 @@ class BeforeNewApplicationServiceListener implements EventListenerInterface
       return;
     }
 
-    if (isset($postData[ApplicationForm::ATTR_PHONE]))
+    if (isset($postData[ApplicationForm::ATTR_PHONE]) && !empty($postData[ApplicationForm::ATTR_PHONE]))
     {
       $this->modifyPhone($emitter);
     }
