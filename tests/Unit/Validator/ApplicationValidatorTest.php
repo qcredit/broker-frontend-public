@@ -16,9 +16,12 @@ use Broker\Domain\Interfaces\SchemaValidatorInterface;
 use Broker\System\BaseTest;
 use PHPUnit\Framework\TestCase;
 use Slim\App;
+use Tests\Helpers\LoggerMockTrait;
 
 class ApplicationValidatorTest extends BaseTest
 {
+  use LoggerMockTrait;
+
   protected $mock;
   protected $altMock;
   protected $partners;
@@ -28,12 +31,16 @@ class ApplicationValidatorTest extends BaseTest
   {
     $this->mock = $this->getMockBuilder(ApplicationValidator::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getEntity', 'getPartners', 'validatePartnerRequirements', 'validateAttributes', 'getSchemaValidator'])
+      ->setMethods(['getEntity', 'getPartners', 'validatePartnerRequirements', 'validateAttributes', 'getSchemaValidator', 'getLogger'])
       ->getMock();
+    $this->mock->method('getLogger')
+      ->willReturn($this->loggerMock);
     $this->altMock = $this->getMockBuilder(ApplicationValidator::class)
       ->disableOriginalConstructor()
-      ->setMethods(['validatePartnerRequirements'])
+      ->setMethods(['validatePartnerRequirements', 'getLogger'])
       ->getMock();
+    $this->altMock->method('getLogger')
+      ->willReturn($this->loggerMock);
     $this->partners = [
       (new Partner())->setDataMapper($this->createMock(PartnerDataMapperInterface::class)),
       (new Partner())->setDataMapper($this->createMock(PartnerDataMapperInterface::class))
@@ -120,6 +127,8 @@ class ApplicationValidatorTest extends BaseTest
       ->willReturn(false);
     $this->mock->method('getPartners')
       ->willReturn([]);
+    $this->mock->method('getEntity')
+      ->willReturn((new Application()));
 
     $this->assertFalse($this->mock->validate());
   }
