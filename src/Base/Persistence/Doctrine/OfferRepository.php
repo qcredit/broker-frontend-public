@@ -33,4 +33,9 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
   {
     return $this->getOneBy(['remoteId' => $remoteId]);
   }
+
+  public function getAcceptedOffersByApplication(Application $application): array
+  {
+    // TODO: Implement getAcceptedOffersByApplication() method.
+  }
 }
