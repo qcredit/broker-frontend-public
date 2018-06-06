@@ -200,13 +200,24 @@ class ApplicationController extends AbstractController
 
     if ($request->isPost())
     {
-      $service->setSaveAppOnValidation(true);
+      $service->setValidationEnabled(true);
+      //$service->setSaveAppOnValidation(true);
       $service->setPostData($postData);
     }
 
-    if ($request->isPost() && !$this->isAjax($request))
+    if ($request->isPost())
     {
-      $service->setValidationEnabled(true);
+      //if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
+      //if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
+      if ($this->isFromFrontpage())
+      {
+        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_FIRST_NAME]);
+      }
+
+      if ($this->isAjax($request))
+      {
+        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+      }
     }
 
     $service->run();
