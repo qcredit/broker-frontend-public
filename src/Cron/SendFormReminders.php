@@ -209,7 +209,7 @@ class SendFormReminders implements BaseJob
     $date = new \DateTime();
     $interval = $date->diff($application->getCreatedAt(), true);
 
-    return ((int) $interval->format('%i') == 5) ? true : false;
+    return ((int) $interval->format('%i') == 5) && ($application->getAttribute('form_sms_reminder_sent') == null) ? true : false;
   }
 
   /**
