@@ -82,7 +82,7 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
       ->from($this->entityClass, 'entity')
       ->leftJoin($offerClass, 'o', 'WITH', 'o.applicationId = entity.id')
       ->where('entity.createdAt > :date')
-      ->andWhere('o.applicationId IS NOT NULL')
+      ->andWhere('o.applicationId IS NULL')
       ->andWhere("JSON_CONTAINS_PATH(entity.data, 'all', '$.form_email_reminder_sent') = 0")
       ->andWhere('entity.phone IS NOT NULL OR entity.email IS NOT NULL')
       ->setParameter('date', $date->modify('-11 minutes'));
