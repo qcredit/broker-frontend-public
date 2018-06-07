@@ -67,7 +67,6 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
       ->andWhere('a.createdAt > :date')
       ->setParameter('date', $date->modify($timeframe));
 
-
     $query = $qb->getQuery();
 
     $result = $query->getResult();
@@ -78,10 +77,14 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
   public function getAppsNeedingFormReminders()
   {
     $date = new \DateTime();
+    $offerClass = 'Broker\Domain\Entity\Offer';
     $query = $this->getQueryBuilder()->select('entity')
       ->from($this->entityClass, 'entity')
-      ->where('entity.createdAt < :date')
+      ->leftJoin($offerClass, 'o', 'WITH', 'o.applicationId = entity.id')
+      ->where('entity.createdAt > :date')
+      ->andWhere('o.applicationId IS NOT NULL')
       ->andWhere("JSON_CONTAINS_PATH(entity.data, 'all', '$.form_email_reminder_sent') = 0")
+      ->andWhere('entity.phone IS NOT NULL OR entity.email IS NOT NULL')
       ->setParameter('date', $date->modify('-11 minutes'));
 
     return $query->getQuery()->execute();

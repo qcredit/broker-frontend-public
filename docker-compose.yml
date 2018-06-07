@@ -51,6 +51,17 @@ services:
     ports:
       - "3310:3306"
 
+  redis:
+    container_name: slim_redis
+    image: redis
+    restart: always
+    networks:
+      default:
+        aliases:
+          - redis
+    ports:
+      - "6379:6379"
+
 networks:
   default:
     driver: bridge

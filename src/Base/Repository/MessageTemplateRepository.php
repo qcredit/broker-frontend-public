@@ -178,6 +178,7 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
 
   /**
    * @param Application $application
+   * @return Message
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function getFormEmailReminderMessage(Application $application)
@@ -191,6 +192,8 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
         'link' => 'http://www.google.ee',
         'title' => $message->getTitle()
       ]));
+
+    return $message;
   }
 
   /**

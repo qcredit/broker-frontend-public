@@ -52,8 +52,8 @@ $mutex->synchronized(function() use ($jobby) {
       $job = new \App\Cron\SendFormReminders(
         $container,
         $container->get('MessageDeliveryService'),
-        $container->get('ApplicationRepository'),
         $container->get('MessageTemplateRepository'),
+        $container->get('ApplicationRepository'),
         $container->get('ApplicationValidator')
       );
 
@@ -68,3 +68,5 @@ $mutex->synchronized(function() use ($jobby) {
 $jobby->run();
 
 $redis->close();
+
+exit;
