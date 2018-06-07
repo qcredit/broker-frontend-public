@@ -273,6 +273,7 @@ class ApplicationController extends AbstractController
   {
     $data = [];
 
+    $data['fields'] = $this->getFormBuilder()->getFormFields();
     $data['application'] = $this->findEntity($args['hash'], $request, $response);
 
     return $this->render($response, 'application/form.twig', $data);

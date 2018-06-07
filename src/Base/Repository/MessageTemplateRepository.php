@@ -183,13 +183,14 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
    */
   public function getFormEmailReminderMessage(Application $application)
   {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
     $message = $this->getMessageFactory()->create();
     $message->setTitle(_("Don't quit, you're almost there!"))
       ->setRecipient($application->getEmail())
       ->setType(Message::MESSAGE_TYPE_EMAIL)
       ->setBody($this->generateEmailContent('mail/form-reminder.twig', [
         'application' => $application,
-        'link' => 'http://www.google.ee',
+        'link' => sprintf('%s/application/resume/%s', $domain, $application->getApplicationHash()),
         'title' => $message->getTitle()
       ]));
 
@@ -203,12 +204,13 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
    */
   public function getFormSmsReminderMessage(Application $application)
   {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_SMS)
       ->setRecipient($application->getPhone())
       ->setBody($this->getTemplateByPath('sms/form-reminder.twig', [
         'application' => $application,
-        'link' => 'http://www.google.ee'
+        'link' => sprintf('%s/application/resume/%s', $domain, $application->getApplicationHash()),
       ]));
 
     return $message;

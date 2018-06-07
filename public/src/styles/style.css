@@ -778,39 +778,34 @@
 }
 
 /* line 165, sass/_form.scss */
-.step-2 {
-  display: none;
-}
-
-/* line 168, sass/_form.scss */
 .loan-form-errors .step-2 {
   display: block;
 }
 
 /* CONTACT PAGE FORM */
-/* line 173, sass/_form.scss */
+/* line 170, sass/_form.scss */
 .contact-form .field.emailaddress, .contact-form .field.textarea {
   margin-bottom: 1.5rem;
 }
 
-/* line 176, sass/_form.scss */
+/* line 173, sass/_form.scss */
 .contact-form .field.textarea label {
   width: 96%;
   background: #fff;
 }
 
-/* line 180, sass/_form.scss */
+/* line 177, sass/_form.scss */
 .contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label {
   top: -0.55rem;
 }
 
-/* line 183, sass/_form.scss */
+/* line 180, sass/_form.scss */
 .contact-form .submit {
   display: flex;
   justify-content: flex-end;
 }
 
-/* line 187, sass/_form.scss */
+/* line 184, sass/_form.scss */
 textarea {
   width: 100%;
   padding-top: 0.5rem;
@@ -820,39 +815,39 @@ textarea {
   resize: none;
 }
 
-/* line 195, sass/_form.scss */
+/* line 192, sass/_form.scss */
 .contact-information > span {
   display: block;
 }
 
 /* Error styles */
-/* line 200, sass/_form.scss */
+/* line 197, sass/_form.scss */
 .field.error select, .field.error input {
   border-bottom: 2px solid #CE0000;
   color: #CE0000;
 }
-/* line 204, sass/_form.scss */
+/* line 201, sass/_form.scss */
 .field.error label {
   color: #CE0000;
 }
 
 /* Input fields & select list styles end here */
-/* line 211, sass/_form.scss */
+/* line 208, sass/_form.scss */
 .modal.show .modal-dialog {
   transform: translate(0, 100%);
 }
-/* line 214, sass/_form.scss */
+/* line 211, sass/_form.scss */
 .modal .modal-footer, .modal .modal-header, .modal .modal-body {
   background: #eaeaea;
 }
-/* line 218, sass/_form.scss */
+/* line 215, sass/_form.scss */
 .modal img {
   filter: grayscale(100%);
   opacity: 0.1;
 }
 
 @media only screen and (max-width: 420px) {
-  /* line 225, sass/_form.scss */
+  /* line 222, sass/_form.scss */
   .loan-form .broker-btn {
     display: block;
     width: 100%;
@@ -860,42 +855,42 @@ textarea {
   }
 }
 @media only screen and (min-width: 420px) {
-  /* line 233, sass/_form.scss */
+  /* line 230, sass/_form.scss */
   .form-block-submit {
     display: flex;
     justify-content: flex-end;
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 240, sass/_form.scss */
+  /* line 237, sass/_form.scss */
   .loan-form {
     margin: 3rem auto;
   }
 
-  /* line 243, sass/_form.scss */
+  /* line 240, sass/_form.scss */
   .loan-form-upper {
     margin: 0;
   }
 
-  /* line 246, sass/_form.scss */
+  /* line 243, sass/_form.scss */
   .form-block .field {
     flex: 0 0 46%;
   }
 }
 @media only screen and (min-width: 769px) {
-  /* line 252, sass/_form.scss */
+  /* line 249, sass/_form.scss */
   .form-block {
     margin: 4rem 0;
   }
 
-  /* line 255, sass/_form.scss */
+  /* line 252, sass/_form.scss */
   .loan-form-upper {
     padding: 2.5rem;
   }
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   /* IE10+ CSS styles go here */
-  /* line 262, sass/_form.scss */
+  /* line 259, sass/_form.scss */
   .field select {
     padding-right: 0;
     background-image: none;
