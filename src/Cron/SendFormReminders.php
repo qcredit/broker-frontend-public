@@ -304,12 +304,19 @@ class SendFormReminders implements BaseJob
   /**
    * @param Application $application
    * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
    */
   protected function appIsValid(Application $application)
   {
     $validator = $this->getApplicationValidator();
     $validator->setEntity($application);
 
-    return $validator->validate();
+    if ($validator->validate())
+    {
+      $this->getLogger()->debug('Application is valid, skipping it...', ['appId' => $application->getId()]);
+      return true;
+    }
+
+    return false;
   }
 }

@@ -64,6 +64,8 @@ class SendFormRemindersTest extends BaseTest
     $this->altMock = $this->createMock(SendFormReminders::class);
     $this->mock->method('getLogger')
       ->willReturn($this->loggerMock);
+    $this->altMock->method('getLogger')
+      ->willReturn($this->loggerMock);
   }
 
   public function test__construct()
