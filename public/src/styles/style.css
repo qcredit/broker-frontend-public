@@ -1,5 +1,30 @@
 /* COLOURS */
 /* Components */
+@keyframes shake {
+  from,
+  to {
+    transform: translate3d(0, 100%, 0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate3d(-10px, 100%, 0);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate3d(10px, 100%, 0);
+  }
+}
+/* line 23, sass/_animations.scss */
+.shake {
+  animation-name: shake;
+  animation-duration: 0.5s;
+}
+
 /* line 1, sass/_modules.scss */
 .bouncing-loader {
   display: flex;
@@ -752,38 +777,35 @@
   opacity: 1;
 }
 
-/*.step-2 {
-  display: none;
-}*/
-/* line 168, sass/_form.scss */
+/* line 165, sass/_form.scss */
 .loan-form-errors .step-2 {
   display: block;
 }
 
 /* CONTACT PAGE FORM */
-/* line 173, sass/_form.scss */
+/* line 170, sass/_form.scss */
 .contact-form .field.emailaddress, .contact-form .field.textarea {
   margin-bottom: 1.5rem;
 }
 
-/* line 176, sass/_form.scss */
+/* line 173, sass/_form.scss */
 .contact-form .field.textarea label {
   width: 96%;
   background: #fff;
 }
 
-/* line 180, sass/_form.scss */
+/* line 177, sass/_form.scss */
 .contact-form .field.textarea.filled label, .contact-form .field.textarea.focused label {
   top: -0.55rem;
 }
 
-/* line 183, sass/_form.scss */
+/* line 180, sass/_form.scss */
 .contact-form .submit {
   display: flex;
   justify-content: flex-end;
 }
 
-/* line 187, sass/_form.scss */
+/* line 184, sass/_form.scss */
 textarea {
   width: 100%;
   padding-top: 0.5rem;
@@ -793,25 +815,39 @@ textarea {
   resize: none;
 }
 
-/* line 195, sass/_form.scss */
+/* line 192, sass/_form.scss */
 .contact-information > span {
   display: block;
 }
 
 /* Error styles */
-/* line 200, sass/_form.scss */
+/* line 197, sass/_form.scss */
 .field.error select, .field.error input {
   border-bottom: 2px solid #CE0000;
   color: #CE0000;
 }
-/* line 204, sass/_form.scss */
+/* line 201, sass/_form.scss */
 .field.error label {
   color: #CE0000;
 }
 
 /* Input fields & select list styles end here */
+/* line 208, sass/_form.scss */
+.modal.show .modal-dialog {
+  transform: translate(0, 100%);
+}
+/* line 211, sass/_form.scss */
+.modal .modal-footer, .modal .modal-header, .modal .modal-body {
+  background: #eaeaea;
+}
+/* line 215, sass/_form.scss */
+.modal img {
+  filter: grayscale(100%);
+  opacity: 0.1;
+}
+
 @media only screen and (max-width: 420px) {
-  /* line 211, sass/_form.scss */
+  /* line 222, sass/_form.scss */
   .loan-form .broker-btn {
     display: block;
     width: 100%;
@@ -819,42 +855,42 @@ textarea {
   }
 }
 @media only screen and (min-width: 420px) {
-  /* line 219, sass/_form.scss */
+  /* line 230, sass/_form.scss */
   .form-block-submit {
     display: flex;
     justify-content: flex-end;
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 226, sass/_form.scss */
+  /* line 237, sass/_form.scss */
   .loan-form {
     margin: 3rem auto;
   }
 
-  /* line 229, sass/_form.scss */
+  /* line 240, sass/_form.scss */
   .loan-form-upper {
     margin: 0;
   }
 
-  /* line 232, sass/_form.scss */
+  /* line 243, sass/_form.scss */
   .form-block .field {
     flex: 0 0 46%;
   }
 }
 @media only screen and (min-width: 769px) {
-  /* line 238, sass/_form.scss */
+  /* line 249, sass/_form.scss */
   .form-block {
     margin: 4rem 0;
   }
 
-  /* line 241, sass/_form.scss */
+  /* line 252, sass/_form.scss */
   .loan-form-upper {
     padding: 2.5rem;
   }
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   /* IE10+ CSS styles go here */
-  /* line 248, sass/_form.scss */
+  /* line 259, sass/_form.scss */
   .field select {
     padding-right: 0;
     background-image: none;
@@ -1386,52 +1422,52 @@ textarea {
   }
 }
 /* Typography */
-/* line 20, sass/style.scss */
+/* line 21, sass/style.scss */
 * {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* line 24, sass/style.scss */
+/* line 25, sass/style.scss */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Playfair Display', serif;
 }
 
-/* line 27, sass/style.scss */
+/* line 28, sass/style.scss */
 p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif;
 }
 
-/* line 30, sass/style.scss */
+/* line 31, sass/style.scss */
 section > h1 {
   flex: 0 0 100%;
   margin: 4.125rem 0 3.5rem;
   font-size: 2rem;
 }
 
-/* line 35, sass/style.scss */
+/* line 36, sass/style.scss */
 section h1.small-mar {
   margin-bottom: 2rem;
 }
 
-/* line 38, sass/style.scss */
+/* line 39, sass/style.scss */
 .p-head {
   margin-bottom: 0.25rem;
 }
 
-/* line 41, sass/style.scss */
+/* line 42, sass/style.scss */
 .page-body {
   min-height: 200px;
 }
 
-/* line 44, sass/style.scss */
+/* line 45, sass/style.scss */
 .img404 {
   max-width: 90%;
   padding: 3rem 0 1rem;
 }
 
 /* UTILITIES */
-/* line 49, sass/style.scss */
+/* line 50, sass/style.scss */
 .broker-btn {
   padding: 1rem 3rem;
   border-radius: 0;
@@ -1443,81 +1479,81 @@ section h1.small-mar {
   cursor: pointer;
   transition: all .15s ease-in-out;
 }
-/* line 59, sass/style.scss */
+/* line 60, sass/style.scss */
 .broker-btn:focus {
   outline: none;
   box-shadow: none;
 }
-/* line 63, sass/style.scss */
+/* line 64, sass/style.scss */
 .broker-btn:hover {
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.16), 0 4px 14px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* line 67, sass/style.scss */
+/* line 68, sass/style.scss */
 a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
   text-decoration: none;
   line-height: 1;
   color: #000;
 }
 
-/* line 72, sass/style.scss */
+/* line 73, sass/style.scss */
 .broker-btn-blue {
   color: #fff;
   background: #00aeef;
 }
 
-/* line 76, sass/style.scss */
+/* line 77, sass/style.scss */
 .broker-btn-gold {
   color: #000;
   background: #ffc328;
 }
 
-/* line 80, sass/style.scss */
+/* line 81, sass/style.scss */
 .broker-btn-disabled {
   color: #999;
   background: #e6e9ee;
   pointer-events: none;
 }
-/* line 84, sass/style.scss */
+/* line 85, sass/style.scss */
 .broker-btn-disabled:hover {
   box-shadow: none;
 }
 
-/* line 89, sass/style.scss */
+/* line 90, sass/style.scss */
 body {
   padding-top: 65px;
 }
 
 /* Home page How it works section */
-/* line 94, sass/style.scss */
+/* line 95, sass/style.scss */
 .circle-block {
   display: flex;
   margin-bottom: 2rem;
   line-height: 1.3;
 }
-/* line 98, sass/style.scss */
+/* line 99, sass/style.scss */
 .circle-block .circle-block-step {
   color: #e6e9ee;
   font-size: 0.875rem;
   font-weight: bold;
 }
-/* line 103, sass/style.scss */
+/* line 104, sass/style.scss */
 .circle-block p {
   margin-bottom: 0;
 }
-/* line 106, sass/style.scss */
+/* line 107, sass/style.scss */
 .circle-block .circle-block-heading {
   margin-top: -2px;
   color: black;
   font-size: 1rem;
 }
-/* line 111, sass/style.scss */
+/* line 112, sass/style.scss */
 .circle-block .circle-block-description, .circle-block .circle-block-description a {
   color: rgba(0, 0, 0, 0.5);
   font-size: 0.875rem;
 }
 
-/* line 116, sass/style.scss */
+/* line 117, sass/style.scss */
 .circle-block-icon {
   display: flex;
   align-items: center;
@@ -1529,58 +1565,58 @@ body {
   background: url(../images/step_icon.svg) no-repeat center;
   background-size: 100%;
 }
-/* line 126, sass/style.scss */
+/* line 127, sass/style.scss */
 .circle-block-icon img {
   width: 30px;
 }
 
-/* line 131, sass/style.scss */
+/* line 132, sass/style.scss */
 .contact-page-blocks {
   margin-bottom: 3rem;
 }
-/* line 133, sass/style.scss */
+/* line 134, sass/style.scss */
 .contact-page-blocks .circle-block {
   margin-bottom: 1rem;
 }
 
-/* line 137, sass/style.scss */
+/* line 138, sass/style.scss */
 .contact-submit {
   flex-direction: column;
   justify-content: center;
 }
-/* line 140, sass/style.scss */
+/* line 141, sass/style.scss */
 .contact-submit .g-recaptcha {
   margin: 0 auto 1rem;
 }
 
 /* Home page about section */
-/* line 146, sass/style.scss */
+/* line 147, sass/style.scss */
 .image-container img {
   max-width: 100%;
   min-width: 100%;
 }
 
-/* line 152, sass/style.scss */
+/* line 153, sass/style.scss */
 .about-image-container .about-text {
   margin-top: 3rem;
 }
-/* line 154, sass/style.scss */
+/* line 155, sass/style.scss */
 .about-image-container .about-text p {
   margin-bottom: 1.5rem;
   line-height: 1.6;
 }
 
-/* line 160, sass/style.scss */
+/* line 161, sass/style.scss */
 .about-image-container-1 {
   margin-top: 2rem;
 }
 
-/* line 163, sass/style.scss */
+/* line 164, sass/style.scss */
 .about-image-container-2 {
   margin-bottom: 2rem;
 }
 
-/* line 166, sass/style.scss */
+/* line 167, sass/style.scss */
 .quote-text {
   margin: 3rem 0 0 0;
   font-size: 21px;
@@ -1588,13 +1624,13 @@ body {
   text-align: center;
 }
 
-/* line 172, sass/style.scss */
+/* line 173, sass/style.scss */
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6;
 }
 
-/* line 177, sass/style.scss */
+/* line 178, sass/style.scss */
 .thank-you-row {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -1602,13 +1638,13 @@ body {
 
 /* Media queries */
 @media only screen and (min-width: 340px) {
-  /* line 185, sass/style.scss */
+  /* line 186, sass/style.scss */
   .thank-you-row {
     padding: 1rem 1rem;
   }
 }
 @media only screen and (max-width: 350px) {
-  /* line 192, sass/style.scss */
+  /* line 193, sass/style.scss */
   .contact-submit .g-recaptcha {
     transform: scale(0.87);
     -webkit-transform: scale(0.87);
@@ -1617,67 +1653,67 @@ body {
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 202, sass/style.scss */
+  /* line 203, sass/style.scss */
   .page-body {
     min-height: 400px;
   }
 
-  /* line 205, sass/style.scss */
+  /* line 206, sass/style.scss */
   .home-about-half {
     margin: 1.5rem 0;
   }
 
-  /* line 208, sass/style.scss */
+  /* line 209, sass/style.scss */
   .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  /* line 213, sass/style.scss */
+  /* line 214, sass/style.scss */
   .quote-text {
     font-size: 24px;
   }
 
-  /* line 216, sass/style.scss */
+  /* line 217, sass/style.scss */
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 1024px) {
-  /* line 222, sass/style.scss */
+  /* line 223, sass/style.scss */
   body {
     padding-top: 60px;
   }
 
-  /* line 225, sass/style.scss */
+  /* line 226, sass/style.scss */
   .page-body {
     min-height: 500px;
   }
 
-  /* line 228, sass/style.scss */
+  /* line 229, sass/style.scss */
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
 
-  /* line 232, sass/style.scss */
+  /* line 233, sass/style.scss */
   .about-how {
     padding-top: 0.25rem;
   }
-  /* line 234, sass/style.scss */
+  /* line 235, sass/style.scss */
   .about-how .circle-block {
     margin-bottom: 4rem;
   }
 
-  /* line 238, sass/style.scss */
+  /* line 239, sass/style.scss */
   .contact-submit {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between !important;
   }
-  /* line 242, sass/style.scss */
+  /* line 243, sass/style.scss */
   .contact-submit .g-recaptcha {
     margin: 0;
   }

@@ -91,12 +91,42 @@
   </div>
   <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#reminderModal">
+    Launch demo modal
+  </button>
+<div class="modal fade" tabindex="-1" role="dialog" id="reminderModal">
+  <div class="modal-dialog shake" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <h5 class="modal-title mb-3 text-center">{% trans 'Hey there!' %}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-4">
+            <img class="img-fluid float-left mr-2" src="/src/images/timerunningout.png" alt="Time is running out"/>
+          </div>
+          <div class="col">
+            <p>{% trans "Good things come to those who don't wait!" %}</p>
+            <p>{% trans "In case you're having trouble completing the form, don't hesitate contacting us!" %}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn broker-btn broker-btn-gold" data-dismiss="modal">{% trans 'Okay' %}</button>
+      </div>
+    </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block endBody %}
   <script type="text/javascript">
-    require(['./src/scripts/common'], function (common) {
-      require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+    require(['/src/scripts/common.js'], function (common) {
+      require(['domReady', 'app/formHelper', 'app/form', 'formReminder'], function (domReady, formHelper, form) {
+
       });
     });
   </script>

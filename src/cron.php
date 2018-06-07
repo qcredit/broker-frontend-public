@@ -11,6 +11,8 @@ $jobby = new Jobby\Jobby([
   'output' => '/var/log/apache2/broker-cron.log'
 ]);
 
+
+/*
 $mutex = new PHPRedisMutex([$redis], 'SendChooseOfferReminder', 10);
 
 $mutex->check(function() {
@@ -30,10 +32,41 @@ $mutex->check(function() {
       );
       return $job->run();
     },
-    'schedule' => '*/2 * * * *',
+    'schedule' => "* * * * *",
+  ]);
+
+  sleep(5);
+});
+*/
+
+$mutex = new PHPRedisMutex([$redis], 'SendFormReminders', 10);
+
+$mutex->synchronized(function() use ($jobby) {
+  $jobby->add('SendFormReminders', [
+    'closure' => function() {
+      require(__DIR__ . '/../vendor/autoload.php');
+      $settings = require(__DIR__ . '/settings.php');
+      $app = new \Slim\App($settings);
+      require(__DIR__ . '/dependencies.php');
+
+      $job = new \App\Cron\SendFormReminders(
+        $container,
+        $container->get('MessageDeliveryService'),
+        $container->get('MessageTemplateRepository'),
+        $container->get('ApplicationRepository'),
+        $container->get('ApplicationValidator')
+      );
+
+      return $job->run();
+    },
+    'schedule' => '* * * * *'
   ]);
 
   sleep(5);
 });
 
 $jobby->run();
+
+$redis->close();
+
+exit;
