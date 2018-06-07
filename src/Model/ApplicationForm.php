@@ -130,8 +130,7 @@ class ApplicationForm
         self::ENUM_INCOME_UNEMPLOYED => _('Unemployed'),
         self::ENUM_INCOME_ALIMONY => _('Alimony'),
         self::ENUM_INCOME_SELF_EMPLOYED => _('Self Employed'),
-        self::ENUM_INCOME_FARMER => _('Farmer'),
-        self::ENUM_INCOME_OTHER => _('Other')
+        self::ENUM_INCOME_FARMER => _('Farmer')
       ],
       self::ATTR_EDUCATION => [
         self::ENUM_EDUCATION_BASIC => _('Basic'),
@@ -155,8 +154,7 @@ class ApplicationForm
       ],
       self::ATTR_ACCOUNT_TYPE => [
         self::ENUM_ACCOUNT_PERSONAL => _('Personal'),
-        self::ENUM_ACCOUNT_JOINT => _('Joint'),
-        self::ENUM_ACCOUNT_COMPANY => _('Company')
+        self::ENUM_ACCOUNT_JOINT => _('Joint')
       ],
       self::ATTR_RESIDENTIAL_TYPE => [
         self::ENUM_RESIDENCY_OWN => _('I\'m an owner'),
@@ -187,7 +185,6 @@ class ApplicationForm
       ],
       self::ATTR_PAYOUT_METHOD => [
         self::ENUM_PAYOUT_ACCOUNT => _('Account'),
-        self::ENUM_PAYOUT_BLUECASH => _('BlueCash'),
         self::ENUM_PAYOUT_GIRO => _('Giro')
       ],
       self::ATTR_LOAN_PURPOSE => [
