@@ -177,6 +177,41 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
   }
 
   /**
+   * @param Application $application
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getFormEmailReminderMessage(Application $application)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setTitle(_("Don't quit, you're almost there!"))
+      ->setRecipient($application->getEmail())
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/form-reminder.twig', [
+        'application' => $application,
+        'link' => 'http://www.google.ee',
+        'title' => $message->getTitle()
+      ]));
+  }
+
+  /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getFormSmsReminderMessage(Application $application)
+  {
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_SMS)
+      ->setRecipient($application->getPhone())
+      ->setBody($this->getTemplateByPath('sms/form-reminder.twig', [
+        'application' => $application,
+        'link' => 'http://www.google.ee'
+      ]));
+
+    return $message;
+  }
+
+  /**
    * @param $data
    * @param $sendTo
    * @return Message

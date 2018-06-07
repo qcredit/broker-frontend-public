@@ -74,4 +74,16 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
 
     return !empty($result) ? $result[0] : [];
   }
+
+  public function getAppsNeedingFormReminders()
+  {
+    $date = new \DateTime();
+    $query = $this->getQueryBuilder()->select('entity')
+      ->from($this->entityClass, 'entity')
+      ->where('entity.createdAt < :date')
+      ->andWhere("JSON_CONTAINS_PATH(entity.data, 'all', '$.form_email_reminder_sent') = 0")
+      ->setParameter('date', $date->modify('-11 minutes'));
+
+    return $query->getQuery()->execute();
+  }
 }

@@ -32,6 +32,7 @@ class ApiDeliveryTest extends BaseTest
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->containerMock = $this->createMock(Container::class);
     $this->mock = $this->getMockBuilder(ApiDelivery::class)
       ->disableOriginalConstructor()
