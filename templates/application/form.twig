@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block container %}
-<form method="POST" class="loan-form {% if application.errors %}loan-form-errors{% endif %}">
+<form method="POST" class="loan-form {% if application.errors %}loan-form-errors{% endif %}" action="/application">
   <div class="loan-form-upper">
     {% include '$sliders.twig' %}
   </div>

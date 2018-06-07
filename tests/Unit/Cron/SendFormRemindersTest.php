@@ -244,6 +244,17 @@ class SendFormRemindersTest extends BaseTest
     $this->assertFalse($this->invokeMethod($mock, 'appNeedsSms', [$app]));
   }
 
+  public function testAppNeedsSmsNotDueToAlreadySent()
+  {
+    $app = new Application();
+    $app->setCreatedAt((new \DateTime())->modify('+5 minutes'))
+      ->setAttribute('form_sms_reminder_sent', new \DateTime())
+      ->setPhone('+37213');
+
+    $mock = $this->createMock(SendFormReminders::class);
+    $this->assertFalse($this->invokeMethod($mock, 'appNeedsSms', [$app]));
+  }
+
   public function testAppNeedsEmail()
   {
     $app = new Application();

@@ -39,7 +39,7 @@ $mutex->check(function() {
 });
 */
 
-$mutex = new PHPRedisMutex([$redis], 'SendFormReminders', 10);
+$mutex = new PHPRedisMutex([$redis], 'SendFormReminders', 15);
 
 $mutex->synchronized(function() use ($jobby) {
   $jobby->add('SendFormReminders', [
@@ -62,7 +62,7 @@ $mutex->synchronized(function() use ($jobby) {
     'schedule' => '* * * * *'
   ]);
 
-  sleep(5);
+  sleep(10);
 });
 
 $jobby->run();
