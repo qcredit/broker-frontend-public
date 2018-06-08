@@ -62,7 +62,7 @@ $mutex->synchronized(function() use ($jobby) {
     'schedule' => '* * * * *'
   ]);
 
-  sleep(10);
+  sleep(8);
 });
 
 $jobby->run();
