@@ -61,7 +61,7 @@ class ApplicationRepository extends AbstractRepository implements ApplicationRep
     ')
       ->from($this->entityClass, 'a')
       ->leftJoin($offerClass, 'o', 'WITH', 'o.applicationId = a.id AND o.acceptedDate IS NOT NULL AND o.paidOutDate IS NULL AND o.rejectedDate IS NULL')
-      ->leftJoin($offerClass, 'o1', 'WITH', 'o1.applicationId = a.id AND o1.rejectedDate IS NOT NULL')
+      ->leftJoin($offerClass, 'o1', 'WITH', 'o1.applicationId = a.id AND o1.rejectedDate IS NOT NULL AND o1.acceptedDate IS NULL AND o1.paidOutDate IS NULL')
       ->leftJoin($offerClass, 'o2', 'WITH', 'o2.applicationId = a.id AND o2.paidOutDate IS NOT NULL')
       ->leftJoin($offerClass, 'o3', 'WITH', 'o3.applicationId = a.id AND o3.rejectedDate IS NULL AND o3.chosenDate IS NULL AND o3.acceptedDate IS NULL AND o3.paidOutDate IS NULL')
       ->andWhere('a.createdAt > :date')

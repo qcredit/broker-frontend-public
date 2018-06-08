@@ -40,9 +40,9 @@ class PartnerRepository extends AbstractRepository implements PartnerRepositoryI
     count(DISTINCT o4.id) paidOut,
     count(DISTINCT o5.id) total')
       ->from($this->entityClass, 'p')
-      ->leftJoin($offerClass, 'o1', 'WITH', 'p.id = o1.partnerId AND o1.rejectedDate IS NOT NULL')
-      ->leftJoin($offerClass, 'o2', 'WITH', 'p.id = o2.partnerId AND o2.rejectedDate IS NULL AND o2.acceptedDate IS NULL')
-      ->leftJoin($offerClass, 'o3', 'WITH', 'p.id = o3.partnerId AND o3.acceptedDate IS NOT NULL')
+      ->leftJoin($offerClass, 'o1', 'WITH', 'p.id = o1.partnerId AND o1.rejectedDate IS NOT NULL AND o1.acceptedDate IS NULL AND o1.paidOutDate IS NULL')
+      ->leftJoin($offerClass, 'o2', 'WITH', 'p.id = o2.partnerId AND o2.rejectedDate IS NULL AND o2.acceptedDate IS NULL AND o2.chosenDate IS NULL AND o2.paidOutDate IS NULL')
+      ->leftJoin($offerClass, 'o3', 'WITH', 'p.id = o3.partnerId AND o3.acceptedDate IS NOT NULL AND o3.paidOutDate IS NULL AND o3.rejectedDate IS NULL')
       ->leftJoin($offerClass, 'o4', 'WITH', 'p.id = o4.partnerId AND o4.paidOutDate IS NOT NULL')
       ->leftJoin($offerClass, 'o5', 'WITH', 'p.id = o5.partnerId')
       ->groupBy('p.name');
