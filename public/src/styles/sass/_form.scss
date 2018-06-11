@@ -205,19 +205,17 @@ textarea {
 /* Input fields & select list styles end here */
 
 .modal {
-  &.show .modal-dialog {
-    //transform: translate(0, 100%);
-  }
-  .modal-footer,.modal-header, .modal-body {
-    //background: $mainlight;
+  padding-right: 0;
+  .modal-content {
+    border: 0;
+    border-radius: 0;
   }
   .modal-body {
     flex: 0 0 auto;
   }
-
-  img {
-    filter: grayscale(100%);
-    opacity: 0.1;
+  .modal-footer{
+    padding-top: 0;
+    border-top: 0;
   }
 }
 
