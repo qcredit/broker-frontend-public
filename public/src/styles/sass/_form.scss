@@ -206,10 +206,13 @@ textarea {
 
 .modal {
   &.show .modal-dialog {
-    transform: translate(0, 100%);
+    //transform: translate(0, 100%);
   }
   .modal-footer,.modal-header, .modal-body {
-    background: $mainlight;
+    //background: $mainlight;
+  }
+  .modal-body {
+    flex: 0 0 auto;
   }
 
   img {
