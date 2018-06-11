@@ -19,7 +19,7 @@ return [
             'processor' => [
               new \Monolog\Processor\UidProcessor()
             ],
-            'dateFormat' => 'Y-m-d\TH:i:sO'
+            'dateFormat' => 'Y-m-d\TH:i:s.vO'
         ],
         'broker' => [
           'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
