@@ -13,12 +13,13 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'WEBSITE',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
+            'name' => 'BROKER',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker_debug.log',
             'level' => getenv('ENV_TYPE') == 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
-            ]
+            ],
+            'dateFormat' => 'Y-m-d\TH:i:sO'
         ],
         'broker' => [
           'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
