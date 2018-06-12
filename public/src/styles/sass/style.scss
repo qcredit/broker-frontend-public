@@ -173,6 +173,12 @@ body {
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6;
+  h5 {
+    margin-bottom: 1rem;
+  }
+  ol li {
+    padding-bottom: .25rem;
+  }
 }
 
 .thank-you-row {
