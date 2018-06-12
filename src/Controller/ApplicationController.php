@@ -201,14 +201,11 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $service->setValidationEnabled(true);
-      //$service->setSaveAppOnValidation(true);
       $service->setPostData($postData);
     }
 
     if ($request->isPost())
     {
-      //if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
-      //if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
       if ($this->isFromFrontpage())
       {
         $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
@@ -227,12 +224,9 @@ class ApplicationController extends AbstractController
       return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
     }
 
-    if ($request->isPost() && !$this->isAjax($request))
+    if ($request->isPost() && !$this->isAjax($request) && $this->getPostApplicationService()->isSuccess())
     {
-      if ($this->getPostApplicationService()->isSuccess())
-      {
-        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
-      }
+      return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
     }
 
     $data['application'] = $service->getApplication();

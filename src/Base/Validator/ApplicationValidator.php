@@ -147,7 +147,6 @@ class ApplicationValidator implements EntityValidatorInterface
     }
     else
     {
-      $this->getLogger()->debug('Not doing partial validation');
       $valid = !$this->getEntity()->hasErrors();
     }
 
