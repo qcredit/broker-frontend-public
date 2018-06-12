@@ -14,7 +14,7 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'BROKER',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker_debug.log',
             'level' => getenv('ENV_TYPE') == 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()

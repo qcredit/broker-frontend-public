@@ -38,7 +38,7 @@ class Logger implements LoggerInterface
 
     if (isset($config['dateFormat']))
     {
-      $output = "[%datetime%] %channel%.%level_name%: %message% %context% %extra%\n";
+      $output = "[%datetime%] %channel%.%level_name%: %message% - %context% - %extra%\n";
       $formatter = new LineFormatter($output, $config['dateFormat']);
       $handler->setFormatter($formatter);
     }
