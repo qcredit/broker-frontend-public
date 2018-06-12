@@ -10,7 +10,7 @@ namespace App\Controller;
 
 use Slim\Views\Twig;
 
-class TermsController
+class CookieController
 {
   /**
    * @var \Twig
@@ -29,6 +29,6 @@ class TermsController
    */
   public function indexAction($request, $response)
   {
-    return $this->view->render($response, 'terms.twig');
+    return $this->view->render($response, 'polityka-cookies.twig');
   }
 }

@@ -16,7 +16,8 @@ $app->group('/', function() {
   $this->get('language', 'HomeController:languageAction');
   $this->get('about', 'AboutController:indexAction');
   $this->map(['GET', 'POST'], 'contact', 'ContactController:indexAction');
-  $this->get('terms', 'TermsController:indexAction');
+  $this->get('polityka-prywatnosci', 'PrivacyController:indexAction');
+  $this->get('polityka-cookies', 'CookieController:indexAction');
   $this->get('blog', 'BlogController:indexAction');
   $this->get('blog/tag/{tag}', 'BlogController:tagAction');
   $this->get('blog/{slug}', 'BlogController:viewAction');
