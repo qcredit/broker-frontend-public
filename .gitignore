@@ -10,3 +10,4 @@
 /public/sparrow-images/*
 .sass-cache
 config.rb
+.DS_Store
