@@ -1,4 +1,4 @@
-define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, Ajv, brokerAjv) {
+define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], function($, app, Ajv, brokerAjv, formHelper) {
   var schema = '';
   var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
 
@@ -35,16 +35,64 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, A
   }).done(function(response) {
     schema = response.schema;
     app.setMessages(response.messages);
+
+    formHelper.schemaLoaded = true;
+    $('form .broker-btn:disabled').prop('disabled', false);
   }).fail(function(response) {
     console.log('Unable to fetch schema!');
   });
 
+  $('form.landing-form').submit(function(e) {
+    var valid = ajv.validate(schema, app.getFormData());
+    brokerAjv.localize(ajv.errors);
+
+    if (!valid)
+    {
+      e.preventDefault();
+      for (var i = 0; i < ajv.errors.length; i++)
+      {
+        var error = ajv.errors[i];
+        var err_msg = error.message;
+        var fieldsToCheck = ['gdpr1','gdpr2','phoneConsent','emailConsent'];
+
+        if (error.keyword == 'required' && fieldsToCheck.indexOf(error.params.missingProperty) !== -1)
+        {
+          $('.modal').modal('show');
+        }
+
+        if(err_msg){
+          var err_target = error.dataPath !== '' ? $('.field' + error.dataPath) : false;
+
+          if (err_target)
+          {
+            if(!err_target.find('.rules').length){
+              err_target.addClass('error');
+              err_target.append('<p class="rules">'+err_msg+'</p>');
+            } else {
+              err_target.find('.rules').text(err_msg);
+            }
+          }
+        }
+      }
+
+      if (brokerAjv.searchError('phone', ajv.errors) && !brokerAjv.searchError('email', ajv.errors))
+      {
+        $('.phone').removeClass('error').find('.rules').hide();
+      }
+      if (brokerAjv.searchError('email', ajv.errors) && !brokerAjv.searchError('phone', ajv.errors))
+      {
+        $('.email').removeClass('error').find('.rules').hide();
+      }
+    }
+  });
+
   $('button[type="submit"]').click(function(e) {
     var valid = ajv.validate(schema, app.getFormData());
+    brokerAjv.localize(ajv.errors);
 
     if (!valid) {
       e.preventDefault();
-      brokerAjv.localize(ajv.errors);
+
       console.log(ajv.errors);
       console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
       var error_list = ajv.errors;

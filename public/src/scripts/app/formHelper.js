@@ -1,5 +1,7 @@
 define(['jquery', 'broker'], function($, app) {
-  var formHelper = {};
+  var formHelper = {
+    schemaLoaded: false
+  };
 
   formHelper.populateOptions = function(slider, unit)
   {
@@ -44,7 +46,10 @@ define(['jquery', 'broker'], function($, app) {
   function addCsrf()
   {
     $('form').append(app.getCsrfFields());
-    $('form .broker-btn:disabled').prop('disabled', false);
+    if (formHelper.schemaLoaded)
+    {
+      $('form .broker-btn:disabled').prop('disabled', false);
+    }
   }
 
   function populateOptions()

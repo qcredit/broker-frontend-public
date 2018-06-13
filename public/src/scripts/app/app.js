@@ -107,5 +107,21 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
   $('.contact-form').on('submit', function() {
     $(this).find('button').attr('disabled', 'disabled');
   });
+  $(".landingCheck input").change(function(){
+    if ($('.landingCheck input:checked').length == $('.landingCheck input').length) {
+      $('.landingCheck button').removeClass('broker-btn-disabled');
+    } else {
+      $('.landingCheck button').addClass('broker-btn-disabled');
+    }
+  });
+  $('.landing-inputs .phone input').focusin(function() {
+    $(this).val('+48');
+  });
+  $('.landing-inputs .phone input').focusout(function() {
+    if($(this).val() === '+48'){
+      $(this).val('');
+      $(this).parent().removeClass("filled");
+    }
+  });
   return app;
 });
