@@ -88,7 +88,7 @@ class BlogControllerTest extends BaseTest
     $this->mock->method('getBlogService')
       ->willReturn($this->serviceMock);
     $this->mock->method('render')
-      ->with($this->equalTo($this->responseMock), 'blog/tag.twig', $this->equalTo(['posts' => $posts, 'tag' => $tag]))
+      ->with($this->equalTo($this->responseMock), 'blog/tag.twig', $this->equalTo(['posts' => $posts, 'tag' => 'some tag']))
       ->willReturnArgument(2);
 
     $result = $this->mock->tagAction($this->requestMock, $this->responseMock, ['tag' => $tag]);

@@ -95,7 +95,7 @@ class BlogController extends AbstractController
   {
     $data = [];
     $data['posts'] = $this->getBlogService()->selectByTag(str_replace(' ', '-', $args['tag']));
-    $data['tag'] = $args['tag'];
+    $data['tag'] = str_replace('-', ' ', $args['tag']);
 
     return $this->render($response, 'blog/tag.twig', $data);
   }
