@@ -15,7 +15,7 @@
       </div>
       <div class="landing-form-lower">
         <div class="landing-inputs form-fields">
-          <div class="field text firstName">
+          <div class="field text phone">
             <label for="">{% trans "Phone" %}</label>
             <input type="text" name="phone" id="phone">
           </div>
@@ -26,10 +26,11 @@
           </div>
         </div>
         <div class="landing-form-lower-footer">
-          <p class="landing-terms">{% trans "*I agree to the processing by QCredit of my personal data for marketing purposes, in the scope of my address, phone number and e-mail address. I have been informed of the right to inspect the data concerning me, the right to request a change and deletion of such data, as well as the right to object to the processing of my personal data. The administrator of personal data is QCredit." %}</p>
+          <img src="src/images/ssl.jpg" class="security-logo"/>
           <button class="btn broker-btn broker-btn-gold" disabled>{% trans "Apply for a loan" %}</button>
         </div>
       </div>
+      {% include '$landing_check_modal.twig' %}
     </form>
 </section>
 <section class="row home-partners"></section>

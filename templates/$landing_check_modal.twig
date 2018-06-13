@@ -1,0 +1,34 @@
+<div class="modal fade landingCheck" id="landingCheck" tabindex="-1" role="dialog" aria-labelledby="landingCheck" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="langingCheckTitle">{% trans 'Please accept terms to continue' %}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+            <div class="field checkbox gdpr1">
+              <input type="checkbox" id="gdpr1" name="gdpr1">
+              <label for="gdpr1">Wyrażam zgodę na przetwarzanie przez Q Credit Sp. z o.o. moich danych osobowych w celach marketingowych, w zakresie obejmującym mój adres zamieszkania, adres do korespondencji oraz adres poczty elektronicznej. Zostałem poinformowany o prawie wglądu do treści dotyczących mnie danych, prawie żądania zmiany oraz usunięcia tych danych, a także o prawie zgłoszenia sprzeciwu wobec przetwarzania moich danych osobowych.</label>
+            </div>
+            <div class="field checkbox emailConsent">
+              <input type="checkbox" id="emailConsent" name="emailConsent">
+              <label for="emailConsent">Wyrażam zgodę na otrzymywanie od Q Credit Sp. z o.o. informacji handlowych przesyłanych za pomocą poczty elektronicznej.</label>
+            </div>
+            <div class="field checkbox phoneConsent">
+              <input type="checkbox" id="phoneConsent" name="phoneConsent">
+              <label for="phoneConsent">Wyrażam zgodę na otrzymywanie od Q Credit Sp. z o.o. informacji handlowych przedstawianych za pośrednictwem telefonu.</label>
+            </div>
+            <div class="field checkbox gdpr2">
+              <input type="checkbox" id="gdpr2" name="gdpr2">
+              <label for="gdpr2">Wyrażam zgodę na przetwarzanie moich danych osobowych przez Q Credit Sp. z o.o. oraz przez podmioty należące do grupy kapitałowej, w której skład wchodzi Q Credit Sp. z o.o. w celu marketingu produktów tych podmiotów oraz podmiotów trzecich, współpracujących z Q Credit Sp. z o.o.</label>
+            </div>
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> -->
+        <button type="button" class="btn broker-btn broker-btn-gold broker-btn-disabled" data-dismiss="modal" disabled>{% trans 'Proceed'%}</button>
+      </div>
+    </div>
+  </div>
+</div>
