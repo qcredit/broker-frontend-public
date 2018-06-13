@@ -94,7 +94,7 @@ class BlogController extends AbstractController
   public function tagAction(Request $request, Response $response, $args)
   {
     $data = [];
-    $data['posts'] = $this->getBlogService()->selectByTag($args['tag']);
+    $data['posts'] = $this->getBlogService()->selectByTag(str_replace(' ', '-', $args['tag']));
     $data['tag'] = $args['tag'];
 
     return $this->render($response, 'blog/tag.twig', $data);
