@@ -328,8 +328,8 @@ class SchemaHelper
 
       if ($this->getScenario() !== null)
       {
-        $scenario = $this->getScenario()->setSchema($dataMapper->getFormSchema());
-        $schema = $scenario->applyScenario()->getSchema();
+        $scenario  = $this->getScenario()->setSchema($dataMapper->getFormSchema())->applyScenario();
+        $schema = $scenario->getSchema();
       }
 
       if (isset($schema['definitions']))

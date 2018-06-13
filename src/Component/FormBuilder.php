@@ -377,7 +377,7 @@ class FormBuilder
   {
     $field = $fieldData;
 
-    $params = ApplicationForm::getFieldParameters();
+    $params = $this->getFormFieldParameters();
     $params = $params[$fieldName] ?? false;
 
     $this->addField([
@@ -438,5 +438,13 @@ class FormBuilder
     });
 
     $this->setFieldsInSections($sections);
+  }
+
+  /**
+   * @return array
+   */
+  protected function getFormFieldParameters()
+  {
+    return ApplicationForm::getFieldParameters();
   }
 }
