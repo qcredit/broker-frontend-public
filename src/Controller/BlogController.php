@@ -50,6 +50,7 @@ class BlogController extends AbstractController
    * @param array $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @throws \Psr\SimpleCache\InvalidArgumentException
    */
   public function indexAction(Request $request, Response $response, $args = [])
   {
@@ -88,12 +89,13 @@ class BlogController extends AbstractController
    * @param $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @throws \Psr\SimpleCache\InvalidArgumentException
    */
   public function tagAction(Request $request, Response $response, $args)
   {
     $data = [];
-    $data['posts'] = $this->getBlogService()->selectByTag($args['tag']);
-    $data['tag'] = $args['tag'];
+    $data['posts'] = $this->getBlogService()->selectByTag(str_replace(' ', '-', $args['tag']));
+    $data['tag'] = str_replace('-', ' ', $args['tag']);
 
     return $this->render($response, 'blog/tag.twig', $data);
   }
