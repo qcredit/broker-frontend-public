@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Base\Event\PostDataListener;
 use App\Base\NewAppListener;
+use App\Base\Validator\Scenario\HomepageScenario;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Model\ApplicationForm;
@@ -169,7 +170,7 @@ class ApplicationController extends AbstractController
    */
   protected function isFromFrontpage()
   {
-    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
+    return !strpos($_SERVER['HTTP_REFERER'], 'application');
   }
 
   /**
@@ -202,13 +203,10 @@ class ApplicationController extends AbstractController
     {
       $service->setValidationEnabled(true);
       $service->setPostData($postData);
-    }
 
-    if ($request->isPost())
-    {
       if ($this->isFromFrontpage())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
+        $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
       }
 
       if ($this->isAjax($request))
@@ -219,12 +217,7 @@ class ApplicationController extends AbstractController
 
     $service->run();
 
-    if ($request->isPost() && $this->isAjax($request))
-    {
-      return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
-    }
-
-    if ($request->isPost() && !$this->isAjax($request) && $this->getPostApplicationService()->isSuccess())
+    if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
     {
       return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
     }
@@ -346,6 +339,11 @@ class ApplicationController extends AbstractController
   public function schemaAction(Request $request, Response $response, $args)
   {
     $helper = new SchemaHelper();
+    if ($this->isFromFrontpage())
+    {
+      $helper->setScenario(new HomepageScenario());
+    }
+
     $form = new ApplicationForm();
     $errors = $form->getAjvErrors();
 

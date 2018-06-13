@@ -8,8 +8,10 @@
 
 namespace App\Component;
 
+use App\Base\Validator\Scenario\HomepageScenario;
 use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\Repository\PartnerDataMapperRepositoryInterface;
+use Broker\Domain\Interfaces\ValidationScenarioInterface;
 use Broker\System\Helper;
 use Broker\System\Log;
 
@@ -31,6 +33,10 @@ class SchemaHelper
    * @var PartnerDataMapperRepositoryInterface
    */
   protected $partnerDataMapperRepository;
+  /**
+   * @var ValidationScenarioInterface
+   */
+  protected $scenario;
 
   /**
    * @return array
@@ -131,6 +137,26 @@ class SchemaHelper
   public function setPartnerDataMapperRepository(PartnerDataMapperRepositoryInterface $partnerDataMapperRepository)
   {
     $this->partnerDataMapperRepository = $partnerDataMapperRepository;
+    return $this;
+  }
+
+  /**
+   * @return ValidationScenarioInterface
+   * @codeCoverageIgnore
+   */
+  public function getScenario()
+  {
+    return $this->scenario;
+  }
+
+  /**
+   * @param ValidationScenarioInterface $scenario
+   * @return SchemaHelper
+   * @codeCoverageIgnore
+   */
+  public function setScenario(ValidationScenarioInterface $scenario)
+  {
+    $this->scenario = $scenario;
     return $this;
   }
 
@@ -298,9 +324,13 @@ class SchemaHelper
 
     foreach ($partnersDataMappers as $dataMapper)
     {
-      $schema = $dataMapper->getDecodedConfigFile()['requestSchema'];
-      $schema = $this->flattenSchema($schema);
-      $schema = $this->mapPartnerSchemaToForm($dataMapper->getRequestPayload(), $schema);
+      $schema = $dataMapper->getFormSchema()->getSchema();
+
+      if ($this->getScenario() !== null)
+      {
+        $scenario = $this->getScenario()->setSchema($dataMapper->getFormSchema());
+        $schema = $scenario->applyScenario()->getSchema();
+      }
 
       if (isset($schema['definitions']))
       {
@@ -351,6 +381,11 @@ class SchemaHelper
    */
   protected function substituteEnumFieldValues($schema)
   {
+    if (!isset($schema['properties']))
+    {
+      return $schema;
+    }
+
     foreach ($schema['properties'] as $key => &$property)
     {
       if (!isset($property['enum'])) continue;
