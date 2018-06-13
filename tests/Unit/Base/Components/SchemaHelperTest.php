@@ -304,29 +304,4 @@ class SchemaHelperTest extends BaseTest
     $this->assertContains('firstName', $result['required']);
     $this->assertContains('field', $result['required']);
   }
-
-  public function testMergePartnerSchemas()
-  {
-    $dataMapper = $this->getMockBuilder(PartnerDataMapperInterface::class)
-      ->setMethods(['getDecodedConfigFile', 'getRequestPayload'])
-      ->getMockForAbstractClass();
-    $dataMapper->method('getDecodedConfigFile')
-      ->willReturn(['requestSchema' => []]);
-    $dataMappers = [
-      $dataMapper
-    ];
-
-    $mock = $this->getMockBuilder(SchemaHelper::class)
-      ->setMethods(['flattenSchema', 'mapPartnerSchemaToForm', 'substituteEnumFieldValues'])
-      ->getMock();
-
-    $mock->expects($this->once())
-      ->method('flattenSchema')
-      ->willReturnArgument(0);
-    $mock->expects($this->once())
-      ->method('mapPartnerSchemaToForm')
-      ->willReturn([]);
-
-    $mock->mergePartnersSchemas($dataMappers);
-  }
 }

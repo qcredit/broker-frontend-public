@@ -113,7 +113,7 @@ class FormBuilderTest extends BaseTest
     $this->invokeMethod($mock, 'extractMergedSchemasFields', []);
   }
 
-  public function testExtractSchemaFields()
+  public function testExploreSchema()
   {
     $schema = [
       'properties' => [
@@ -122,22 +122,25 @@ class FormBuilderTest extends BaseTest
         ],
         'firstName' => [
           'type' => 'string',
-          'section' => 'personal'
+          'section' => 'general'
         ]
       ]
     ];
     $mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMergedPartnerSchemas'])
+      ->setMethods(['getMergedPartnerSchemas', 'getFormFieldParameters'])
       ->getMock();
 
     $mock->setApplicationForm(new ApplicationForm());
+
+    $mock->method('getFormFieldParameters')
+      ->willReturn([]);
 
     $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();
 
     $this->assertArraySubset([0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general']], $result);
-    $this->assertArraySubset([1 => ['name' => 'firstName', 'type' => 'text', 'section' => 'personal']], $result);
+    $this->assertArraySubset([1 => ['name' => 'firstName', 'type' => 'text', 'section' => 'general']], $result);
   }
 
   public function testExtractSchemaFieldsWithRequiredFields()
@@ -158,10 +161,13 @@ class FormBuilderTest extends BaseTest
     ];
     $mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMergedPartnerSchemas'])
+      ->setMethods(['getMergedPartnerSchemas', 'getFormFieldParameters'])
       ->getMock();
 
     $mock->setApplicationForm(new ApplicationForm());
+
+    $mock->method('getFormFieldParameters')
+      ->willReturn([]);
 
     $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();

@@ -20,6 +20,10 @@ class ContactValidator extends AbstractEntityValidator
   /**
    * @var array
    */
+  protected $rawData;
+  /**
+   * @var array
+   */
   protected $validationAttributes = [
     ContactForm::ATTR_NAME,
     ContactForm::ATTR_EMAIL,
@@ -127,5 +131,25 @@ class ContactValidator extends AbstractEntityValidator
     $result = json_decode($response);
 
     return $result->success === true;
+  }
+
+  /**
+   * @return array
+   * @codeCoverageIgnore
+   */
+  public function getRawData()
+  {
+    return $this->rawData;
+  }
+
+  /**
+   * @param array $rawData
+   * @return ContactValidator
+   * @codeCoverageIgnore
+   */
+  public function setRawData(array $rawData)
+  {
+    $this->rawData = $rawData;
+    return $this;
   }
 }

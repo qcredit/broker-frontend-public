@@ -84,7 +84,11 @@ class SchemaValidator implements SchemaValidatorInterface
 
     foreach ($fatErrors as $error)
     {
-      if (isset($error['property']))
+      if (isset($error['property']) && $error['property'] == '')
+      {
+        $errors['general'] = $this->beautifyErrorMessage($error['message']);
+      }
+      else if (isset($error['property']))
       {
         $parts = explode('.', $error['property']);
         if ($parts)
@@ -119,6 +123,11 @@ class SchemaValidator implements SchemaValidatorInterface
     if (strpos($message, 'String value found, but a number is required') !== false)
     {
       return _('Please provide a number');
+    }
+
+    if (preg_match('/The property .*? is required/', $message))
+    {
+      return _('This field is required');
     }
 
     return $message;
