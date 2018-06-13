@@ -2,7 +2,7 @@ version: '3'
 
 services:
   nginx:
-    container_name: slim_web
+    container_name: broker_web
     image: nginx:latest
     ports:
       - "8100:80"
@@ -16,7 +16,7 @@ services:
       - default
 
   php:
-    container_name: slim_php
+    container_name: broker_php
     build: ./infrastructure/php
     volumes:
       - ./:/app
@@ -28,22 +28,22 @@ services:
      - mysql
 
   composer:
-    container_name: slim_composer
+    container_name: broker_composer
     image: composer
     volumes:
     - ./:/app
     command: composer install
 
   mysql:
-    container_name: slim_mysql
-    image: mysql
+    container_name: broker_mysql
+    image: mysql:5.7
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: hobunelasiterveaiat2is
       MYSQL_DATABASE: broker
     volumes:
       - ./infrastructure/mysql/broker-config.cnf:/etc/mysql/conf.d/broker-config.cnf
-      - ./data:/var/lib/mysql
+      - ./data/mysql:/var/lib/mysql
     networks:
       default:
         aliases:
