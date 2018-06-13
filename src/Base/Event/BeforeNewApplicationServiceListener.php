@@ -33,7 +33,11 @@ class BeforeNewApplicationServiceListener implements EventListenerInterface
     $postData = $emitter->getPostData();
     $phone = $postData[ApplicationForm::ATTR_PHONE];
 
-    if (strpos($phone, '+48') === false && strpos($phone, '+372') === false)
+    if (preg_match('/^48\d{9}$/', $phone))
+    {
+      $phone = sprintf('+%d', $phone);
+    }
+    else if (strpos($phone, '+48') === false && strpos($phone, '+372') === false)
     {
       $phone = sprintf('+48%d', $phone);
     }
