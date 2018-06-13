@@ -14,8 +14,6 @@ use Broker\Domain\Entity\Partner;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use Broker\Domain\Interfaces\SchemaValidatorInterface;
 use Broker\System\BaseTest;
-use PHPUnit\Framework\TestCase;
-use Slim\App;
 use Tests\Helpers\LoggerMockTrait;
 
 class ApplicationValidatorTest extends BaseTest
@@ -29,6 +27,7 @@ class ApplicationValidatorTest extends BaseTest
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->mock = $this->getMockBuilder(ApplicationValidator::class)
       ->disableOriginalConstructor()
       ->setMethods(['getEntity', 'getPartners', 'validatePartnerRequirements', 'validateAttributes', 'getSchemaValidator', 'getLogger'])
