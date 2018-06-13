@@ -249,6 +249,24 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   * @throws NotFoundException
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function resumeAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+
+    $data['fields'] = $this->getFormBuilder()->getFormFields();
+    $data['application'] = $this->findEntity($args['hash'], $request, $response);
+
+    return $this->render($response, 'application/form.twig', $data);
+  }
+
+  /**
    * @param $hash
    * @param $request
    * @param $response

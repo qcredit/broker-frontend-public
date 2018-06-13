@@ -173,9 +173,6 @@
   }
 }
 
-/*.step-2 {
-  display: none;
-}*/
 .loan-form-errors .step-2 {
   display: block;
 }
@@ -217,6 +214,21 @@ textarea {
   }
 }
 /* Input fields & select list styles end here */
+
+.modal {
+  padding-right: 0;
+  .modal-content {
+    border: 0;
+    border-radius: 0;
+  }
+  .modal-body {
+    flex: 0 0 auto;
+  }
+  .modal-footer{
+    padding-top: 0;
+    border-top: 0;
+  }
+}
 
 @media only screen and (max-width: 420px) {
   .loan-form .broker-btn {

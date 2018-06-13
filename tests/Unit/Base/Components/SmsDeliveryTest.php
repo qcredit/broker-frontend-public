@@ -29,6 +29,7 @@ class SmsDeliveryTest extends BaseTest
 
   public function setUp()/* The :void return type declaration that should be here would cause a BC issue */
   {
+    $this->setupMocks();
     parent::setUp();
 
     $this->mock = $this->getMockBuilder(SmsDelivery::class)
