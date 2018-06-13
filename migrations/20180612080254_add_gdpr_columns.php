@@ -30,8 +30,8 @@ class AddGdprColumns extends AbstractMigration
     {
       $table = $this->table('application');
 
-      $table->addColumn('marketing_consent', 'boolean', ['default' => false])
-        ->addColumn('third_party_consent', 'boolean', ['default' => false])
+      $table->addColumn('gdpr_1', 'boolean', ['default' => false])
+        ->addColumn('gdpr_2', 'boolean', ['default' => false])
         ->addColumn('email_consent', 'boolean', ['default' => false])
         ->addColumn('phone_consent', 'boolean', ['default' => false])
         ->save();
