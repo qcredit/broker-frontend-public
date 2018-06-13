@@ -50,6 +50,7 @@ class BlogController extends AbstractController
    * @param array $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @throws \Psr\SimpleCache\InvalidArgumentException
    */
   public function indexAction(Request $request, Response $response, $args = [])
   {
@@ -88,6 +89,7 @@ class BlogController extends AbstractController
    * @param $args
    * @return mixed
    * @throws \Interop\Container\Exception\ContainerException
+   * @throws \Psr\SimpleCache\InvalidArgumentException
    */
   public function tagAction(Request $request, Response $response, $args)
   {
