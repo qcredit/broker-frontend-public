@@ -81,9 +81,36 @@ class HomepageScenario implements ValidationScenarioInterface
         [
           'type' => 'object',
           'required' => [
+            ApplicationForm::ATTR_EMAIL,
+            ApplicationForm::ATTR_GDPR_1,
+            ApplicationForm::ATTR_GDPR_2,
+            ApplicationForm::ATTR_PHONE_CONSENT,
+            ApplicationForm::ATTR_EMAIL_CONSENT
+          ],
+          'properties' => [
+            ApplicationForm::ATTR_EMAIL => $originalSchema['properties'][ApplicationForm::ATTR_EMAIL],
+            ApplicationForm::ATTR_GDPR_1 => [
+              'type' => 'number'
+            ],
+            ApplicationForm::ATTR_GDPR_2 => [
+              'type' => 'number'
+            ],
+            ApplicationForm::ATTR_EMAIL_CONSENT => [
+              'type' => 'number'
+            ],
+            ApplicationForm::ATTR_PHONE_CONSENT => [
+              'type' => 'number'
+            ]
+          ]
+        ],
+        [
+          'type' => 'object',
+          'required' => [
             ApplicationForm::ATTR_PHONE,
             ApplicationForm::ATTR_GDPR_1,
-            ApplicationForm::ATTR_GDPR_2
+            ApplicationForm::ATTR_GDPR_2,
+            ApplicationForm::ATTR_PHONE_CONSENT,
+            ApplicationForm::ATTR_EMAIL_CONSENT
           ],
           'properties' => [
             ApplicationForm::ATTR_PHONE => $originalSchema['properties'][ApplicationForm::ATTR_PHONE],
@@ -92,22 +119,11 @@ class HomepageScenario implements ValidationScenarioInterface
             ],
             ApplicationForm::ATTR_GDPR_2 => [
               'type' => 'number'
-            ]
-          ]
-        ],
-        [
-          'type' => 'object',
-          'required' => [
-            ApplicationForm::ATTR_EMAIL,
-            ApplicationForm::ATTR_GDPR_1,
-            ApplicationForm::ATTR_GDPR_2
-          ],
-          'properties' => [
-            ApplicationForm::ATTR_EMAIL => $originalSchema['properties'][ApplicationForm::ATTR_EMAIL],
-            ApplicationForm::ATTR_GDPR_1 => [
+            ],
+            ApplicationForm::ATTR_EMAIL_CONSENT => [
               'type' => 'number'
             ],
-            ApplicationForm::ATTR_GDPR_2 => [
+            ApplicationForm::ATTR_PHONE_CONSENT => [
               'type' => 'number'
             ]
           ]
