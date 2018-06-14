@@ -10,6 +10,7 @@ $app->group('/', function() {
   $this->map(['GET', 'POST'], 'application', 'ApplicationController:indexAction');
   $this->get('application/schema', 'ApplicationController:schemaAction');
   $this->get('application/status', 'ApplicationController:statusAction');
+  $this->get('application/resume/{hash}', 'ApplicationController:resumeAction');
   $this->get('application/{hash}', 'ApplicationController:offersAction');
   $this->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
   $this->get('', 'HomeController:indexAction');

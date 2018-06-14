@@ -7,7 +7,8 @@ requirejs.config({
     'ajv': '//cdnjs.cloudflare.com/ajax/libs/ajv/6.4.0/ajv.min',
     'ajv.broker': 'app/ajv.broker',
     'broker': './app/app',
-    'domReady': './app/domReady'
+    'domReady': './app/domReady',
+    'formReminder': './app/formReminder'
   },
   'shim': {
     'jquery.bootstrap': ['jquery']
