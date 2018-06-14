@@ -3,6 +3,7 @@ return [
     'settings' => [
         'mainEmail' => 'info@qcredit.pl',
         'defaultLanguage' => 'pl_PL',
+        'baseUrl' => getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100'),
         'displayErrorDetails' => getenv('ENV_TYPE') == 'production' ? false : true,
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 

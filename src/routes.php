@@ -7,7 +7,7 @@ use App\Middleware\PartnerAuthenticator;
 // Routes
 
 $app->group('/', function() {
-  $this->map(['GET', 'POST'], 'application', 'ApplicationController:indexAction');
+  $this->map(['GET', 'POST'], 'application', 'ApplicationController:indexAction')->add(new \App\Middleware\ApplicationPost($this));
   $this->get('application/schema', 'ApplicationController:schemaAction');
   $this->get('application/status', 'ApplicationController:statusAction');
   $this->get('application/resume/{hash}', 'ApplicationController:resumeAction');
