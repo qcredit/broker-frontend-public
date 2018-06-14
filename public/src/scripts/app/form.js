@@ -78,18 +78,14 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
         }
       }
 
-      if (brokerAjv.searchError('phone', ajv.errors) && !brokerAjv.searchError('email', ajv.errors))
+      if ($('.modal.show').length && (brokerAjv.searchError('phone', ajv.errors) || brokerAjv.searchError('email', ajv.errors)))
       {
-        $('.phone').removeClass('error').find('.rules').hide();
-      }
-      if (brokerAjv.searchError('email', ajv.errors) && !brokerAjv.searchError('phone', ajv.errors))
-      {
-        $('.email').removeClass('error').find('.rules').hide();
+        $('.modal').modal('hide');
       }
     }
   });
 
-  $('button[type="submit"]').click(function(e) {
+  $('form:not(.landing-form) button[type="submit"]').click(function(e) {
     var valid = ajv.validate(schema, app.getFormData());
     brokerAjv.localize(ajv.errors);
 

@@ -77,7 +77,7 @@ class HomepageScenario implements ValidationScenarioInterface
     $originalSchema = $this->schema->getSchema();
 
     $this->schema = [
-      'anyOf' => [
+      'oneOf' => [
         [
           'type' => 'object',
           'required' => [
@@ -89,6 +89,10 @@ class HomepageScenario implements ValidationScenarioInterface
           ],
           'properties' => [
             ApplicationForm::ATTR_EMAIL => $originalSchema['properties'][ApplicationForm::ATTR_EMAIL],
+            ApplicationForm::ATTR_PHONE => [
+              'type' => $originalSchema['properties'][ApplicationForm::ATTR_PHONE]['type'],
+              'pattern' => sprintf('(^$|%s)', $originalSchema['properties'][ApplicationForm::ATTR_PHONE]['pattern'])
+            ],
             ApplicationForm::ATTR_GDPR_1 => [
               'type' => 'number'
             ],
@@ -114,6 +118,10 @@ class HomepageScenario implements ValidationScenarioInterface
           ],
           'properties' => [
             ApplicationForm::ATTR_PHONE => $originalSchema['properties'][ApplicationForm::ATTR_PHONE],
+            ApplicationForm::ATTR_EMAIL => [
+              'type' => 'string',
+              'pattern' => sprintf('(^$|%s)', $originalSchema['properties'][ApplicationForm::ATTR_EMAIL]['pattern'])
+            ],
             ApplicationForm::ATTR_GDPR_1 => [
               'type' => 'number'
             ],
