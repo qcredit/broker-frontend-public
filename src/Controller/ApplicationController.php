@@ -225,7 +225,6 @@ class ApplicationController extends AbstractController
     }
 
     $data['application'] = $service->getApplication();
-    var_dump($data['application']->getErrors());
 
     return $this->render($response, 'application/form.twig', $data);
   }

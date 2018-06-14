@@ -16,8 +16,6 @@ class ApplicationListener
   public function prePersist(Application $application, $event)
   {
     $errors = $application->getErrors();
-    var_dump($errors);
-    var_dump($event);
     if (array_key_exists(ApplicationForm::ATTR_PHONE, $errors) && array_key_exists(ApplicationForm::ATTR_EMAIL, $errors))
     {
       throw new \Exception('Cannot save app without phone or email!');
