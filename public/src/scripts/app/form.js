@@ -49,15 +49,18 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
     if (!valid)
     {
       e.preventDefault();
+      var fieldsToCheck = ['gdpr1','gdpr2','phoneConsent','emailConsent'];
       for (var i = 0; i < ajv.errors.length; i++)
       {
         var error = ajv.errors[i];
         var err_msg = error.message;
-        var fieldsToCheck = ['gdpr1','gdpr2','phoneConsent','emailConsent'];
 
         if (error.keyword == 'required' && fieldsToCheck.indexOf(error.params.missingProperty) !== -1)
         {
-          $('.modal').modal('show');
+          if (!brokerAjv.searchError('phone', ajv.errors) || !brokerAjv.searchError('email', ajv.errors))
+          {
+            $('.modal').modal('show');
+          }
         }
 
         if(err_msg){
@@ -93,8 +96,6 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
     if (!valid) {
       e.preventDefault();
 
-      console.log(ajv.errors);
-      console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
       var error_list = ajv.errors;
       for(var i = 0; i < error_list.length; i++) {
         var err_target = $('.field'+error_list[i].dataPath);
