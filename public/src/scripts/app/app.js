@@ -115,7 +115,9 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
     }
   });
   $('.landing-inputs .phone input').focusin(function() {
-    $(this).val('+48');
+    if($(this).val() === '' || $(this).val() === '+48') {
+      $(this).val('+48');
+    }
   });
   $('.landing-inputs .phone input').focusout(function() {
     if($(this).val() === '+48'){
