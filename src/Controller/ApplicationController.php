@@ -198,41 +198,49 @@ class ApplicationController extends AbstractController
 
     $service = $this->getPostApplicationService()->setValidationEnabled(false);
 
-    if ($request->isPost())
+    try
     {
-      $service->setValidationEnabled(true);
-      //$service->setSaveAppOnValidation(true);
-      $service->setPostData($postData);
-    }
 
-    if ($request->isPost())
-    {
-      //if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
-      //if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
-      if ($this->isFromFrontpage())
+      if ($request->isPost())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_FIRST_NAME]);
+        $service->setValidationEnabled(true);
+        //$service->setSaveAppOnValidation(true);
+        $service->setPostData($postData);
       }
 
-      if ($this->isAjax($request))
+      if ($request->isPost())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        //if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
+        //if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
+        if ($this->isFromFrontpage())
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_FIRST_NAME]);
+        }
+
+        if ($this->isAjax($request))
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        }
+      }
+
+      $service->run();
+
+      if ($request->isPost() && $this->isAjax($request))
+      {
+        return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
+      }
+
+      if ($request->isPost() && !$this->isAjax($request))
+      {
+        if ($this->getPostApplicationService()->isSuccess())
+        {
+          return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
+        }
       }
     }
-
-    $service->run();
-
-    if ($request->isPost() && $this->isAjax($request))
+    catch (\Exception $ex)
     {
-      return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
-    }
-
-    if ($request->isPost() && !$this->isAjax($request))
-    {
-      if ($this->getPostApplicationService()->isSuccess())
-      {
-        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
-      }
+      $data['flash'] = ['error' => _('We are unable to process your request. Please try again later.')];
     }
 
     $data['application'] = $service->getApplication();

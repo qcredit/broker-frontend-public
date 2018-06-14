@@ -371,3 +371,18 @@ $container['BrokerInstance'] = function($c)
 
   return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), $c->get('EventManager'));
 };
+
+$container['errorHandler'] = function ($c) {
+  return function ($request, $response, Exception $exception) use ($c) {
+    $view = $c->get('view');
+
+    $logger = $c->get('logger');
+    $logger->alert('A serious error has ocourred!', [$exception->getMessage()]);
+
+    //echo $view->fetch('error.twig');
+
+    return $c['response']->withStatus(500)
+      ->withHeader('Content-Type', 'text/html')
+      ->write('Something went wrong!');
+  };
+};
