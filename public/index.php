@@ -29,19 +29,21 @@ class Fatality
     // Determine if there was an error and that is why we are about to exit.
     $error = error_get_last();
 
-    $settings = require __DIR__ . '/../src/settings.php';
-    $app = new \Slim\App($settings);
-
-    require __DIR__ . '/../src/dependencies.php';
-
-    $view = $app->getContainer()->get('view');
-    if ($error !== null)
+    if ($error !== null && is_array($error) && $error['type'] == E_ERROR)
     {
+      $settings = require __DIR__ . '/../src/settings.php';
+      $app = new \Slim\App($settings);
+
+      require __DIR__ . '/../src/dependencies.php';
+
+      $view = $app->getContainer()->get('view');
+
       $logger = $app->getContainer()->get('logger');
       $logger->emergency('An unrecoverable error has ocurred!', $error);
+
+      echo $view->fetch('error.twig');
     }
 
-    echo $view->fetch('error.twig');
     exit;
   }
 }
