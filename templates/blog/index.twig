@@ -1,5 +1,13 @@
 {% extends 'base.twig' %}
-{% block title %}Artykuły{% endblock %}
+{% block title %}O pożyczkach - nasz blog | QCredit{% endblock %}
+{% block post_meta_blog %}
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ currentUrl }}" />
+<meta property="og:title" content="O pożyczkach - nasz blog | QCredit" />
+<meta property="og:description" content="Blog o pożyczkach, pożyczaniu, oszczędzaniu - zapraszamy do przeczytaniu i sugerowaniu swoich ciekawych tematów na które napiszemy." />
+<meta property="og:image" content="https://www.qcredit.pl/src/images/site-image.jpg" />
+<meta name="description" content="Blog o pożyczkach, pożyczaniu, oszczędzaniu - zapraszamy do przeczytaniu i sugerowaniu swoich ciekawych tematów na które napiszemy."/>
+{% endblock %}
 
 {% block container %}
   <section class="blog-articles">
