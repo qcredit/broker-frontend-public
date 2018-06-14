@@ -65,7 +65,7 @@ class ApplicationControllerTest extends BaseTest
       ->getMock();
     $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy'])
+      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy', 'getAcceptedOffersByApplication'])
       ->getMock();
 
     $twigMock = $this->getMockBuilder(Twig::class)

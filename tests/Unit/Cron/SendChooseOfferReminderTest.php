@@ -36,6 +36,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->mock = $this->getMockBuilder(SendChooseOfferReminder::class)
       ->disableOriginalConstructor()
       ->setMethods([

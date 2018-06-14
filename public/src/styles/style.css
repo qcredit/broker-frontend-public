@@ -1593,8 +1593,16 @@ body {
   font-size: 0.875rem;
   line-height: 1.6;
 }
+/* line 175, sass/style.scss */
+.terms-container h5 {
+  margin-bottom: 1rem;
+}
+/* line 178, sass/style.scss */
+.terms-container ol li {
+  padding-bottom: .25rem;
+}
 
-/* line 177, sass/style.scss */
+/* line 183, sass/style.scss */
 .thank-you-row {
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -1602,13 +1610,13 @@ body {
 
 /* Media queries */
 @media only screen and (min-width: 340px) {
-  /* line 185, sass/style.scss */
+  /* line 191, sass/style.scss */
   .thank-you-row {
     padding: 1rem 1rem;
   }
 }
 @media only screen and (max-width: 350px) {
-  /* line 192, sass/style.scss */
+  /* line 198, sass/style.scss */
   .contact-submit .g-recaptcha {
     transform: scale(0.87);
     -webkit-transform: scale(0.87);
@@ -1617,67 +1625,67 @@ body {
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 202, sass/style.scss */
+  /* line 208, sass/style.scss */
   .page-body {
     min-height: 400px;
   }
 
-  /* line 205, sass/style.scss */
+  /* line 211, sass/style.scss */
   .home-about-half {
     margin: 1.5rem 0;
   }
 
-  /* line 208, sass/style.scss */
+  /* line 214, sass/style.scss */
   .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  /* line 213, sass/style.scss */
+  /* line 219, sass/style.scss */
   .quote-text {
     font-size: 24px;
   }
 
-  /* line 216, sass/style.scss */
+  /* line 222, sass/style.scss */
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 1024px) {
-  /* line 222, sass/style.scss */
+  /* line 228, sass/style.scss */
   body {
     padding-top: 60px;
   }
 
-  /* line 225, sass/style.scss */
+  /* line 231, sass/style.scss */
   .page-body {
     min-height: 500px;
   }
 
-  /* line 228, sass/style.scss */
+  /* line 234, sass/style.scss */
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
 
-  /* line 232, sass/style.scss */
+  /* line 238, sass/style.scss */
   .about-how {
     padding-top: 0.25rem;
   }
-  /* line 234, sass/style.scss */
+  /* line 240, sass/style.scss */
   .about-how .circle-block {
     margin-bottom: 4rem;
   }
 
-  /* line 238, sass/style.scss */
+  /* line 244, sass/style.scss */
   .contact-submit {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between !important;
   }
-  /* line 242, sass/style.scss */
+  /* line 248, sass/style.scss */
   .contact-submit .g-recaptcha {
     margin: 0;
   }

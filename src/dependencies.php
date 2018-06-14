@@ -168,10 +168,15 @@ $container['ContactController'] = function($c)
   $contactForm = new \App\Model\ContactForm($c, $c->get('BrokerInstance'), new \App\Base\Repository\MessageTemplateRepository($c, new \Broker\Domain\Factory\MessageFactory()), $c->get('MessageDeliveryService'));
   return new \App\Controller\ContactController($c, $contactForm);
 };
-$container['TermsController'] = function($c)
+$container['PrivacyController'] = function($c)
 {
   $view = $c->get('view');
-  return new \App\Controller\TermsController($view);
+  return new \App\Controller\PrivacyController($view);
+};
+$container['CookieController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\CookieController($view);
 };
 
 $container['ApiController'] = function($c)
@@ -240,19 +245,25 @@ $container['PartnerUpdateService'] = function($c)
   );
 };
 
+$container['ApplicationValidator'] = function($c)
+{
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
+  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
+
+  return $applicationValidator;
+};
+
 $container['PostApplicationService'] = function($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
   $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
-  $schemaValidator = new \App\Base\Validator\SchemaValidator();
-  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
 
   $newApplicationService = new NewApplicationService(
     $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
-    $applicationValidator
+    $c->get('ApplicationValidator')
   );
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(

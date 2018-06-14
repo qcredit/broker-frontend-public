@@ -10,13 +10,15 @@ $app->group('/', function() {
   $this->map(['GET', 'POST'], 'application', 'ApplicationController:indexAction');
   $this->get('application/schema', 'ApplicationController:schemaAction');
   $this->get('application/status', 'ApplicationController:statusAction');
+  $this->get('application/resume/{hash}', 'ApplicationController:resumeAction');
   $this->get('application/{hash}', 'ApplicationController:offersAction');
   $this->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
   $this->get('', 'HomeController:indexAction');
   $this->get('language', 'HomeController:languageAction');
   $this->get('about', 'AboutController:indexAction');
   $this->map(['GET', 'POST'], 'contact', 'ContactController:indexAction');
-  $this->get('terms', 'TermsController:indexAction');
+  $this->get('polityka-prywatnosci', 'PrivacyController:indexAction');
+  $this->get('polityka-cookies', 'CookieController:indexAction');
   $this->get('blog', 'BlogController:indexAction');
   $this->get('blog/tag/{tag}', 'BlogController:tagAction');
   $this->get('blog/{slug}', 'BlogController:viewAction');
