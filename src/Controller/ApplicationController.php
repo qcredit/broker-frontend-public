@@ -24,6 +24,7 @@ use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
 use Broker\Domain\Service\PreparePartnerRequestsService;
+use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
@@ -207,6 +208,7 @@ class ApplicationController extends AbstractController
       if ($this->isFromFrontpage())
       {
         $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
+        //$service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
       }
 
       if ($this->isAjax($request))
@@ -223,6 +225,7 @@ class ApplicationController extends AbstractController
     }
 
     $data['application'] = $service->getApplication();
+    var_dump($data['application']->getErrors());
 
     return $this->render($response, 'application/form.twig', $data);
   }
