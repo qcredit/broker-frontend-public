@@ -1,5 +1,13 @@
 {% extends 'base.twig' %}
-{% block title %}qCredit{% endblock %}
+{% block title %}Porównywarka pożyczek - broker pożyczkowy | QCredit{% endblock %}
+{% block post_meta_blog %}
+    <meta property="og:url" content="{{ currentUrl }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Porównywarka pożyczek - broker pożyczkowy | QCredit" />
+    <meta property="og:description" content="Jesteśmy brokerem pożyczkowym, miejscem gdzie możesz jednocześnie aplikować bez prowizji w wielu firmach pożyczkowych i wybrać najlepszą dla Ciebie ofertę." />
+    <meta property="og:image" content="https://www.qcredit.pl/src/images/site-image.jpg" />
+    <meta name="description" content="Jesteśmy brokerem pożyczkowym, miejscem gdzie możesz jednocześnie aplikować bez prowizji w wielu firmach pożyczkowych i wybrać najlepszą dla Ciebie ofertę."/>
+{% endblock %}
 
 {% block hero %}
 <section class="row home-hero">
