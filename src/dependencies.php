@@ -245,19 +245,25 @@ $container['PartnerUpdateService'] = function($c)
   );
 };
 
+$container['ApplicationValidator'] = function($c)
+{
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
+  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
+
+  return $applicationValidator;
+};
+
 $container['PostApplicationService'] = function($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
   $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
-  $schemaValidator = new \App\Base\Validator\SchemaValidator();
-  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
 
   $newApplicationService = new NewApplicationService(
     $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
-    $applicationValidator
+    $c->get('ApplicationValidator')
   );
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(

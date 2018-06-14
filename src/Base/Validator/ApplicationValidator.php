@@ -142,16 +142,14 @@ class ApplicationValidator implements EntityValidatorInterface
 
     if (!empty($this->getValidationAttributes()))
     {
-      $this->getLogger()->debug('Doing partial validation...');
       $valid = $this->validateAttributes();
     }
     else
     {
-      $this->getLogger()->debug('Not doing partial validation');
       $valid = !$this->getEntity()->hasErrors();
     }
 
-    if (!$valid) $this->getLogger()->info('Validation failed!', $this->getEntity()->getErrors());
+    if (!$valid) $this->getLogger()->debug('Validation failed!', $this->getEntity()->getErrors());
 
     return $valid;
   }
