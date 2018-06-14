@@ -109,9 +109,9 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
   });
   $(".landingCheck input").change(function(){
     if ($('.landingCheck input:checked').length == $('.landingCheck input').length) {
-      $('.landingCheck button').removeClass('broker-btn-disabled');
+      $('.landingCheck #sendSubmit').removeClass('broker-btn-disabled');
     } else {
-      $('.landingCheck button').addClass('broker-btn-disabled');
+      $('.landingCheck #sendSubmit').addClass('broker-btn-disabled');
     }
   });
   $('.landing-inputs .phone input').focusin(function() {
