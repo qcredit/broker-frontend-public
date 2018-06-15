@@ -6,13 +6,14 @@
  * Time: 17:38
  */
 
-namespace App\Base;
+namespace App\Base\Partner\Aasa;
 
 use App\Model\ChooseOfferForm;
 use Broker\Domain\Entity\AbstractEntity;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
+use Broker\Domain\Interfaces\Partner\SchemaInterface;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\System\Delivery\DeliveryHeadersInterface;
@@ -22,7 +23,7 @@ use Broker\System\Delivery\DeliveryOptions;
 use Broker\System\Error\InvalidConfigException;
 use Slim\App;
 
-class AasaDataMapper implements PartnerDataMapperInterface
+class DataMapper implements PartnerDataMapperInterface
 {
   const STATUS_IN_PROCESS = 'InProcess';
   const STATUS_ACCEPTED = 'Accepted';
@@ -47,6 +48,14 @@ class AasaDataMapper implements PartnerDataMapperInterface
   }
 
   /**
+   * @return SchemaInterface
+   */
+  public function getFormSchema(): SchemaInterface
+  {
+    return new FormSchema();
+  }
+
+  /**
    * @return array
    * @throws InvalidConfigException
    * @throws \Exception
@@ -63,7 +72,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfigFile()
   {
-    $file = sprintf('%s/Config/%s', dirname(__FILE__), $this->configFile);
+    $file = sprintf('%s/%s', dirname(__FILE__), $this->configFile);
     if (!file_exists($file))
     {
       throw new InvalidConfigException('No configuration file found for Aasa!');

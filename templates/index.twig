@@ -23,21 +23,21 @@
       </div>
       <div class="landing-form-lower">
         <div class="landing-inputs form-fields">
-          <div class="field text firstName">
-            <label for="">{% trans "Insert your first name" %}</label>
-            <input type="text" name="firstName" id="firstName">
+          <div class="field text phone">
+            <label for="">{% trans "Phone" %}</label>
+            <input type="text" name="phone" id="phone">
           </div>
           <div class="field text email">
             <label for="">{% trans "Insert your email address" %}</label>
             <input type="email" name="email" id="email">
-            <p class="rules">{% trans 'Wrong email format' %}</p>
           </div>
         </div>
         <div class="landing-form-lower-footer">
-          <p class="landing-terms">{% trans "*I agree to the processing by QCredit of my personal data for marketing purposes, in the scope of my address, phone number and e-mail address. I have been informed of the right to inspect the data concerning me, the right to request a change and deletion of such data, as well as the right to object to the processing of my personal data. The administrator of personal data is QCredit." %}</p>
+          <img src="src/images/ssl.jpg" class="security-logo"/>
           <button class="btn broker-btn broker-btn-gold" disabled>{% trans "Apply for a loan" %}</button>
         </div>
       </div>
+      {% include '$landing_check_modal.twig' %}
     </form>
 </section>
 <section class="row home-partners"></section>
@@ -105,4 +105,12 @@
     <p class="col-sm-12 col-md-8 text-center">Każdego dnia nasz zespół dostarcza profesjonalne rozwiązania finansowe dla Klientów. Jesteśmy w stałym kontakcie z wieloma pożyczkodawcami, którzy mogą Ci zaoferować nawet do 50 000 PLN z natychmiastową decyzją.</p>
     <p class="col-sm-12 col-md-8 text-center d-none"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
   </section>
+{% endblock %}
+{% block endBody %}
+  <script type="text/javascript">
+    require(['./src/scripts/common'], function (common) {
+      require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+      });
+    });
+  </script>
 {% endblock %}

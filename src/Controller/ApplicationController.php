@@ -10,6 +10,7 @@ namespace App\Controller;
 
 use App\Base\Event\PostDataListener;
 use App\Base\NewAppListener;
+use App\Base\Validator\Scenario\HomepageScenario;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Model\ApplicationForm;
@@ -23,6 +24,7 @@ use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
 use Broker\Domain\Service\PreparePartnerRequestsService;
+use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
@@ -169,7 +171,7 @@ class ApplicationController extends AbstractController
    */
   protected function isFromFrontpage()
   {
-    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
+    return !strpos($_SERVER['HTTP_REFERER'], 'application');
   }
 
   /**
@@ -201,17 +203,12 @@ class ApplicationController extends AbstractController
     if ($request->isPost())
     {
       $service->setValidationEnabled(true);
-      //$service->setSaveAppOnValidation(true);
       $service->setPostData($postData);
-    }
 
-    if ($request->isPost())
-    {
-      //if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
-      //if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
       if ($this->isFromFrontpage())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_FIRST_NAME]);
+        $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
+        //$service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
       }
 
       if ($this->isAjax($request))
@@ -222,17 +219,9 @@ class ApplicationController extends AbstractController
 
     $service->run();
 
-    if ($request->isPost() && $this->isAjax($request))
+    if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
     {
-      return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
-    }
-
-    if ($request->isPost() && !$this->isAjax($request))
-    {
-      if ($this->getPostApplicationService()->isSuccess())
-      {
-        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
-      }
+      return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
     }
 
     $data['application'] = $service->getApplication();
@@ -370,6 +359,11 @@ class ApplicationController extends AbstractController
   public function schemaAction(Request $request, Response $response, $args)
   {
     $helper = new SchemaHelper();
+    if ($this->isFromFrontpage())
+    {
+      $helper->setScenario(new HomepageScenario());
+    }
+
     $form = new ApplicationForm();
     $errors = $form->getAjvErrors();
 
