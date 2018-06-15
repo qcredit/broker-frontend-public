@@ -173,6 +173,11 @@ $container['PrivacyController'] = function($c)
   $view = $c->get('view');
   return new \App\Controller\PrivacyController($view);
 };
+$container['TermsController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\TermsController($view);
+};
 $container['CookieController'] = function($c)
 {
   $view = $c->get('view');
