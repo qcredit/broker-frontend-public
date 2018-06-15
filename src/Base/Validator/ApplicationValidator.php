@@ -8,12 +8,14 @@
 
 namespace App\Base\Validator;
 
+use App\Base\Partner\Aasa\FormSchema;
 use Broker\Domain\Entity\AbstractEntity;
 use Broker\Domain\Entity\Partner;
 use Broker\Domain\Interfaces\EntityValidatorInterface;
 use Broker\Domain\Interfaces\Repository\PartnerRepositoryInterface;
 use Broker\Domain\Interfaces\SchemaValidatorInterface;
 use Broker\Domain\Interfaces\System\InstanceInterface;
+use Broker\Domain\Interfaces\ValidationScenarioInterface;
 
 class ApplicationValidator implements EntityValidatorInterface
 {
@@ -37,6 +39,14 @@ class ApplicationValidator implements EntityValidatorInterface
    * @var InstanceInterface
    */
   protected $instance;
+  /**
+   * @var array
+   */
+  protected $rawData;
+  /**
+   * @var ValidationScenarioInterface|null
+   */
+  protected $scenario;
 
   /**
    * @param AbstractEntity $entity
@@ -56,6 +66,24 @@ class ApplicationValidator implements EntityValidatorInterface
   public function getEntity(): AbstractEntity
   {
     return $this->entity;
+  }
+
+  /**
+   * @param array $data
+   * @return $this
+   */
+  public function setRawData(array $data)
+  {
+    $this->rawData = $data;
+    return $this;
+  }
+
+  /**
+   * @return array
+   */
+  public function getRawData()
+  {
+    return $this->rawData;
   }
 
   /**
@@ -114,6 +142,26 @@ class ApplicationValidator implements EntityValidatorInterface
   }
 
   /**
+   * @return ValidationScenarioInterface|null
+   * @codeCoverageIgnore
+   */
+  public function getScenario()
+  {
+    return $this->scenario;
+  }
+
+  /**
+   * @param ValidationScenarioInterface|null $scenario
+   * @return ApplicationValidator
+   * @codeCoverageIgnore
+   */
+  public function setScenario($scenario)
+  {
+    $this->scenario = $scenario;
+    return $this;
+  }
+
+  /**
    * ApplicationValidator constructor.
    * @param InstanceInterface $instance
    * @param PartnerRepositoryInterface $partnerRepository
@@ -161,11 +209,21 @@ class ApplicationValidator implements EntityValidatorInterface
   protected function validatePartnerRequirements(Partner $partner)
   {
     $mapper = $partner->getDataMapper();
-    $data = $mapper->mapAppToRequest($this->getEntity());
-    $schema = json_encode($mapper->getRequestSchema());
+    //$data = $mapper->mapAppToRequest($this->getEntity());
+    //$schema = json_encode($mapper->getRequestSchema());
 
+    //$sc = new FormSchema();
     $validator = $this->getSchemaValidator();
-    $validator->validate($data, $schema);
+    if ($this->scenario !== null)
+    {
+      $this->scenario->setSchema($mapper->getFormSchema())->applyScenario();
+      $validator->validate(json_encode($this->getRawData()), $this->getScenario()->getJsonSchema());
+    }
+    else
+    {
+      $data = $mapper->mapAppToRequest($this->getEntity());
+      $validator->validate($data, json_encode($mapper->getRequestSchema()));
+    }
 
     if (!$validator->isValid())
     {
