@@ -77,7 +77,7 @@ class HomepageScenario implements ValidationScenarioInterface
     $originalSchema = $this->schema->getSchema();
 
     $this->schema = [
-      'oneOf' => [
+      'anyOf' => [
         [
           'type' => 'object',
           'required' => [
