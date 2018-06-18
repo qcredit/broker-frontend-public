@@ -7,3 +7,4 @@ xgettext --default-domain=broker -p ./locale --from-code=UTF-8 -n --omit-header 
 xgettext --default-domain=broker -p ./locale --from-code=UTF-8 -n --omit-header -L PHP -o broker.pot -j ./src/Cron/*.php
 xgettext --default-domain=broker -p ./locale --from-code=UTF-8 -n --omit-header -L PHP -o broker.pot -j ./src/Base/Repository/*.php
 xgettext --default-domain=broker -p ./locale --from-code=UTF-8 -n --omit-header -L PHP -o broker.pot -j ./src/Base/Validator/*.php
+xgettext --default-domain=broker -p ./locale --from-code=UTF-8 -n --omit-header -L PHP -o broker.pot -j ./src/routes.php

@@ -1,0 +1,26 @@
+{% set signButton = 'Sign contract'|trans %}
+<article class="loan-offer-container personal-offer-container {% if offer.partner.featured %}featured{% endif %}">
+  <div class="badge">
+    {% trans 'Top offer' %}
+  </div>
+  <div class="loan-offer-head">
+    <div class="loan-offerer-logo-container">
+      <img src="{{ offer.partner.logoUrl }}" class="loan-offerer-logo" alt="{{ offer.partner.name }} logo">
+    </div>
+    <div class="loan-offerer-info">
+      <span class="loan-offerer-name">{{ offer.partner.name }}</span>
+      <span class="loan-offerer-website">{{ offer.partner.website }}</span>
+    </div>
+    <div class="text-focus show-mobile"><span class="name">{% trans 'Monthly' %}:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
+  </div>
+  <div class="loan-offer-body">
+    <span><strong>{% trans 'Amount' %}:</strong> {{ offer.loanAmount }} PLN</span>
+    <span><strong>{% trans 'Duration' %}:</strong> {{ offer.loanTerm }}m</span>
+    <span><strong>{% trans 'Interest' %}:</strong> {{ offer.interest }} %</span>
+    <span><strong>{% trans 'APR' %}:</strong> {{ offer.apr }}%</span>
+  </div>
+  <div class="loan-offer-footer">
+    <div class="text-focus show-large"><span class="name">{% trans 'Monthly' %}:</span> <span class="value">{{ offer.monthlyFee }}PLN</span></div>
+    <a href="{{ offer.acceptancePageUrl }}" target="_blank" class="loan-offer-cta btn broker-btn broker-btn-gold">{{ signButton|upper }}</a>
+  </div>
+</article>
