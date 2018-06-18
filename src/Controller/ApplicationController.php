@@ -200,31 +200,39 @@ class ApplicationController extends AbstractController
 
     $service = $this->getPostApplicationService()->setValidationEnabled(false);
 
-    if ($request->isPost())
+    try
     {
-      $service->setValidationEnabled(true);
-      $service->setPostData($postData);
-
-      if ($this->isFromFrontpage())
+      //throw new \Exception('tereasd');
+      if ($request->isPost())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
-        //$service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
+        $service->setValidationEnabled(true);
+        $service->setPostData($postData);
+
+        if ($this->isFromFrontpage())
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
+          //$service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
+        }
+
+        if ($this->isAjax($request))
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        }
       }
 
-      if ($this->isAjax($request))
+      $service->run();
+
+      if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
       }
+
+      $data['application'] = $service->getApplication();
     }
-
-    $service->run();
-
-    if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
+    catch (\Exception $ex)
     {
-      return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
+      $data['flash'] = ['error' => _('We were unable to process your request. Please try again later.')];
     }
-
-    $data['application'] = $service->getApplication();
 
     return $this->render($response, 'application/form.twig', $data);
   }
