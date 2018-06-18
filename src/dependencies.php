@@ -73,6 +73,12 @@ $container['view'] = function($container) {
     $view->getEnvironment()->addGlobal('currentUrl', '/application');
   }
 
+  $settings = $container->get('settings');
+  if (isset($settings['companyName']))
+  {
+    $view->getEnvironment()->addGlobal('companyName', $settings['companyName']);
+  }
+
   $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
 
   return $view;
