@@ -1,4 +1,4 @@
-define(['jquery', 'broker'], function($, app) {
+define(['jquery', 'broker', 'ajv.broker'], function($, app, brokerAjv) {
   var formHelper = {
     schemaLoaded: false
   };
@@ -40,6 +40,31 @@ define(['jquery', 'broker'], function($, app) {
     {
       populateOptions();
       addCsrf();
+    }
+  };
+
+  formHelper.handleErrors = function(errors)
+  {
+    brokerAjv.localize(errors);
+
+    for (var i = 0; i < errors.length; i++)
+    {
+      var error = errors[i];
+      var err_msg = error.message;
+
+      if(err_msg){
+        var err_target = error.dataPath !== '' ? $('.field' + error.dataPath) : false;
+
+        if (err_target)
+        {
+          if(!err_target.find('.rules').length){
+            err_target.addClass('error');
+            err_target.append('<p class="rules">'+err_msg+'</p>');
+          } else {
+            err_target.find('.rules').text(err_msg);
+          }
+        }
+      }
     }
   };
 
