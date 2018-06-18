@@ -200,18 +200,15 @@ class ApplicationController extends AbstractController
 
     try
     {
-
+      //throw new \Exception('blablah');
       if ($request->isPost())
       {
         $service->setValidationEnabled(true);
-        //$service->setSaveAppOnValidation(true);
         $service->setPostData($postData);
       }
 
       if ($request->isPost())
       {
-        //if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
-        //if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
         if ($this->isFromFrontpage())
         {
           $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_FIRST_NAME]);
@@ -237,13 +234,13 @@ class ApplicationController extends AbstractController
           return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
         }
       }
+
+      $data['application'] = $service->getApplication();
     }
     catch (\Exception $ex)
     {
       $data['flash'] = ['error' => _('We are unable to process your request. Please try again later.')];
     }
-
-    $data['application'] = $service->getApplication();
 
     return $this->render($response, 'application/form.twig', $data);
   }
