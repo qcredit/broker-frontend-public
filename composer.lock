@@ -1,7 +1,7 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
     "content-hash": "7a8aafedc9a884d02bd650ad17a23db0",
@@ -47,12 +47,12 @@
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "7abcc52960c20139c2be7d70448e409dcbe0775c"
+                "reference": "6c2d2ba3f54ca42f09a636b688acd0f8183cce50"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/7abcc52960c20139c2be7d70448e409dcbe0775c",
-                "reference": "7abcc52960c20139c2be7d70448e409dcbe0775c",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/6c2d2ba3f54ca42f09a636b688acd0f8183cce50",
+                "reference": "6c2d2ba3f54ca42f09a636b688acd0f8183cce50",
                 "shasum": ""
             },
             "require-dev": {
@@ -70,7 +70,7 @@
                 "source": "https://github.com/aasa-global/broker/tree/master",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-06-01T12:39:50+00:00"
+            "time": "2018-06-13T07:26:59+00:00"
         },
         {
             "name": "aws/aws-sdk-php",

@@ -8,7 +8,9 @@
 
 namespace App\Controller;
 
+use App\Base\Event\PostDataListener;
 use App\Base\NewAppListener;
+use App\Base\Validator\Scenario\HomepageScenario;
 use App\Component\AbstractController;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Model\ApplicationForm;
@@ -20,7 +22,10 @@ use Broker\Domain\Interfaces\Service\PostApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PrepareAndSendApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
+use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
 use Broker\Domain\Service\PreparePartnerRequestsService;
+use Monolog\Logger;
+use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
@@ -167,7 +172,7 @@ class ApplicationController extends AbstractController
    */
   protected function isFromFrontpage()
   {
-    return !strpos($_SERVER['HTTP_REFERER'], $_SERVER['REQUEST_URI']);
+    return !strpos($_SERVER['HTTP_REFERER'], 'application');
   }
 
   /**
@@ -177,6 +182,15 @@ class ApplicationController extends AbstractController
   protected function getFormBuilder()
   {
     return $this->getContainer()->get('FormBuilder');
+  }
+
+  /**
+   * @return \App\Base\Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function getLogger()
+  {
+    return $this->getContainer()->get('logger');
   }
 
   /**
@@ -196,34 +210,39 @@ class ApplicationController extends AbstractController
 
     $service = $this->getPostApplicationService()->setValidationEnabled(false);
 
-    if ($request->isPost())
+    try
     {
-      $service->setSaveAppOnValidation(true);
-      $service->setPostData($postData);
-    }
+      //throw new \Exception('tereasd');
+      if ($request->isPost())
+      {
+        $service->setValidationEnabled(true);
+        $service->setPostData($postData);
 
-    if ($request->isPost() && !$this->isAjax($request))
-    {
-      if (!$this->isFromFrontpage()) $service->setValidationEnabled(true);
-      if ($this->isFromFrontpage()) $service->setSaveAppOnValidation(false);
-    }
+        if ($this->isFromFrontpage())
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
+        }
 
-    $service->run();
+        if ($this->isAjax($request))
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        }
+      }
 
-    if ($request->isPost() && $this->isAjax($request))
-    {
-      return $response->withJson(['applicationHash' => $service->getApplication()->getApplicationHash()]);
-    }
+      $service->run();
 
-    if ($request->isPost() && !$this->isAjax($request))
-    {
-      if ($this->getPostApplicationService()->isSuccess())
+      if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
       {
         return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
       }
-    }
 
-    $data['application'] = $service->getApplication();
+      $data['application'] = $service->getApplication();
+    }
+    catch (\Exception $ex)
+    {
+      $this->getLogger()->alert('Unable to submit application!', [$ex->getMessage()]);
+      $data['flash'] = ['error' => _('We were unable to process your request. Please try again later.')];
+    }
 
     return $this->render($response, 'application/form.twig', $data);
   }
@@ -247,6 +266,24 @@ class ApplicationController extends AbstractController
     ];
 
     return $this->render($response, 'application/offer-list.twig', $data);
+  }
+
+  /**
+   * @param Request $request
+   * @param Response $response
+   * @param $args
+   * @return mixed
+   * @throws NotFoundException
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function resumeAction(Request $request, Response $response, $args)
+  {
+    $data = [];
+
+    $data['fields'] = $this->getFormBuilder()->getFormFields();
+    $data['application'] = $this->findEntity($args['hash'], $request, $response);
+
+    return $this->render($response, 'application/form.twig', $data);
   }
 
   /**
@@ -340,6 +377,11 @@ class ApplicationController extends AbstractController
   public function schemaAction(Request $request, Response $response, $args)
   {
     $helper = new SchemaHelper();
+    if ($this->isFromFrontpage())
+    {
+      $helper->setScenario(new HomepageScenario());
+    }
+
     $form = new ApplicationForm();
     $errors = $form->getAjvErrors();
 

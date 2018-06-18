@@ -29,6 +29,6 @@ class TermsController
    */
   public function indexAction($request, $response)
   {
-    return $this->view->render($response, 'terms.twig');
+    return $this->view->render($response, 'warunki-korzystania.twig');
   }
 }

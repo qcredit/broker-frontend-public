@@ -6,6 +6,7 @@ $bluegray: #e6e9ee;
 $error: #CE0000;
 
 /* Components */
+@import "animations";
 @import "modules";
 @import "header";
 @import "hero";
@@ -172,6 +173,12 @@ body {
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6;
+  h5 {
+    margin-bottom: 1rem;
+  }
+  ol li {
+    padding-bottom: .25rem;
+  }
 }
 
 .thank-you-row {
@@ -199,6 +206,9 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+  body {
+    padding-top: 67px;
+  }
   .page-body {
     min-height: 400px;
   }
@@ -220,7 +230,7 @@ body {
 }
 @media only screen and (min-width: 1024px) {
   body {
-    padding-top: 60px;
+    padding-top: 84px;
   }
   .page-body {
     min-height: 500px;

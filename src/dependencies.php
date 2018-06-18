@@ -71,7 +71,6 @@ $container['view'] = function($container) {
   else
   {
     $view->getEnvironment()->addGlobal('currentUrl', '/application');
-
   }
 
   $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
@@ -169,10 +168,20 @@ $container['ContactController'] = function($c)
   $contactForm = new \App\Model\ContactForm($c, $c->get('BrokerInstance'), new \App\Base\Repository\MessageTemplateRepository($c, new \Broker\Domain\Factory\MessageFactory()), $c->get('MessageDeliveryService'));
   return new \App\Controller\ContactController($c, $contactForm);
 };
+$container['PrivacyController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\PrivacyController($view);
+};
 $container['TermsController'] = function($c)
 {
   $view = $c->get('view');
   return new \App\Controller\TermsController($view);
+};
+$container['CookieController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\CookieController($view);
 };
 
 $container['ApiController'] = function($c)
@@ -241,19 +250,25 @@ $container['PartnerUpdateService'] = function($c)
   );
 };
 
+$container['ApplicationValidator'] = function($c)
+{
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
+  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
+
+  return $applicationValidator;
+};
+
 $container['PostApplicationService'] = function($c)
 {
   $factory = $c->get('RepositoryFactory');
   $appRepository = $factory->createGateway($c->get('db'), 'Application');
   $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
-  $schemaValidator = new \App\Base\Validator\SchemaValidator();
 
   $newApplicationService = new NewApplicationService(
     $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
-    $factory->createGateway($c->get('db'), 'Partner'),
-    $schemaValidator
+    $c->get('ApplicationValidator')
   );
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
@@ -265,7 +280,7 @@ $container['PostApplicationService'] = function($c)
     $c->get('MessageTemplateRepository')
   );
 
-  $createRequestsService = new \Broker\Domain\Service\CreatePartnerRequestsService($c->get('BrokerInstance'), new PartnerRequestFactory());
+  $createRequestsService = new \Broker\Domain\Service\CreatePartnerRequestsService($c->get('BrokerInstance'), new PartnerRequestFactory(), $c->get('PartnerRepository'));
 
   return new \Broker\Domain\Service\PostApplicationService(
     $c->get('BrokerInstance'),
@@ -329,6 +344,14 @@ $container['FormBuilder'] = function($c)
   return new \App\Component\FormBuilder($c->get('PartnerRepository'), new \App\Component\SchemaHelper());
 };
 
+$container['EventManager'] = function($c)
+{
+  $eventManager = new \Broker\System\Event\EventManager();
+  $eventManager->addListener(\Broker\Domain\Interfaces\Service\NewApplicationServiceInterface::EVENT_BEFORE_RUN, new \App\Base\Event\BeforeNewApplicationServiceListener());
+
+  return $eventManager;
+};
+
 $container['notFoundHandler'] = function($c)
 {
   return function($request, $response) use ($c)
@@ -346,5 +369,20 @@ $container['BrokerInstance'] = function($c)
   $brokerSettings = $c->get('settings')['broker'];
   $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
 
-  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), new \Broker\System\Event\EventManager());
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), $c->get('EventManager'));
+};
+
+$container['errorHandler'] = function ($c) {
+  return function ($request, $response, Exception $exception) use ($c) {
+    $view = $c->get('view');
+
+    $logger = $c->get('logger');
+    $logger->alert('A serious error has ocourred!', [$exception->getMessage()]);
+
+    //echo $view->fetch('error.twig');
+
+    return $c['response']->withStatus(500)
+      ->withHeader('Content-Type', 'text/html')
+      ->write('Something went wrong!');
+  };
 };

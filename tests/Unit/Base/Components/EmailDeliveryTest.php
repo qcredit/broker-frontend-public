@@ -13,9 +13,6 @@ use App\Base\Components\HttpClient;
 use Broker\Domain\Entity\Message;
 use Broker\System\BaseTest;
 use Broker\System\Error\InvalidConfigException;
-use Broker\System\Traits\LoggerTrait;
-use Monolog\Logger;
-use PHPMailer\PHPMailer\PHPMailer;
 use Slim\Container;
 use Tests\Helpers\LoggerMockTrait;
 
@@ -30,6 +27,7 @@ class EmailDeliveryTest extends BaseTest
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->mock = $this->getMockBuilder(EmailDelivery::class)
       ->disableOriginalConstructor()
       ->setMethods(['getContainer', 'getLogger'])
