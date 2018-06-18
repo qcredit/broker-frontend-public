@@ -17,6 +17,10 @@ class UserValidator extends AbstractEntityValidator
   /**
    * @var array
    */
+  protected $rawData;
+  /**
+   * @var array
+   */
   protected $validationAttributes = [
     UserForm::ATTR_EMAIL,
     UserForm::ATTR_ACCESS_LEVEL
@@ -50,5 +54,25 @@ class UserValidator extends AbstractEntityValidator
     }
 
     return true;
+  }
+
+  /**
+   * @return array
+   * @codeCoverageIgnore
+   */
+  public function getRawData()
+  {
+    return $this->rawData;
+  }
+
+  /**
+   * @param array $rawData
+   * @return UserValidator
+   * @codeCoverageIgnore
+   */
+  public function setRawData(array $rawData)
+  {
+    $this->rawData = $rawData;
+    return $this;
   }
 }

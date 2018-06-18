@@ -1,4 +1,4 @@
-define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, Ajv, brokerAjv) {
+define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], function($, app, Ajv, brokerAjv, formHelper) {
   var schema = '';
   var ajv = new Ajv({ allErrors: true, verbose: true, coerceTypes: true });
 
@@ -35,19 +35,88 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, A
   }).done(function(response) {
     schema = response.schema;
     app.setMessages(response.messages);
+
+    formHelper.schemaLoaded = true;
+    $('form .broker-btn:disabled').prop('disabled', false);
   }).fail(function(response) {
     console.log('Unable to fetch schema!');
   });
 
-  $('button[type="submit"]').click(function(e) {
+  $('.landing-form-lower-footer button').click(function(e)
+  {
+    var formData = app.getFormData();
+    formData['gdpr1'] = 1;
+    formData['gdpr2'] = 1;
+    formData['emailConsent'] = 1;
+    formData['phoneConsent'] = 1;
+
+    var valid = ajv.validate(schema, formData);
+
+    if (!valid)
+    {
+      console.log(ajv.errors);
+      formHelper.handleErrors(ajv.errors);
+
+      return false;
+    }
+
+    $('.modal').modal('show');
+  });
+
+  $('form.landing-form').submit(function(e) {
+    var formData = app.getFormData();
+    var valid = ajv.validate(schema, formData);
+    brokerAjv.localize(ajv.errors);
+
+    if (!valid)
+    {
+      e.preventDefault();
+      var fieldsToCheck = ['gdpr1','gdpr2','phoneConsent','emailConsent'];
+/*      for (var i = 0; i < ajv.errors.length; i++)
+      {
+        var error = ajv.errors[i];
+        var err_msg = error.message;
+
+        if (error.keyword == 'required' && fieldsToCheck.indexOf(error.params.missingProperty) !== -1)
+        {
+          if (!brokerAjv.searchError('phone', ajv.errors) || !brokerAjv.searchError('email', ajv.errors))
+          {
+            $('.modal').modal('show');
+          }
+        }
+
+        if(err_msg){
+          var err_target = error.dataPath !== '' ? $('.field' + error.dataPath) : false;
+
+          if (err_target)
+          {
+            if(!err_target.find('.rules').length){
+              err_target.addClass('error');
+              err_target.append('<p class="rules">'+err_msg+'</p>');
+            } else {
+              err_target.find('.rules').text(err_msg);
+            }
+          }
+        }
+      }*/
+
+      formHelper.handleErrors(ajv.errors);
+
+      if ($('.modal.show').length && (brokerAjv.searchError('phone', ajv.errors) || brokerAjv.searchError('email', ajv.errors)))
+      {
+        $('.modal').modal('hide');
+      }
+    }
+  });
+
+  $('form:not(.landing-form) button[type="submit"]').click(function(e) {
     var valid = ajv.validate(schema, app.getFormData());
 
     if (!valid) {
       e.preventDefault();
-      brokerAjv.localize(ajv.errors);
-      console.log(ajv.errors);
-      console.log(ajv.errorsText(ajv.errors, { separator: '\n'}));
-      var error_list = ajv.errors;
+      formHelper.handleErrors(ajv.errors);
+
+/*      var error_list = ajv.errors;
       for(var i = 0; i < error_list.length; i++) {
         var err_target = $('.field'+error_list[i].dataPath);
         var err_msg = error_list[i].message;
@@ -59,15 +128,28 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker'], function($, app, A
             err_target.find('.rules').text(err_msg);
           }
         }
-      }
+      }*/
     }
   });
 
-  $('input').on('change', function(e) {
+  $('form:not(.landing-form) input').on('change', function(e) {
     var attrId = $(this)[0].id;
     var formValues = app.getFormData();
     var parent = $(this).parent();
     runSchemaLive(attrId, formValues, parent);
+  });
+  $('form.landing-form input').on('change', function(e)
+  {
+    var attrId = $(this)[0].id,
+        formData = app.getFormData(),
+        parent = $(this).parent();
+
+    formData['gdpr1'] = 1;
+    formData['gdpr2'] = 1;
+    formData['emailConsent'] = 1;
+    formData['phoneConsent'] = 1;
+
+    runSchemaLive(attrId, formData, parent);
   });
   $('select').on('change', function(e) {
     var attrId = $(this)[0].id;
