@@ -1725,66 +1725,71 @@ body {
 }
 @media only screen and (min-width: 768px) {
   /* line 209, sass/style.scss */
+  body {
+    padding-top: 67px;
+  }
+
+  /* line 212, sass/style.scss */
   .page-body {
     min-height: 400px;
   }
 
-  /* line 212, sass/style.scss */
+  /* line 215, sass/style.scss */
   .home-about-half {
     margin: 1.5rem 0;
   }
 
-  /* line 215, sass/style.scss */
+  /* line 218, sass/style.scss */
   .image-container {
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
-  /* line 220, sass/style.scss */
+  /* line 223, sass/style.scss */
   .quote-text {
     font-size: 24px;
   }
 
-  /* line 223, sass/style.scss */
+  /* line 226, sass/style.scss */
   .thank-you-row {
     padding-top: 4rem;
     padding-bottom: 4rem;
   }
 }
 @media only screen and (min-width: 1024px) {
-  /* line 229, sass/style.scss */
+  /* line 232, sass/style.scss */
   body {
-    padding-top: 60px;
+    padding-top: 84px;
   }
 
-  /* line 232, sass/style.scss */
+  /* line 235, sass/style.scss */
   .page-body {
     min-height: 500px;
   }
 
-  /* line 235, sass/style.scss */
+  /* line 238, sass/style.scss */
   .thank-you-row {
     padding-top: 6rem;
     padding-bottom: 6rem;
   }
 
-  /* line 239, sass/style.scss */
+  /* line 242, sass/style.scss */
   .about-how {
     padding-top: 0.25rem;
   }
-  /* line 241, sass/style.scss */
+  /* line 244, sass/style.scss */
   .about-how .circle-block {
     margin-bottom: 4rem;
   }
 
-  /* line 245, sass/style.scss */
+  /* line 248, sass/style.scss */
   .contact-submit {
     flex-direction: row;
     align-items: flex-start;
     justify-content: space-between !important;
   }
-  /* line 249, sass/style.scss */
+  /* line 252, sass/style.scss */
   .contact-submit .g-recaptcha {
     margin: 0;
   }

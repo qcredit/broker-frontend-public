@@ -24,6 +24,7 @@ use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
 use Broker\Domain\Service\PreparePartnerRequestsService;
+use Monolog\Logger;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -184,6 +185,15 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return \App\Base\Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function getLogger()
+  {
+    return $this->getContainer()->get('logger');
+  }
+
+  /**
    * @param $request
    * @param $response
    * @param $args
@@ -211,7 +221,6 @@ class ApplicationController extends AbstractController
         if ($this->isFromFrontpage())
         {
           $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
-          //$service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
         }
 
         if ($this->isAjax($request))
@@ -231,6 +240,7 @@ class ApplicationController extends AbstractController
     }
     catch (\Exception $ex)
     {
+      $this->getLogger()->alert('Unable to submit application!', [$ex->getMessage()]);
       $data['flash'] = ['error' => _('We were unable to process your request. Please try again later.')];
     }
 
