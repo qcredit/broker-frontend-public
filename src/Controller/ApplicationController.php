@@ -24,6 +24,7 @@ use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
 use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
 use Broker\Domain\Service\PreparePartnerRequestsService;
+use Monolog\Logger;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -184,6 +185,15 @@ class ApplicationController extends AbstractController
   }
 
   /**
+   * @return \App\Base\Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function getLogger()
+  {
+    return $this->getContainer()->get('logger');
+  }
+
+  /**
    * @param $request
    * @param $response
    * @param $args
@@ -200,31 +210,39 @@ class ApplicationController extends AbstractController
 
     $service = $this->getPostApplicationService()->setValidationEnabled(false);
 
-    if ($request->isPost())
+    try
     {
-      $service->setValidationEnabled(true);
-      $service->setPostData($postData);
-
-      if ($this->isFromFrontpage())
+      //throw new \Exception('tereasd');
+      if ($request->isPost())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
-        //$service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PHONE, ApplicationForm::ATTR_EMAIL]);
+        $service->setValidationEnabled(true);
+        $service->setPostData($postData);
+
+        if ($this->isFromFrontpage())
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setScenario(new HomepageScenario());
+        }
+
+        if ($this->isAjax($request))
+        {
+          $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        }
       }
 
-      if ($this->isAjax($request))
+      $service->run();
+
+      if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
       {
-        $service->getNewApplicationService()->getApplicationValidator()->setValidationAttributes([ApplicationForm::ATTR_PIN, ApplicationForm::ATTR_EMAIL, ApplicationForm::ATTR_PHONE]);
+        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
       }
+
+      $data['application'] = $service->getApplication();
     }
-
-    $service->run();
-
-    if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
+    catch (\Exception $ex)
     {
-      return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
+      $this->getLogger()->alert('Unable to submit application!', [$ex->getMessage()]);
+      $data['flash'] = ['error' => _('We were unable to process your request. Please try again later.')];
     }
-
-    $data['application'] = $service->getApplication();
 
     return $this->render($response, 'application/form.twig', $data);
   }
