@@ -46,13 +46,13 @@
             <a class="nav-link text-uppercase home-link" href="/">Strona domowa</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-uppercase" href="/about">O nas</a>
+            <a class="nav-link text-uppercase" href="/{% trans 'about' %}">O nas</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-uppercase" href="/blog">Blog</a>
+            <a class="nav-link text-uppercase" href="/{% trans 'blog' %}">Blog</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link text-uppercase" href="/contact">Kontakt</a>
+            <a class="nav-link text-uppercase" href="/{% trans 'contact' %}">Kontakt</a>
           </li>
         </ul>
       </div>
@@ -85,11 +85,11 @@
               <nav class="navigation footer-navigation">
                 <ul class="list-unstyled">
                   <li><a href="/">Strona domowa</a></li>
-                  <li><a href="/about">O nas</a></li>
-                  <li><a href="/contact">Kontakt</a></li>
-                  <li><a href="/polityka-prywatnosci">Polityka Prywatności</a></li>
-                  <li><a href="/polityka-cookies">Polityka cookies</a></li>
-                  <li><a href="/warunki-korzystania">Warunki korzystania</a></li>
+                  <li><a href="/{% trans 'about' %}">O nas</a></li>
+                  <li><a href="/{% trans 'contact' %}">Kontakt</a></li>
+                  <li><a href="/{% trans 'privacy-policy' %}">Polityka Prywatności</a></li>
+                  <li><a href="/{% trans 'cookies-policy' %}">Polityka cookies</a></li>
+                  <li><a href="/{% trans 'terms-and-conditions' %}">Warunki korzystania</a></li>
                   <li class="d-none"><a href="/application">Weź pożyczkę</a></li>
                 </ul>
               </nav>

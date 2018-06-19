@@ -205,6 +205,7 @@ class LanguageSwitcher
    */
   protected function isLanguageSetByCookie()
   {
+    //var_dump($this->getContainer()->get('session')->get(self::COOKIE_LANGUAGE, false));
     return $this->getContainer()->get('session')->get(self::COOKIE_LANGUAGE, false);
   }
 
