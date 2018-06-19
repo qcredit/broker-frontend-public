@@ -84,6 +84,13 @@
                     {% endif %}
                 </div>
                 <div class="form-group">
+                  <label for="apiLiveUrl">apiLiveUrl: </label>
+                  <input type="text" name="apiLiveUrl" id="apiLiveUrl" placeholder="apiLiveUrl" class="form-control" value="{{ partner.apiLiveUrl }}"/>
+                  {% if partner.errors.apiLiveUrl %}
+                    <small class="form-text text-danger">{{ partner.errors.apiLiveUrl }}</small>
+                  {% endif %}
+                </div>
+                <div class="form-group">
                   <label for="remoteUsername">Remote Username: </label>
                     <input type="text" name="remoteUsername" id="remoteUsername" placeholder="remoteUsername" class="form-control" value="{{ partner.remoteUsername }}"/>
                     {% if partner.errors.remoteUsername %}
