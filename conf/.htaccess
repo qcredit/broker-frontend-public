@@ -6,5 +6,5 @@
 
 <IfModule mod_rewrite.c>
   # Do not allow access to /conf/ directory
-  RewriteRule (.*) http://%{HTTP_HOST}/ [R=301,L]
+  RewriteRule (.*) https://%{HTTP_HOST}/ [R=301,L]
 </IfModule>
