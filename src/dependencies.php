@@ -235,18 +235,6 @@ $container['MessageDeliveryService'] = function ($c)
   );
 };
 
-$container['ChooseOfferService'] = function($c)
-{
-  return new \Broker\Domain\Service\ChooseOfferService(
-    $c->get('BrokerInstance'),
-    $c->get('SendPartnerRequestsService'),
-    $c->get('PartnerResponseService'),
-    new PartnerRequestFactory(),
-    new \App\Base\Validator\SchemaValidator(),
-    $c->get('MessageDeliveryService')
-  );
-};
-
 $container['PartnerUpdateService'] = function($c)
 {
   return new \Broker\Domain\Service\PartnerUpdateService(
@@ -308,7 +296,6 @@ $container['ApplicationController'] = function ($c)
   return new \App\Controller\ApplicationController(
     $appRepository,
     $offerRepository,
-    $c->get('ChooseOfferService'),
     $c->get('PostApplicationService'),
     $c
   );
