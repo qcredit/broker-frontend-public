@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a8aafedc9a884d02bd650ad17a23db0",
+    "content-hash": "23631439073aeffbea8fc3063c5ce8ef",
     "packages": [
         {
             "name": "aasa-global/CommonWebSDK",
@@ -43,16 +43,16 @@
         },
         {
             "name": "aasa/broker",
-            "version": "dev-master",
+            "version": "v0.0.2",
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "6c2d2ba3f54ca42f09a636b688acd0f8183cce50"
+                "reference": "36bb190e54e974752e17d8e1bd5e6d20962fb453"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/6c2d2ba3f54ca42f09a636b688acd0f8183cce50",
-                "reference": "6c2d2ba3f54ca42f09a636b688acd0f8183cce50",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/36bb190e54e974752e17d8e1bd5e6d20962fb453",
+                "reference": "36bb190e54e974752e17d8e1bd5e6d20962fb453",
                 "shasum": ""
             },
             "require-dev": {
@@ -67,10 +67,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/master",
+                "source": "https://github.com/aasa-global/broker/tree/v0.0.2",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-06-13T07:26:59+00:00"
+            "time": "2018-06-19T14:04:58+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
@@ -5125,13 +5125,12 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "aasa/broker": 20,
         "aasa-global/commonwebsdk": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.0"
+        "php": ">=7.2.0"
     },
     "platform-dev": []
 }
