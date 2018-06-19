@@ -22,6 +22,17 @@
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="/src/styles/style.css">
     <title>{{ block('title') }}</title>
+    {% if environment == 'production' %}
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121045679-1"></script>
+      <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-121045679-1');
+      </script>
+    {% endif %}
 </head>
 <body>
   <header class="page-header">
@@ -63,15 +74,15 @@
   {% endblock %}
   </div>
   <div class="container page-body">
-      {% if flash.success %}
-        <div class="alert alert-success" role="alert">
-          {{ flash.success }}
-        </div>
-      {% elseif flash.error %}
-        <div class="alert alert-danger" role="alert">
-          {{ flash.error }}
-        </div>
-      {% endif %}
+    {% if flash.success %}
+      <div class="alert alert-success" role="alert">
+        {{ flash.success }}
+      </div>
+    {% elseif flash.error %}
+      <div class="alert alert-danger" role="alert">
+        {{ flash.error }}
+      </div>
+    {% endif %}
       {% block container %}
       {% endblock %}
   </div>
