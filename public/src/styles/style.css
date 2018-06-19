@@ -1076,7 +1076,12 @@ textarea {
   border: 3px solid #ffc328;
 }
 /* line 90, sass/_loan-offers.scss */
-.personal-offer-container.featured:before {
+.personal-offer-container.featured .badge {
+  font-size: 1.25rem;
+  padding-top: 7px;
+}
+/* line 94, sass/_loan-offers.scss */
+.personal-offer-container.featured .badge, .personal-offer-container.featured:before {
   content: "Top offer";
   position: absolute;
   top: -30px;
@@ -1089,12 +1094,12 @@ textarea {
   background: #ffc328;
   color: #000;
 }
-/* line 103, sass/_loan-offers.scss */
+/* line 107, sass/_loan-offers.scss */
 .personal-offer-container.featured:first-child {
   margin-top: 2.125rem;
 }
 
-/* line 107, sass/_loan-offers.scss */
+/* line 111, sass/_loan-offers.scss */
 .offers-list-heading {
   font-family: 'Lato', sans-serif;
   font-size: 1rem;
@@ -1103,57 +1108,57 @@ textarea {
   color: #d0d0d0;
 }
 
-/* line 115, sass/_loan-offers.scss */
+/* line 119, sass/_loan-offers.scss */
 .affiliate-offer-container .loan-offer-head {
   justify-content: center;
 }
-/* line 119, sass/_loan-offers.scss */
+/* line 123, sass/_loan-offers.scss */
 .affiliate-offer-container .loan-offer-body span {
   flex: 0 0 100%;
   text-align: center;
 }
 
 @media only screen and (min-width: 360px) {
-  /* line 127, sass/_loan-offers.scss */
+  /* line 131, sass/_loan-offers.scss */
   .loan-offerer-website {
     display: block;
   }
 }
 @media only screen and (min-width: 768px) {
-  /* line 132, sass/_loan-offers.scss */
+  /* line 136, sass/_loan-offers.scss */
   .offer-list-head {
     margin: 3rem 0;
   }
 
-  /* line 135, sass/_loan-offers.scss */
+  /* line 139, sass/_loan-offers.scss */
   .personal-offer-container .loan-offer-body span {
     flex: 0 0 146px;
   }
 }
 @media only screen and (min-width: 769px) {
-  /* line 142, sass/_loan-offers.scss */
+  /* line 146, sass/_loan-offers.scss */
   .show-mobile {
     display: none;
   }
 
-  /* line 145, sass/_loan-offers.scss */
+  /* line 149, sass/_loan-offers.scss */
   .show-large {
     display: block;
   }
 }
 @media only screen and (min-width: 1024px) {
-  /* line 151, sass/_loan-offers.scss */
+  /* line 155, sass/_loan-offers.scss */
   .offer-list-head {
     margin: 4rem 0;
   }
 
-  /* line 154, sass/_loan-offers.scss */
+  /* line 158, sass/_loan-offers.scss */
   .loan-offer-container {
     flex-direction: row;
     padding: 0;
   }
 
-  /* line 158, sass/_loan-offers.scss */
+  /* line 162, sass/_loan-offers.scss */
   .loan-offer-head {
     flex-direction: column;
     justify-content: center;
@@ -1161,26 +1166,26 @@ textarea {
     padding: 0 1rem;
     border-bottom: 0;
   }
-  /* line 164, sass/_loan-offers.scss */
+  /* line 168, sass/_loan-offers.scss */
   .loan-offer-head .loan-offerer-logo-container {
     margin-bottom: .1875rem;
   }
-  /* line 167, sass/_loan-offers.scss */
+  /* line 171, sass/_loan-offers.scss */
   .loan-offer-head .loan-offerer-info {
     margin-left: 0;
   }
-  /* line 169, sass/_loan-offers.scss */
+  /* line 173, sass/_loan-offers.scss */
   .loan-offer-head .loan-offerer-info .loan-offerer-name {
     display: none;
   }
 
-  /* line 174, sass/_loan-offers.scss */
+  /* line 178, sass/_loan-offers.scss */
   .loan-offer-body {
     position: relative;
     justify-content: center;
   }
 
-  /* line 178, sass/_loan-offers.scss */
+  /* line 182, sass/_loan-offers.scss */
   .loan-offer-footer {
     display: flex;
     flex-direction: column;
@@ -1190,83 +1195,83 @@ textarea {
     padding: .5rem;
     background: #ececec;
   }
-  /* line 186, sass/_loan-offers.scss */
+  /* line 190, sass/_loan-offers.scss */
   .loan-offer-footer .text-focus {
     position: static;
     margin-bottom: .375rem;
     text-align: center;
   }
-  /* line 190, sass/_loan-offers.scss */
+  /* line 194, sass/_loan-offers.scss */
   .loan-offer-footer .text-focus span {
     flex: none;
     margin: 0;
     font-size: 1rem;
   }
-  /* line 196, sass/_loan-offers.scss */
+  /* line 200, sass/_loan-offers.scss */
   .loan-offer-footer .broker-btn-gold {
     width: auto;
     padding: 1rem;
   }
 
-  /* line 202, sass/_loan-offers.scss */
+  /* line 206, sass/_loan-offers.scss */
   .affiliate-offer-container .loan-offer-head {
     flex-direction: column;
     flex: 0 0 140px;
     padding: 0 0 0 2rem;
   }
-  /* line 207, sass/_loan-offers.scss */
+  /* line 211, sass/_loan-offers.scss */
   .affiliate-offer-container .loan-offer-body span {
     font-size: .875rem;
   }
-  /* line 210, sass/_loan-offers.scss */
+  /* line 214, sass/_loan-offers.scss */
   .affiliate-offer-container .loan-offer-footer {
     justify-content: center;
   }
 }
 @media only screen and (min-width: 1200px) {
-  /* line 217, sass/_loan-offers.scss */
+  /* line 221, sass/_loan-offers.scss */
   .loan-offer-head {
     flex-direction: row;
     align-items: center;
   }
-  /* line 220, sass/_loan-offers.scss */
+  /* line 224, sass/_loan-offers.scss */
   .loan-offer-head .loan-offerer-logo-container {
     margin-bottom: 0;
   }
-  /* line 223, sass/_loan-offers.scss */
+  /* line 227, sass/_loan-offers.scss */
   .loan-offer-head .loan-offerer-info {
     margin-left: 1.5rem;
   }
-  /* line 225, sass/_loan-offers.scss */
+  /* line 229, sass/_loan-offers.scss */
   .loan-offer-head .loan-offerer-info .loan-offerer-name {
     display: block;
   }
 
-  /* line 230, sass/_loan-offers.scss */
+  /* line 234, sass/_loan-offers.scss */
   .loan-offer-body {
     margin-left: 2rem;
     justify-content: center;
   }
 
-  /* line 235, sass/_loan-offers.scss */
+  /* line 239, sass/_loan-offers.scss */
   .affiliate-offer-container .loan-offer-head {
     flex-direction: row;
     flex: 0 0 250px;
     padding-right: 0;
   }
-  /* line 240, sass/_loan-offers.scss */
+  /* line 244, sass/_loan-offers.scss */
   .affiliate-offer-container .loan-offer-body {
     margin-left: 0;
   }
 }
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) {
   /* IE10+ CSS styles go here */
-  /* line 247, sass/_loan-offers.scss */
+  /* line 251, sass/_loan-offers.scss */
   .loan-offer-body {
     max-width: 400px;
   }
 
-  /* line 250, sass/_loan-offers.scss */
+  /* line 254, sass/_loan-offers.scss */
   .affiliate-offer-container .loan-offer-body {
     flex: 0 0 328px;
     max-width: 295px;

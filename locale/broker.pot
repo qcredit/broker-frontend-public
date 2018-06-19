@@ -37,6 +37,48 @@ msgstr ""
 msgid "Proceed"
 msgstr ""
 
+#: tmp/cache/1c/1c0fdafc7facd7014b608a92ac5e0db6672a737c2695deb5a6ffde9794a90fad.php:98
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:103
+#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:96
+#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:82
+#: src/routes.php:23 src/routes.php:24 src/routes.php:25
+msgid "blog"
+msgstr ""
+
+#: tmp/cache/1c/1c0fdafc7facd7014b608a92ac5e0db6672a737c2695deb5a6ffde9794a90fad.php:100
+#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:98
+#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:84
+#: src/routes.php:24
+msgid "tag"
+msgstr ""
+
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:97
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:162
+#: src/routes.php:18
+msgid "about"
+msgstr ""
+
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:109
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:166
+#: src/routes.php:19
+msgid "contact"
+msgstr ""
+
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:170
+#: src/routes.php:20
+msgid "privacy-policy"
+msgstr ""
+
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:174
+#: src/routes.php:21
+msgid "cookies-policy"
+msgstr ""
+
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:178
+#: src/routes.php:22
+msgid "terms-and-conditions"
+msgstr ""
+
 #: tmp/cache/52/52b9d2d621678e49e7521074bea028255984348ce47a2635635872081b4ef630.php:29
 msgid "Error"
 msgstr ""
@@ -166,8 +208,8 @@ msgstr ""
 msgid "APR"
 msgstr ""
 
-#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:123
-#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:109
+#: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:127
+#: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:113
 msgid "Read more"
 msgstr ""
 
@@ -799,28 +841,4 @@ msgstr ""
 
 #: src/routes.php:10
 msgid "application"
-msgstr ""
-
-#: src/routes.php:18
-msgid "about"
-msgstr ""
-
-#: src/routes.php:19
-msgid "contact"
-msgstr ""
-
-#: src/routes.php:20
-msgid "privacy-policy"
-msgstr ""
-
-#: src/routes.php:21
-msgid "cookies-policy"
-msgstr ""
-
-#: src/routes.php:22
-msgid "terms-and-conditions"
-msgstr ""
-
-#: src/routes.php:23 src/routes.php:25
-msgid "blog"
 msgstr ""
