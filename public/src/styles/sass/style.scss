@@ -206,6 +206,9 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+  body {
+    padding-top: 67px;
+  }
   .page-body {
     min-height: 400px;
   }
@@ -227,7 +230,7 @@ body {
 }
 @media only screen and (min-width: 1024px) {
   body {
-    padding-top: 60px;
+    padding-top: 84px;
   }
   .page-body {
     min-height: 500px;
