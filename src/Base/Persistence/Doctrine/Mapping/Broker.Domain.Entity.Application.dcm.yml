@@ -39,6 +39,7 @@ Broker\Domain\Entity\Application:
     email:
       type: string
       nullable: false
+      length: 90
     phone:
       type: string
       nullable: false

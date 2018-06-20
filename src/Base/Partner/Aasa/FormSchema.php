@@ -139,6 +139,7 @@ class FormSchema implements SchemaInterface
         ApplicationForm::ATTR_DOCUMENT_NR => [
           'type' => 'string',
           'minLength' => 9,
+          'maxLength' => 60,
           'documentNr' => 'Poland'
         ],
         ApplicationForm::ATTR_EDUCATION => [
@@ -207,7 +208,7 @@ class FormSchema implements SchemaInterface
         ],
         ApplicationForm::ATTR_EMAIL => [
           'type' => 'string',
-          'minLength' => 4,
+          'maxLength' => 90,
           'pattern' => '\S+@\S+\.\S+'
         ],
         ApplicationForm::ATTR_PHONE => [

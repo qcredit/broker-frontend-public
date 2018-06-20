@@ -8,15 +8,17 @@
 
 namespace App\Base\Factory;
 
+use Slim\Container;
+
 class RepositoryFactory
 {
-  public function createGateway($entityManager, $entityName)
+  public function createGateway($entityManager, $entityName, Container $container)
   {
     $class = 'App\\Base\\Persistence\\Doctrine\\' . $entityName . 'Repository';
 
     if (class_exists($class))
     {
-      return new $class($entityManager);
+      return new $class($entityManager, $container);
     }
 
     throw new \RuntimeException(sprintf('Unknown Repository requested: %s', $class));
