@@ -130,6 +130,10 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
         }
       }*/
     }
+    else
+    {
+      $('form button[type="submit"]').prop('disabled', true);
+    }
   });
 
   $('form:not(.landing-form) input').on('change', function(e) {
