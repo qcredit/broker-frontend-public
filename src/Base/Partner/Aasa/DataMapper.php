@@ -497,16 +497,6 @@ class DataMapper implements PartnerDataMapperInterface
   }
 
   /**
-   * @return array
-   * @throws InvalidConfigException
-   * @throws \Exception
-   */
-  public function getChooseRequestSchema(): array
-  {
-    return json_decode($this->getConfigFile(), true)['chooseRequestSchema'];
-  }
-
-  /**
    * @param $code
    * @return bool
    */
@@ -547,12 +537,13 @@ class DataMapper implements PartnerDataMapperInterface
 
   /**
    * @return array
-   * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getIncomingUpdateSchema(): array
   {
-    return $this->getDecodedConfigFile()['incomingUpdateSchema'];
+    $schema = new IncomingUpdateSchema();
+
+    return $schema->getSchema();
   }
 
   /**
