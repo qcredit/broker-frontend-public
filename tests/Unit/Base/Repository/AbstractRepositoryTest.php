@@ -13,17 +13,19 @@ use Doctrine\ORM\EntityManager;
 class AbstractRepositoryTest extends TestCase
 {
   protected $entityManagerMock;
+  protected $containerMock;
 
   public function setUp()
   {
     $this->entityManagerMock = $this->createMock(EntityManager::class);
+    $this->containerMock = $this->createMock(\Slim\Container::class);
   }
 
   public function test__construct()
   {
     $this->expectException('Exception');
 
-    $this->getMockBuilder(AbstractRepository::class)->setConstructorArgs([$this->entityManagerMock])
+    $this->getMockBuilder(AbstractRepository::class)->setConstructorArgs([$this->entityManagerMock, $this->containerMock])
       ->getMockForAbstractClass();
   }
 }
