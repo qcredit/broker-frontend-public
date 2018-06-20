@@ -111,22 +111,22 @@ $container['PartnerResponseFactory'] = function($c)
 };
 
 $container['UserRepository'] = function($container) {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User', $container);
 };
 
 $container['PartnerRepository'] = function($container)
 {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Partner');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Partner', $container);
 };
 
 $container['ApplicationRepository'] = function($container)
 {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application', $container);
 };
 
 $container['OfferRepository'] = function($container)
 {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer', $container);
 };
 
 $container['AdminController'] = function($c)
@@ -223,7 +223,7 @@ $container['PartnerResponseService'] = function($c)
   return new PartnerResponseService(
     $c->get('BrokerInstance'),
     new OfferFactory(),
-    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer')
+    $c->get('OfferRepository')
   );
 };
 
@@ -255,8 +255,8 @@ $container['ApplicationValidator'] = function($c)
 $container['PostApplicationService'] = function($c)
 {
   $factory = $c->get('RepositoryFactory');
-  $appRepository = $factory->createGateway($c->get('db'), 'Application');
-  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
+  $appRepository = $c->get('ApplicationRepository');
+  $offerRepository = $c->get('OfferRepository');
 
   $newApplicationService = new NewApplicationService(
     $c->get('BrokerInstance'),
@@ -289,9 +289,8 @@ $container['PostApplicationService'] = function($c)
 
 $container['ApplicationController'] = function ($c)
 {
-  $factory = $c->get('RepositoryFactory');
-  $appRepository = $factory->createGateway($c->get('db'), 'Application');
-  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
+  $appRepository = $c->get('ApplicationRepository');
+  $offerRepository = $c->get('OfferRepository');
 
   return new \App\Controller\ApplicationController(
     $appRepository,
