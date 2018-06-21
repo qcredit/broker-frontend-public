@@ -75,7 +75,7 @@
                           <td>{% if offer.loanAmount %}{{ offer.loanAmount }} PLN{% endif %}</td>
                           <td>{{ offer.remoteId }}</td>
                           <td class="{% if offer.isAccepted %}status-accepted{% elseif offer.isInProcess %}status-in-process{% elseif offer.isPaidOut %}status-paidout{% else %}status-rejected{% endif %}">{% if offer.isAccepted %}Accepted{% elseif offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
-                          <td><a href="/admin/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
+                          <td><a href="/office/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
                       </tr>
                   {% endfor %}
               </tbody>

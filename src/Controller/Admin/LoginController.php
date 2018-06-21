@@ -105,7 +105,7 @@ class LoginController extends AbstractController
 
     if ($handler->logout())
     {
-      return $response->withRedirect('/admin/login');
+      return $response->withRedirect('/office/login');
     }
 
     return $response->withRedirect($request->getHeader('HTTP_REFERER'));

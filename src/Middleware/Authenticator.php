@@ -109,7 +109,7 @@ class Authenticator
    */
   protected function denyAccess(Response $response)
   {
-    return $response->withRedirect('/admin/login');
+    return $response->withRedirect('/office/login');
   }
 
   /**
