@@ -39,12 +39,12 @@ class DataMapper implements PartnerDataMapperInterface
 
   /**
    * @return array
-   * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getRequestSchema(): array
   {
-    return $this->getDecodedConfigFile()['requestSchema'];
+    $schema = new RequestSchema();
+    return $schema->getSchema();
   }
 
   /**
