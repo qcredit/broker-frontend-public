@@ -15,6 +15,7 @@
   <header class="page-header">
       <nav class="navbar navbar-expand-md navbar-light">
       <a class="navbar-brand" href="/office"><img class="navbar-brand" src="/src/images/crm_broker_logo.png" alt="logo"></a>
+      {% if user %}
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -38,6 +39,7 @@
          {% if user.email %}<a class="nav-logout" href="/office/logout" onclick="signOut();">Logout</a>{% endif %}
        </div>
       </div>
+      {% endif %}
     </nav>
   </header>
   <div class="container">
