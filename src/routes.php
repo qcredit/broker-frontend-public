@@ -25,7 +25,7 @@ $app->group('/', function() {
   $this->get(sprintf('%s/{slug}', _('blog')), 'BlogController:viewAction');
   $this->get('test', 'TestController:mailAction');
 
-  $this->group('admin', function() {
+  $this->group('office', function() {
     $this->get('', 'AdminController:indexAction');
     $this->map(['GET', 'POST'], '/partners/new', 'PartnerController:newAction');
     $this->map(['GET', 'POST'], '/partners/update/{id}', 'PartnerController:updateAction');
@@ -43,5 +43,5 @@ $app->group('/', function() {
 
 $app->post('/api/partner/update-offer', 'ApiController:updateAction')->add(new PartnerAuthenticator($app));
 
-$app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
-$app->get('/admin/logout', 'LoginController:logoutAction');
+$app->map(['GET', 'POST'], '/office/login', 'LoginController:loginAction');
+$app->get('/office/logout', 'LoginController:logoutAction');
