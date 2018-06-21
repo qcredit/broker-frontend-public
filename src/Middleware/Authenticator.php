@@ -121,8 +121,7 @@ class Authenticator
   {
     $container = $this->getContainer();
 
-    $factory = $container->get('RepositoryFactory');
-    $repository = $factory->createGateway($container->get('db'), 'User');
+    $repository = $container->get('UserRepository');
 
     return $repository->getOneBy(['id' => $id]);
   }
