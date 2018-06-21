@@ -218,9 +218,9 @@ class DataMapper implements PartnerDataMapperInterface
     $payload = $this->getRequestPayload();
     array_walk($payload, [$this, 'mapper'], $application);
 
-    $payload['eMarketing'] = 'Y';
+/*    $payload['eMarketing'] = 'Y';
     $payload['pMarketing'] = 'Y';
-    $payload['tMarketing'] = 'Y';
+    $payload['tMarketing'] = 'Y';*/
 
     return json_encode($payload);
   }

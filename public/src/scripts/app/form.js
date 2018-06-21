@@ -109,12 +109,14 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
     }
   });
 
-  $('form:not(.landing-form) button[type="submit"]').click(function(e) {
+  $('form.loan-form').submit(function(e) {
     var valid = ajv.validate(schema, app.getFormData());
 
     if (!valid) {
+      console.log(ajv.errors);
       e.preventDefault();
       formHelper.handleErrors(ajv.errors);
+      $('form button[type="submit"]').prop('disabled', false);
 
 /*      var error_list = ajv.errors;
       for(var i = 0; i < error_list.length; i++) {
