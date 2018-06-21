@@ -86,7 +86,11 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
     box-shadow: none;
   }
 }
-
+.alert {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  border-radius: 0;
+}
 body {
   padding-top: 65px;
 }
