@@ -140,7 +140,7 @@ $container['TestController'] = function($c)
 };
 
 $container['PartnerController'] = function($c) {
-  $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
+  $partnerRepository = $c->get('PartnerRepository');
 
   $partnerDataLoader = $c->get('PartnerExtraDataLoader');
   return new \App\Controller\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
@@ -148,14 +148,14 @@ $container['PartnerController'] = function($c) {
 
 $container['AdminApplicationController'] = function($c)
 {
-  $appRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Application');
-  $offerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer');
+  $appRepository = $c->get('ApplicationRepository');
+  $offerRepository = $c->get('OfferRepository');
   return new \App\Controller\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
 };
 
 $container['UserController'] = function($c) {
   $userFactory = new \App\Base\Factory\UserFactory();
-  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $userRepository = $c->get('UserRepository');
   $validator = new \App\Base\Validator\UserValidator($c->get('BrokerInstance'));
   return new \App\Controller\Admin\UserController($userRepository, $userFactory, $validator, $c);
 };
@@ -311,7 +311,7 @@ $container['AdminOfferController'] = function($c)
 
   return new \App\Controller\Admin\AdminOfferController(
     $offerUpdateService,
-    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
+    $c->get('OfferRepository'),
     $c
   );
 };
@@ -319,7 +319,7 @@ $container['AdminOfferController'] = function($c)
 $container['LoginController'] = function ($c)
 {
   $authService = new \App\Component\GoogleAuthenticator();
-  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $userRepository = $c->get('UserRepository');
   $authHandler = new \App\Component\AuthHandler($authService, $userRepository, $c);
   return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
