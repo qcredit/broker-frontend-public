@@ -18,7 +18,7 @@
     "slim/twig-view": "^2.3",
     "doctrine/orm": "^2.6",
     "symfony/yaml": "^4.0",
-    "aasa/broker": "dev-master",
+    "aasa/broker": "0.0.3",
     "robmorgan/phinx": "^0.9.2",
     "respect/validation": "^1.1",
     "slim/flash": "^0.4.0",

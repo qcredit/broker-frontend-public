@@ -209,7 +209,7 @@ class PartnerController extends AbstractController
     {
       if ($this->getPartnerRepository()->save($partner))
       {
-        return $response->withRedirect('/admin/partners');
+        return $response->withRedirect('/office/partners');
       }
     }
 
@@ -231,10 +231,10 @@ class PartnerController extends AbstractController
 
     if ($this->getPartnerRepository()->delete($partner))
     {
-      return $response->withRedirect('/admin/partners');
+      return $response->withRedirect('/office/partners');
     }
 
-    return $this->withRedirect('/admin/partners');
+    return $this->withRedirect('/office/partners');
   }
 
   /**

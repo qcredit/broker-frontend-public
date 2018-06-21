@@ -8,24 +8,12 @@
 
 namespace App\Controller;
 
-use App\Base\Event\PostDataListener;
-use App\Base\NewAppListener;
 use App\Base\Validator\Scenario\HomepageScenario;
 use App\Component\AbstractController;
-use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use App\Model\ApplicationForm;
 use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\OfferRepositoryInterface;
-use Broker\Domain\Interfaces\Service\ChooseOfferServiceInterface;
-use Broker\Domain\Interfaces\Service\NewApplicationServiceInterface;
 use Broker\Domain\Interfaces\Service\PostApplicationServiceInterface;
-use Broker\Domain\Interfaces\Service\PrepareAndSendApplicationServiceInterface;
-use Broker\Domain\Interfaces\Service\PreparePartnerRequestsServiceInterface;
-use Broker\Domain\Interfaces\Service\SendPartnerRequestsServiceInterface;
-use Broker\Domain\Interfaces\System\Event\EventListenerInterface;
-use Broker\Domain\Service\PreparePartnerRequestsService;
-use Monolog\Logger;
-use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Exception\NotFoundException;
@@ -45,10 +33,6 @@ class ApplicationController extends AbstractController
    */
   protected $offerRepository;
   /**
-   * @var ChooseOfferServiceInterface
-   */
-  protected $chooseOfferService;
-  /**
    * @var PostApplicationServiceInterface
    */
   protected $postApplicationService;
@@ -57,7 +41,6 @@ class ApplicationController extends AbstractController
    * ApplicationController constructor.
    * @param ApplicationRepositoryInterface $appRepository
    * @param OfferRepositoryInterface $offerRepository
-   * @param ChooseOfferServiceInterface $chooseOfferService
    * @param PostApplicationServiceInterface $postApplicationService
    * @param $container
    * @throws \Interop\Container\Exception\ContainerException
@@ -65,14 +48,12 @@ class ApplicationController extends AbstractController
   public function __construct(
     ApplicationRepositoryInterface $appRepository,
     OfferRepositoryInterface $offerRepository,
-    ChooseOfferServiceInterface $chooseOfferService,
     PostApplicationServiceInterface $postApplicationService,
     $container
   )
   {
     $this->appRepository = $appRepository;
     $this->offerRepository = $offerRepository;
-    $this->chooseOfferService = $chooseOfferService;
     $this->postApplicationService = $postApplicationService;
 
     parent::__construct($container);
@@ -111,24 +92,6 @@ class ApplicationController extends AbstractController
   public function setOfferRepository(OfferRepositoryInterface $offerRepository)
   {
     $this->offerRepository = $offerRepository;
-    return $this;
-  }
-
-  /**
-   * @return ChooseOfferServiceInterface
-   */
-  public function getChooseOfferService()
-  {
-    return $this->chooseOfferService;
-  }
-
-  /**
-   * @param ChooseOfferServiceInterface $chooseOfferService
-   * @return ApplicationController
-   */
-  public function setChooseOfferService(ChooseOfferServiceInterface $chooseOfferService)
-  {
-    $this->chooseOfferService = $chooseOfferService;
     return $this;
   }
 
