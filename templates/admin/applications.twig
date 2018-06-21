@@ -20,8 +20,35 @@
               <td>{{ app.fullName }}</td>
               <td>{{ app.loanAmount }} PLN</td>
               <td>{{ app.loanTerm }}</td>
-              <td>{{ app.status }}</td>
-              <td><a href="/office/applications/{{ app.id }}">Details</a></td>
+              <td>
+                {% set appStatus = 0 %}
+                {% for offer in app.offers %}
+                  {% if appStatus < 1 and offer.isRejected %}
+                    {% set appStatus = 1 %}
+                  {% endif %}
+                  {% if appStatus < 2 and offer.isInProcess %}
+                    {% set appStatus = 2 %}
+                  {% endif %}
+                  {% if appStatus < 3 and offer.isAccepted %}
+                    {% set appStatus = 3 %}
+                  {% endif %}
+                  {% if appStatus <= 4 and offer.isPaidOut %}
+                    {% set appStatus = 4 %}
+                  {% endif %}
+                {% endfor %}
+
+                {% if appStatus == 4 %}
+                  <span class="status-paidout">Paid out</span>
+                {% elseif appStatus == 3 %}
+                  <span class="status-accepted">Accepted</span>
+                {% elseif appStatus == 2 %}
+                  <span class="status-in-process">In process</span>
+                {% elseif appStatus == 1 %}
+                  <span class="status-rejected">Rejected</span>
+                {% else %}
+                {% endif %}
+              </td>
+              <td><a href="/admin/applications/{{ app.id }}">Details</a></td>
           </tr>
       {% endfor %}
       </tbody>
