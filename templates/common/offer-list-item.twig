@@ -1,8 +1,10 @@
 {% set signButton = 'Sign contract'|trans %}
 <article class="loan-offer-container personal-offer-container {% if offer.partner.featured %}featured{% endif %}">
-  <div class="badge">
-    {% trans 'Top offer' %}
-  </div>
+  {% if offer.partner.featured %}
+    <div class="badge">
+      {% trans 'Top offer' %}
+    </div>
+  {% endif %}
   <div class="loan-offer-head">
     <div class="loan-offerer-logo-container">
       <img src="{{ offer.partner.logoUrl }}" class="loan-offerer-logo" alt="{{ offer.partner.name }} logo">
