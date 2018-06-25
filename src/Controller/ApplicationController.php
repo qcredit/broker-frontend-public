@@ -200,12 +200,11 @@ class ApplicationController extends AbstractController
         return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
       }
 
-      if (count($service->getApplication()->getOffers()) === 0)
+      if (!$this->isFromFrontpage() && count($service->getApplication()->getOffers()) === 0)
       {
         $data['flash'] = ['error' => _('We could not contact our partners, please try again!')];
       }
-
-      if (count($service->getApplication()->getOffers()) !== count($this->getPartners()))
+      else if (!$this->isFromFrontpage() && count($service->getApplication()->getOffers()) !== count($this->getPartners()))
       {
         $data['flash'] = ['error' => _('We could not reach some of our partners. You can wait and submit the form again. You will be e-mailed a link to offers from partners we managed to contact with.')];
       }
