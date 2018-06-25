@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-06-25 15:42+0300\n"
+"PO-Revision-Date: 2018-06-25 15:52+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -32,7 +32,7 @@ msgid ""
 "Please %beginLink% click here %endLink% to finish your application and get a "
 "little closer to your dreams."
 msgstr ""
-"Proszę  beginLink% kliknij tutaj% endLink%, aby zakończyć aplikację i "
+"Proszę %beginLink% kliknij tutaj %endLink%, aby zakończyć aplikację i "
 "zbliżyć się do swoich marzeń."
 
 #: tmp/cache/0e/0ef683d2facf503e183e0d5b0e8ded310b072ca3f39e289091faf39440353bcc.php:66
@@ -59,12 +59,12 @@ msgid "Proceed"
 msgstr "Kontynuować"
 
 #: tmp/cache/1c/1c0fdafc7facd7014b608a92ac5e0db6672a737c2695deb5a6ffde9794a90fad.php:98
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:103
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:119
 #: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:96
 #: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:82
 #: src/routes.php:23 src/routes.php:24 src/routes.php:25
 msgid "blog"
-msgstr "blog"
+msgstr "blog-pozyczkowy"
 
 #: tmp/cache/1c/1c0fdafc7facd7014b608a92ac5e0db6672a737c2695deb5a6ffde9794a90fad.php:100
 #: tmp/cache/93/93ca44838bd9c6ba5581bc9730143289dee089c478277888d91b2f78ecb5ca50.php:98
@@ -73,29 +73,29 @@ msgstr "blog"
 msgid "tag"
 msgstr "tag"
 
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:97
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:162
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:113
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:178
 #: src/routes.php:18
 msgid "about"
 msgstr "o-nas"
 
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:109
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:166
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:125
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:182
 #: src/routes.php:19
 msgid "contact"
 msgstr "kontakt"
 
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:170
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:186
 #: src/routes.php:20
 msgid "privacy-policy"
 msgstr "polityka-prywatności"
 
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:174
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:190
 #: src/routes.php:21
 msgid "cookies-policy"
 msgstr "polityka-cookies"
 
-#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:178
+#: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:194
 #: src/routes.php:22
 msgid "terms-and-conditions"
 msgstr "warunki-korzystania"
@@ -122,11 +122,11 @@ msgid ""
 "to contact us at %email%."
 msgstr ""
 "Jeśli nadal widzisz ten komunikat, a minęło już trochę czasu, skontaktuj się "
-"z nami pod adresem% email%."
+"z nami pod adresem %email%."
 
 #: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:72
 #: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:59
-#: src/routes.php:10
+#: src/routes.php:10 src/Controller/ApplicationController.php:139
 msgid "application"
 msgstr "wakacje"
 
@@ -890,6 +890,28 @@ msgstr "Wpisz numer"
 #: src/Base/Validator/SchemaValidator.php:130
 msgid "This field is required"
 msgstr "To pole jest wymagane"
+
+#: src/Controller/ApplicationController.php:205
+msgid "We could not contact our partners, please try again!"
+msgstr ""
+"W tej chwili nie udało nam się skontaktować z naszymi parnerami. Spróbuj "
+"ponownie."
+
+#: src/Controller/ApplicationController.php:209
+msgid ""
+"We could not reach some of our partners. You can wait and submit the form "
+"again. You will be e-mailed a link to offers from partners we managed to "
+"contact with."
+msgstr ""
+"Nasi patrznerzy są chwilowo niedostepni. Odczekaj chwilę i ponownie prześlij "
+"wniosek. Otrzymasz mailem link do ofert partnerów, z którymi uda nam się "
+"skontaktować."
+
+#: src/Controller/ApplicationController.php:217
+#, fuzzy
+#| msgid "We were unable to send your message. Please try again later."
+msgid "We were unable to process your request. Please try again later."
+msgstr "Nie udało się wysłać Twojej wiadomości. Spróbuj ponownie później."
 
 #~ msgid "Insert your first name"
 #~ msgstr "Imię"

@@ -327,7 +327,7 @@ $container['LoginController'] = function ($c)
 $container['BlogController'] = function($c)
 {
   $blog = new \Aasa\CommonWebSDK\BlogServiceAWS();
-  \Aasa\CommonWebSDK\Configuration::getInstance()->init(6, 'pl', 'blog');
+  \Aasa\CommonWebSDK\Configuration::getInstance()->init(6, 'pl', _('blog'));
   return new \App\Controller\BlogController($blog, $c);
 };
 
