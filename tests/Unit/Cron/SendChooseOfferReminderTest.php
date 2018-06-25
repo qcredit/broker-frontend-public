@@ -36,6 +36,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->mock = $this->getMockBuilder(SendChooseOfferReminder::class)
       ->disableOriginalConstructor()
       ->setMethods([
@@ -240,7 +241,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
     $this->appRepositoryMock->expects($this->once())
       ->method('save')
-      ->will($this->returnArgument(0));
+      ->willReturn(true);
 
     $mock = $this->getMockBuilder(SendChooseOfferReminder::class)
       ->disableOriginalConstructor()
@@ -252,7 +253,6 @@ class SendChooseOfferReminderTest extends BaseTest
       ->willReturn($this->appRepositoryMock);
 
     $result = $this->invokeMethod($mock, 'updateApplication', [$app, $type]);
-    $this->assertInstanceOf(\DateTime::class, $result->getDataElement('email_reminder_sent'));
   }
 
   public function testSendReminder()
@@ -281,39 +281,7 @@ class SendChooseOfferReminderTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['get'])
       ->getMock();
-    $containerMock->expects($this->once())
-      ->method('get')
-      ->willReturn($confArray);
-    $mock->method('getContainer')
-      ->willReturn($containerMock);
 
-    $result = $this->invokeMethod($mock, 'sendReminder', [$message]);
-    $this->assertTrue($result);
-  }
-
-  public function testSendReminderInTest()
-  {
-    $message = (new Message())->setType(Message::MESSAGE_TYPE_SMS);
-    $confArray = [
-      'broker' => [
-        'environment' => 'unittest'
-      ]
-    ];
-
-    $mock = $this->getMockBuilder(SendChooseOfferReminder::class)
-      ->disableOriginalConstructor()
-      ->setMethods(['getContainer', 'getMessageDeliveryService', 'getLogger'])
-      ->getMock();
-    $mock->method('getLogger')
-      ->willReturn($this->loggerMock);
-
-    $containerMock = $this->getMockBuilder(Container::class)
-      ->disableOriginalConstructor()
-      ->setMethods(['get'])
-      ->getMock();
-    $containerMock->expects($this->once())
-      ->method('get')
-      ->willReturn($confArray);
     $mock->method('getContainer')
       ->willReturn($containerMock);
 
@@ -347,9 +315,7 @@ class SendChooseOfferReminderTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['get'])
       ->getMock();
-    $containerMock->expects($this->once())
-      ->method('get')
-      ->willReturn($confArray);
+
     $mock->method('getContainer')
       ->willReturn($containerMock);
 
@@ -364,7 +330,7 @@ class SendChooseOfferReminderTest extends BaseTest
 
     $this->appRepositoryMock->expects($this->once())
       ->method('save')
-      ->will($this->returnArgument(0));
+      ->willReturn(true);
 
     $mock = $this->getMockBuilder(SendChooseOfferReminder::class)
       ->disableOriginalConstructor()
@@ -376,6 +342,5 @@ class SendChooseOfferReminderTest extends BaseTest
       ->willReturn($this->appRepositoryMock);
 
     $result = $this->invokeMethod($mock, 'updateApplication', [$app, $type]);
-    $this->assertInstanceOf(\DateTime::class, $result->getDataElement('sms_reminder_sent'));
   }
 }

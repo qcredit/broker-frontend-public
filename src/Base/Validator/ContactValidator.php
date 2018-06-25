@@ -11,6 +11,7 @@ namespace App\Base\Validator;
 use App\Model\ContactForm;
 use Broker\Domain\Service\Validator\AbstractEntityValidator;
 use Broker\System\BrokerInstance;
+use Broker\System\Log;
 use Respect\Validation\Validator as V;
 use Slim\Container;
 
@@ -19,10 +20,15 @@ class ContactValidator extends AbstractEntityValidator
   /**
    * @var array
    */
+  protected $rawData;
+  /**
+   * @var array
+   */
   protected $validationAttributes = [
     ContactForm::ATTR_NAME,
     ContactForm::ATTR_EMAIL,
-    ContactForm::ATTR_MESSAGE
+    ContactForm::ATTR_MESSAGE,
+    ContactForm::ATTR_RECAPTCHA
   ];
 
   /**
@@ -82,5 +88,68 @@ class ContactValidator extends AbstractEntityValidator
     }
 
     return true;
+  }
+
+  /**
+   * @return bool
+   */
+  public function validateGrecaptcharesponse()
+  {
+    $value = $this->getEntity()->getAttribute(ContactForm::ATTR_RECAPTCHA);
+
+    if (!V::notEmpty()->validate($value) || !$this->verifyCaptcha())
+    {
+      $this->getEntity()->setErrors([ContactForm::ATTR_RECAPTCHA => _('Please verify you are a human!')]);
+      return false;
+    }
+
+    return true;
+  }
+
+  /**
+   * @return bool
+   */
+  protected function verifyCaptcha()
+  {
+    $data = http_build_query(
+      [
+        'secret' => '6LcXOVcUAAAAALmZc4LeyuThHko43K1qTBUluD0Y',
+        'response' => $this->getEntity()->getAttribute(ContactForm::ATTR_RECAPTCHA),
+        'remoteip' => $_SERVER['REMOTE_ADDR']
+      ]
+    );
+    $options = ['http' =>
+      [
+        'method'  => 'POST',
+        'header'  => 'Content-type: application/x-www-form-urlencoded',
+        'content' => $data
+      ]
+    ];
+    $context  = stream_context_create($options);
+    $response = file_get_contents('https://www.google.com/recaptcha/api/siteverify', false, $context);
+
+    $result = json_decode($response);
+
+    return $result->success === true;
+  }
+
+  /**
+   * @return array
+   * @codeCoverageIgnore
+   */
+  public function getRawData()
+  {
+    return $this->rawData;
+  }
+
+  /**
+   * @param array $rawData
+   * @return ContactValidator
+   * @codeCoverageIgnore
+   */
+  public function setRawData(array $rawData)
+  {
+    $this->rawData = $rawData;
+    return $this;
   }
 }

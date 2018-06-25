@@ -105,6 +105,13 @@ class SmsDelivery implements MessageDeliveryInterface
     $this->setMessage($message);
     $this->setup();
 
+    if (!$this->isNumberWhitelisted())
+    {
+      $this->getLogger()->notice('Skipping sending SMS as the number is not in the whitelist!');
+      $this->setOk(true);
+      return;
+    }
+
     $result = $this->getClient()->send();
 
     $this->handleResult($result);
@@ -115,7 +122,7 @@ class SmsDelivery implements MessageDeliveryInterface
    */
   protected function setup()
   {
-    $settings = $this->getSettings();
+    $settings = $this->getSmsSettings();
     $url = $settings['apiUrl'] . '?' .
       http_build_query(
         [
@@ -133,11 +140,28 @@ class SmsDelivery implements MessageDeliveryInterface
   }
 
   /**
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function isNumberWhitelisted()
+  {
+    if ($this->getSettings()['broker']['environment'] === 'production') return true;
+
+    $smsSettings = $this->getSmsSettings();
+    if (!isset($smsSettings['whitelist']) || empty($smsSettings['whitelist'])) return false;
+
+    if (in_array($this->getMessage()->getRecipient(), $smsSettings['whitelist'])) return true;
+
+    return false;
+  }
+
+  /**
    * @param $result
    * @throws \Interop\Container\Exception\ContainerException
    */
   protected function handleResult($result)
   {
+    $this->getLogger()->debug('API response from SMS provider:', [$result]);
     list($resp, $code) = explode(' ', $result);
 
     if ($resp != 'OK')
@@ -171,12 +195,21 @@ class SmsDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @return mixed
+   * @return array
    * @throws \Interop\Container\Exception\ContainerException
    */
   protected function getSettings()
   {
-    return $this->getContainer()->get('settings')['messente'];
+    return $this->getContainer()->get('settings');
+  }
+
+  /**
+   * @return array
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  protected function getSmsSettings()
+  {
+    return $this->getSettings()['messente'];
   }
 
   /**

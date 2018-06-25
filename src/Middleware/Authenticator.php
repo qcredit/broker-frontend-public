@@ -109,7 +109,7 @@ class Authenticator
    */
   protected function denyAccess(Response $response)
   {
-    return $response->withRedirect('/admin/login');
+    return $response->withRedirect('/office/login');
   }
 
   /**
@@ -121,8 +121,7 @@ class Authenticator
   {
     $container = $this->getContainer();
 
-    $factory = $container->get('RepositoryFactory');
-    $repository = $factory->createGateway($container->get('db'), 'User');
+    $repository = $container->get('UserRepository');
 
     return $repository->getOneBy(['id' => $id]);
   }

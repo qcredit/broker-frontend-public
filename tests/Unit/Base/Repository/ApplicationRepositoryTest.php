@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManager;
 class ApplicationRepositoryTest extends TestCase
 {
   protected $entityManagerMock;
+  protected $containerMock;
 
   public function setUp()
   {
@@ -28,25 +29,26 @@ class ApplicationRepositoryTest extends TestCase
     $this->entityManagerMock = $this->createMock(EntityManager::class);
     $this->entityManagerMock->method('getRepository')
       ->willReturn($entityRepositoryMock);
+    $this->containerMock = $this->createMock(\Slim\Container::class);
   }
 
   public function testGetBy()
   {
-    $instance = new ApplicationRepository($this->entityManagerMock);
+    $instance = new ApplicationRepository($this->entityManagerMock, $this->containerMock);
 
     $this->assertTrue(is_array($instance->getBy(['key' => 'something'])));
   }
 
   public function testGetById()
   {
-    $instance = new ApplicationRepository($this->entityManagerMock);
+    $instance = new ApplicationRepository($this->entityManagerMock, $this->containerMock);
 
     $this->assertTrue(is_object($instance->getById(10)));
   }
 
   public function testGetAll()
   {
-    $instance = new ApplicationRepository($this->entityManagerMock);
+    $instance = new ApplicationRepository($this->entityManagerMock, $this->containerMock);
 
     $this->assertTrue(is_array($instance->getAll()));
   }

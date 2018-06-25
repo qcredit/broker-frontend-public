@@ -11,9 +11,7 @@ namespace App\Base\Components;
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
 use Broker\System\Error\InvalidConfigException;
-use Broker\System\Log;
 use Monolog\Logger;
-use PHPMailer\PHPMailer\PHPMailer;
 use Slim\Container;
 
 class EmailDelivery implements MessageDeliveryInterface
@@ -27,7 +25,7 @@ class EmailDelivery implements MessageDeliveryInterface
    */
   protected $message;
   /**
-   * @var PHPMailer
+   * @var HttpClient
    */
   protected $client;
   /**
@@ -54,7 +52,7 @@ class EmailDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @return PHPMailer
+   * @return HttpClient
    */
   public function getClient()
   {
@@ -62,10 +60,10 @@ class EmailDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @param PHPMailer $client
-   * @return EmailDelivery
+   * @param HttpClient $client
+   * @return $this
    */
-  public function setClient(PHPMailer $client)
+  public function setClient(HttpClient $client)
   {
     $this->client = $client;
     return $this;
@@ -123,7 +121,7 @@ class EmailDelivery implements MessageDeliveryInterface
   public function __construct(Container $container)
   {
     $this->container = $container;
-    $this->client = new PHPMailer(true);
+    $this->client = new HttpClient();
   }
 
   /**
@@ -132,17 +130,18 @@ class EmailDelivery implements MessageDeliveryInterface
    */
   public function send(Message $message)
   {
+    $this->setMessage($message);
+
     try {
-      $this->setMessage($message);
       $this->setupClient();
       $this->setupMessage();
 
-      $this->getClient()->send();
+      $result = $this->getClient()->send();
       $this->setOk(true);
     }
     catch (\Exception $ex)
     {
-      $this->getLogger()->error('Could not deliver e-mail!', [$this->getClient()->ErrorInfo]);
+      $this->getLogger()->error('Could not deliver e-mail!', [$this->getClient()->getError()]);
       $this->setOk(false);
     }
   }
@@ -155,16 +154,32 @@ class EmailDelivery implements MessageDeliveryInterface
   protected function setupMessage()
   {
     $settings = $this->getSettings();
-    $client = $this->getClient();
     $message = $this->getMessage();
 
-    $client->isHTML(true);
-    $client->Subject = $message->getTitle();
-    $client->Body = $message->getBody();
-    //$client->setFrom($settings['sender'], $settings['senderName']);
-    $client->From = $settings['sender'];
-    $client->FromName = $settings['senderName'];
-    $client->addAddress($message->getRecipient());
+    $requestBody = [
+      'personalizations' => [
+        [
+          'to' => [
+            [
+              'email' => $message->getRecipient()
+            ]
+          ],
+          'subject' => $message->getTitle()
+        ]
+      ],
+      'from' => [
+        'email' => $settings['sender'],
+        'name' => $settings['senderName']
+      ],
+      'content' => [
+        [
+          'type' => 'text/html',
+          'value' => $message->getBody()
+        ]
+      ]
+    ];
+
+    $this->getClient()->setClientOption(CURLOPT_POSTFIELDS, json_encode($requestBody));
   }
 
   /**
@@ -175,14 +190,14 @@ class EmailDelivery implements MessageDeliveryInterface
   protected function setupClient()
   {
     $settings = $this->getSettings();
-    $client = $this->getClient();
-    $client->isSMTP();
-    $client->Host = $settings['host'];
-    $client->SMTPAuth = true;
-    $client->Username = $settings['username'];
-    $client->Password = $settings['password'];
-    $client->Port = $settings['port'];
-    $client->SMTPSecure = $settings['secure'];
+
+    $headers = [
+      'Content-Type: application/json',
+      sprintf('Authorization: Bearer %s', $settings['apiKey'])
+    ];
+
+    $this->getClient()->setClientHeaders($headers);
+    $this->getClient()->setBaseUrl($settings['apiUrl']);
   }
 
   /**

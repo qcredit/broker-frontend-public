@@ -27,7 +27,7 @@
           </table>
       </div>
       <div class="col col-sm-12 col-md-6 col-lg-6 application-loan-accepted-table">
-          <h5>Signed loans</h5>
+          <h5>Paid out loans</h5>
           <table class="table">
               <thead>
                   <tr>
@@ -39,12 +39,12 @@
               </thead>
               <tbody>
                 {% for offer in application.offers %}
-                  {% if offer.isAccepted %}
+                  {% if offer.isPaidOut %}
                     <tr>
                         <td>{{ offer.partner.id }}</td>
                         <td>{{ offer.partner.name }}</td>
                         <td>{{ offer.loanAmount }} PLN</td>
-                        <td class="status-accepted">Accepted</td>
+                        <td class="status-accepted">Paid out</td>
                     </tr>
                   {% endif %}
                 {% endfor %}
@@ -72,9 +72,9 @@
                       <tr>
                           <td>{{ offer.partner.id }}</td>
                           <td>{{ offer.partner.name }}</td>
-                          <td>{% if offer.loanAmount %}{{ offer.loanAmount }} PLN{% endif %}</td>
+                          <td>{% if offer.loanAmount %}{{ offer.loanAmount }}{% else %}{{ application.loanAmount }} PLN{% endif %}</td>
                           <td>{{ offer.remoteId }}</td>
-                          <td class="{% if offer.isAccepted %}status-accepted{% elseif offer.isInProcess %}status-in-process{% elseif offer.isPaidOut %}status-paidout{% else %}status-rejected{% endif %}">{% if offer.isAccepted %}Accepted{% elseif offer.isInProcess %}In process{% elseif offer.isPaidOut %}Paid out{% else %}Rejected{% endif %}</td>
+                          <td class="{% if offer.isPaidOut %}status-paidout{% elseif offer.isAccepted %}status-accepted{% elseif offer.isInProcess %}status-in-process{% else %}status-rejected{% endif %}">{% if offer.isPaidOut %}Paid out{% elseif offer.isAccepted %}Accepted{% elseif offer.isInProcess %}In process{% else %}Rejected{% endif %}</td>
                           <td><a href="/admin/offers/update/{{ offer.id }}"><span class="text-uppercase">update</span></a></td>
                       </tr>
                   {% endfor %}
@@ -192,7 +192,7 @@
               </tr>
               <tr>
                 <td class="key">Work start:</td>
-                <td class="value">{{ application.data.monthSince }}.{{ application.data.yearSince }}</td>
+                <td class="value">{{ application.data.monthSince }}/{{ application.data.yearSince }}</td>
               </tr>
               {% endif %}
               <tr>

@@ -17,10 +17,10 @@
           <td>{{ partner.id }}</td>
           <td>{{ partner.name }}</td>
           <td>{{ partner.commission }}</td>
-          <td class="text-right"><a href="/admin/partners/{{ partner.id }}">Details</a></td>
+          <td class="text-right"><a href="/office/partners/{{ partner.id }}">Details</a></td>
         </tr>
         {% endfor %}
       </tbody>
     </table>
-    <p><a class="btn broker-btn broker-btn-blue" href="/admin/partners/new">Add new partner</a></p>
+    <p><a class="btn broker-btn broker-btn-blue" href="/office/partners/new">Add new partner</a></p>
 {% endblock %}

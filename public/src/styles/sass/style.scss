@@ -6,6 +6,7 @@ $bluegray: #e6e9ee;
 $error: #CE0000;
 
 /* Components */
+@import "animations";
 @import "modules";
 @import "header";
 @import "hero";
@@ -27,12 +28,12 @@ h1,h2,h3,h4,h5,h6 {
 p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif;
 }
-section > h1 {
+section > h1, section > h2 {
   flex: 0 0 100%;
   margin: 4.125rem 0 3.5rem;
   font-size: 2rem;
 }
-section h1.small-mar {
+section h2.small-mar {
   margin-bottom: 2rem;
 }
 .p-head {
@@ -40,6 +41,10 @@ section h1.small-mar {
 }
 .page-body {
   min-height: 200px;
+}
+.img404 {
+  max-width: 90%;
+  padding: 3rem 0 1rem;
 }
 /* UTILITIES */
 .broker-btn {
@@ -81,7 +86,11 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
     box-shadow: none;
   }
 }
-
+.alert {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  border-radius: 0;
+}
 body {
   padding-top: 65px;
 }
@@ -130,6 +139,13 @@ body {
     margin-bottom: 1rem;
   }
 }
+.contact-submit {
+  flex-direction: column;
+  justify-content: center;
+  .g-recaptcha {
+    margin: 0 auto 1rem;
+  }
+}
 
 /* Home page about section */
 .image-container img {
@@ -161,6 +177,12 @@ body {
 .terms-container {
   font-size: 0.875rem;
   line-height: 1.6;
+  h5 {
+    margin-bottom: 1rem;
+  }
+  ol li {
+    padding-bottom: .25rem;
+  }
 }
 
 .thank-you-row {
@@ -176,7 +198,21 @@ body {
   }
 }
 
+@media only screen and (max-width: 350px) {
+  .contact-submit {
+    .g-recaptcha {
+      transform:scale(0.87);
+      -webkit-transform:scale(0.87);
+      transform-origin:0 0;
+      -webkit-transform-origin:0 0;
+    }
+  }
+}
+
 @media only screen and (min-width: 768px) {
+  body {
+    padding-top: 67px;
+  }
   .page-body {
     min-height: 400px;
   }
@@ -197,6 +233,9 @@ body {
   }
 }
 @media only screen and (min-width: 1024px) {
+  body {
+    padding-top: 84px;
+  }
   .page-body {
     min-height: 500px;
   }
@@ -208,6 +247,14 @@ body {
     padding-top: 0.25rem;
     .circle-block {
       margin-bottom: 4rem;
+    }
+  }
+  .contact-submit {
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between!important;
+    .g-recaptcha {
+      margin: 0;
     }
   }
 }

@@ -8,3 +8,5 @@ README.md
 *docker-compose*
 *docker-cloud*
 infrastructure
+.sass-cache
+config.rb

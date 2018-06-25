@@ -50,28 +50,22 @@ class FormBuilderTest extends BaseTest
 
   public function test__construct()
   {
-    $dataMapperRepo = $this->getMockBuilder(PartnerDataMapperRepositoryInterface::class)
-      ->getMockForAbstractClass();
     $partnerRepositoryMock = $this->getMockBuilder(PartnerRepositoryInterface::class)
       ->getMockForAbstractClass();
-    $instance = new FormBuilder($dataMapperRepo, $partnerRepositoryMock, new SchemaHelper());
+    $instance = new FormBuilder($partnerRepositoryMock, new SchemaHelper());
 
-    $this->assertInstanceOf(PartnerDataMapperRepositoryInterface::class, $instance->getPartnerDataMapperRepository());
     $this->assertInstanceOf(PartnerRepositoryInterface::class, $instance->getPartnerRepository());
   }
 
   public function testGetMergedPartnerSchemas()
   {
     $partners = [
-      (new Partner())->setIdentifier('kala'),
-      (new Partner())->setIdentifier('supp')
+      (new Partner())->setIdentifier('kala')->setDataMapper($this->dataMapperMock),
+      (new Partner())->setIdentifier('supp')->setDataMapper($this->dataMapperMock)
     ];
     $this->partnerRepositoryMock->expects($this->once())
       ->method('getActivePartners')
       ->willReturn($partners);
-    $this->dataMapperRepoMock->expects($this->exactly(count($partners)))
-      ->method('getDataMapperByPartnerId')
-      ->willReturn($this->dataMapperMock);
     $schemaHelperMock = $this->getMockBuilder(SchemaHelper::class)
       ->setMethods(['mergePartnersSchemas'])
       ->getMock();
@@ -80,7 +74,6 @@ class FormBuilderTest extends BaseTest
 
     $this->mock->setSchemaHelper($schemaHelperMock);
     $this->mock->setPartnerRepository($this->partnerRepositoryMock);
-    $this->mock->setPartnerDataMapperRepository($this->dataMapperRepoMock);
 
     $result = $this->invokeMethod($this->mock, 'getMergedPartnerSchemas', []);
     $this->assertInstanceOf(PartnerDataMapperInterface::class, $result[0]);
@@ -120,7 +113,7 @@ class FormBuilderTest extends BaseTest
     $this->invokeMethod($mock, 'extractMergedSchemasFields', []);
   }
 
-  public function testExtractSchemaFields()
+  public function testExploreSchema()
   {
     $schema = [
       'properties' => [
@@ -129,22 +122,25 @@ class FormBuilderTest extends BaseTest
         ],
         'firstName' => [
           'type' => 'string',
-          'section' => 'personal'
+          'section' => 'general'
         ]
       ]
     ];
     $mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMergedPartnerSchemas'])
+      ->setMethods(['getMergedPartnerSchemas', 'getFormFieldParameters'])
       ->getMock();
 
     $mock->setApplicationForm(new ApplicationForm());
+
+    $mock->method('getFormFieldParameters')
+      ->willReturn([]);
 
     $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();
 
     $this->assertArraySubset([0 => ['name' => 'netPerMonth', 'type' => 'text', 'section' => 'general']], $result);
-    $this->assertArraySubset([1 => ['name' => 'firstName', 'type' => 'text', 'section' => 'personal']], $result);
+    $this->assertArraySubset([1 => ['name' => 'firstName', 'type' => 'text', 'section' => 'general']], $result);
   }
 
   public function testExtractSchemaFieldsWithRequiredFields()
@@ -165,10 +161,13 @@ class FormBuilderTest extends BaseTest
     ];
     $mock = $this->getMockBuilder(FormBuilder::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getMergedPartnerSchemas'])
+      ->setMethods(['getMergedPartnerSchemas', 'getFormFieldParameters'])
       ->getMock();
 
     $mock->setApplicationForm(new ApplicationForm());
+
+    $mock->method('getFormFieldParameters')
+      ->willReturn([]);
 
     $this->invokeMethod($mock, 'exploreSchema', [$schema]);
     $result = $mock->getFields();

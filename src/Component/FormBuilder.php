@@ -33,10 +33,6 @@ class FormBuilder
   ];
 
   /**
-   * @var PartnerDataMapperRepositoryInterface
-   */
-  protected $partnerDataMapperRepository;
-  /**
    * @var PartnerRepositoryInterface
    */
   protected $partnerRepository;
@@ -64,26 +60,6 @@ class FormBuilder
    * @var ApplicationForm
    */
   protected $applicationForm;
-
-  /**
-   * @return PartnerDataMapperRepositoryInterface
-   * @codeCoverageIgnore
-   */
-  public function getPartnerDataMapperRepository()
-  {
-    return $this->partnerDataMapperRepository;
-  }
-
-  /**
-   * @param PartnerDataMapperRepositoryInterface $partnerDataMapperRepository
-   * @return FormBuilder
-   * @codeCoverageIgnore
-   */
-  public function setPartnerDataMapperRepository(PartnerDataMapperRepositoryInterface $partnerDataMapperRepository)
-  {
-    $this->partnerDataMapperRepository = $partnerDataMapperRepository;
-    return $this;
-  }
 
   /**
    * @return PartnerRepositoryInterface
@@ -290,17 +266,14 @@ class FormBuilder
 
   /**
    * FormBuilder constructor.
-   * @param PartnerDataMapperRepositoryInterface $partnerDataMapperRepository
    * @param PartnerRepositoryInterface $partnerRepository
-   * @param SchemaHelper $schemaHelper
+   * @param \App\Component\SchemaHelper $schemaHelper
    */
   public function __construct(
-    PartnerDataMapperRepositoryInterface $partnerDataMapperRepository,
     PartnerRepositoryInterface $partnerRepository,
     SchemaHelper $schemaHelper
   )
   {
-    $this->setPartnerDataMapperRepository($partnerDataMapperRepository);
     $this->setPartnerRepository($partnerRepository);
     $this->setSchemaHelper($schemaHelper);
     $this->applicationForm = new ApplicationForm();
@@ -308,6 +281,7 @@ class FormBuilder
 
   /**
    * @return array
+   * @throws \Exception
    */
   protected function getMergedPartnerSchemas()
   {
@@ -316,7 +290,10 @@ class FormBuilder
     $dataMappers = [];
     foreach ($partners as $partner)
     {
-      $dataMappers[] = $this->getPartnerDataMapperRepository()->getDataMapperByPartnerId($partner->getIdentifier());
+      if ($partner->hasDataMapper())
+      {
+        $dataMappers[] = $partner->getDataMapper();
+      }
     }
 
     return $this->getSchemaHelper()->mergePartnersSchemas($dataMappers);
@@ -400,14 +377,17 @@ class FormBuilder
   {
     $field = $fieldData;
 
+    $params = $this->getFormFieldParameters();
+    $params = $params[$fieldName] ?? false;
+
     $this->addField([
       'name' => $fieldName,
       'type' => $this->determineFieldType($field),
       'required' => $this->isFieldRequired($fieldName),
-      'section' => $field['section'] ?? self::SECTION_GENERAL,
+      'section' => $params['section'] ?? self::SECTION_GENERAL,
       'enum' => $field['enum'] ?? false,
-      'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
-      'order' => $field['order'] ?? self::DEFAULT_ORDER
+      'label' => $params['label'] ?? $this->getApplicationForm()->getFieldLabel($fieldName),
+      'order' => $params['order'] ?? self::DEFAULT_ORDER
     ]);
   }
 
@@ -458,5 +438,13 @@ class FormBuilder
     });
 
     $this->setFieldsInSections($sections);
+  }
+
+  /**
+   * @return array
+   */
+  protected function getFormFieldParameters()
+  {
+    return ApplicationForm::getFieldParameters();
   }
 }

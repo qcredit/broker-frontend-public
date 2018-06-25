@@ -1,9 +1,10 @@
 <?php
 return [
     'settings' => [
-        'mainEmail' => 'qcredit.test@gmail.com',
+        'mainEmail' => 'info@qcredit.pl',
         'defaultLanguage' => 'pl_PL',
-        'displayErrorDetails' => true, // set to false in production
+        'baseUrl' => getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100'),
+        'displayErrorDetails' => getenv('ENV_TYPE') == 'production' ? false : true,
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
 
         // Renderer settings
@@ -15,7 +16,7 @@ return [
         'logger' => [
             'name' => 'WEBSITE',
             'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
-            'level' => \Monolog\Logger::DEBUG,
+            'level' => getenv('ENV_TYPE') == 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
             ]
@@ -72,15 +73,21 @@ return [
           'password' => 'URXpY7xGDL',
           'secure' => 'tls',
           'port' => 587,
-          'sender' => 'qcredit.test@gmail.com',
-          'senderName' => 'qCredit'
+          'sender' => 'info@qcredit.pl',
+          'senderName' => 'qCredit',
+          'apiKey' => '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',
+          'apiUrl' => 'https://api.sendgrid.com/v3/mail/send'
         ],
         'messente' => [
-          'apiUrl' => 'http://api2.messente.com/send_sms/',
-          'senderName' => 'qCredit',
+          'apiUrl' => 'https://api2.messente.com/send_sms/',
+          'senderName' => 'QCredit',
           'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
-          'username' => 'f7303187a44e84450d202debecb507ea',
-          'password' => '849556537bdce14bb797b42d32641a36'
+          'whitelist' => [
+            '+3725171081',
+            '+37253439601'
+          ],
+          'username' => '301cda77166de101a7751b1f1a6322df',
+          'password' => '0197a62dce2ce9db1ab09437197b09b7'
         ]
     ],
 ];

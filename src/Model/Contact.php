@@ -9,9 +9,11 @@
 namespace App\Model;
 
 use Broker\Domain\Entity\AbstractEntity;
+use Broker\Domain\Entity\FluidDataTrait;
 
 class Contact extends AbstractEntity
 {
+  use FluidDataTrait;
   /**
    * @var string
    */

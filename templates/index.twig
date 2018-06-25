@@ -1,41 +1,50 @@
 {% extends 'base.twig' %}
-{% block title %}qCredit{% endblock %}
+{% block title %}Porównywarka pożyczek - broker pożyczkowy | QCredit{% endblock %}
+{% block post_meta_blog %}
+    <meta property="og:url" content="{{ currentUrl }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Porównywarka pożyczek - broker pożyczkowy | QCredit" />
+    <meta property="og:description" content="Jesteśmy brokerem pożyczkowym, miejscem gdzie możesz jednocześnie aplikować bez prowizji w wielu firmach pożyczkowych i wybrać najlepszą dla Ciebie ofertę." />
+    <meta property="og:image" content="https://www.qcredit.pl/src/images/site-image.jpg" />
+    <meta name="description" content="Jesteśmy brokerem pożyczkowym, miejscem gdzie możesz jednocześnie aplikować bez prowizji w wielu firmach pożyczkowych i wybrać najlepszą dla Ciebie ofertę."/>
+{% endblock %}
+
 {% block hero %}
 <section class="row home-hero">
   <div class="col-sm-12 col-md-5 home-hero-half home-hero-left">
-    <h2>Szybka gotówka, którą możesz spłacić swoje wszystkie długi</h2>
+    <h1>Szybka gotówka, którą możesz spłacić swoje wszystkie długi</h1>
     <p>Chciałbyś mieć dodatkowe 100 PLN lub nawet 50 000 PLN w kieszeni? QCredit pomoże Ci zdobyć te środki. I to bez wychodzenia z domu. Ponad 30 autoryzowanych pożyczkodawców w QCredit czeka na Ciebie ze swoja ofertą.</p>
   </div>
   <div class="col-sm-12 col-md-7 home-hero-half home-hero-right">
-    <form class="landing-form" method="post" action="/application" novalidate>
+    <form class="landing-form {% if environment == 'production' %}d-none{% endif %} " method="post" action="/application" novalidate>
       <div class="landing-form-upper">
         <!-- Landing form for laptop/desktop devices -->
         {% include '$sliders.twig' %}
       </div>
       <div class="landing-form-lower">
         <div class="landing-inputs form-fields">
-          <div class="field text firstName">
-            <label for="">{% trans "Insert your first name" %}</label>
-            <input type="text" name="firstName" id="firstName">
+          <div class="field text phone">
+            <label for="">{% trans "Phone" %}</label>
+            <input type="text" name="phone" id="phone">
           </div>
           <div class="field text email">
             <label for="">{% trans "Insert your email address" %}</label>
             <input type="email" name="email" id="email">
-            <p class="rules">{% trans 'Wrong email format' %}</p>
           </div>
         </div>
         <div class="landing-form-lower-footer">
-          <p class="landing-terms">{% trans "*I agree to the processing by QCredit of my personal data for marketing purposes, in the scope of my address, phone number and e-mail address. I have been informed of the right to inspect the data concerning me, the right to request a change and deletion of such data, as well as the right to object to the processing of my personal data. The administrator of personal data is QCredit." %}</p>
-          <button class="btn broker-btn broker-btn-gold" disabled>{% trans "Apply for a loan" %}</button>
+          <img src="src/images/ssl.jpg" class="security-logo"/>
+          <button class="btn broker-btn broker-btn-gold" type="button" disabled>{% trans "Apply for a loan" %}</button>
         </div>
       </div>
+      {% include '$landing_check_modal.twig' %}
     </form>
 </section>
 <section class="row home-partners"></section>
 {% endblock %}
 {% block container %}
   <section class="row home-how">
-    <h1 class="col-sm-12 text-center">Jak to działa?</h1>
+    <h2 class="col-sm-12 text-center">Jak to działa?</h2>
     <div class="col-sm-12 col-lg-4 circle-block">
       <div class="circle-block-icon"><img src="src/images/icons/pen.svg" alt="Fill the form"></div>
       <div class="circle-block-text">
@@ -59,7 +68,7 @@
     </div>
   </section>
   <section class="row home-about">
-    <h1 class="col-sm-12 text-center">Kilka słów o pożyczkach</h1>
+    <h2 class="col-sm-12 text-center">Kilka słów o pożyczkach</h2>
     <div class="col-sm-12 col-lg-6 home-about-half home-about-left">
       <p class="p-head"><strong>Czy to naprawdę jest bezpłatne?</strong></p>
       <p>Nigdy nie będziesz płacić za usługi QCredit. Jedyne koszty pożyczki wynikają z oferty jaką złoży Tobie pożyczkodawca. Pamiętaj, aby zawsze przeczytać umowę przed jej podpisaniem.</p>
@@ -92,8 +101,16 @@
     </div>
   </section>
   <section class="row justify-content-md-center">
-    <h1 class="col-sm-12 text-center small-mar">W QCredit jesteś w dobrych rękach</h1>
+    <h2 class="col-sm-12 text-center small-mar">W QCredit jesteś w dobrych rękach</h2>
     <p class="col-sm-12 col-md-8 text-center">Każdego dnia nasz zespół dostarcza profesjonalne rozwiązania finansowe dla Klientów. Jesteśmy w stałym kontakcie z wieloma pożyczkodawcami, którzy mogą Ci zaoferować nawet do 50 000 PLN z natychmiastową decyzją.</p>
-    <p class="col-sm-12 col-md-8 text-center"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
+    <p class="col-sm-12 col-md-8 text-center d-none"><a href="/application" class="btn broker-btn broker-btn-gold">{% trans "Apply for a loan" %}</a></p>
   </section>
+{% endblock %}
+{% block endBody %}
+  <script type="text/javascript">
+    require(['./src/scripts/common'], function (common) {
+      require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+      });
+    });
+  </script>
 {% endblock %}

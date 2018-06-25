@@ -1,5 +1,7 @@
-define(['jquery', 'broker'], function($, app) {
-  var formHelper = {};
+define(['jquery', 'broker', 'ajv.broker'], function($, app, brokerAjv) {
+  var formHelper = {
+    schemaLoaded: false
+  };
 
   formHelper.populateOptions = function(slider, unit)
   {
@@ -41,10 +43,38 @@ define(['jquery', 'broker'], function($, app) {
     }
   };
 
+  formHelper.handleErrors = function(errors)
+  {
+    brokerAjv.localize(errors);
+
+    for (var i = 0; i < errors.length; i++)
+    {
+      var error = errors[i];
+      var err_msg = error.message;
+
+      if(err_msg){
+        var err_target = error.dataPath !== '' ? $('.field' + error.dataPath) : false;
+
+        if (err_target)
+        {
+          if(!err_target.find('.rules').length){
+            err_target.addClass('error');
+            err_target.append('<p class="rules">'+err_msg+'</p>');
+          } else {
+            err_target.find('.rules').text(err_msg);
+          }
+        }
+      }
+    }
+  };
+
   function addCsrf()
   {
     $('form').append(app.getCsrfFields());
-    $('form .broker-btn:disabled').prop('disabled', false);
+    if (formHelper.schemaLoaded)
+    {
+      $('form .broker-btn:disabled').prop('disabled', false);
+    }
   }
 
   function populateOptions()

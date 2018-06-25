@@ -205,12 +205,11 @@ class PartnerController extends AbstractController
     $partner = $this->getPartnerFactory()->create();
     $partner->setValidator($this->getValidator());
 
-    if ($request->isPost())
+    if ($request->isPost() && $partner->load($request->getParsedBody()) && $partner->validate())
     {
-      if ($partner->load($request->getParsedBody()) && $partner->validate())
+      if ($this->getPartnerRepository()->save($partner))
       {
-        $this->getPartnerRepository()->save($partner);
-        return $response->withRedirect('/admin/partners');
+        return $response->withRedirect('/office/partners');
       }
     }
 
@@ -232,10 +231,10 @@ class PartnerController extends AbstractController
 
     if ($this->getPartnerRepository()->delete($partner))
     {
-      return $response->withRedirect('/admin/partners');
+      return $response->withRedirect('/office/partners');
     }
 
-    return $this->withRedirect('/admin/partners');
+    return $this->withRedirect('/office/partners');
   }
 
   /**

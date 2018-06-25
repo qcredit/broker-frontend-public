@@ -1,18 +1,16 @@
 {% extends 'base.twig' %}
-{% block title %}{{ post.meta_information.title }}{% endblock %}
-{% block post_meta %}
-    <meta name="description" content="{{ post.meta_information.description }}"/>
-    <meta name="keywords" content="{{ post.meta_information.keywords }}">
-    <!-- You can use Open Graph tags to customize link previews.
-    Learn more: https://developers.facebook.com/docs/sharing/webmasters
-    <meta property="og:url" content="https://www-test.qcredit.pl/{{post.slug}}" />
+{% block title %}Artykuł "{{ post.meta_information.title }}" | QCredit{% endblock %}
+{% block post_meta_blog %}
+    <meta property="og:url" content="{{ currentUrl }}" />
     <meta property="og:type" content="article " />
-    <meta property="og:title" content="{{ post.meta_information.title }}" />
+    <meta property="og:title" content="Artykuł '{{ post.meta_information.title }}' | QCredit" />
     <meta property="og:description" content="{{ post.meta_information.description }}" />
-    <meta property="og:image" content="{{ post.image }}" />-->
+    <meta property="og:image" content="{{ post.image }}" />
+    <meta name="description" content="Jeśli interesuję Cię tematyka pożyczek przeczytaj nasz artykuł '{{ post.meta_information.description }}'"/>
 {% endblock %}
+
 {% block container %}
-  <!-- Load Facebook SDK for JavaScript
+  <!-- Load Facebook SDK for JavaScript -->
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
     var js, fjs = d.getElementsByTagName(s)[0];
@@ -20,28 +18,28 @@
     js = d.createElement(s); js.id = id;
     js.src = "https://connect.facebook.net/pl_PL/sdk.js#xfbml=1&version=v3.0";
     fjs.parentNode.insertBefore(js, fjs);
-  }(document, 'script', 'facebook-jssdk'));</script> -->
+  }(document, 'script', 'facebook-jssdk'));</script>
 
     <article class="row justify-content-md-center post-full">
       <div class="col-sm-12 col-md-10 date text-center">{{ post.date_formatted }} </div>
       <h1 class="col-sm-12 col-md-10 post-full-title text-center">{{ post.title }}</h1>
-      <div class="col-sm-12 col-md-10 tags text-center text-uppercase">{% for tag in post.tags %}{% if tag.name|length > 0 %}<a href="tag/{{ tag.name }}">{{ tag.name }}</a>{% endif %}{% endfor %}</div>
+      <div class="col-sm-12 col-md-10 tags text-center text-uppercase">{% for tag in post.tags %}{% if tag.name|length > 0 %}<a href="tag/{{ tag.name|replace({' ': '-'}) }}">{{ tag.name }}</a>{% endif %}{% endfor %}</div>
       <div class="col-sm-12 post-content-separator text-center"><span></span></div>
       <div class="col-sm-12 col-md-10 col-lg-7 post-preview-lead font-weight-bold">{{post.lead | raw }}</div>
       <div class="col-sm-12 col-md-10 post-full-image" style="background-image: url({{post.image}});"></div>
       <div class="col-sm-12 col-md-10 col-lg-7 post-full-content">{{ post.content | raw }}</div>
-      <!-- Your share button code
+      <!-- Your share button code-->
       <div class="col-sm-12 col-md-10 col-lg-7" style="overflow-x: hidden;">
         <div class="fb-share-button"
-          data-href="https://www-test.qcredit.pl/{{post.slug}}"
+          data-href="https://www.qcredit.pl/{{post.slug}}"
           data-layout="button_count" style="transform: translateY(-4px); -webkit-transform: translateY(-4px); -ms-transform: translateY(-4px);">
         </div>
         <div class="fb-like"
-          data-href="https://www-test.qcredit.pl/{{post.slug}}"
+          data-href="https://www.qcredit.pl/{{post.slug}}"
           data-layout="standard"
           data-action="like"
           data-show-faces="true">
         </div>
-      </div>-->
+      </div>
     </article>
 {% endblock %}

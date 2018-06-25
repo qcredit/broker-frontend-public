@@ -96,7 +96,7 @@ class AdminOfferController
    * @param Request $request
    * @param Response $response
    * @param $args
-   * @return static
+   * @return Response
    * @throws NotFoundException
    * @throws \Exception
    * @throws \Interop\Container\Exception\ContainerException
@@ -110,7 +110,8 @@ class AdminOfferController
       throw new NotFoundException($request, $response);
     }
 
-    $offers = $this->getOfferUpdateService()->setOffers([$offer])->run();
+    $this->getOfferUpdateService()->setOffers([$offer])->run();
+    $offers = $this->getOfferUpdateService()->getOffers();
 
     if (isset($offers[0]) && $offers[0]->getId() === $offer->getId())
     {
@@ -121,6 +122,6 @@ class AdminOfferController
       $this->getContainer()->get('flash')->addMessage('error', 'Could not update the offer. Probably the token has expired...');
     }
 
-    return $response->withRedirect(sprintf('/admin/applications/%d', $offer->getApplicationId()));
+    return $response->withRedirect(sprintf('/office/applications/%d', $offer->getApplicationId()));
   }
 }

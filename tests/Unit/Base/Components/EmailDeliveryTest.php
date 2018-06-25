@@ -9,12 +9,10 @@
 namespace Tests\Unit\Base\Components;
 
 use App\Base\Components\EmailDelivery;
+use App\Base\Components\HttpClient;
 use Broker\Domain\Entity\Message;
 use Broker\System\BaseTest;
 use Broker\System\Error\InvalidConfigException;
-use Broker\System\Traits\LoggerTrait;
-use Monolog\Logger;
-use PHPMailer\PHPMailer\PHPMailer;
 use Slim\Container;
 use Tests\Helpers\LoggerMockTrait;
 
@@ -29,6 +27,7 @@ class EmailDeliveryTest extends BaseTest
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->mock = $this->getMockBuilder(EmailDelivery::class)
       ->disableOriginalConstructor()
       ->setMethods(['getContainer', 'getLogger'])
@@ -36,7 +35,7 @@ class EmailDeliveryTest extends BaseTest
     $this->mock->method('getLogger')
       ->willReturn($this->loggerMock);
     $this->containerMock = $this->createMock(Container::class);
-    $this->clientMock = $this->createMock(PHPMailer::class);
+    $this->clientMock = $this->createMock(HttpClient::class);
 
     $this->settings = [
       'sender' => 'info@pornhub.com',
@@ -45,7 +44,8 @@ class EmailDeliveryTest extends BaseTest
       'username' => 'littlepervert123',
       'password' => '1337',
       'secure' => 'tls',
-      'port' => 587
+      'port' => 587,
+      'apiUrl' => 'someSendGridURL'
     ];
   }
 
@@ -53,7 +53,7 @@ class EmailDeliveryTest extends BaseTest
   {
     $containerMock = $this->createMock(Container::class);
     $instance = new EmailDelivery($containerMock);
-    $this->assertInstanceOf(PHPMailer::class, $instance->getClient());
+    $this->assertInstanceOf(HttpClient::class, $instance->getClient());
   }
 
   public function testGetSettings()
@@ -110,11 +110,7 @@ class EmailDeliveryTest extends BaseTest
 
     $this->invokeMethod($mock, 'setupClient', []);
 
-    $this->assertSame($this->settings['host'], $mock->getClient()->Host);
-    $this->assertSame($this->settings['username'], $mock->getClient()->Username);
-    $this->assertSame($this->settings['password'], $mock->getClient()->Password);
-    $this->assertSame($this->settings['port'], $mock->getClient()->Port);
-    $this->assertSame($this->settings['secure'], $mock->getClient()->SMTPSecure);
+    $this->assertSame($this->settings['apiKey'], $mock->getClient()->getBaseUrl());
   }
 
   public function testSetupMessage()
@@ -131,18 +127,12 @@ class EmailDeliveryTest extends BaseTest
     $mock->expects($this->once())
       ->method('getSettings')
       ->willReturn($this->settings);
+    $this->clientMock->method('setClientOption')
+      ->with($this->equalTo(CURLOPT_POSTFIELDS));
     $mock->method('getClient')
       ->willReturn($this->clientMock);
-    $mock->expects($this->once())
-      ->method('getMessage')
-      ->willReturn($message);
 
     $this->invokeMethod($mock, 'setupMessage', []);
-
-    $this->assertSame($message->getTitle(), $mock->getClient()->Subject);
-    $this->assertSame($message->getBody(), $mock->getClient()->Body);
-    $this->assertSame($this->settings['sender'], $mock->getClient()->From);
-
   }
 
   public function testSend()
@@ -189,7 +179,7 @@ class EmailDeliveryTest extends BaseTest
       ->method('getClient')
       ->willReturn($this->clientMock);
     $this->containerMock->method('get')
-      ->willReturn($this->createMock(Logger::class));
+      ->willReturn($this->loggerMock);
     $mock->expects($this->once())
       ->method('getContainer')
       ->willReturn($this->containerMock);

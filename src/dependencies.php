@@ -3,12 +3,11 @@ use Broker\System\Config;
 use App\Base\Repository\PartnerDataMapperRepository;
 use Broker\Domain\Service\NewApplicationService;
 use Broker\Domain\Factory\ApplicationFactory;
-use Broker\Domain\Service\PartnerRequestsService;
 use Broker\Domain\Service\PartnerResponseService;
 use Broker\Domain\Factory\OfferFactory;
-use Broker\Domain\Service\PreparePartnerRequestsService;
 use Broker\Domain\Factory\PartnerRequestFactory;
 use Syslogic\DoctrineJsonFunctions\Query\AST\Functions\Mysql as DqlFunctions;
+use Broker\Domain\Service\SendPartnerRequestsService;
 
 $container = $app->getContainer();
 
@@ -65,6 +64,17 @@ $container['view'] = function($container) {
   $view->addExtension(new Slim\Views\TwigExtension($container['router'], $basePath));
   $view->addExtension(new \App\Component\CsrfExtension($container->get('csrf')));
 
+  if (!preg_match('/\/application\/+\S.*$/', $container->get('request')->getUri()->getPath()))
+  {
+    $view->getEnvironment()->addGlobal('currentUrl', $container->get('request')->getUri());
+  }
+  else
+  {
+    $view->getEnvironment()->addGlobal('currentUrl', '/application');
+  }
+
+  $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
+
   return $view;
 };
 
@@ -95,22 +105,22 @@ $container['PartnerResponseFactory'] = function($c)
 };
 
 $container['UserRepository'] = function($container) {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'User', $container);
 };
 
 $container['PartnerRepository'] = function($container)
 {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Partner');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Partner', $container);
 };
 
 $container['ApplicationRepository'] = function($container)
 {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Application', $container);
 };
 
 $container['OfferRepository'] = function($container)
 {
-  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer');
+  return $container->get('RepositoryFactory')->createGateway($container->get('db'), 'Offer', $container);
 };
 
 $container['AdminController'] = function($c)
@@ -124,7 +134,7 @@ $container['TestController'] = function($c)
 };
 
 $container['PartnerController'] = function($c) {
-  $partnerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Partner');
+  $partnerRepository = $c->get('PartnerRepository');
 
   $partnerDataLoader = $c->get('PartnerExtraDataLoader');
   return new \App\Controller\Admin\PartnerController($partnerRepository, new \Broker\Domain\Factory\PartnerFactory(), $partnerDataLoader, $c);
@@ -132,15 +142,15 @@ $container['PartnerController'] = function($c) {
 
 $container['AdminApplicationController'] = function($c)
 {
-  $appRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Application');
-  $offerRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer');
+  $appRepository = $c->get('ApplicationRepository');
+  $offerRepository = $c->get('OfferRepository');
   return new \App\Controller\Admin\AdminApplicationController($appRepository, $offerRepository, $c);
 };
 
 $container['UserController'] = function($c) {
   $userFactory = new \App\Base\Factory\UserFactory();
-  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
-  $validator = new \App\Base\Validator\UserValidator();
+  $userRepository = $c->get('UserRepository');
+  $validator = new \App\Base\Validator\UserValidator($c->get('BrokerInstance'));
   return new \App\Controller\Admin\UserController($userRepository, $userFactory, $validator, $c);
 };
 
@@ -158,10 +168,20 @@ $container['ContactController'] = function($c)
   $contactForm = new \App\Model\ContactForm($c, $c->get('BrokerInstance'), new \App\Base\Repository\MessageTemplateRepository($c, new \Broker\Domain\Factory\MessageFactory()), $c->get('MessageDeliveryService'));
   return new \App\Controller\ContactController($c, $contactForm);
 };
+$container['PrivacyController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\PrivacyController($view);
+};
 $container['TermsController'] = function($c)
 {
   $view = $c->get('view');
   return new \App\Controller\TermsController($view);
+};
+$container['CookieController'] = function($c)
+{
+  $view = $c->get('view');
+  return new \App\Controller\CookieController($view);
 };
 
 $container['ApiController'] = function($c)
@@ -184,11 +204,10 @@ $container['PartnerExtraDataLoader'] = function($c)
   return new \App\Base\Repository\PartnerExtraDataLoader($c->get('PartnerDataMapperRepository'));
 };
 
-$container['PartnerRequestsService'] = function($c)
+$container['SendPartnerRequestsService'] = function($c)
 {
-  return new PartnerRequestsService(
+  return new SendPartnerRequestsService(
     $c->get('BrokerInstance'),
-    $c->get('PartnerDataMapperRepository'),
     $c->get('MessageDeliveryService')
   );
 };
@@ -198,8 +217,7 @@ $container['PartnerResponseService'] = function($c)
   return new PartnerResponseService(
     $c->get('BrokerInstance'),
     new OfferFactory(),
-    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
-    $c->get('PartnerDataMapperRepository')
+    $c->get('OfferRepository')
   );
 };
 
@@ -211,65 +229,67 @@ $container['MessageDeliveryService'] = function ($c)
   );
 };
 
-$container['ChooseOfferService'] = function($c)
-{
-  return new \Broker\Domain\Service\ChooseOfferService(
-    $c->get('BrokerInstance'),
-    $c->get('PartnerRequestsService'),
-    $c->get('PartnerResponseService'),
-    new PartnerRequestFactory(),
-    new PartnerDataMapperRepository(),
-    new \App\Base\Validator\SchemaValidator(),
-    $c->get('MessageDeliveryService')
-  );
-};
-
 $container['PartnerUpdateService'] = function($c)
 {
   return new \Broker\Domain\Service\PartnerUpdateService(
     $c->get('BrokerInstance'),
     $c->get('OfferRepository'),
-    $c->get('PartnerDataMapperRepository'),
     new \App\Base\Validator\SchemaValidator()
   );
 };
 
-$container['ApplicationController'] = function ($c)
+$container['ApplicationValidator'] = function($c)
+{
+  $schemaValidator = new \App\Base\Validator\SchemaValidator();
+  $applicationValidator = new \App\Base\Validator\ApplicationValidator($c->get('BrokerInstance'), $c->get('PartnerRepository'), $schemaValidator);
+
+  return $applicationValidator;
+};
+
+$container['PostApplicationService'] = function($c)
 {
   $factory = $c->get('RepositoryFactory');
-  $appRepository = $factory->createGateway($c->get('db'), 'Application');
-  $offerRepository = $factory->createGateway($c->get('db'), 'Offer');
-  $schemaValidator = new \App\Base\Validator\SchemaValidator();
+  $appRepository = $c->get('ApplicationRepository');
+  $offerRepository = $c->get('OfferRepository');
 
   $newApplicationService = new NewApplicationService(
     $c->get('BrokerInstance'),
     new ApplicationFactory(),
     $appRepository,
-    $factory->createGateway($c->get('db'), 'Partner'),
-    $c->get('PartnerDataMapperRepository'),
-    $schemaValidator
+    $c->get('ApplicationValidator')
   );
 
   $prepareService = new \Broker\Domain\Service\PreparePartnerRequestsService(
     $c->get('BrokerInstance'),
-    $c->get('PartnerRequestsService'),
+    $c->get('SendPartnerRequestsService'),
     $c->get('PartnerResponseService'),
     new PartnerRequestFactory(),
     $c->get('MessageDeliveryService'),
     $c->get('MessageTemplateRepository')
   );
 
-/*  $sendApplicationService = new \Broker\Domain\Service\PrepareAndSendApplicationService(
+  $createRequestsService = new \Broker\Domain\Service\CreatePartnerRequestsService($c->get('BrokerInstance'), new PartnerRequestFactory(), $c->get('PartnerRepository'));
+
+  return new \Broker\Domain\Service\PostApplicationService(
+    $c->get('BrokerInstance'),
     $newApplicationService,
-    $prepareService
-  );*/
+    $createRequestsService,
+    $c->get('SendPartnerRequestsService'),
+    $c->get('PartnerResponseService'),
+    $c->get('MessageTemplateRepository'),
+    $c->get('MessageDeliveryService')
+    );
+};
+
+$container['ApplicationController'] = function ($c)
+{
+  $appRepository = $c->get('ApplicationRepository');
+  $offerRepository = $c->get('OfferRepository');
 
   return new \App\Controller\ApplicationController(
-    $prepareService,
-    $newApplicationService,
     $appRepository,
     $offerRepository,
-    $c->get('ChooseOfferService'),
+    $c->get('PostApplicationService'),
     $c
   );
 };
@@ -278,15 +298,14 @@ $container['AdminOfferController'] = function($c)
 {
   $offerUpdateService = new \Broker\Domain\Service\OfferUpdateService(
     $c->get('BrokerInstance'),
-    new PartnerDataMapperRepository(),
     new PartnerRequestFactory(),
-    $c->get('PartnerRequestsService'),
+    $c->get('SendPartnerRequestsService'),
     $c->get('PartnerResponseService')
   );
 
   return new \App\Controller\Admin\AdminOfferController(
     $offerUpdateService,
-    $c->get('RepositoryFactory')->createGateway($c->get('db'), 'Offer'),
+    $c->get('OfferRepository'),
     $c
   );
 };
@@ -294,7 +313,7 @@ $container['AdminOfferController'] = function($c)
 $container['LoginController'] = function ($c)
 {
   $authService = new \App\Component\GoogleAuthenticator();
-  $userRepository = $c->get('RepositoryFactory')->createGateway($c->get('db'), 'User');
+  $userRepository = $c->get('UserRepository');
   $authHandler = new \App\Component\AuthHandler($authService, $userRepository, $c);
   return new \App\Controller\Admin\LoginController($c, $authHandler);
 };
@@ -308,7 +327,15 @@ $container['BlogController'] = function($c)
 
 $container['FormBuilder'] = function($c)
 {
-  return new \App\Component\FormBuilder($c->get('PartnerDataMapperRepository'), $c->get('PartnerRepository'), new \App\Component\SchemaHelper());
+  return new \App\Component\FormBuilder($c->get('PartnerRepository'), new \App\Component\SchemaHelper());
+};
+
+$container['EventManager'] = function($c)
+{
+  $eventManager = new \Broker\System\Event\EventManager();
+  $eventManager->addListener(\Broker\Domain\Interfaces\Service\NewApplicationServiceInterface::EVENT_BEFORE_RUN, new \App\Base\Event\BeforeNewApplicationServiceListener());
+
+  return $eventManager;
 };
 
 $container['notFoundHandler'] = function($c)
@@ -328,5 +355,20 @@ $container['BrokerInstance'] = function($c)
   $brokerSettings = $c->get('settings')['broker'];
   $brokerSettings['logger'] = array_merge($c->get('settings')['logger'], $brokerSettings['logger']);
 
-  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']));
+  return new \Broker\System\BrokerInstance(new \Broker\System\NewConfig(), new \App\Base\Logger($brokerSettings['logger']), $c->get('EventManager'));
+};
+
+$container['errorHandler'] = function ($c) {
+  return function ($request, $response, Exception $exception) use ($c) {
+    $view = $c->get('view');
+
+    $logger = $c->get('logger');
+    $logger->alert('A serious error has ocourred!', [$exception->getMessage()]);
+
+    //echo $view->fetch('error.twig');
+
+    return $c['response']->withStatus(500)
+      ->withHeader('Content-Type', 'text/html')
+      ->write('Something went wrong!');
+  };
 };

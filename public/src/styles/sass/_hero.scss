@@ -1,13 +1,14 @@
 /* Home page hero sectio */
 .home-hero {
-  padding-bottom: 1.25rem;
+  //padding-bottom: 1.25rem;
+  padding-bottom: 0;
   background-color: $mainlight;
   .home-hero-left {
-    h2{
+    h1{
       text-align: center;
       margin-top: 1.25rem;
       margin-bottom: 1.25rem;
-      font-size: 1.5rem;
+      font-size: 1.25rem;
     }
     button, p {
       display: none;
@@ -36,15 +37,12 @@
 }
 .landing-form-lower {
   padding: 1rem 2rem 2rem;
-  .field.email .rules {
-    display: none;
-  }
 }
 .landing-form-lower-footer {
   display: flex;
   align-items: flex-start;
   margin: 1.5rem 0 1rem;
-  .landing-terms {
+  .security-logo {
     flex-shrink: 1;
     margin: 0 .625rem;
     color: #444;
@@ -67,22 +65,11 @@
   }
 }
 
-@media only screen and (min-width: 501px) {
-  .landing-form {
-    .field {
-      flex: 0 0 175px;
-    }
-  }
-}
-
-@media only screen and (max-width: 768px) {
-  .landing-form .field {
-    margin: 0 0 1rem;
-  }
+@media only screen and (max-width: 500px) {
   .landing-form-lower-footer {
     flex-direction: column;
     align-items: center;
-    .landing-terms {
+    .security-logo {
       order: 2;
       flex: 1 1 100%;
       margin: 0
@@ -93,6 +80,22 @@
     }
   }
 }
+@media only screen and (min-width: 501px) {
+  .landing-form {
+    .field {
+      flex: 1 0 175px;
+    }
+  }
+  .landing-form-lower-footer {
+    justify-content: space-between;
+  }
+}
+
+@media only screen and (max-width: 768px) {
+  .landing-form .field {
+    margin: 0 0 1rem;
+  }
+}
 @media only screen and (min-width: 501px) and (max-width: 768px) {
   .landing-form .field {
     margin: 0 .625rem 1rem;
@@ -101,9 +104,9 @@
 @media only screen and (min-width: 768px) {
   .home-hero {
     position: relative;
-    min-height: 400px;
+    min-height: 600px;
     align-items: center;
-    background: url(../images/hero-bg2.jpg) no-repeat;
+    background: url(../images/hero-bg2-reversed.jpg) no-repeat;
     background-position: 50% 10%;
     background-size: cover;
     .landing-form {
@@ -111,10 +114,13 @@
       .field {
         flex: 1 0 200px;
       }
+      .landing-form-lower-footer {
+        justify-content: space-between;
+      }
     }
     .home-hero-left {
       color: #fefefe;
-      h2{
+      h1{
         text-align: left;
         margin-top: 0;
         margin-bottom: .5rem;
@@ -160,9 +166,27 @@
   }
 }
 
+@media only screen and (min-width: 768px) and (max-width: 920px) {
+  .landing-form-lower-footer {
+    flex-direction: column;
+    align-items: center;
+    button {
+      flex: 1 1 100%;
+      width: 100%;
+      margin-bottom: 1rem;
+    }
+    .security-logo {
+      order: 2;
+    }
+  }
+}
+
 @media only screen and (min-width: 1024px) {
   .home-hero {
     padding-top: 1.25rem;
+  }
+  .landing-form-lower-footer {
+    padding: 0 .5rem;
   }
 }
 

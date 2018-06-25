@@ -6,19 +6,24 @@
  * Time: 17:38
  */
 
-namespace App\Base;
+namespace App\Base\Partner\Aasa;
 
 use App\Model\ChooseOfferForm;
 use Broker\Domain\Entity\AbstractEntity;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\PartnerRequest;
 use Broker\Domain\Entity\PartnerResponse;
+use Broker\Domain\Interfaces\Partner\SchemaInterface;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
+use App\Model\OfferForm;
+use Broker\Domain\Interfaces\System\Delivery\DeliveryHeadersInterface;
+use Broker\Domain\Interfaces\System\Delivery\DeliveryOptionsInterface;
+use Broker\System\Delivery\DeliveryHeaders;
+use Broker\System\Delivery\DeliveryOptions;
 use Broker\System\Error\InvalidConfigException;
-use Slim\App;
 
-class AasaDataMapper implements PartnerDataMapperInterface
+class DataMapper implements PartnerDataMapperInterface
 {
   const STATUS_IN_PROCESS = 'InProcess';
   const STATUS_ACCEPTED = 'Accepted';
@@ -34,12 +39,20 @@ class AasaDataMapper implements PartnerDataMapperInterface
 
   /**
    * @return array
-   * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getRequestSchema(): array
   {
-    return $this->getDecodedConfigFile()['requestSchema'];
+    $schema = new RequestSchema();
+    return $schema->getSchema();
+  }
+
+  /**
+   * @return SchemaInterface
+   */
+  public function getFormSchema(): SchemaInterface
+  {
+    return new FormSchema();
   }
 
   /**
@@ -59,7 +72,7 @@ class AasaDataMapper implements PartnerDataMapperInterface
    */
   public function getConfigFile()
   {
-    $file = sprintf('%s/Config/%s', dirname(__FILE__), $this->configFile);
+    $file = sprintf('%s/%s', dirname(__FILE__), $this->configFile);
     if (!file_exists($file))
     {
       throw new InvalidConfigException('No configuration file found for Aasa!');
@@ -155,14 +168,14 @@ class AasaDataMapper implements PartnerDataMapperInterface
   public function getResponsePayload()
   {
     return [
-      'id' => 'remoteId',
-      'amount' => 'loanAmount',
-      'period' => 'loanTerm',
-      'interest' => 'interest',
-      'avg' => 'monthlyFee',
-      'apr' => 'apr',
-      'acceptancePageUrl' => 'acceptancePageUrl',
-      'esignUrl' => 'signingPageUrl'
+      'id' => OfferForm::ATTR_REMOTE_ID,
+      'amount' => OfferForm::ATTR_LOAN_AMOUNT,
+      'period' => OfferForm::ATTR_LOAN_TERM,
+      'interest' => OfferForm::ATTR_INTEREST,
+      'avg' => OfferForm::ATTR_MONTHLY_FEE,
+      'apr' => OfferForm::ATTR_APR,
+      'acceptancePageUrl' => OfferForm::ATTR_ACCEPTANCE_URL,
+      'esignUrl' => OfferForm::ATTR_ESIGN_URL
     ];
   }
 
@@ -205,9 +218,9 @@ class AasaDataMapper implements PartnerDataMapperInterface
     $payload = $this->getRequestPayload();
     array_walk($payload, [$this, 'mapper'], $application);
 
-    $payload['eMarketing'] = 'Y';
+/*    $payload['eMarketing'] = 'Y';
     $payload['pMarketing'] = 'Y';
-    $payload['tMarketing'] = 'Y';
+    $payload['tMarketing'] = 'Y';*/
 
     return json_encode($payload);
   }
@@ -484,16 +497,6 @@ class AasaDataMapper implements PartnerDataMapperInterface
   }
 
   /**
-   * @return array
-   * @throws InvalidConfigException
-   * @throws \Exception
-   */
-  public function getChooseRequestSchema(): array
-  {
-    return json_decode($this->getConfigFile(), true)['chooseRequestSchema'];
-  }
-
-  /**
    * @param $code
    * @return bool
    */
@@ -534,12 +537,13 @@ class AasaDataMapper implements PartnerDataMapperInterface
 
   /**
    * @return array
-   * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getIncomingUpdateSchema(): array
   {
-    return $this->getDecodedConfigFile()['incomingUpdateSchema'];
+    $schema = new IncomingUpdateSchema();
+
+    return $schema->getSchema();
   }
 
   /**
@@ -661,5 +665,51 @@ class AasaDataMapper implements PartnerDataMapperInterface
   protected function hasEnumMapping(string $field)
   {
     return array_key_exists($field, $this->getEnumMappings());
+  }
+
+  /**
+   * @param PartnerRequest $request
+   * @return DeliveryHeadersInterface
+   */
+  public function getDeliveryHeaders(PartnerRequest $request): DeliveryHeadersInterface
+  {
+    $headers = new DeliveryHeaders();
+    $headers->addHeader('Accept', 'application/json')
+      ->addHeader('Content-Type', 'application/json')
+      ->addHeader('Authorization', sprintf('Basic %s', base64_encode(sprintf('%s:%s', $request->getPartner()->getRemoteUsername(), $request->getPartner()->getRemotePassword()))));
+
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
+    {
+      $headers->addHeader('X-Auth-Token', $request->getOffer()->getAttribute('token'));
+    }
+
+    return $headers;
+  }
+
+  /**
+   * @param PartnerRequest $request
+   * @return DeliveryOptionsInterface
+   */
+  public function getDeliveryOptions(PartnerRequest $request): DeliveryOptionsInterface
+  {
+    $options = new DeliveryOptions();
+
+    $apiUrl = getenv('ENV_TYPE') == 'production' ? $request->getPartner()->getApiLiveUrl() : $request->getPartner()->getApiTestUrl();
+
+    $options->addOption(CURLOPT_URL, $apiUrl)
+      ->addOption(CURLOPT_RETURNTRANSFER, true)
+      ->addOption(CURLOPT_CONNECTTIMEOUT, 30)
+      ->addOption(CURLOPT_SSL_VERIFYPEER, false);
+
+    if ($request->getType() === PartnerRequest::REQUEST_TYPE_INITIAL)
+    {
+      $options->addOption(CURLOPT_POSTFIELDS, $request->getRequestPayload());
+    }
+    else if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
+    {
+      $options->addOption(CURLOPT_URL, $apiUrl . "/" . $request->getOffer()->getRemoteId());
+    }
+
+    return $options;
   }
 }

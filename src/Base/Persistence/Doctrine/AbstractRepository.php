@@ -8,21 +8,28 @@
 
 namespace App\Base\Persistence\Doctrine;
 
+use App\Base\Logger;
 use Broker\Domain\Interfaces\Repository\RepositoryInterface;
 use Doctrine\ORM\EntityManager;
+use Slim\Container;
 
 abstract class AbstractRepository implements RepositoryInterface
 {
   protected $entityManager;
   protected $entityClass;
   protected $queryBuilder;
+  /**
+   * @var Container
+   */
+  protected $container;
 
   /**
    * AbstractRepository constructor.
    * @param EntityManager $entityManager
+   * @param Container $container
    * @throws \Exception
    */
-  public function __construct(EntityManager $entityManager)
+  public function __construct(EntityManager $entityManager, Container $container)
   {
     if (empty($this->entityClass))
     {
@@ -30,6 +37,7 @@ abstract class AbstractRepository implements RepositoryInterface
     }
 
     $this->entityManager = $entityManager;
+    $this->container = $container;
   }
 
   /**
@@ -66,6 +74,23 @@ abstract class AbstractRepository implements RepositoryInterface
   {
     $this->entityClass = $entityClass;
     return $this;
+  }
+
+  /**
+   * @return Container
+   */
+  public function getContainer()
+  {
+    return $this->container;
+  }
+
+  /**
+   * @return Logger
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getLogger()
+  {
+    return $this->getContainer()->get('logger');
   }
 
   /**
@@ -125,16 +150,22 @@ abstract class AbstractRepository implements RepositoryInterface
 
   /**
    * @param $entity
-   * @return $this
-   * @throws \Doctrine\ORM\ORMException
-   * @throws \Doctrine\ORM\OptimisticLockException
+   * @return bool
+   * @throws \Interop\Container\Exception\ContainerException
    */
-  public function save($entity)
+  public function save($entity): bool
   {
-    $this->entityManager->persist($entity);
-    $this->entityManager->flush();
+    try {
+      $this->entityManager->persist($entity);
+      $this->entityManager->flush();
 
-    return $this;
+      return true;
+    }
+    catch (\Exception $ex)
+    {
+      $this->getLogger()->error($ex->getMessage());
+      return false;
+    }
   }
 
   /**

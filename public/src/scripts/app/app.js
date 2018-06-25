@@ -84,7 +84,7 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
       $(this).parent().removeClass("filled");
     }
   });
-  $('.landing-form #email').on('input change', function() {
+/*  $('.landing-form #email').on('input change', function() {
     var val = $(this).val();
     if(val){
       var validated = validateEmail(val);
@@ -103,6 +103,27 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
   function validateEmail(email) {
     var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
-  }
+  }*/
+  $('.contact-form').on('submit', function() {
+    $(this).find('button').attr('disabled', 'disabled');
+  });
+  $(".landingCheck input").change(function(){
+    if ($('.landingCheck input:checked').length == $('.landingCheck input').length) {
+      $('.landingCheck #sendSubmit').removeClass('broker-btn-disabled');
+    } else {
+      $('.landingCheck #sendSubmit').addClass('broker-btn-disabled');
+    }
+  });
+  $('.landing-inputs .phone input').focusin(function() {
+    if($(this).val() === '' || $(this).val() === '+48') {
+      $(this).val('+48');
+    }
+  });
+  $('.landing-inputs .phone input').focusout(function() {
+    if($(this).val() === '+48'){
+      $(this).val('');
+      $(this).parent().removeClass("filled");
+    }
+  });
   return app;
 });
