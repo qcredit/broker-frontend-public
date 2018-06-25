@@ -15,19 +15,19 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ /index.php?r=$1 [L,QSA]
 
 #<IfModule mod_expires.c>
-  ## Enable expirations
-  #ExpiresActive On
-  ## favicon
-  #ExpiresByType image/x-icon "access plus 1 week"
-  #ExpiresByType image/vnd.microsoft.icon "access plus 1 week"
-  ## images
-  #ExpiresByType image/gif "access plus 1 week"
-  #ExpiresByType image/png "access plus 1 week"
-  #ExpiresByType image/jpg "access plus 1 week"
-  #ExpiresByType image/jpeg "access plus 1 week"
-  #ExpiresByType image/svg "access plus 1 week"
-  #ExpiresByType image/svg+xml "access plus 1 week"
-#</IfModule>
+# # Enable expirations
+# ExpiresActive On
+# # favicon
+# ExpiresByType image/x-icon "access plus 1 week"
+# ExpiresByType image/vnd.microsoft.icon "access plus 1 week"
+# # images
+# ExpiresByType image/gif "access plus 1 week"
+# ExpiresByType image/png "access plus 1 week"
+# ExpiresByType image/jpg "access plus 1 week"
+# ExpiresByType image/jpeg "access plus 1 week"
+# ExpiresByType image/svg "access plus 1 week"
+# ExpiresByType image/svg+xml "access plus 1 week"
+# </IfModule>
 
 <ifModule mod_gzip.c>
   mod_gzip_on Yes
