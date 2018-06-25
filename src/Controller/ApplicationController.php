@@ -136,7 +136,7 @@ class ApplicationController extends AbstractController
    */
   protected function isFromFrontpage()
   {
-    return !strpos($_SERVER['HTTP_REFERER'], 'application');
+    return !strpos($_SERVER['HTTP_REFERER'], _('application'));
   }
 
   /**
