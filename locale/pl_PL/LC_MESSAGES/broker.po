@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-06-19 11:36+0300\n"
+"PO-Revision-Date: 2018-06-25 15:42+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -24,12 +24,16 @@ msgid ""
 "We see that you've begun applying for a loan. Why not finish what you "
 "started?"
 msgstr ""
+"Zachęcamy do ukończenia wypełniania wniosku. Dodatkowa szybka gotówka czeka "
+"na Ciebie."
 
 #: tmp/cache/0e/0ef683d2facf503e183e0d5b0e8ded310b072ca3f39e289091faf39440353bcc.php:60
 msgid ""
 "Please %beginLink% click here %endLink% to finish your application and get a "
 "little closer to your dreams."
 msgstr ""
+"Proszę  beginLink% kliknij tutaj% endLink%, aby zakończyć aplikację i "
+"zbliżyć się do swoich marzeń."
 
 #: tmp/cache/0e/0ef683d2facf503e183e0d5b0e8ded310b072ca3f39e289091faf39440353bcc.php:66
 #: tmp/cache/84/8442cede6738b238876e4ec76456d1aa8320083bf624e2f196b4b43b58fb2573.php:105
@@ -50,7 +54,7 @@ msgid "Please accept terms to continue"
 msgstr "Zaakceptuj warunki aby kontynuować"
 
 #: tmp/cache/1b/1baa234f1e5bb14036c2fbd66e22f9d74cc364ddc82948d5170c06b3067d6f73.php:57
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:163
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:165
 msgid "Proceed"
 msgstr "Kontynuować"
 
@@ -67,7 +71,7 @@ msgstr "blog"
 #: tmp/cache/ef/ef254765a5d53e4a1be1c0f3493fa8e76ade6b85eb762a792e9fd7800f9c7bbb.php:84
 #: src/routes.php:24
 msgid "tag"
-msgstr ""
+msgstr "tag"
 
 #: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:97
 #: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:162
@@ -98,35 +102,45 @@ msgstr "warunki-korzystania"
 
 #: tmp/cache/52/52b9d2d621678e49e7521074bea028255984348ce47a2635635872081b4ef630.php:29
 msgid "Error"
-msgstr ""
+msgstr "Błąd!"
 
 #: tmp/cache/52/52b9d2d621678e49e7521074bea028255984348ce47a2635635872081b4ef630.php:38
 msgid "Oops!"
-msgstr ""
+msgstr "Ups!"
 
 #: tmp/cache/52/52b9d2d621678e49e7521074bea028255984348ce47a2635635872081b4ef630.php:42
 msgid ""
 "It seems we are experiencing some trouble right now. We are aware of the "
 "problem and are dealing with it. Please come back later."
 msgstr ""
+"Przepraszamy, mamy chwilowe problemy techniczne. Pracujemy nad ich "
+"rozwiązaniem. Zapraszamy później."
 
 #: tmp/cache/52/52b9d2d621678e49e7521074bea028255984348ce47a2635635872081b4ef630.php:46
 msgid ""
 "If you still see this message after a reasonable time, please don't hesitate "
 "to contact us at %email%."
 msgstr ""
+"Jeśli nadal widzisz ten komunikat, a minęło już trochę czasu, skontaktuj się "
+"z nami pod adresem% email%."
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:84
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:72
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:59
+#: src/routes.php:10
+msgid "application"
+msgstr "wakacje"
+
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:86
 #: src/Model/ApplicationForm.php:257 src/Model/ApplicationForm.php:398
 msgid "Phone"
 msgstr "Numer telefonu kontaktowego"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:91
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:93
 msgid "Insert your email address"
 msgstr "Adres email"
 
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:100
-#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:180
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:102
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:182
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:155
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:186
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:217
@@ -179,16 +193,16 @@ msgstr ""
 msgid "Sign contract"
 msgstr "Podpisz umowę"
 
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:33
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:37
 msgid "Top offer"
-msgstr ""
+msgstr "Super oferta"
 
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:57
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:91
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:64
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:98
 msgid "Monthly"
 msgstr "Miesięczna spłata"
 
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:65
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:72
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:141
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:172
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:203
@@ -200,7 +214,7 @@ msgstr "Miesięczna spłata"
 msgid "Amount"
 msgstr "Kwota"
 
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:71
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:78
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:145
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:176
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:207
@@ -212,11 +226,11 @@ msgstr "Kwota"
 msgid "Duration"
 msgstr "Okres spłaty"
 
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:77
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:84
 msgid "Interest"
 msgstr "Oprocentowanie"
 
-#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:83
+#: tmp/cache/8f/8ff9011eafaacf0d069af645b1ead89b42c78b3fd8172de07f948f7235fa855a.php:90
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:149
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:180
 #: tmp/cache/97/97d0e456b9307eb78bb38b6d15f87220f2a967a60195ea4d9dde435dbe2fffd9.php:211
@@ -253,39 +267,39 @@ msgstr "Oferty dla osób prywatnych"
 msgid "Other offers"
 msgstr "Inne oferty"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:189
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:191
 msgid "Personal information"
 msgstr "Informacje osobiste"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:195
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:197
 msgid "Housing information"
 msgstr "Informacje mieszkaniowe"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:201
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:203
 msgid "Income information"
 msgstr "Informacje o dochodach"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:207
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:209
 msgid "Account information"
 msgstr "Numer rachunku"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:213
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:215
 msgid "Additional information"
 msgstr "Dodatkowe informacje"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:364
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:366
 msgid "Confirm"
 msgstr "Potwierdzam"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:390
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:392
 msgid "Hey there!"
 msgstr "Dzień dobry,"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:398
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:400
 msgid "Good things come to those who don't wait!"
 msgstr "Łap okazję na dodatkową gotówkę!"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:402
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:404
 msgid ""
 "In case you're having trouble completing the form, don't hesitate contacting "
 "us!"
@@ -293,7 +307,7 @@ msgstr ""
 "Skontaktuj się z nami, jeśli będziesz potrzebować pomocy przy wypełnianiu "
 "formularza!"
 
-#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:410
+#: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:412
 msgid "Resume"
 msgstr "Dalej"
 
@@ -843,7 +857,7 @@ msgstr "Dziękujemy za wybranie naszej oferty !"
 
 #: src/Base/Repository/MessageTemplateRepository.php:192
 msgid "Don't quit, you're almost there!"
-msgstr ""
+msgstr "Nie poddawaj się, jeszcze tylko kilka kroków!"
 
 #: src/Base/Repository/MessageTemplateRepository.php:235
 msgid "Message from website"
@@ -876,10 +890,6 @@ msgstr "Wpisz numer"
 #: src/Base/Validator/SchemaValidator.php:130
 msgid "This field is required"
 msgstr "To pole jest wymagane"
-
-#: src/routes.php:10
-msgid "application"
-msgstr "wakacje"
 
 #~ msgid "Insert your first name"
 #~ msgstr "Imię"
