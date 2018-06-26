@@ -137,6 +137,8 @@ class SmsDelivery implements MessageDeliveryInterface
     $this->getClient()->setBaseUrl($url);
     $this->getClient()->setClientOption(CURLOPT_RETURNTRANSFER, true);
     $this->getClient()->setClientOption(CURLOPT_SSL_VERIFYPEER, false);
+    $this->getClient()->setClientOption(CURLOPT_CONNECTTIMEOUT, 15);
+
 
     if (isset($settings['proxy']))
     {

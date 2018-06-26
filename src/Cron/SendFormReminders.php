@@ -83,7 +83,7 @@ class SendFormReminders implements BaseJob
    */
   public function getLogger()
   {
-    return $this->getContainer()->get('BrokerInstance')->getLogger();
+    return $this->getContainer()->get('BrokerInstance')->getLogger()->withName('CRON');
   }
 
   /**
