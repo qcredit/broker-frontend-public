@@ -59,20 +59,6 @@ $app = new \Slim\App($settings);
 
 session_start();
 
-if (isset($settings['settings']['defaultLanguage']))
-{
-  $lang = $settings['settings']['defaultLanguage'];
-  if (isset($_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE]))
-  {
-    $lang = $_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE];
-  }
-
-  putenv(sprintf('LC_ALL=%s.UTF-8', $lang));
-  setlocale(LC_ALL, sprintf('%s.UTF-8', $lang));
-  bindtextdomain('broker', dirname(__DIR__) . '/locale');
-  textdomain('broker');
-}
-
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
 
