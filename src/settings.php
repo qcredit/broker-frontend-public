@@ -88,7 +88,8 @@ return [
           ],
           'username' => '301cda77166de101a7751b1f1a6322df',
           'password' => '0197a62dce2ce9db1ab09437197b09b7',
-          'proxy' => 'proxy.asakredyt.pl:1080'
+          'proxy' => 'proxy.asakredyt.pl:1080',
+          'proxyType' => CURLPROXY_SOCKS5
         ]
     ],
 ];
