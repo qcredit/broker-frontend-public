@@ -9,11 +9,15 @@
 namespace App\Base;
 
 use Broker\Domain\Interfaces\System\LoggerInterface;
+use Monolog\Formatter\LineFormatter;
 use Monolog\Logger as Monolog;
 use Monolog\Handler\StreamHandler;
 
 class Logger implements LoggerInterface
 {
+  const LOGGER_DATE_FORMAT = 'Y-m-d\TH:i:sO';
+  const LOG_DEFAULT_PATH = '/var/log/apache2/broker-frontend-public_debug.log';
+
   protected $logger;
 
   /**
@@ -33,7 +37,28 @@ class Logger implements LoggerInterface
    */
   public function setConfig($config)
   {
-    $this->logger->pushHandler(new StreamHandler($config['path'], $config['level']));
+    $handler = new StreamHandler($config['path'], $config['level']);
+
+    if (isset($config['dateFormat']))
+    {
+      $output = "[%datetime%] %channel%.%level_name%: %message% - %context% - %extra%\n";
+      $formatter = new LineFormatter($output, $config['dateFormat']);
+      $handler->setFormatter($formatter);
+    }
+
+    if (isset($config['formatter']))
+    {
+      if (is_array($config['formatter']))
+      {
+        foreach ($config['formatter'] as $formatter)
+        {
+          $handler->setFormatter($formatter);
+        }
+      }
+    }
+
+    $this->logger->pushHandler($handler);
+
     if (isset($config['processor']))
     {
       if (is_array($config['processor']))

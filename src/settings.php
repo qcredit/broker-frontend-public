@@ -14,12 +14,13 @@ return [
 
         // Monolog settings
         'logger' => [
-            'name' => 'WEBSITE',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
+            'name' => 'BROKER',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : \App\Base\Logger::LOG_DEFAULT_PATH,
             'level' => getenv('ENV_TYPE') == 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
-            ]
+            ],
+            'dateFormat' => \App\Base\Logger::LOGGER_DATE_FORMAT
         ],
         'broker' => [
           'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
@@ -87,7 +88,9 @@ return [
             '+37253439601'
           ],
           'username' => '301cda77166de101a7751b1f1a6322df',
-          'password' => '0197a62dce2ce9db1ab09437197b09b7'
+          'password' => '0197a62dce2ce9db1ab09437197b09b7',
+          'proxy' => 'proxy.asakredyt.pl:1080',
+          'proxyType' => CURLPROXY_SOCKS5
         ]
     ],
 ];

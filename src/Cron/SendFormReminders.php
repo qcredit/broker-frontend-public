@@ -15,6 +15,8 @@ use Broker\Domain\Interfaces\Repository\ApplicationRepositoryInterface;
 use Broker\Domain\Interfaces\Repository\MessageTemplateRepositoryInterface;
 use Broker\Domain\Interfaces\Service\MessageDeliveryServiceInterface;
 use Broker\Domain\Interfaces\System\LoggerInterface;
+use Monolog\Handler\StreamHandler;
+use Monolog\Logger;
 use Slim\Container;
 use Broker\Domain\Entity\Message;
 
@@ -78,12 +80,20 @@ class SendFormReminders implements BaseJob
   }
 
   /**
-   * @return LoggerInterface
+   * @return \App\Base\Logger
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function getLogger()
   {
-    return $this->getContainer()->get('BrokerInstance')->getLogger();
+    $settings = $this->getContainer()->get('settings');
+    $settings = $settings['logger'];
+
+    $settings['name'] = BaseJob::CRON_LOG_FACILITY;
+    $settings['path'] = BaseJob::CRON_LOG_PATH;
+    $settings['level'] = BaseJob::CRON_LOG_LEVEL;
+    $logger = new \App\Base\Logger($settings);
+
+    return $logger;
   }
 
   /**
