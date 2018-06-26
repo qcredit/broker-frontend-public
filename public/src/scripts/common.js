@@ -33,3 +33,4 @@ String.prototype.formatUnicorn = String.prototype.formatUnicorn ||
 
     return str;
   };
+

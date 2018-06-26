@@ -72,7 +72,7 @@ class ApplicationControllerTest extends BaseTest
       ->getMock();
     $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy', 'getAcceptedOffersByApplication'])
+      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy', 'getAcceptedOffersByApplication', 'getPendingOffersByApplication'])
       ->getMock();
 
     $twigMock = $this->getMockBuilder(Twig::class)
@@ -174,13 +174,12 @@ class ApplicationControllerTest extends BaseTest
     $this->requestMock->method('getParsedBody')
       ->willReturn(['hash' => 'adasdasdae3e342e3r']);
     $this->mock->expects($this->once())
-      ->method('getPartners')
-      ->willReturn($partnerArray);
-    $this->mock->expects($this->once())
       ->method('serializeObjects')
       ->willReturn(['asdad','adasd']);
-    $this->offerRepoMock->method('getOffersByApplication')
+    $this->offerRepoMock->method('getAcceptedOffersByApplication')
       ->willReturn([new Offer, new Offer]);
+    $this->offerRepoMock->method('getPendingOffersByApplication')
+      ->willReturn([]);
     $this->mock->expects($this->once())
       ->method('getOfferRepository')
       ->willReturn($this->offerRepoMock);
@@ -194,7 +193,6 @@ class ApplicationControllerTest extends BaseTest
   {
     $app = new Application();
     $app->setOffers([new Offer]);
-    $partnerArray = [new Partner(), new Partner()];
 
     $this->responseMock->method('withJson')
       ->willReturnArgument(0);
@@ -204,12 +202,11 @@ class ApplicationControllerTest extends BaseTest
     $this->requestMock->method('getParsedBody')
       ->willReturn(['hash' => 'adasdasdae3e342e3r']);
     $this->mock->expects($this->once())
-      ->method('getPartners')
-      ->willReturn($partnerArray);
-    $this->mock->expects($this->once())
       ->method('serializeObjects')
       ->willReturn(['asdad','adasd']);
-    $this->offerRepoMock->method('getOffersByApplication')
+    $this->offerRepoMock->method('getAcceptedOffersByApplication')
+      ->willReturn([new Offer]);
+    $this->offerRepoMock->method('getPendingOffersByApplication')
       ->willReturn([new Offer]);
     $this->mock->expects($this->once())
       ->method('getOfferRepository')

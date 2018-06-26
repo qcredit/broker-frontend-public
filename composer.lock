@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "dd638d783f20cf3ea0f5589e75aa25e7",
+    "content-hash": "5eb4c73a7b897e14f872c7b6965ee23b",
     "packages": [
         {
             "name": "aasa-global/CommonWebSDK",
@@ -43,16 +43,16 @@
         },
         {
             "name": "aasa/broker",
-            "version": "v0.0.3",
+            "version": "v0.0.4",
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "a6d4b0296e0ac0945380c7a7b98827ab1265cbc1"
+                "reference": "5cd7faf6fdf9e6b110670b75f2d9d17debc85cea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/a6d4b0296e0ac0945380c7a7b98827ab1265cbc1",
-                "reference": "a6d4b0296e0ac0945380c7a7b98827ab1265cbc1",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/5cd7faf6fdf9e6b110670b75f2d9d17debc85cea",
+                "reference": "5cd7faf6fdf9e6b110670b75f2d9d17debc85cea",
                 "shasum": ""
             },
             "require-dev": {
@@ -67,10 +67,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/v0.0.3",
+                "source": "https://github.com/aasa-global/broker/tree/v.0.0.4",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-06-20T12:53:51+00:00"
+            "time": "2018-06-26T06:55:00+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
