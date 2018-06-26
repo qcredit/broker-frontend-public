@@ -79,7 +79,7 @@ $container['view'] = function($container) {
     $view->getEnvironment()->addGlobal('companyName', $settings['companyName']);
   }
 
-  $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
+  $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer');
 
   return $view;
 };
