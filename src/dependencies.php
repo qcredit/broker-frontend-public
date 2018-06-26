@@ -11,6 +11,21 @@ use Broker\Domain\Service\SendPartnerRequestsService;
 
 $container = $app->getContainer();
 
+$settings = $container->get('settings');
+if (isset($settings['defaultLanguage']))
+{
+  $lang = $settings['defaultLanguage'];
+  if (isset($_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE]))
+  {
+    $lang = $_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE];
+  }
+
+  putenv(sprintf('LC_ALL=%s.UTF-8', $lang));
+  setlocale(LC_ALL, sprintf('%s.UTF-8', $lang));
+  bindtextdomain('broker', dirname(__DIR__) . '/locale');
+  textdomain('broker');
+}
+
 // view renderer
 $container['renderer'] = function ($c) {
     $settings = $c->get('settings')['renderer'];

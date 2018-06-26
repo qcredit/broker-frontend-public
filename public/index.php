@@ -1,4 +1,7 @@
 <?php
+define('PUBLIC_ROOT', __DIR__);
+define('CODE_ROOT', dirname(__DIR__));
+
 if (PHP_SAPI == 'cli-server') {
     // To help the built-in PHP dev server, check if the request was actually for
     // something which should probably be served as a static file
@@ -17,40 +20,9 @@ if (getenv('ENV_TYPE') == 'production')
 
 global $fatality;
 
-class Fatality
-{
-  public function __construct()
-  {
-    register_shutdown_function( [$this, "fatal_handler"]);
-  }
-
-  public function fatal_handler()
-  {
-    // Determine if there was an error and that is why we are about to exit.
-    $error = error_get_last();
-
-    if ($error !== null && is_array($error) && $error['type'] == E_ERROR)
-    {
-      $settings = require __DIR__ . '/../src/settings.php';
-      $app = new \Slim\App($settings);
-
-      require __DIR__ . '/../src/dependencies.php';
-
-      $view = $app->getContainer()->get('view');
-
-      $logger = $app->getContainer()->get('logger');
-      $logger->emergency('An unrecoverable error has ocurred!', $error);
-
-      echo $view->fetch('error.twig');
-    }
-
-    exit;
-  }
-}
-
-$fatality = new Fatality();
-
 require __DIR__ . '/../vendor/autoload.php';
+
+$fatality = new \App\Component\Fatality();
 
 // Instantiate the app
 $settings = require __DIR__ . '/../src/settings.php';
@@ -58,20 +30,6 @@ $settings = require __DIR__ . '/../src/settings.php';
 $app = new \Slim\App($settings);
 
 session_start();
-
-if (isset($settings['settings']['defaultLanguage']))
-{
-  $lang = $settings['settings']['defaultLanguage'];
-  if (isset($_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE]))
-  {
-    $lang = $_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE];
-  }
-
-  putenv(sprintf('LC_ALL=%s.UTF-8', $lang));
-  setlocale(LC_ALL, sprintf('%s.UTF-8', $lang));
-  bindtextdomain('broker', dirname(__DIR__) . '/locale');
-  textdomain('broker');
-}
 
 // Set up dependencies
 require __DIR__ . '/../src/dependencies.php';
