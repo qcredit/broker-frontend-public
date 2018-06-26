@@ -44,7 +44,39 @@ class OfferRepository extends AbstractRepository implements OfferRepositoryInter
       ->from($this->entityClass, 'e')
       ->where('e.acceptedDate IS NOT NULL')
       ->andWhere('e.rejectedDate IS NULL')
+      ->andWhere('e.paidOutDate IS NULL')
       ->andWhere('e.applicationId = :appId')
+      ->setParameter('appId', $application->getId());
+
+    return $query->getQuery()->execute();
+  }
+
+  /**
+   * @param Application $application
+   * @return array
+   */
+  public function getPendingOffersByApplication(Application $application): array
+  {
+    $query = $this->getQueryBuilder()->select('e')
+      ->from($this->entityClass, 'e')
+      ->where('e.acceptedDate IS NULL')
+      ->andWhere('e.rejectedDate IS NULL')
+      ->andWhere('e.applicationId = :appId')
+      ->setParameter('appId', $application->getId());
+
+    return $query->getQuery()->execute();
+  }
+
+  /**
+   * @param Application $application
+   * @return array
+   */
+  public function getPaidOutOffersByApplication(Application $application): array
+  {
+    $query = $this->getQueryBuilder()->select('e')
+      ->from($this->entityClass, 'e')
+      ->where('e.paidOutDate IS NOT NULL')
+      ->andWhere('e.rejectedDate IS NOT NULL')
       ->setParameter('appId', $application->getId());
 
     return $query->getQuery()->execute();

@@ -9,6 +9,8 @@
       <div class="offer-list-head">
         {% if not offers %}
           <p>{% trans 'Thank you for submitting your application! Unfortunately we could not find you any offers at this moment. You can contact our affiliates listed below to try your luck again.' %}</p>
+        {% else %}
+          <p>{% trans 'Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:' %}</p>
         {% endif %}
       </div>
     </div>
@@ -193,35 +195,37 @@
   {% block endBody %}
     {% if offers %}
   <script type="text/javascript">
-    var app_hash = '{{ application.applicationHash }}';
-
     require(['/src/scripts/common.js'], function (common) {
       require(['broker', 'domReady'], function (app) {
-        var intervalID;
+        var intervalID,
+          timesToRun = 45,
+          timesRan = 0;
 
         function stopInterval()
         {
+          $('.bouncing-loader').hide();
+          $('.offer-list-head p').hide();
           clearInterval(intervalID);
         }
 
         intervalID = setInterval(function(){
-          console.log(app_hash);
+          timesRan += 1;
           $.ajax({
             method: "GET",
             url: "/application/status",
           })
-            .done(function( data ) {
-              console.log( "Success " + data.status );
-              if(data.status === 'done') {
-                $('.bouncing-loader').hide();
-                $('.offer-list-head p').hide();
-                stopInterval(intervalID);
-              }
-            })
-            .fail(function(){
-              console.log('fail');
-            });
-        },15000);
+          .done(function( data ) {
+            console.log( "Success " + data.status );
+            if(data.status === 'done') {
+              stopInterval(intervalID);
+            }
+          })
+          .fail(function(){
+            console.log('fail');
+          });
+
+          if (timesRan >= timesToRun) stopInterval();
+        },20000);
       });
     });
   </script>

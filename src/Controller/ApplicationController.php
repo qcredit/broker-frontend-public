@@ -291,12 +291,12 @@ class ApplicationController extends AbstractController
   {
     $parts = explode('/', $_SERVER['HTTP_REFERER']);
     $app = $this->findEntity(end($parts), $request, $response);
-    $partners = $this->getPartners();
-    $offers = $this->getOfferRepository()->getOffersByApplication($app);
+    $repository = $this->getOfferRepository();
+    $offers = $repository->getAcceptedOffersByApplication($app);
 
     $filtered = $this->serializeObjects($offers);
 
-    if (count($partners) === count($offers))
+    if (empty($repository->getPendingOffersByApplication($app)))
     {
       return $response->withJson([
         'status' => 'done',

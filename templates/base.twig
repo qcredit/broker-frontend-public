@@ -140,6 +140,16 @@
       {% if lang is defined %}
       app.setLanguage('{{ lang }}');
       {% endif %}
+      {% if environment is defined %}
+      app.setEnvironment('{{ environment }}');
+
+      if (app.getEnvironment() == 'production')
+      {
+        var console = {};
+        console.log = function() {};
+        window.console = console;
+      }
+      {% endif %}
     });
   });
 </script>
