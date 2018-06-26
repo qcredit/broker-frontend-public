@@ -149,10 +149,14 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
    */
   public function getOfferReminderSmsMessage(Application $application)
   {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
     $message = $this->getMessageFactory()->create();
     $message->setType(Message::MESSAGE_TYPE_SMS)
       ->setRecipient($application->getPhone())
-      ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', ['application' => $application]));
+      ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', [
+        'application' => $application,
+        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+      ]));
 
     return $message;
   }
@@ -171,6 +175,46 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
       ->setBody($this->generateEmailContent('mail/offer-confirmation.twig', [
         'offer' => $offer,
         'title' => $message->getTitle()
+      ]));
+
+    return $message;
+  }
+
+  /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getFormEmailReminderMessage(Application $application)
+  {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
+    $message = $this->getMessageFactory()->create();
+    $message->setTitle(_("Don't quit, you're almost there!"))
+      ->setRecipient($application->getEmail())
+      ->setType(Message::MESSAGE_TYPE_EMAIL)
+      ->setBody($this->generateEmailContent('mail/form-reminder.twig', [
+        'application' => $application,
+        'link' => sprintf('%s/application/resume/%s', $domain, $application->getApplicationHash()),
+        'title' => $message->getTitle()
+      ]));
+
+    return $message;
+  }
+
+  /**
+   * @param Application $application
+   * @return Message
+   * @throws \Interop\Container\Exception\ContainerException
+   */
+  public function getFormSmsReminderMessage(Application $application)
+  {
+    $domain = getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100');
+    $message = $this->getMessageFactory()->create();
+    $message->setType(Message::MESSAGE_TYPE_SMS)
+      ->setRecipient($application->getPhone())
+      ->setBody($this->getTemplateByPath('sms/form-reminder.twig', [
+        'application' => $application,
+        'link' => sprintf('%s/application/resume/%s', $domain, $application->getApplicationHash()),
       ]));
 
     return $message;

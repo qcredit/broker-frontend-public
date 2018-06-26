@@ -1,6 +1,8 @@
 Broker\Domain\Entity\Application:
   type: entity
   table: application
+  entityListeners:
+    App\Base\Persistence\Doctrine\EntityListener\ApplicationListener:
   id:
     id:
       type: integer
@@ -37,12 +39,29 @@ Broker\Domain\Entity\Application:
     email:
       type: string
       nullable: false
+      length: 90
     phone:
       type: string
       nullable: false
     documentNr:
       column: document_nr
       type: string
+      nullable: false
+    gdpr1:
+      column: gdpr_1
+      type: boolean
+      nullable: false
+    gdpr2:
+      column: gdpr_2
+      type: boolean
+      nullable: false
+    emailConsent:
+      column: email_consent
+      type: boolean
+      nullable: false
+    phoneConsent:
+      column: phone_consent
+      type: boolean
       nullable: false
   oneToMany:
     offers:

@@ -17,6 +17,10 @@ class PartnerValidator extends AbstractEntityValidator
   /**
    * @var array
    */
+  protected $rawData;
+  /**
+   * @var array
+   */
   protected $validationAttributes = [
     PartnerForm::ATTR_NAME,
     PartnerForm::ATTR_IDENTIFIER,
@@ -246,5 +250,25 @@ class PartnerValidator extends AbstractEntityValidator
     }
 
     return true;
+  }
+
+  /**
+   * @return array
+   * @codeCoverageIgnore
+   */
+  public function getRawData()
+  {
+    return $this->rawData;
+  }
+
+  /**
+   * @param array $rawData
+   * @return PartnerValidator
+   * @codeCoverageIgnore
+   */
+  public function setRawData(array $rawData)
+  {
+    $this->rawData = $rawData;
+    return $this;
   }
 }

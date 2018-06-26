@@ -3,9 +3,10 @@ return [
     'settings' => [
         'mainEmail' => 'info@qcredit.pl',
         'defaultLanguage' => 'pl_PL',
+        'companyName' => 'Q Credit Sp. z o.o.',
+        'baseUrl' => getenv('ENV_TYPE') == 'production' ? 'https://www.qcredit.pl' : (getenv('ENV_TYPE') == 'testserver' ? 'https://www-test.qcredit.pl' : 'http://localhost:8100'),
         'displayErrorDetails' => getenv('ENV_TYPE') == 'production' ? false : true,
         'addContentLengthHeader' => false, // Allow the web server to send the content-length header
-
         // Renderer settings
         'renderer' => [
             'template_path' => __DIR__ . '/../templates/',
@@ -82,7 +83,8 @@ return [
           'senderName' => 'QCredit',
           'sender' => getenv('ENV_TYPE') == 'production' ? '+48732168527' : '+48732232358',
           'whitelist' => [
-            '+3725171081'
+            '+3725171081',
+            '+37253439601'
           ],
           'username' => '301cda77166de101a7751b1f1a6322df',
           'password' => '0197a62dce2ce9db1ab09437197b09b7'

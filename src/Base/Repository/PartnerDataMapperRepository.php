@@ -25,7 +25,10 @@ class PartnerDataMapperRepository implements PartnerDataMapperRepositoryInterfac
     switch($identifier)
     {
       case 'AASA';
-        $class = 'App\Base\AasaDataMapper';
+        $class = 'App\Base\Partner\Aasa\DataMapper';
+        break;
+      case 'TEST':
+        $class = 'App\Base\Partner\Aasa\DataMapper';
         break;
       default:
         throw new InvalidConfigException(sprintf('No data mapper for "%s"!', $identifier));

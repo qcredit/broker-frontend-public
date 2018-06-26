@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "7a8aafedc9a884d02bd650ad17a23db0",
+    "content-hash": "dd638d783f20cf3ea0f5589e75aa25e7",
     "packages": [
         {
             "name": "aasa-global/CommonWebSDK",
@@ -43,16 +43,16 @@
         },
         {
             "name": "aasa/broker",
-            "version": "dev-master",
+            "version": "v0.0.3",
             "source": {
                 "type": "git",
                 "url": "git@github.com:aasa-global/broker.git",
-                "reference": "4dff70e97abf207ca8df298952d44278596f16ea"
+                "reference": "a6d4b0296e0ac0945380c7a7b98827ab1265cbc1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aasa-global/broker/zipball/4dff70e97abf207ca8df298952d44278596f16ea",
-                "reference": "4dff70e97abf207ca8df298952d44278596f16ea",
+                "url": "https://api.github.com/repos/aasa-global/broker/zipball/a6d4b0296e0ac0945380c7a7b98827ab1265cbc1",
+                "reference": "a6d4b0296e0ac0945380c7a7b98827ab1265cbc1",
                 "shasum": ""
             },
             "require-dev": {
@@ -67,10 +67,10 @@
             },
             "description": "The Broker Core system",
             "support": {
-                "source": "https://github.com/aasa-global/broker/tree/master",
+                "source": "https://github.com/aasa-global/broker/tree/v0.0.3",
                 "issues": "https://github.com/aasa-global/broker/issues"
             },
-            "time": "2018-06-06T06:51:31+00:00"
+            "time": "2018-06-20T12:53:51+00:00"
         },
         {
             "name": "aws/aws-sdk-php",
@@ -5125,13 +5125,12 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "aasa/broker": 20,
         "aasa-global/commonwebsdk": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.5.0"
+        "php": ">=7.2.0"
     },
     "platform-dev": []
 }

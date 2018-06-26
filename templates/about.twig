@@ -1,10 +1,18 @@
 {% extends 'base.twig' %}
-{% block title %}Nasz produkt{% endblock %}
+{% block title %}O brokerze pożyczkowym | QCredit{% endblock %}
+{% block post_meta_blog %}
+    <meta property="og:url" content="{{ currentUrl }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="O brokerze pożyczkowym | QCredit" />
+    <meta property="og:description" content="Jedna aplikacja a wiele ofert pożyczek. Bez prowizji, bez wychodzenia z domu, wszystko szybko i przez internet." />
+    <meta property="og:image" content="https://www.qcredit.pl/src/images/site-image.jpg" />
+    <meta name="description" content="Jedna aplikacja a wiele ofert pożyczek. Bez prowizji, bez wychodzenia z domu, wszystko szybko i przez internet."/>
+{% endblock %}
 
 {% block container %}
 <div class="row justify-content-lg-center">
   <section class="col-sm-12 text-center">
-    <h1>Nasz produkt</h1>
+    <h1>O brokerze pożyczkowym</h1>
   </section>
 </div>
 <div class="row">
@@ -49,7 +57,7 @@
 </div>
 <div class="row">
   <section class="col-sm-12 text-center">
-    <h1>O nas</h1>
+    <h2>O nas</h2>
   </section>
   <div class="col-sm-12 col-md-12 col-lg-6 home-about-half home-about-left about-text">
     <p>QCredit oferuje szeroki zakres rozwiązań dla osób szukających dodatkowego finansowania. Dzięki szybkiemu procesowi online jesteśmy w stanie szybko dopasować dla Ciebie odpowiedniego pożyczkodawcę.</p>

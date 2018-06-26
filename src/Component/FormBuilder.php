@@ -377,14 +377,17 @@ class FormBuilder
   {
     $field = $fieldData;
 
+    $params = $this->getFormFieldParameters();
+    $params = $params[$fieldName] ?? false;
+
     $this->addField([
       'name' => $fieldName,
       'type' => $this->determineFieldType($field),
       'required' => $this->isFieldRequired($fieldName),
-      'section' => $field['section'] ?? self::SECTION_GENERAL,
+      'section' => $params['section'] ?? self::SECTION_GENERAL,
       'enum' => $field['enum'] ?? false,
-      'label' => $this->getApplicationForm()->getFieldLabel($fieldName),
-      'order' => $field['order'] ?? self::DEFAULT_ORDER
+      'label' => $params['label'] ?? $this->getApplicationForm()->getFieldLabel($fieldName),
+      'order' => $params['order'] ?? self::DEFAULT_ORDER
     ]);
   }
 
@@ -435,5 +438,13 @@ class FormBuilder
     });
 
     $this->setFieldsInSections($sections);
+  }
+
+  /**
+   * @return array
+   */
+  protected function getFormFieldParameters()
+  {
+    return ApplicationForm::getFieldParameters();
   }
 }

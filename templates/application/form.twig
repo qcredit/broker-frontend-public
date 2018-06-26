@@ -1,5 +1,5 @@
 {% extends 'base.twig' %}
-{% block title %}New application{% endblock %}
+{% block title %}{% trans 'Apply for a loan' %}{% endblock %}
 {% block post_meta %}
 <meta property="og:title" content="Qcredit title | QCredit" />
 <meta property="og:description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
@@ -7,11 +7,11 @@
 {% endblock %}
 
 {% block container %}
-<form method="POST" class="loan-form {% if application.errors %}loan-form-errors{% endif %}">
+<form method="POST" class="loan-form {% if application.errors %}loan-form-errors{% endif %}" action="/{% trans 'application' %}">
   <div class="loan-form-upper">
     {% include '$sliders.twig' %}
   </div>
-  <div class="step-1">
+  <div class="step-1 d-none">
     <div class="form-block form-block-general">
       {% for field in fields.general %}
         {% if field.type is same as('checkbox') %}
@@ -42,15 +42,15 @@
       <div class="form-block form-block-{{ sectionId }}">
         <p>
           {% if sectionId is same as('personal') %}
-            Personal information
+            {% trans 'Personal information' %}
           {% elseif sectionId is same as('housing') %}
-            Housing information
+            {% trans 'Housing information' %}
           {% elseif sectionId is same as('income') %}
-            Income information
+            {% trans 'Income information' %}
           {% elseif sectionId is same as('account') %}
-            Account information
+            {% trans 'Account information' %}
           {% elseif sectionId is same as('additional') %}
-            Additional information
+            {% trans 'Additional information' %}
           {% endif %}
         </p>
         {% for field in section %}
@@ -91,12 +91,35 @@
   </div>
   <input type="hidden" name="applicationHash" id="applicationHash" value="{{ application.applicationHash }}">
 </form>
+<div class="modal fade" tabindex="-1" role="dialog" id="reminderModal">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <h4 class="modal-title mb-3 text-center">{% trans 'Hey there!' %}</h4>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col text-center">
+            <p>{% trans "Good things come to those who don't wait!" %}</p>
+            <p style="margin-bottom:0;">{% trans "In case you're having trouble completing the form, don't hesitate contacting us!" %}</p>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-center">
+        <button type="button" class="btn broker-btn broker-btn-gold" data-dismiss="modal">{% trans 'Resume' %}</button>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block endBody %}
   <script type="text/javascript">
-    require(['./src/scripts/common'], function (common) {
-      require(['domReady', 'app/formHelper', 'app/form'], function (domReady, formHelper, form) {
+    require(['/src/scripts/common.js'], function (common) {
+      require(['domReady', 'app/formHelper', 'app/form', 'formReminder'], function (domReady, formHelper, form, formReminder) {
+
       });
     });
   </script>

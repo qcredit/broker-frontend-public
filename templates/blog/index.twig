@@ -1,9 +1,12 @@
 {% extends 'base.twig' %}
-{% block title %}Artykuły{% endblock %}
-{% block post_meta %}
-<meta property="og:title" content="Qcredit Artykuły | QCredit" />
-<meta property="og:description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
-<meta name="description" content="QCredit dummy description for Facebook Open Graph Tool. QCredit dummy description for Facebook Open Graph Tool." />
+{% block title %}O pożyczkach - nasz blog | QCredit{% endblock %}
+{% block post_meta_blog %}
+<meta property="og:type" content="website" />
+<meta property="og:url" content="{{ currentUrl }}" />
+<meta property="og:title" content="O pożyczkach - nasz blog | QCredit" />
+<meta property="og:description" content="Blog o pożyczkach, pożyczaniu, oszczędzaniu - zapraszamy do przeczytaniu i sugerowaniu swoich ciekawych tematów na które napiszemy." />
+<meta property="og:image" content="https://www.qcredit.pl/src/images/site-image.jpg" />
+<meta name="description" content="Blog o pożyczkach, pożyczaniu, oszczędzaniu - zapraszamy do przeczytaniu i sugerowaniu swoich ciekawych tematów na które napiszemy."/>
 {% endblock %}
 
 {% block container %}
@@ -12,7 +15,7 @@
     {% for post in posts %}
       <article class="post-preview">
         <a class="post-preview-link-hide" href="{{post.slug}}"><div class="post-preview-image" style="background-image: url({{post.image}});"></div></a>
-        <div class="data text-uppercase"><span class="date">{{ post.date_publish | date("d.m.Y") }} </span>{% for tag in post.tags %}<span class="tags"><a href="blog/tag/{{ tag.name }}">{{ tag.name }}</a>{% endfor %}</span></div>
+        <div class="data text-uppercase"><span class="date">{{ post.date_publish | date("d.m.Y") }} </span>{% for tag in post.tags %}<span class="tags"><a href="{% trans 'blog' %}/{% trans 'tag' %}/{{ tag.name|replace({' ': '-'}) }}">{{ tag.name }}</a>{% endfor %}</span></div>
         <a class="post-preview-link-hide" href="{{post.slug}}"><h5 class="post-preview-title">{{ post.title }}</h5>
         <div class="post-preview-lead">{{ post.lead|striptags|length > 170 ? post.lead|raw|slice(0,170)|raw : post.lead|raw }}
 {{ post.lead|striptags|length > 170 ? '...' : ''}}</div></a>

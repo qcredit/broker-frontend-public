@@ -11,12 +11,10 @@ namespace Tests\Unit\Controller;
 use App\Base\Persistence\Doctrine\OfferRepository;
 use App\Base\Persistence\Doctrine\PartnerRepository;
 use App\Base\Repository\MessageTemplateRepository;
-use App\Base\Repository\PartnerDataMapperRepository;
+use App\Component\FormBuilder;
 use App\Controller\ApplicationController;
-use Broker\Domain\Service\ChooseOfferService;
-use Broker\Domain\Service\MessageDeliveryService;
+use Broker\Domain\Service\PostApplicationService;
 use Broker\System\BaseTest;
-use Slim\Exception\NotFoundException;
 use Slim\Http\Request;
 use Slim\Http\Response;
 use Slim\Container;
@@ -25,10 +23,12 @@ use App\Base\Persistence\Doctrine\ApplicationRepository;
 use Broker\Domain\Entity\Application;
 use Broker\Domain\Entity\Offer;
 use Broker\Domain\Entity\Partner;
-use Broker\Domain\Entity\Message;
+use Tests\Helpers\LoggerMockTrait;
 
 class ApplicationControllerTest extends BaseTest
 {
+  use LoggerMockTrait;
+
   protected $mock;
   protected $requestMock;
   protected $responseMock;
@@ -36,9 +36,12 @@ class ApplicationControllerTest extends BaseTest
   protected $repositoryMock;
   protected $offerRepoMock;
   protected $messageTemplateRepoMock;
+  protected $serviceMock;
+  protected $formBuilderMock;
 
   public function setUp()
   {
+    $this->setupMocks();
     $this->mock = $this->getMockBuilder(ApplicationController::class)
       ->disableOriginalConstructor()
       ->setMethods([
@@ -51,7 +54,11 @@ class ApplicationControllerTest extends BaseTest
         'getChooseOfferService',
         'generateOfferConfirmationMessage',
         'serializeObjects',
-        'getMessageTemplateRepository'
+        'getMessageTemplateRepository',
+        'getFormBuilder',
+        'getPostApplicationService',
+        'getParsedBody',
+        'getLogger'
       ])
       ->getMock();
     $this->requestMock = $this->createMock(Request::class);
@@ -65,7 +72,7 @@ class ApplicationControllerTest extends BaseTest
       ->getMock();
     $this->offerRepoMock = $this->getMockBuilder(OfferRepository::class)
       ->disableOriginalConstructor()
-      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy'])
+      ->setMethods(['getAll', 'getOneBy', 'getByHash', 'getOffersByApplication', 'getBy', 'getAcceptedOffersByApplication'])
       ->getMock();
 
     $twigMock = $this->getMockBuilder(Twig::class)
@@ -82,6 +89,13 @@ class ApplicationControllerTest extends BaseTest
       ->disableOriginalConstructor()
       ->setMethods(['getOfferConfirmationMessage'])
       ->getMock();
+
+    $this->serviceMock = $this->getMockBuilder(PostApplicationService::class)
+      ->disableOriginalConstructor()
+      ->setMethods(['run', 'setValidationEnabled', 'getApplication'])
+      ->getMock();
+
+    $this->formBuilderMock = $this->createMock(FormBuilder::class);
   }
 
   public function testOfferListAction()
@@ -204,5 +218,25 @@ class ApplicationControllerTest extends BaseTest
     $result = $this->mock->statusAction($this->requestMock, $this->responseMock, []);
     $this->assertArrayHasKey('status', $result);
     $this->assertSame('waiting', $result['status']);
+  }
+
+  public function testIndexActionWithExceptionThrown()
+  {
+    $this->requestMock->method('isPost')
+      ->willReturn(true);
+    $this->serviceMock->method('setValidationEnabled')
+      ->willThrowException(new \Exception());
+    $this->mock->method('getFormBuilder')
+      ->willReturn($this->formBuilderMock);
+    $this->mock->method('getParsedBody')
+      ->willReturn([]);
+    $this->mock->method('getPostApplicationService')
+      ->willReturn($this->serviceMock);
+    $this->mock->method('getLogger')
+      ->willReturn($this->loggerMock);
+
+    $this->expectException(\Exception::class);
+
+    $this->invokeMethod($this->mock, 'indexAction', [$this->requestMock, $this->responseMock, []]);
   }
 }

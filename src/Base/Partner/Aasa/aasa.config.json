@@ -71,8 +71,8 @@
         "type": "string",
         "maxLength": 11,
         "pattern": "[0-9]{4}[0-3]{1}[0-9}{1}[0-9]{5}",
-        "section": "general",
-        "order": 1
+        "section": "personal",
+        "order": 3
       },
       "contactAddress": {
         "$ref": "#/definitions/addressObject"
@@ -89,7 +89,7 @@
         "example": "ZZC900146",
         "section": "personal",
         "documentNr": "Poland",
-        "order": 3
+        "order": 4
       },
       "payoutMethod": {
         "type": "string",
@@ -113,7 +113,7 @@
           "Other"
         ],
         "section": "personal",
-        "order": 4
+        "order": 7
       },
       "maritalStatusType": {
         "type": "string",
@@ -128,7 +128,7 @@
           "Other"
         ],
         "section": "personal",
-        "order": 5
+        "order": 8
       },
       "housing": {
         "$ref": "#/definitions/housingObject"
@@ -166,16 +166,16 @@
         "minLength": 4,
         "example": "test.test@aasaglobal.com",
         "pattern": "\\S+@\\S+\\.\\S+",
-        "section": "general",
-        "order": 1
+        "section": "personal",
+        "order": 5
       },
       "mobilePhoneNumber": {
         "type": "string",
         "minLength": 9,
         "example": "+372987654321",
         "pattern": "^@?((\\+48)?(\\d{9})|(\\+372)\\d{7,8})\\b",
-        "section": "general",
-        "order": 1
+        "section": "personal",
+        "order": 6
       },
       "loanPurposeType": {
         "type": "string",
@@ -329,183 +329,6 @@
             ],
             "section": "housing",
             "order": 2
-          }
-        }
-      }
-    }
-  },
-  "chooseRequestSchema": {
-    "type": "object",
-    "properties": {
-      "paymentFreeMonth": {
-        "$ref": "#/definitions/paymentFreeMonthRequest"
-      },
-      "signingMethod": {
-        "type": "string",
-        "enum": [
-          "SignOnPaper",
-          "CallMe",
-          "SignWithBlueMedia",
-          "OTP"
-        ]
-      },
-      "signingToken": {
-        "type": "string"
-      },
-      "generateESignUrl": {
-        "type": "boolean"
-      },
-      "update": {
-        "$ref": "#/definitions/updateRequest"
-      }
-    },
-    "definitions": {
-      "paymentFreeMonthRequest": {
-        "properties": {
-          "enable": {
-            "type": "boolean"
-          },
-          "installmentDate": {
-            "type": "string",
-            "example": "2017-01-08"
-          },
-          "installmentAmount": {
-            "type": "number",
-            "example": "224.58"
-          }
-        }
-      },
-      "insuranceRequest": {
-        "properties": {
-          "enable": {
-            "type": "boolean"
-          },
-          "aasaAsBeneficiaryConsent": {
-            "type": "boolean"
-          },
-          "insuranceMarketingConsent": {
-            "type": "boolean"
-          }
-        }
-      },
-      "updateRequest": {
-        "properties": {
-          "insurance": {
-            "$ref": "#/definitions/insuranceRequest"
-          },
-          "firstPaymentDate": {
-            "type": "string",
-            "example": "2018-05-08"
-          },
-          "payoutMethod": {
-            "type": "string",
-            "enum": [
-              "Account",
-              "Giro",
-              "BlueCash"
-            ]
-          },
-          "pepConsent": {
-            "type": "string",
-            "enum": [
-              "Y",
-              "N"
-            ]
-          },
-          "pepConsentFamily": {
-            "type": "string",
-            "enum": [
-              "Y",
-              "N"
-            ]
-          },
-          "autoGiro": {
-            "type": "string",
-            "default": "Y",
-            "enum": [
-              "Y",
-              "N"
-            ]
-          }
-        }
-      }
-    }
-  },
-  "incomingUpdateSchema": {
-    "type": "object",
-    "required": ["update"],
-    "properties": {
-      "update": {
-        "type": "object",
-        "required": [
-          "status"
-        ],
-        "properties": {
-          "id": {
-            "type": "string"
-          },
-          "status": {
-            "type": "string",
-            "enum": [
-              "Accepted",
-              "InProcess",
-              "Rejected",
-              "Signed",
-              "Active",
-              "PaidBack"
-            ]
-          },
-          "amount": {
-            "type": "number"
-          },
-          "period": {
-            "type": "string"
-          },
-          "message": {
-            "type": "string"
-          },
-          "esignUrl": {
-            "type": "string"
-          },
-          "acceptancePageUrl": {
-            "type": "string"
-          },
-          "requiredDocuments": {
-            "type": "array"
-          },
-          "loanDetails": {
-            "type": "object",
-            "properties": {
-              "toBankAccount": {
-                "type": "number"
-              },
-              "interest": {
-                "type": "string"
-              },
-              "arrangementFee": {
-                "type": "string"
-              },
-              "administrationFee": {
-                "type": "string"
-              },
-              "apr": {
-                "type": "number"
-              },
-              "monthly": {
-                "type": "object",
-                "properties": {
-                  "first": {
-                    "type": "string"
-                  },
-                  "avg": {
-                    "type": "number"
-                  }
-                }
-              }
-            }
-          },
-          "signingMethod": {
-            "type": "string"
           }
         }
       }

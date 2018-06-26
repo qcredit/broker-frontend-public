@@ -41,7 +41,10 @@ class ApplicationForm
   const ATTR_LAST_NAME = 'lastName';
   const ATTR_EMAIL = 'email';
   const ATTR_PHONE = 'phone';
-  const ATTR_MARKETING_CONSENT = 'marketingConsent';
+  const ATTR_GDPR_1 = 'gdpr1';
+  const ATTR_GDPR_2 = 'gdpr2';
+  const ATTR_EMAIL_CONSENT = 'emailConsent';
+  const ATTR_PHONE_CONSENT = 'phoneConsent';
 
   const ENUM_INCOME_EMPLOYED = 'employed';
   const ENUM_INCOME_STUDENT = 'student';
@@ -119,6 +122,144 @@ class ApplicationForm
   const ENUM_PURPOSE_RENT = 'rent';
   const ENUM_PURPOSE_OTHER = 'other';
 
+  const SECTION_GENERAL = 'general';
+  const SECTION_PERSONAL = 'personal';
+  const SECTION_ADDITIONAL = 'additional';
+  const SECTION_INCOME = 'income';
+  const SECTION_HOUSING = 'housing';
+  const SECTION_ACCOUNT = 'account';
+
+  public static function getFieldParameters()
+  {
+    return [
+      self::ATTR_INCOME_SOURCE => [
+        'section' => self::SECTION_INCOME,
+        'label' => _('Income type'),
+        'order' => 1
+      ],
+      self::ATTR_NET_PER_MONTH => [
+        'section' => self::SECTION_INCOME,
+        'label' => _('Your monthly net income'),
+        'order' => 2
+      ],
+      self::ATTR_YEAR_SINCE => [
+        'section' => self::SECTION_INCOME,
+        'label' => _('Year started at the organization'),
+        'order' => 4
+      ],
+      self::ATTR_MONTH_SINCE => [
+        'section' => self::SECTION_INCOME,
+        'label' => _('Month started at the organization'),
+        'order' => 3
+      ],
+      self::ATTR_LOAN_PURPOSE => [
+        'section' => self::SECTION_ADDITIONAL,
+        'label' => _('Purpose of loan'),
+        'order' => 1
+      ],
+      self::ATTR_PIN => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('Personal identification number'),
+        'order' => 3
+      ],
+      self::ATTR_STREET => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('Street'),
+        'order' => 3
+      ],
+      self::ATTR_ZIP => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('ZIP'),
+        'order' => 7
+      ],
+      self::ATTR_HOUSE_NR => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('House number'),
+        'order' => 4
+      ],
+      self::ATTR_APARTMENT_NR => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('Apartment number'),
+        'order' => 5
+      ],
+      self::ATTR_CITY => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('City'),
+        'order' => 6
+      ],
+      self::ATTR_ACCOUNT_NR => [
+        'section' => self::SECTION_ACCOUNT,
+        'label' => _('Account number'),
+      ],
+      self::ATTR_ACCOUNT_TYPE => [
+        'section' => self::SECTION_ACCOUNT,
+        'label' => _('Account type'),
+      ],
+      self::ATTR_ACCOUNT_HOLDER => [
+        'section' => self::SECTION_ACCOUNT,
+        'label' => _('Account holder\'s name')
+      ],
+      self::ATTR_DOCUMENT_NR => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('ID Card number'),
+        'order' => 4
+      ],
+      self::ATTR_PAYOUT_METHOD => [
+        'section' => self::SECTION_ADDITIONAL,
+        'label' => _('Payout method'),
+        'order' => 1
+      ],
+      self::ATTR_EDUCATION => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('Education level'),
+        'order' => 7
+      ],
+      self::ATTR_MARITAL_STATUS => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('Marital status'),
+        'order' => 8
+      ],
+      self::ATTR_RESIDENTIAL_TYPE => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('Type of residency'),
+        'order' => 1
+      ],
+      self::ATTR_PROPERTY_TYPE => [
+        'section' => self::SECTION_HOUSING,
+        'label' => _('Type of property'),
+        'order' => 2
+      ],
+      self::ATTR_LOAN_AMOUNT => [
+        'section' => self::SECTION_GENERAL,
+        'label' => _('Loan amount')
+      ],
+      self::ATTR_LOAN_TERM => [
+        'section' => self::SECTION_GENERAL,
+        'label' => _('Loan term')
+      ],
+      self::ATTR_FIRST_NAME => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('First name'),
+        'order' => 1
+      ],
+      self::ATTR_LAST_NAME => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('Last name'),
+        'order' => 2
+      ],
+      self::ATTR_EMAIL => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('Email'),
+        'order' => 5
+      ],
+      self::ATTR_PHONE => [
+        'section' => self::SECTION_PERSONAL,
+        'label' => _('Phone'),
+        'order' => 6
+      ]
+    ];
+  }
+
   public static function getEnumFields()
   {
     return [
@@ -130,8 +271,7 @@ class ApplicationForm
         self::ENUM_INCOME_UNEMPLOYED => _('Unemployed'),
         self::ENUM_INCOME_ALIMONY => _('Alimony'),
         self::ENUM_INCOME_SELF_EMPLOYED => _('Self Employed'),
-        self::ENUM_INCOME_FARMER => _('Farmer'),
-        self::ENUM_INCOME_OTHER => _('Other')
+        self::ENUM_INCOME_FARMER => _('Farmer')
       ],
       self::ATTR_EDUCATION => [
         self::ENUM_EDUCATION_BASIC => _('Basic'),
@@ -155,8 +295,7 @@ class ApplicationForm
       ],
       self::ATTR_ACCOUNT_TYPE => [
         self::ENUM_ACCOUNT_PERSONAL => _('Personal'),
-        self::ENUM_ACCOUNT_JOINT => _('Joint'),
-        self::ENUM_ACCOUNT_COMPANY => _('Company')
+        self::ENUM_ACCOUNT_JOINT => _('Joint')
       ],
       self::ATTR_RESIDENTIAL_TYPE => [
         self::ENUM_RESIDENCY_OWN => _('I\'m an owner'),
@@ -187,7 +326,6 @@ class ApplicationForm
       ],
       self::ATTR_PAYOUT_METHOD => [
         self::ENUM_PAYOUT_ACCOUNT => _('Account'),
-        self::ENUM_PAYOUT_BLUECASH => _('BlueCash'),
         self::ENUM_PAYOUT_GIRO => _('Giro')
       ],
       self::ATTR_LOAN_PURPOSE => [
@@ -258,7 +396,10 @@ class ApplicationForm
       self::ATTR_LAST_NAME => _('Last name'),
       self::ATTR_EMAIL => _('Email'),
       self::ATTR_PHONE => _('Phone'),
-      self::ATTR_MARKETING_CONSENT => _('Yes, you can send me information about promotions, competitions, offers and such.')
+      self::ATTR_GDPR_1 => _('I agree to the processing by Q Credit Sp. z o.o my personal data for marketing purposes, in terms of my address, address for correspondence and e-mail address. I have been informed of the right to inspect the data concerning me, the right to request a change and deletion of such data, as well as the right to object to the processing of my personal data.'),
+      self::ATTR_GDPR_2 => _('I agree to the processing of my personal data byQ Credit Sp. z o.o and by entities belonging to the capital group, which includes Q Credit Sp. z o.o in order to marketing products of these entities and third parties cooperating with Q Credit Sp. z o.o'),
+      self::ATTR_EMAIL_CONSENT => _('I agree to receive from Q Credit Sp. z o.o commercial information sent via email.'),
+      self::ATTR_PHONE_CONSENT => _('I agree to receive from Q Credit Sp. z o.o commercial information provided via the telephone.')
     ];
   }
 
