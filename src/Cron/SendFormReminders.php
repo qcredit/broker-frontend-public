@@ -80,18 +80,20 @@ class SendFormReminders implements BaseJob
   }
 
   /**
-   * @return LoggerInterface
+   * @return \App\Base\Logger
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function getLogger()
   {
-    $logger = $this->getContainer()->get('BrokerInstance')->getLogger();
-    $logger->popHandler();
+    $settings = $this->getContainer()->get('settings');
+    $settings = $settings['logger'];
 
-    $stream = new StreamHandler('/var/log/apache2/broker-cron.log', Logger::DEBUG);
-    $logger->pushHandler($stream);
+    $settings['name'] = BaseJob::CRON_LOG_FACILITY;
+    $settings['path'] = BaseJob::CRON_LOG_PATH;
+    $settings['level'] = BaseJob::CRON_LOG_LEVEL;
+    $logger = new \App\Base\Logger($settings);
 
-    return $logger->withName('CRON');
+    return $logger;
   }
 
   /**
