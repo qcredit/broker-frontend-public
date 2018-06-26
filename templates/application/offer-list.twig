@@ -8,7 +8,7 @@
     <div class="col-sm-12 col-md-9">
       <div class="offer-list-head">
         {% if not offers %}
-          <p>{% trans 'Thank you for submitting your application! Unfortunately we could not find you any offers at this moment. You can contact our affiliates listed below to try your luck again.' %}</p>
+          <p class="d-none">{% trans 'Thank you for submitting your application! Unfortunately we could not find you any offers at this moment. You can contact our affiliates listed below to try your luck again.' %}</p>
         {% else %}
           <p>{% trans 'Thank you! Your application has been submitted and the loan offers will appear live within 15 minutes below:' %}</p>
         {% endif %}
