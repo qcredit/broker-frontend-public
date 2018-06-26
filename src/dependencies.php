@@ -12,9 +12,9 @@ use Broker\Domain\Service\SendPartnerRequestsService;
 $container = $app->getContainer();
 
 $settings = $container->get('settings');
-if (isset($settings['settings']['defaultLanguage']))
+if (isset($settings['defaultLanguage']))
 {
-  $lang = $settings['settings']['defaultLanguage'];
+  $lang = $settings['defaultLanguage'];
   if (isset($_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE]))
   {
     $lang = $_SESSION[\App\Middleware\LanguageSwitcher::COOKIE_LANGUAGE];
