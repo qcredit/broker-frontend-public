@@ -106,7 +106,7 @@
     position: relative;
     min-height: 600px;
     align-items: center;
-    background: url(../images/hero-bg2-reversed.jpg) no-repeat;
+    background: url(../images/hero-bg2.jpg) no-repeat;
     background-position: 50% 10%;
     background-size: cover;
     .landing-form {
@@ -132,6 +132,7 @@
     }
     .home-hero-right {
       padding-top: 1.25rem;
+      padding-bottom: 1.25rem;
     }
     &:before {
       content: "";
@@ -182,8 +183,9 @@
 }
 
 @media only screen and (min-width: 1024px) {
-  .home-hero {
-    padding-top: 1.25rem;
+  .home-hero-right {
+    padding-top: 0;
+    padding-bottom: 0;
   }
   .landing-form-lower-footer {
     padding: 0 .5rem;

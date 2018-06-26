@@ -1,10 +1,10 @@
 {% extends 'base.twig' %}
-{% block title %}Page not found{% endblock %}
+{% block title %}{% trans '404 - Not found' %}{% endblock %}
 {% block container %}
 <div class="row justify-content-md-center">
   <section class="col-sm-12 col-md-6 text-center">
     <img class="img404" src="/src/images/404.png" alt="404 Not found"/>
-    <h2>{% trans '404 - Not found' %}</h2>
+    <h3>{% trans '404 - Not found' %}</h3>
     <p>{% trans 'The page you were requesting was not found!' %}</p>
   </section>
 </div>
