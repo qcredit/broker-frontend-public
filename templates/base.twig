@@ -153,11 +153,17 @@
     });
   });
 </script>
-{#<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="/src/scripts/rangeslider.min.js"></script>
-<script src="/src/scripts/functions.js"></script>
-<script src="/src/scripts/validation.js"></script>#}
+{% if environment == 'production' %}
+  <script type="text/javascript">
+      window._mfq = window._mfq || [];
+      (function() {
+          var mf = document.createElement("script");
+          mf.type = "text/javascript"; mf.async = true;
+          mf.src = "//cdn.mouseflow.com/projects/df055192-425e-4e06-8ea6-5dd11d9e2d56.js";
+          document.getElementsByTagName("head")[0].appendChild(mf);
+      })();
+  </script>
+{% endif %}
 {% if block('endBody') is defined %}
   {{ block('endBody') }}
 {% endif %}
