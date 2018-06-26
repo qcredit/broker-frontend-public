@@ -87,7 +87,8 @@ return [
             '+37253439601'
           ],
           'username' => '301cda77166de101a7751b1f1a6322df',
-          'password' => '0197a62dce2ce9db1ab09437197b09b7'
+          'password' => '0197a62dce2ce9db1ab09437197b09b7',
+          'proxy' => 'proxy.asakredyt.pl:1080'
         ]
     ],
 ];
