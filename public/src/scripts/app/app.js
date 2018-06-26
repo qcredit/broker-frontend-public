@@ -11,7 +11,8 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
       }
     },
     language: 'en_EN',
-    messages: []
+    messages: [],
+    environment: 'production'
   };
 
   app.setCsrfName = function(keyName, value)
@@ -50,6 +51,16 @@ define(['jquery', 'jquery.bootstrap', 'lib/formData.polyfill', 'lib/weakmap.poly
   app.setMessages = function(messages)
   {
     this.messages = messages;
+  };
+
+  app.getEnvironment = function()
+  {
+    return this.environment;
+  };
+
+  app.setEnvironment = function(environment)
+  {
+    this.environment = environment;
   };
 
   app.getFormData = function() {
