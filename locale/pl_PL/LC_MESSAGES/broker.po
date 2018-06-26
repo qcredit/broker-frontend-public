@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-06-25 15:52+0300\n"
+"PO-Revision-Date: 2018-06-26 14:53+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -88,7 +88,7 @@ msgstr "kontakt"
 #: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:186
 #: src/routes.php:20
 msgid "privacy-policy"
-msgstr "polityka-prywatności"
+msgstr "polityka-prywatnosci"
 
 #: tmp/cache/41/41d6011f0119fe302c9317f65333310e81b375088546465ae0d62137c936b84d.php:190
 #: src/routes.php:21
