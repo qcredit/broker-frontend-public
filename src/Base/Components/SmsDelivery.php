@@ -10,6 +10,7 @@ namespace App\Base\Components;
 
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
+use Broker\Domain\Interfaces\System\LoggerInterface;
 use Broker\System\Log;
 use Monolog\Logger;
 use Slim\Container;
@@ -77,12 +78,12 @@ class SmsDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @return Logger
+   * @return LoggerInterface
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function getLogger()
   {
-    return $this->getContainer()->get('logger');
+    return $this->getContainer()->get('BrokerInstance')->getLogger();
   }
 
   /**

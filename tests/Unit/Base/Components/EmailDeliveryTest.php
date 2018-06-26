@@ -164,7 +164,7 @@ class EmailDeliveryTest extends BaseTest
   {
     $mock = $this->getMockBuilder(EmailDelivery::class)
       ->disableOriginalConstructor()
-      ->setMethods(['setupClient', 'setupMessage', 'getClient', 'getContainer'])
+      ->setMethods(['setupClient', 'setupMessage', 'getClient', 'getContainer', 'getLogger'])
       ->getMock();
 
     $mock->expects($this->once())
@@ -178,11 +178,8 @@ class EmailDeliveryTest extends BaseTest
     $mock->expects($this->exactly(2))
       ->method('getClient')
       ->willReturn($this->clientMock);
-    $this->containerMock->method('get')
+    $mock->method('getLogger')
       ->willReturn($this->loggerMock);
-    $mock->expects($this->once())
-      ->method('getContainer')
-      ->willReturn($this->containerMock);
 
     $message = new Message();
 

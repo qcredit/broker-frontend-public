@@ -14,6 +14,7 @@ use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
 use Broker\System\Log;
 use Monolog\Logger;
+use Psr\Log\LoggerInterface;
 use Slim\Container;
 
 class ApiDelivery implements MessageDeliveryInterface
@@ -103,12 +104,12 @@ class ApiDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @return Logger
+   * @return LoggerInterface
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function getLogger()
   {
-    return $this->getContainer()->get('logger');
+    return $this->getContainer()->get('BrokerInstance')->getLogger();
   }
 
   /**

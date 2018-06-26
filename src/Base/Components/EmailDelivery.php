@@ -10,6 +10,7 @@ namespace App\Base\Components;
 
 use Broker\Domain\Entity\Message;
 use Broker\Domain\Interfaces\MessageDeliveryInterface;
+use Broker\Domain\Interfaces\System\LoggerInterface;
 use Broker\System\Error\InvalidConfigException;
 use Monolog\Logger;
 use Slim\Container;
@@ -106,12 +107,12 @@ class EmailDelivery implements MessageDeliveryInterface
   }
 
   /**
-   * @return Logger
+   * @return LoggerInterface
    * @throws \Interop\Container\Exception\ContainerException
    */
   public function getLogger()
   {
-    return $this->getContainer()->get('logger');
+    return $this->getContainer()->get('BrokerInstance')->getLogger();
   }
 
   /**
@@ -141,7 +142,7 @@ class EmailDelivery implements MessageDeliveryInterface
     }
     catch (\Exception $ex)
     {
-      $this->getLogger()->error('Could not deliver e-mail!', [$this->getClient()->getError()]);
+      $this->getLogger()->warning('Could not deliver e-mail!', [$this->getClient()->getError()]);
       $this->setOk(false);
     }
   }
