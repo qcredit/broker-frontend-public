@@ -7,7 +7,7 @@ use App\Middleware\PartnerAuthenticator;
 // Routes
 
 $app->group('/', function() {
-  $this->map(['GET', 'POST'], 'application', 'ApplicationController:indexAction')->add(new \App\Middleware\ApplicationPost($this));
+  $this->map(['GET', 'POST'], _('application'), 'ApplicationController:indexAction')->add(new \App\Middleware\ApplicationPost($this));
   $this->get('application/schema', 'ApplicationController:schemaAction');
   $this->get('application/status', 'ApplicationController:statusAction');
   $this->get('application/resume/{hash}', 'ApplicationController:resumeAction');
@@ -15,17 +15,17 @@ $app->group('/', function() {
   $this->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
   $this->get('', 'HomeController:indexAction');
   $this->get('language', 'HomeController:languageAction');
-  $this->get('about', 'AboutController:indexAction');
-  $this->map(['GET', 'POST'], 'contact', 'ContactController:indexAction');
-  $this->get('polityka-prywatnosci', 'PrivacyController:indexAction');
-  $this->get('polityka-cookies', 'CookieController:indexAction');
-  $this->get('warunki-korzystania', 'TermsController:indexAction');
-  $this->get('blog', 'BlogController:indexAction');
-  $this->get('blog/tag/{tag}', 'BlogController:tagAction');
-  $this->get('blog/{slug}', 'BlogController:viewAction');
+  $this->get(_('about'), 'AboutController:indexAction');
+  $this->map(['GET', 'POST'], _('contact'), 'ContactController:indexAction');
+  $this->get(_('privacy-policy'), 'PrivacyController:indexAction');
+  $this->get(_('cookies-policy'), 'CookieController:indexAction');
+  $this->get(_('terms-and-conditions'), 'TermsController:indexAction');
+  $this->get(_('blog'), 'BlogController:indexAction');
+  $this->get(sprintf('%s/%s/{tag}', _('blog'), _('tag')), 'BlogController:tagAction');
+  $this->get(sprintf('%s/{slug}', _('blog')), 'BlogController:viewAction');
   $this->get('test', 'TestController:mailAction');
 
-  $this->group('admin', function() {
+  $this->group('office', function() {
     $this->get('', 'AdminController:indexAction');
     $this->map(['GET', 'POST'], '/partners/new', 'PartnerController:newAction');
     $this->map(['GET', 'POST'], '/partners/update/{id}', 'PartnerController:updateAction');
@@ -43,5 +43,5 @@ $app->group('/', function() {
 
 $app->post('/api/partner/update-offer', 'ApiController:updateAction')->add(new PartnerAuthenticator($app));
 
-$app->map(['GET', 'POST'], '/admin/login', 'LoginController:loginAction');
-$app->get('/admin/logout', 'LoginController:logoutAction');
+$app->map(['GET', 'POST'], '/office/login', 'LoginController:loginAction');
+$app->get('/office/logout', 'LoginController:logoutAction');

@@ -19,5 +19,5 @@
         <li><strong>APILiveUrl:</strong> {{ partner.apiLiveUrl }}</li>
         <li><strong>Authorization type:</strong> {% if partner.authorizationType is same as('basic') %}Basic{% else %}{% endif %}</li>
     </ol>
-    <a href="/admin/partners/update/{{ partner.id }}" class="btn broker-btn broker-btn-blue mb-3">Edit</a>
+    <a href="/office/partners/update/{{ partner.id }}" class="btn broker-btn broker-btn-blue mb-3">Edit</a>
 {% endblock %}

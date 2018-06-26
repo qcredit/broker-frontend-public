@@ -16,12 +16,12 @@ use Broker\Domain\Entity\PartnerResponse;
 use Broker\Domain\Interfaces\Partner\SchemaInterface;
 use Broker\Domain\Interfaces\PartnerDataMapperInterface;
 use App\Model\ApplicationForm;
+use App\Model\OfferForm;
 use Broker\Domain\Interfaces\System\Delivery\DeliveryHeadersInterface;
 use Broker\Domain\Interfaces\System\Delivery\DeliveryOptionsInterface;
 use Broker\System\Delivery\DeliveryHeaders;
 use Broker\System\Delivery\DeliveryOptions;
 use Broker\System\Error\InvalidConfigException;
-use Slim\App;
 
 class DataMapper implements PartnerDataMapperInterface
 {
@@ -39,12 +39,12 @@ class DataMapper implements PartnerDataMapperInterface
 
   /**
    * @return array
-   * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getRequestSchema(): array
   {
-    return $this->getDecodedConfigFile()['requestSchema'];
+    $schema = new RequestSchema();
+    return $schema->getSchema();
   }
 
   /**
@@ -168,14 +168,14 @@ class DataMapper implements PartnerDataMapperInterface
   public function getResponsePayload()
   {
     return [
-      'id' => 'remoteId',
-      'amount' => 'loanAmount',
-      'period' => 'loanTerm',
-      'interest' => 'interest',
-      'avg' => 'monthlyFee',
-      'apr' => 'apr',
-      'acceptancePageUrl' => 'acceptancePageUrl',
-      'esignUrl' => 'signingPageUrl'
+      'id' => OfferForm::ATTR_REMOTE_ID,
+      'amount' => OfferForm::ATTR_LOAN_AMOUNT,
+      'period' => OfferForm::ATTR_LOAN_TERM,
+      'interest' => OfferForm::ATTR_INTEREST,
+      'avg' => OfferForm::ATTR_MONTHLY_FEE,
+      'apr' => OfferForm::ATTR_APR,
+      'acceptancePageUrl' => OfferForm::ATTR_ACCEPTANCE_URL,
+      'esignUrl' => OfferForm::ATTR_ESIGN_URL
     ];
   }
 
@@ -218,9 +218,9 @@ class DataMapper implements PartnerDataMapperInterface
     $payload = $this->getRequestPayload();
     array_walk($payload, [$this, 'mapper'], $application);
 
-    $payload['eMarketing'] = 'Y';
+/*    $payload['eMarketing'] = 'Y';
     $payload['pMarketing'] = 'Y';
-    $payload['tMarketing'] = 'Y';
+    $payload['tMarketing'] = 'Y';*/
 
     return json_encode($payload);
   }
@@ -497,16 +497,6 @@ class DataMapper implements PartnerDataMapperInterface
   }
 
   /**
-   * @return array
-   * @throws InvalidConfigException
-   * @throws \Exception
-   */
-  public function getChooseRequestSchema(): array
-  {
-    return json_decode($this->getConfigFile(), true)['chooseRequestSchema'];
-  }
-
-  /**
    * @param $code
    * @return bool
    */
@@ -547,12 +537,13 @@ class DataMapper implements PartnerDataMapperInterface
 
   /**
    * @return array
-   * @throws InvalidConfigException
    * @throws \Exception
    */
   public function getIncomingUpdateSchema(): array
   {
-    return $this->getDecodedConfigFile()['incomingUpdateSchema'];
+    $schema = new IncomingUpdateSchema();
+
+    return $schema->getSchema();
   }
 
   /**
@@ -703,7 +694,9 @@ class DataMapper implements PartnerDataMapperInterface
   {
     $options = new DeliveryOptions();
 
-    $options->addOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl())
+    $apiUrl = getenv('ENV_TYPE') == 'production' ? $request->getPartner()->getApiLiveUrl() : $request->getPartner()->getApiTestUrl();
+
+    $options->addOption(CURLOPT_URL, $apiUrl)
       ->addOption(CURLOPT_RETURNTRANSFER, true)
       ->addOption(CURLOPT_CONNECTTIMEOUT, 30)
       ->addOption(CURLOPT_SSL_VERIFYPEER, false);
@@ -714,7 +707,7 @@ class DataMapper implements PartnerDataMapperInterface
     }
     else if ($request->getType() === PartnerRequest::REQUEST_TYPE_UPDATE)
     {
-      $options->addOption(CURLOPT_URL, $request->getPartner()->getApiTestUrl() . "/" . $request->getOffer()->getRemoteId());
+      $options->addOption(CURLOPT_URL, $apiUrl . "/" . $request->getOffer()->getRemoteId());
     }
 
     return $options;

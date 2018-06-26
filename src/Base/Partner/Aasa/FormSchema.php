@@ -139,6 +139,7 @@ class FormSchema implements SchemaInterface
         ApplicationForm::ATTR_DOCUMENT_NR => [
           'type' => 'string',
           'minLength' => 9,
+          'maxLength' => 60,
           'documentNr' => 'Poland'
         ],
         ApplicationForm::ATTR_EDUCATION => [
@@ -207,7 +208,7 @@ class FormSchema implements SchemaInterface
         ],
         ApplicationForm::ATTR_EMAIL => [
           'type' => 'string',
-          'minLength' => 4,
+          'maxLength' => 90,
           'pattern' => '\S+@\S+\.\S+'
         ],
         ApplicationForm::ATTR_PHONE => [
@@ -236,10 +237,14 @@ class FormSchema implements SchemaInterface
   }
 
   /**
-   * @return string
+   * Specify data which should be serialized to JSON
+   * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+   * @return mixed data which can be serialized by <b>json_encode</b>,
+   * which is a value of any type other than a resource.
+   * @since 5.4.0
    */
-  public function getJsonSchema(): string
+  public function jsonSerialize()
   {
-    return json_encode($this->schema);
+    return $this->schema;
   }
 }

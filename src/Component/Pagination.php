@@ -52,6 +52,10 @@ class Pagination
    * @var int
    */
   private $totalPages;
+  /**
+   * @var bool
+   */
+  private $useNiceURLs = false;
 
   /**
    * Pagination constructor.
@@ -111,6 +115,26 @@ class Pagination
   public function getNextPage()
   {
     return $this->nextPage;
+  }
+
+  /**
+   * @return bool
+   * @codeCoverageIgnore
+   */
+  public function isUseNiceURLs()
+  {
+    return $this->useNiceURLs;
+  }
+
+  /**
+   * @param bool $useNiceURLs
+   * @return Pagination
+   * @codeCoverageIgnore
+   */
+  public function setUseNiceURLs(bool $useNiceURLs)
+  {
+    $this->useNiceURLs = $useNiceURLs;
+    return $this;
   }
 
   /**
@@ -238,6 +262,11 @@ class Pagination
     parse_str($query, $output);
 
     $output['page'] = $pageNumber;
+
+    if ($pageNumber == 1)
+    {
+      return $path;
+    }
 
     return sprintf('%s?%s', $path, http_build_query($output));
   }

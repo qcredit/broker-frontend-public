@@ -165,7 +165,7 @@ class UserController extends AbstractController
       {
         $this->getContainer()->get('flash')->addMessage('success', 'User was successfully added.');
         $this->getUserRepository()->save($user);
-        return $response->withRedirect('/admin/users');
+        return $response->withRedirect('/office/users');
       }
     }
 
@@ -188,10 +188,10 @@ class UserController extends AbstractController
 
     if ($this->getUserRepository()->delete($user))
     {
-      return $response->withRedirect('/admin/users');
+      return $response->withRedirect('/office/users');
     }
 
-    return $this->withRedirect('/admin/users');
+    return $this->withRedirect('/office/users');
   }
 
   public function loginAction(Request $request, Response $response, $args)

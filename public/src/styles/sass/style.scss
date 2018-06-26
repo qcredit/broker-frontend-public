@@ -28,12 +28,12 @@ h1,h2,h3,h4,h5,h6 {
 p, span, a, strong, button, input, textarea {
   font-family: 'Lato', sans-serif;
 }
-section > h1 {
+section > h1, section > h2 {
   flex: 0 0 100%;
   margin: 4.125rem 0 3.5rem;
   font-size: 2rem;
 }
-section h1.small-mar {
+section h2.small-mar {
   margin-bottom: 2rem;
 }
 .p-head {
@@ -86,7 +86,11 @@ a.broker-btn, a.broker-btn:hover, a.broker-btn:focus, a.broker-btn:visited {
     box-shadow: none;
   }
 }
-
+.alert {
+  margin-top: 1rem;
+  margin-bottom: 0;
+  border-radius: 0;
+}
 body {
   padding-top: 65px;
 }
@@ -206,6 +210,9 @@ body {
 }
 
 @media only screen and (min-width: 768px) {
+  body {
+    padding-top: 67px;
+  }
   .page-body {
     min-height: 400px;
   }
@@ -227,7 +234,7 @@ body {
 }
 @media only screen and (min-width: 1024px) {
   body {
-    padding-top: 60px;
+    padding-top: 84px;
   }
   .page-body {
     min-height: 500px;

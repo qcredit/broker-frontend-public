@@ -42,41 +42,36 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
     console.log('Unable to fetch schema!');
   });
 
+  $('.landing-form-lower-footer button').click(function(e)
+  {
+    var formData = app.getFormData();
+    formData['gdpr1'] = 1;
+    formData['gdpr2'] = 1;
+    formData['emailConsent'] = 1;
+    formData['phoneConsent'] = 1;
+
+    var valid = ajv.validate(schema, formData);
+
+    if (!valid)
+    {
+      console.log(ajv.errors);
+      formHelper.handleErrors(ajv.errors);
+
+      return false;
+    }
+
+    $('.modal').modal('show');
+  });
+
   $('form.landing-form').submit(function(e) {
-    var valid = ajv.validate(schema, app.getFormData());
+    var formData = app.getFormData();
+    var valid = ajv.validate(schema, formData);
     brokerAjv.localize(ajv.errors);
 
     if (!valid)
     {
       e.preventDefault();
-      var fieldsToCheck = ['gdpr1','gdpr2','phoneConsent','emailConsent'];
-      for (var i = 0; i < ajv.errors.length; i++)
-      {
-        var error = ajv.errors[i];
-        var err_msg = error.message;
-
-        if (error.keyword == 'required' && fieldsToCheck.indexOf(error.params.missingProperty) !== -1)
-        {
-          if (!brokerAjv.searchError('phone', ajv.errors) || !brokerAjv.searchError('email', ajv.errors))
-          {
-            $('.modal').modal('show');
-          }
-        }
-
-        if(err_msg){
-          var err_target = error.dataPath !== '' ? $('.field' + error.dataPath) : false;
-
-          if (err_target)
-          {
-            if(!err_target.find('.rules').length){
-              err_target.addClass('error');
-              err_target.append('<p class="rules">'+err_msg+'</p>');
-            } else {
-              err_target.find('.rules').text(err_msg);
-            }
-          }
-        }
-      }
+      formHelper.handleErrors(ajv.errors);
 
       if ($('.modal.show').length && (brokerAjv.searchError('phone', ajv.errors) || brokerAjv.searchError('email', ajv.errors)))
       {
@@ -85,34 +80,38 @@ define('app/form', ['jquery', 'broker', 'ajv', 'ajv.broker', 'app/formHelper'], 
     }
   });
 
-  $('form:not(.landing-form) button[type="submit"]').click(function(e) {
+  $('form.loan-form').submit(function(e) {
     var valid = ajv.validate(schema, app.getFormData());
-    brokerAjv.localize(ajv.errors);
 
     if (!valid) {
       e.preventDefault();
-
-      var error_list = ajv.errors;
-      for(var i = 0; i < error_list.length; i++) {
-        var err_target = $('.field'+error_list[i].dataPath);
-        var err_msg = error_list[i].message;
-        if(err_msg){
-          if(!err_target.find('.rules').length){
-            err_target.addClass('error');
-            err_target.append('<p class="rules">'+err_msg+'</p>');
-          } else {
-            err_target.find('.rules').text(err_msg);
-          }
-        }
-      }
+      formHelper.handleErrors(ajv.errors);
+      $('form button[type="submit"]').prop('disabled', false);
+    }
+    else
+    {
+      $('form button[type="submit"]').prop('disabled', true);
     }
   });
 
-  $('input').on('change', function(e) {
+  $('form:not(.landing-form) input').on('change', function(e) {
     var attrId = $(this)[0].id;
     var formValues = app.getFormData();
     var parent = $(this).parent();
     runSchemaLive(attrId, formValues, parent);
+  });
+  $('form.landing-form input').on('change', function(e)
+  {
+    var attrId = $(this)[0].id,
+        formData = app.getFormData(),
+        parent = $(this).parent();
+
+    formData['gdpr1'] = 1;
+    formData['gdpr2'] = 1;
+    formData['emailConsent'] = 1;
+    formData['phoneConsent'] = 1;
+
+    runSchemaLive(attrId, formData, parent);
   });
   $('select').on('change', function(e) {
     var attrId = $(this)[0].id;

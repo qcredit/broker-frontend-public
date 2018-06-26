@@ -90,7 +90,10 @@ class HomeController extends AbstractController
   public function languageAction(Request $request, Response $response, $args)
   {
     $language = $request->getQueryParam('lang');
-    $language = sprintf('%s_%s', $language, strtoupper($language));
+    if (strpos($language, '_') === false)
+    {
+      $language = sprintf('%s_%s', $language, strtoupper($language));
+    }
 
     $this->getSession()->set(LanguageSwitcher::COOKIE_LANGUAGE, $language);
 
