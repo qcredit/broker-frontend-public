@@ -8,7 +8,7 @@ $redis->connect('redis', 6379);
 
 $jobby = new Jobby\Jobby([
   'debug' => false,
-  'output' => '/var/log/apache2/broker-cron.log'
+  'output' => \App\Cron\BaseJob::CRON_LOG_PATH
 ]);
 
 $mutex = new PHPRedisMutex([$redis], 'SendFormReminders', 20);

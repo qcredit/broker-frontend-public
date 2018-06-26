@@ -15,6 +15,9 @@ use Monolog\Handler\StreamHandler;
 
 class Logger implements LoggerInterface
 {
+  const LOGGER_DATE_FORMAT = 'Y-m-d\TH:i:sO';
+  const LOG_DEFAULT_PATH = '/var/log/apache2/broker-frontend-public_debug.log';
+
   protected $logger;
 
   /**

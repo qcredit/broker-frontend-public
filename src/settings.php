@@ -15,12 +15,12 @@ return [
         // Monolog settings
         'logger' => [
             'name' => 'BROKER',
-            'path' => isset($_ENV['docker']) ? 'php://stdout' : '/var/log/apache2/broker-frontend-public_debug.log',
+            'path' => isset($_ENV['docker']) ? 'php://stdout' : \App\Base\Logger::LOG_DEFAULT_PATH,
             'level' => getenv('ENV_TYPE') == 'production' ? \Monolog\Logger::INFO : \Monolog\Logger::DEBUG,
             'processor' => [
               new \Monolog\Processor\UidProcessor()
             ],
-            'dateFormat' => 'Y-m-d\TH:i:sO'
+            'dateFormat' => \App\Base\Logger::LOGGER_DATE_FORMAT
         ],
         'broker' => [
           'environment' => getenv('ENV_TYPE') ? getenv('ENV_TYPE') : 'developer',
