@@ -19,9 +19,6 @@ ADD .                              /var/www/html
 RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
     apt-get install -y git zip unzip libicu-dev locales cron
 
-# COPY ./infrastructure/start.sh ./infrastructure/start.sh
-# RUN chmod 755 ./infrastructure/start.sh
-
 RUN    apt-get update \
     && usermod -u 1000 www-data \
     && a2enmod rewrite headers expires remoteip \
@@ -49,7 +46,7 @@ RUN    apt-get update \
        fi
 
 RUN    if cd /var/www/html; then\
-         curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
+         curl -sS https://getcomposer.org/installer | /usr/local/bin/php -- --install-dir=/usr/local/bin --filename=composer \
          && composer update && composer install; \
          pwd && ls -lh . vendor/bin/phinx; \
        else exit 1; fi \
@@ -59,10 +56,9 @@ RUN    if cd /var/www/html; then\
 
 EXPOSE 80
 
-
 # docker build -t broker-frontend-public .
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest$GitCommitAppendix
 # eval (aws ecr get-login --no-include-email --region eu-west-1)
-# docker push 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest
 # docker push 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest$GitCommitAppendix
+# docker push 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest

@@ -73,6 +73,12 @@ $container['view'] = function($container) {
     $view->getEnvironment()->addGlobal('currentUrl', '/application');
   }
 
+  $settings = $container->get('settings');
+  if (isset($settings['companyName']))
+  {
+    $view->getEnvironment()->addGlobal('companyName', $settings['companyName']);
+  }
+
   $view->getEnvironment()->addGlobal('environment', getenv('ENV_TYPE'));
 
   return $view;
@@ -321,7 +327,7 @@ $container['LoginController'] = function ($c)
 $container['BlogController'] = function($c)
 {
   $blog = new \Aasa\CommonWebSDK\BlogServiceAWS();
-  \Aasa\CommonWebSDK\Configuration::getInstance()->init(6, 'pl', 'blog');
+  \Aasa\CommonWebSDK\Configuration::getInstance()->init(6, 'pl', _('blog'));
   return new \App\Controller\BlogController($blog, $c);
 };
 

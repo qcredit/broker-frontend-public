@@ -37,7 +37,7 @@ services:
           - 'node.labels.ENV_TEST == TRUE'
 
   redis:
-    image: redis
+    image: redis:latest
     # networks:
       # - test
     stop_grace_period: 60s
@@ -48,12 +48,16 @@ services:
         order: start-first
         parallelism: 1
         delay: 70s
+        max_failure_ratio: 1
         failure_action: rollback
       restart_policy:
         condition: on-failure
         delay: 20s
         max_attempts: 30
         window: 30s
+      resources:
+        limits:
+          memory: 64M
       placement:
         constraints:
           - 'node.labels.COUNTRY_poland == TRUE'
