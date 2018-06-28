@@ -51,7 +51,7 @@ RUN    if cd /var/www/html; then\
          pwd && ls -lh . vendor/bin/phinx; \
        else exit 1; fi \
         && echo 'pl_PL.UTF-8 UTF-8\n' >> /etc/locale.gen \
-        && ln -s /etc/locale.alias /usr/share/locale/locale.alias \
+        && ln -sf /etc/locale.alias /usr/share/locale/locale.alias \
         && locale-gen
 
 EXPOSE 80
