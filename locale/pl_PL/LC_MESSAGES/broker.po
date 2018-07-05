@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-06-26 14:53+0300\n"
+"PO-Revision-Date: 2018-07-05 10:58+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -124,6 +124,7 @@ msgstr ""
 "Jeśli nadal widzisz ten komunikat, a minęło już trochę czasu, skontaktuj się "
 "z nami pod adresem %email%."
 
+#: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:84
 #: tmp/cache/6b/6b006d243dfadb389e21b39d4ace27ab5b2da8886188f6ce57dd44211f640f49.php:72
 #: tmp/cache/a2/a2f5dd35ce3365a7f030c08bbd9cf6bf806ff779455f795e34d2d43e65e2904a.php:59
 #: src/routes.php:10 src/Controller/ApplicationController.php:139
@@ -403,7 +404,7 @@ msgstr "Nazwisko właściciela konta"
 
 #: src/Model/ApplicationForm.php:204 src/Model/ApplicationForm.php:386
 msgid "ID Card number"
-msgstr "Numer mieszkania"
+msgstr "Numer dowodu osobistego"
 
 #: src/Model/ApplicationForm.php:209 src/Model/ApplicationForm.php:388
 msgid "Payout method"
