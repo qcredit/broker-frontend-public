@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2018-06-26 14:53+0300\n"
+"PO-Revision-Date: 2018-07-05 11:07+0300\n"
 "Last-Translator: Hendrik <hendrik.uibopuu@aasaglobal.com>\n"
 "Language-Team: Polish\n"
 "Language: pl\n"
@@ -403,7 +403,7 @@ msgstr "Nazwisko właściciela konta"
 
 #: src/Model/ApplicationForm.php:204 src/Model/ApplicationForm.php:386
 msgid "ID Card number"
-msgstr "Numer mieszkania"
+msgstr "Numer dowodu osobistego"
 
 #: src/Model/ApplicationForm.php:209 src/Model/ApplicationForm.php:388
 msgid "Payout method"
