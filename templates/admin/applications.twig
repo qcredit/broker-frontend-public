@@ -49,7 +49,7 @@
                 {% else %}
                 {% endif %}
               </td>
-              <td>{{ application.createdAt | date('d-m-Y') }}</td>
+              <td>{{ app.createdAt | date('d-m-Y') }}</td>
               <td><a href="/office/applications/{{ app.id }}">Details</a></td>
           </tr>
       {% endfor %}
