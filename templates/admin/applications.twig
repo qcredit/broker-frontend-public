@@ -10,6 +10,7 @@
               <th>Amount</th>
               <th>Term</th>
               <th>Status</th>
+              <th>Created</th>
               <th></th>
           </tr>
       </thead>
@@ -48,6 +49,7 @@
                 {% else %}
                 {% endif %}
               </td>
+              <td>{{ application.createdAt | date('d-m-Y') }}</td>
               <td><a href="/office/applications/{{ app.id }}">Details</a></td>
           </tr>
       {% endfor %}
