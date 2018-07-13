@@ -136,7 +136,7 @@ class ApplicationController extends AbstractController
    */
   protected function isFromFrontpage()
   {
-    return !strpos($_SERVER['HTTP_REFERER'], _('application'));
+    return strpos($_SERVER['HTTP_REFERER'], _('application')) === false;
   }
 
   /**
@@ -197,7 +197,7 @@ class ApplicationController extends AbstractController
 
       if ($request->isPost() && $this->getPostApplicationService()->isSuccess())
       {
-        return $response->withRedirect(sprintf('application/%s', $this->getPostApplicationService()->getApplication()->getApplicationHash()));
+        return $response->withRedirect(sprintf('%s/%s', _('application'), $this->getPostApplicationService()->getApplication()->getApplicationHash()));
       }
 
       if (!$this->isFromFrontpage() && count($service->getApplication()->getOffers()) === 0)
@@ -350,7 +350,7 @@ class ApplicationController extends AbstractController
   public function schemaAction(Request $request, Response $response, $args)
   {
     $helper = new SchemaHelper();
-    if ($this->isFromFrontpage())
+    if ($this->isFromFrontpage() && strpos($_SERVER['HTTP_REFERER'], sprintf('%s/%s', _('application'), _('resume'))) === false)
     {
       $helper->setScenario(new HomepageScenario());
     }

@@ -10,7 +10,7 @@ $app->group('/', function() {
   $this->map(['GET', 'POST'], _('application'), 'ApplicationController:indexAction')->add(new \App\Middleware\ApplicationPost($this));
   $this->get('application/schema', 'ApplicationController:schemaAction');
   $this->get('application/status', 'ApplicationController:statusAction');
-  $this->get('application/resume/{hash}', 'ApplicationController:resumeAction');
+  $this->get(sprintf('%s/%s/{hash}', _('application'), _('resume')), 'ApplicationController:resumeAction');
   $this->get(sprintf('%s/{hash}', _('application')), 'ApplicationController:offersAction');
   //$this->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
   $this->get('', 'HomeController:indexAction');
