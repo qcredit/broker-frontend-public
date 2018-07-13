@@ -18,6 +18,9 @@ fi
   echo "### $(Time) Finished phinx migrate: $? ###" | tee -a /var/log/messages
 ) &
 
+echo "Generating app translations..."
+msgfmt --output-file=/app/locale/pl_PL/LC_MESSAGES/broker.mo /app/locale/pl_PL/LC_MESSAGES/broker.po
+
 sleep 8
 
 echo "Setting up cron jobs..."
