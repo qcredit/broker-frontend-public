@@ -104,7 +104,9 @@ msgstr ""
 #: src/Base/Repository/MessageTemplateRepository.php:117
 #: src/Base/Repository/MessageTemplateRepository.php:139
 #: src/Base/Repository/MessageTemplateRepository.php:158 src/routes.php:10
-#: src/routes.php:14 src/Controller/ApplicationController.php:139
+#: src/routes.php:13 src/routes.php:14
+#: src/Controller/ApplicationController.php:139
+#: src/Controller/ApplicationController.php:200
 #: src/Controller/ApplicationController.php:353
 msgid "application"
 msgstr ""
@@ -857,6 +859,10 @@ msgstr ""
 msgid "This field is required"
 msgstr ""
 
+#: src/routes.php:13 src/Controller/ApplicationController.php:353
+msgid "resume"
+msgstr ""
+
 #: src/Controller/ApplicationController.php:205
 msgid "We could not contact our partners, please try again!"
 msgstr ""
@@ -870,8 +876,4 @@ msgstr ""
 
 #: src/Controller/ApplicationController.php:217
 msgid "We were unable to process your request. Please try again later."
-msgstr ""
-
-#: src/Controller/ApplicationController.php:353
-msgid "resume"
 msgstr ""
