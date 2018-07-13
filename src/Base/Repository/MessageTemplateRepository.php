@@ -114,7 +114,7 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
       ->setBody($this->generateEmailContent('mail/offer-link.twig', [
         'application' => $application,
         'title' => $message->getTitle(),
-        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+        'link' => sprintf('%s/%s/%s', $domain, _('application'), $application->getApplicationHash())
       ]))
       ->setRecipient($application->getEmail());
 
@@ -136,7 +136,7 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
       ->setBody($this->generateEmailContent('mail/offer-reminder.twig', [
         'application' => $application,
         'title' => $message->getTitle(),
-        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+        'link' => sprintf('%s/%s/%s', $domain, _('application'), $application->getApplicationHash())
       ]));
 
     return $message;
@@ -155,7 +155,7 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
       ->setRecipient($application->getPhone())
       ->setBody($this->getTemplateByPath('sms/offer-reminder.twig', [
         'application' => $application,
-        'link' => sprintf('%s/application/%s', $domain, $application->getApplicationHash())
+        'link' => sprintf('%s/%s/%s', $domain, _('application'), $application->getApplicationHash())
       ]));
 
     return $message;
