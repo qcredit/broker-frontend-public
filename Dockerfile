@@ -17,7 +17,7 @@ ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
 ADD .                              /var/www/html
 
 RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev locales cron
+    apt-get install -y git zip unzip libicu-dev locales cron gettext
 
 RUN    apt-get update \
     && usermod -u 1000 www-data \
