@@ -11,8 +11,8 @@ $app->group('/', function() {
   $this->get('application/schema', 'ApplicationController:schemaAction');
   $this->get('application/status', 'ApplicationController:statusAction');
   $this->get('application/resume/{hash}', 'ApplicationController:resumeAction');
-  $this->get('application/{hash}', 'ApplicationController:offersAction');
-  $this->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
+  $this->get(sprintf('%s/{hash}', _('application')), 'ApplicationController:offersAction');
+  //$this->map(['GET', 'POST'], '/application/{hash}/offer/{id}', 'ApplicationController:selectOfferAction');
   $this->get('', 'HomeController:indexAction');
   $this->get('language', 'HomeController:languageAction');
   $this->get(_('about'), 'AboutController:indexAction');
