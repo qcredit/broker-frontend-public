@@ -194,7 +194,7 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
       ->setType(Message::MESSAGE_TYPE_EMAIL)
       ->setBody($this->generateEmailContent('mail/form-reminder.twig', [
         'application' => $application,
-        'link' => sprintf('%s/application/resume/%s', $domain, $application->getApplicationHash()),
+        'link' => sprintf('%s/%s/%s/%s', $domain, _('application'), _('resume'), $application->getApplicationHash()),
         'title' => $message->getTitle()
       ]));
 
@@ -214,7 +214,7 @@ class MessageTemplateRepository implements MessageTemplateRepositoryInterface
       ->setRecipient($application->getPhone())
       ->setBody($this->getTemplateByPath('sms/form-reminder.twig', [
         'application' => $application,
-        'link' => sprintf('%s/application/resume/%s', $domain, $application->getApplicationHash()),
+        'link' => sprintf('%s/%s/%s/%s', $domain, _('application'), _('resume'), $application->getApplicationHash()),
       ]));
 
     return $message;
