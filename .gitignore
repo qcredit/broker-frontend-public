@@ -8,6 +8,7 @@
 /tmp/*
 /public/cache/*
 /public/sparrow-images/*
+/locale/pl_PL/LC_MESSAGES/broker.mo
 .sass-cache
 config.rb
 .DS_Store

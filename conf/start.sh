@@ -19,6 +19,9 @@ fi
 
 sleep 8
 
+echo "### $(Time) Generating application translations..."
+msgfmt --output-file=/var/www/html/locale/pl_PL/LC_MESSAGES/broker.mo /var/www/html/locale/pl_PL/LC_MESSAGES/broker.po
+
 echo "### $(Time) Setting up cron jobs ... ###"
 echo "* * * * * ENV_TYPE=\"${ENV_TYPE}\" /usr/local/bin/php /var/www/html/src/cron.php >> /var/log/apache2/broker-cron.log 2>&1" | crontab -
 
