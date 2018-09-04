@@ -11,7 +11,11 @@ use Broker\Domain\Service\SendPartnerRequestsService;
 
 $container = $app->getContainer();
 
-$_SERVER['HTTPS'] = isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https';
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
+{
+  $_SERVER['HTTPS'] = 'on';
+  $_SERVER['REQUEST_SCHEME'] = 'https';
+}
 
 $settings = $container->get('settings');
 if (isset($settings['defaultLanguage']))
