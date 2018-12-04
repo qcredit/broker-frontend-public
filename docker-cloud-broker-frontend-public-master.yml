@@ -29,7 +29,7 @@ services:
         window: 60s
       resources:
         limits:
-          memory: 384M
+          memory: 1024M
       placement:
         constraints:
           - 'node.labels.COUNTRY_poland == TRUE'
