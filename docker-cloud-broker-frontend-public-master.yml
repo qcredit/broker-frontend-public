@@ -19,17 +19,20 @@ services:
       update_config:
         order: start-first
         parallelism: 1
-        delay: 40s
+        delay: 30s
         max_failure_ratio: 1
         failure_action: rollback
       restart_policy:
         condition: on-failure
         delay: 15s
-        max_attempts: 5
-        window: 60s
+        max_attempts: 50
+        window: 30s
       resources:
         limits:
-          memory: 1024M
+          memory: 1536M
+          cpus: "0.8"
+        reservations:
+          memory: 128M
       placement:
         constraints:
           - 'node.labels.COUNTRY_poland == TRUE'
