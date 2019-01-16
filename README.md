@@ -45,3 +45,4 @@ please run the following command to collect modifications to translatable string
 Running the above command will create/update the language file `locale/broker.pot`. You can use software like Poedit
 to open the newly created `.pot` file. After you're finished with the translations, please save the generated `.po` file to
 folder `locale/pl_PL/LC_MESSAGES/`.
+
