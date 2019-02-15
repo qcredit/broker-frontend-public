@@ -1,60 +1,46 @@
 ARG GitCommitAppendix
-FROM php:7.2-apache
+
+FROM 666509747749.dkr.ecr.eu-west-1.amazonaws.com/aasa-public:php7.2-apache-test
 
 MAINTAINER dagor.vint@aasaglobal.com
 
-ENV TERM=xterm-256color
-ENV HOME=/root
-ENV TZ=Europe/Tallinn
-ENV DEBIAN_FRONTEND=noninteractive
+ENV TERM="xterm-256color"
+ENV HOME="/root"
+ENV TZ="Europe/Tallinn"
+ENV DEBIAN_FRONTEND="noninteractive"
+ENV DEBUG="TRUE"
 
-ADD ./conf/start.sh                /usr/local/bin/docker-php-entrypoint
-ADD ./conf/apache_php.ini          /usr/local/etc/php/php.ini
-ADD ./conf/apache_000-default.conf /etc/apache2/sites-enabled/000-default.conf
-ADD ./conf/apache_apache2.conf     /etc/apache2/apache2.conf
-ADD ./conf/apache_security.conf    /etc/apache2/conf-available/security.conf
-#ADD ./infrastructure/start.sh      /usr/local/bin/docker-php-entrypoint
-ADD .                              /var/www/html
+ADD ./conf/start.sh       /usr/local/bin/broker-entrypoint
+ADD ./conf/apache_php.ini /usr/local/etc/php/conf.d/broker_php.ini
+ADD --chown=www-data:www-data . /var/www/html
 
-RUN apt-get clean all; apt-get update && apt-get upgrade -y; \
-    apt-get install -y git zip unzip libicu-dev locales cron gettext
 
-RUN    apt-get update \
-    && usermod -u 1000 www-data \
-    && a2enmod rewrite headers expires remoteip \
-    && ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone \
-    && echo 'session.save_handler=redis' >> /usr/local/etc/php/php.ini \
-    && echo 'session.save_path="tcp://redis:6379"' >> /usr/local/etc/php/php.ini \
-    && pecl install redis xdebug \
-    && docker-php-ext-install pdo pdo_mysql intl gettext >> /dev/null \
-    && docker-php-ext-configure intl >> /dev/null \
-    && docker-php-ext-enable redis pdo pdo_mysql xdebug >> /dev/null \
-    && if [ -d /tmp/pear ]; then /bin/rm -rv /tmp/pear; fi \
-    && mkdir -p /var/www/html/cache \
-    && chown www-data /var/www/html/cache \
-    && chown -R www-data /var/www/html/public \
-    && chmod +x /usr/local/bin/docker-php-entrypoint \
-    && if cd /var/www/html/conf; then \
-         for file in apache_000-default.conf apache_apache2.conf apache_php.ini apache_security.conf start.sh; do \
-           test -f $file && /bin/rm $file; done; \
-       fi \
-    && if cd /var/www/html/infrastructure; then \
-         for file in start.sh; do \
-           test -f $file && /bin/rm $file; done; \
-         for folder in mysql nginx php; do \
-           test -d $folder && /bin/rm -r $folder; done; \
-       fi
+RUN printf "<?php\n  echo \"<br>$(date)\";\n  echo \"<br>$(cat /root/.version)\"\n?>\n" > /var/www/html/version.php; \
+    chmod +x /usr/local/bin/broker-entrypoint; \
+    apt-get clean all; apt-get update -qq ; apt-get install -y git libicu-dev locales cron; \
+    pecl install xdebug; \
+    docker-php-ext-install intl gettext; \
+    docker-php-ext-configure intl; \
+    docker-php-ext-enable xdebug; \
+    echo "[info] Changing Apache DocumentRoot."; \
+    sed --in-place --expression '/DocumentRoot/s/\/.*/\/var\/www\/html\/public/g' /etc/apache2/sites-enabled/000-default.conf; \
+    echo "[info] Removing Files and Folders."; \
+    if cd /var/www/html/; then composer install; fi; \
+    if cd /var/www/html/conf; then \
+      for file in apache_000-default.conf apache_apache2.conf apache_php.ini apache_security.conf start.sh; do \
+        test -f $file && /bin/rm $file; done; fi; \
+    if cd /var/www/html/infrastructure; then \
+      for file in start.sh; do \
+        test -f $file && /bin/rm $file; done; \
+      for folder in mysql nginx php; do \
+        test -d $folder && /bin/rm -r $folder; done; fi; \
+    echo 'pl_PL.UTF-8 UTF-8\n' >> /etc/locale.gen; \
+    ln -sf /etc/locale.alias /usr/share/locale/locale.alias; \
+    locale-gen
 
-RUN    if cd /var/www/html; then\
-         curl -sS https://getcomposer.org/installer | /usr/local/bin/php -- --install-dir=/usr/local/bin --filename=composer \
-         && composer update && composer install; \
-         pwd && ls -lh . vendor/bin/phinx; \
-       else exit 1; fi \
-        && echo 'pl_PL.UTF-8 UTF-8\n' >> /etc/locale.gen \
-        && ln -sf /etc/locale.alias /usr/share/locale/locale.alias \
-        && locale-gen
+ENTRYPOINT ["broker-entrypoint"]
 
-EXPOSE 80
+CMD ["apache2-foreground"]
 
 # docker build -t broker-frontend-public .
 # docker tag broker-frontend-public 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest
