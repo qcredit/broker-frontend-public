@@ -5,21 +5,27 @@ services:
     image: 666509747749.dkr.ecr.eu-west-1.amazonaws.com/broker-frontend-public:latest$GitCommitAppendix
     environment:
       ENV_TYPE: "testserver"
+      LOCAL_REDIS: "tcp://redis:6379"
     volumes:
       - /srv/local/broker-frontend-public/test:/var/log/apache2
     ports:
       - 11112:80
-    # networks:
-      # - test
-    stop_grace_period: 60s
+    stop_grace_period: 360s
     stop_signal: WINCH
+    healthcheck:
+      disable: true
+      #test: ["CMD", "/bin/sh", "/usr/local/bin/healthcheck.sh"]
+      interval: 30s
+      timeout: 10s
+      retries: 4
+      start_period: 20s
     deploy:
       mode: replicated
       replicas: 2
       update_config:
         order: start-first
-        parallelism: 1
-        delay: 30s
+        parallelism: 2
+        delay: 15s
         max_failure_ratio: 1
         failure_action: rollback
       restart_policy:
@@ -39,9 +45,7 @@ services:
 
   redis:
     image: redis:latest
-    # networks:
-      # - test
-    stop_grace_period: 60s
+    stop_grace_period: 360s
     deploy:
       mode: replicated
       replicas: 1
@@ -49,24 +53,14 @@ services:
         order: start-first
         parallelism: 1
         delay: 70s
-        max_failure_ratio: 1
         failure_action: rollback
       restart_policy:
         condition: on-failure
         delay: 20s
         max_attempts: 30
         window: 30s
-      resources:
-        limits:
-          memory: 64M
       placement:
         constraints:
           - 'node.labels.COUNTRY_poland == TRUE'
           - 'node.labels.SITE_PUBLIC == TRUE'
           - 'node.labels.ENV_TEST == TRUE'
-
-# networks:
-  # default:
-    # driver: overlay
-  # test:
-    # driver: overlay
