@@ -17,7 +17,7 @@ class OfferSeed extends AbstractSeed
     {
       $data = [
         [
-          'application_id' => 1,
+          'application_id' => 100000,
           'partner_id' => 1,
           'rejected_date' => '2018-04-04 10:10:10',
           'remote_id' => '31896319',
