@@ -10,6 +10,7 @@ repository.
 Clone the project and run the following commands:
 
     docker-compose up -d
+    docker run --rm --interactive --volume $PWD:/app composer install
     docker-compose exec php vendor/bin/phinx migrate -c phinx.php
     docker-compose exec php vendor/bin/phinx seed:run -s PartnerSeed -s ApplicationSeed -s OfferSeed -s SampleAppOfferSeed -c phinx.php
 
