@@ -145,7 +145,7 @@ class SampleAppOfferSeed extends AbstractSeed
 
       $offerData = [
         [
-          'application_id' => 3,
+          'application_id' => 100000,
           'partner_id' => 1,
           'loan_amount' => 10000,
           'loan_term' => 36,
@@ -160,7 +160,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => '2018-04-10 07:04:54'
         ],
         [
-          'application_id' => 4,
+          'application_id' => 100001,
           'partner_id' => 1,
           'loan_amount' => null,
           'loan_term' => null,
@@ -175,7 +175,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => null
         ],
         [
-          'application_id' => 5,
+          'application_id' => 100002,
           'partner_id' => 1,
           'loan_amount' => null,
           'loan_term' => null,
@@ -190,7 +190,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => null
         ],
         [
-          'application_id' => 6,
+          'application_id' => 100003,
           'partner_id' => 1,
           'loan_amount' => null,
           'loan_term' => null,
@@ -205,7 +205,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => null
         ],
         [
-          'application_id' => 7,
+          'application_id' => 100004,
           'partner_id' => 2,
           'loan_amount' => null,
           'loan_term' => null,
@@ -220,7 +220,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => null
         ],
         [
-          'application_id' => 8,
+          'application_id' => 100005,
           'partner_id' => 1,
           'loan_amount' => null,
           'loan_term' => null,
@@ -235,7 +235,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => null
         ],
         [
-          'application_id' => 9,
+          'application_id' => 100006,
           'partner_id' => 1,
           'loan_amount' => null,
           'loan_term' => null,
@@ -250,7 +250,7 @@ class SampleAppOfferSeed extends AbstractSeed
           'updated_at' => null
         ],
         [
-          'application_id' => 10,
+          'application_id' => 100007,
           'partner_id' => 1,
           'loan_amount' => null,
           'loan_term' => null,
